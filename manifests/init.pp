@@ -34,8 +34,8 @@ class kafka (
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_re($version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
-  validate_re($scala_version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
+  #validate_re($version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
+  #validate_re($scala_version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
   validate_absolute_path($install_dir)
   validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
   validate_bool($install_java)
