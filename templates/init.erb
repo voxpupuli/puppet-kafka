@@ -1,56 +1,81 @@
 #!/bin/sh
-#
-# chkconfig: 345 99 01
-# description: Kafka
-#
-# File : Kafka
-#
-# Description: Starts and stops the Kafka server
-#
 
-KAFKA_USER=kafka
-# See how we were called.
-case "$1" in
+NAME=kafka
+PID_FILE=/var/run/$NAME.pid
 
-start)
-  echo -n "Starting Kafka:"
-  su $KAFKA_USER -c "nohup /usr/local/kafka/bin/kafka-server-start.sh /usr/local/kafka/config/server.properties > /var/log/kafka/server.out 2> /var/log/kafka/server.err &"
-  echo " done."
-  exit 0
-;;
+DAEMON="/usr/local/kafka/bin/kafka-server-start.sh"
+DAEMON_OPTS="/usr/local/kafka/config/server.properties"
 
-stop)
-  echo -n "Stopping Kafka: "
-  su  $KAFKA_USER  -c "ps -ef | grep kafka.Kafka | grep -v grep | awk '{print \$2}' | xargs kill"
-  echo " done."
-  exit 0
-;;
-hardstop)
-  echo -n "Stopping (hard) Kafka: "
-  su $KAFKA_USER  -c "ps -ef | grep kafka.Kafka | grep -v grep | awk '{print \$2}' | xargs kill -9"
-  echo " done."
-  exit 0
-;;
+start() {
+  if [ -f $PID_FILE ]
+    then
+      PID=`cat $PID_FILE`
+      if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]; then
+        echo "\n$PID_FILE exists, process is already running"
+        exit 0
+      else
+        echo "\n$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
+        rm -f $PID_FILE
+        start
+      fi
+    else
+        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/server.log 2>&1 &
+        echo $! > $PID_FILE;
+    fi
+}
 
-status)
-  c_pid=`ps -ef | grep kafka.Kafka | grep -v grep | awk '{print $2}'`
-  if [ "$c_pid" = "" ] ; then
-    echo "Stopped"
-    exit 3
+stop() {
+  if [ ! -f $PID_FILE ]
+  then
+    echo "\n$PID_FILE does not exist, process is not running"
+    exit 1
   else
-    echo "Running $c_pid"
+    kill `cat $PID_FILE`;
+    rm -f $PID_FILE;
+    echo "\n$NAME stopped"
     exit 0
   fi
-;;
+}
 
-restart)
-  stop
-  start
-;;
+status() {
+  if [ -f $PID_FILE ]
+  then
+    PID=`cat $PID_FILE`
+    if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]
+    then
+      echo "$NAME stopped but pid file exists"
+      exit 1
+    else
+      echo "$NAME running with pid $PID"
+      exit 0
+    fi
+  else
+    echo "$NAME stopped"
+    exit 1
+  fi
+}
 
-*)
-  echo "Usage: $0 {start|stop|hardstop|status|restart}"
-  exit 1
-;;
+case "$1" in
+  status)
+    status
+	;;
+  start)
+    echo -n "Starting daemon: "$NAME
+    start
+	;;
+  stop)
+    echo -n "Stopping daemon: "$NAME
+    stop
+	;;
+  restart)
+    echo -n "Restarting daemon: "$NAME
+	  stop
+    start
+	;;
 
+  *)
+	echo "Usage: "$1" {status|start|stop|restart}"
+	exit 1
 esac
+
+exit 0
