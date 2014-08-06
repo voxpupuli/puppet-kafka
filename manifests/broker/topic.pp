@@ -2,7 +2,7 @@ define kafka::broker::topic(
   $ensure = '',
   $zookeeper = '',
   $replication_factor = 1,
-  $partions = 1
+  $partitions = 1
 ) {
   
   if $ensure == 'present' {
