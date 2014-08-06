@@ -1,4 +1,4 @@
-class kafka::broker::topic(
+define kafka::broker::topic(
   $ensure = '',
   $zookeeper = '',
   $replication_factor = 1,
