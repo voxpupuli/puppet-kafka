@@ -20,7 +20,9 @@ start() {
       fi
     else
         exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/server.log 2>&1 &
-        echo $! > $PID_FILE;
+        sleep 2
+        PID=`ps ax | grep -E '[k]afka.Kafka' | awk '{print $1}'`
+        echo $PID > $PID_FILE;
     fi
 }
 
