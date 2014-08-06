@@ -10,7 +10,7 @@ class kafka::broker::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  $server_config = merge($kafka::params::broker_config_defaults, $kafka::broker::config)
+  $server_config = deep_merge($kafka::params::broker_config_defaults, $kafka::broker::config)
 
   file { "${install_dir}/config/server.properties":
     owner   => 'kafka',
