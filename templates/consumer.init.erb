@@ -1,10 +1,10 @@
 #!/bin/sh
 
-NAME=kafka
+NAME=kafka-consumer
 PID_FILE=/var/run/$NAME.pid
 
-DAEMON="/opt/kafka/bin/kafka-server-start.sh"
-DAEMON_OPTS="/opt/kafka/config/server.properties"
+DAEMON="/opt/kafka/bin/kafka-console-consumer.sh"
+DAEMON_OPTS="<%= @consumer_service_config.sort.each do |k,v| -%> --<%= k -%><%= v %><%- end -%>"
 
 start() {
   if [ -f $PID_FILE ]
@@ -19,9 +19,9 @@ start() {
         start
       fi
     else
-        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/server.log 2>&1 &
+        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/consumer.log 2>&1 &
         sleep 2
-        PID=`ps ax | grep -E '[k]afka.Kafka' | awk '{print $1}'`
+        PID=`ps ax | grep -E '[k]afka-console-consumer' | awk '{print $1}'`
         echo $PID > $PID_FILE;
     fi
 }

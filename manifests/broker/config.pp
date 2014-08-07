@@ -20,16 +20,4 @@ class kafka::broker::config(
     require => [ Exec['untar-kafka'], File['/usr/local/kafka'] ],
     content => template('kafka/server.properties.erb')
   }
-  
-  file { "/opt/kafka":
-    ensure => link,
-    target => $install_dir
-  }
-
-  file { '/var/log/kafka':
-    ensure => directory,
-    owner  => 'kafka',
-    group  => 'kafka'
-  }
-
 }

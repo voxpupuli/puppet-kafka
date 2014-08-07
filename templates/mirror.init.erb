@@ -1,10 +1,10 @@
 #!/bin/sh
 
-NAME=kafka
+NAME=kafka-mirror
 PID_FILE=/var/run/$NAME.pid
 
-DAEMON="/opt/kafka/bin/kafka-server-start.sh"
-DAEMON_OPTS="/opt/kafka/config/server.properties"
+DAEMON="/usr/local/kafka/bin/kafka-run-class.sh"
+DAEMON_OPTS="kafka.tools.MirrorMaker <%= @consumer_configs.sort.each do |c| -%> --consumer.config <%= c -%> --num.streams <%= @num_streams %> --producer.config <%= @producer_config %> --num.producers <@= num_producers %> --whitelist=\"<%= @whitelist %>\" --blacklist=\"<%= @blacklist %>\""
 
 start() {
   if [ -f $PID_FILE ]
@@ -19,9 +19,9 @@ start() {
         start
       fi
     else
-        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/server.log 2>&1 &
+        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/mirror.log 2>&1 &
         sleep 2
-        PID=`ps ax | grep -E '[k]afka.Kafka' | awk '{print $1}'`
+        PID=`ps ax | grep -E '[k]afka.tools.MirrorMaker' | awk '{print $1}'`
         echo $PID > $PID_FILE;
     fi
 }

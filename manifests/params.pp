@@ -79,4 +79,103 @@ class kafka::params {
     'leader.imbalance.check.interval.seconds'       => '300',
     'offset.metadata.max.bytes'                     => '1024'
   }
+  
+  #http://kafka.apache.org/documentation.html#consumerconfigs
+  $consumer_config_defaults = {
+    'group.id'                        => '',
+    'zookeeper.connect'               => '',
+    'consumer.id'                     => '',
+    'socket.timeout.ms'               => '30000',
+    'socket.receive.buffer.bytes'     => '65536',
+    'fetch.message.max.bytes'         => '1048576',
+    'auto.commit.enable'              => true,
+    'auto.commit.interval.ms'         => '60000',
+    'queued.max.message.chunks'       => '10',
+    'rebalance.max.retries'           => '4',
+    'fetch.min.bytes'                 => '1',
+    'fetch.wait.max.ms'               => '100',
+    'rebalance.backoff.ms'            => '2000',
+    'refresh.leader.backoff.ms'       => '200',
+    'auto.offset.reset'               => 'largest',
+    'consumer.timeout.ms'             => '-1',
+    'client.id'                       => '',
+    'zookeeper.session.timeout.ms'    => '6000',
+    'zookeeper.connection.timeout.ms' => '6000',
+    'zookeeper.sync.time.ms'          => '2000'
+  }
+  
+  #http://kafka.apache.org/documentation.html#producerconfigs
+  $producer_config_defaults = {
+    'metadata.broker.list'               => '',
+    'request.required.acks'              => '0',
+    'request.timeout.ms'                 => '10000',
+    'producer.type'                      => 'sync',
+    'serializer.class'                   => 'kafka.serializer.DefaultEncoder',
+    'key.serializer.class'               => '',
+    'partitioner.class'                  => 'kafka.producer.DefaultPartitioner',
+    'compression.codec'                  => 'none',
+    'compressed.topics'                  => '',
+    'message.send.max.retries'           => '3',
+    'retry.backoff.ms'                   => '100',
+    'topic.metadata.refresh.interval.ms' => '600000',
+    'queue.buffering.max.ms'             => '5000',
+    'queue.buffering.max.messages'       => '10000',
+    'queue.enqueue.timeout.ms'           => '-1',
+    'batch.num.messages'                 => '200',
+    'send.buffer.bytes'                  => '102400',
+    'client.id'                          => ''
+  }
+  
+  #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
+  #https://kafka.apache.org/documentation.html#basic_ops_mirror_maker
+  $consumer_configs = ['/opt/kafka/conf/consumer-1.properties']
+  $producer_config = '/opt/kafka/conf/producer.properties'
+  $num_streams = 2
+  $num_producers = 1
+  $whitelist = '.*'
+  $blacklist = ''
+  
+  $consumer_service_config = {
+    'autocommit.interval.ms'    => '60000',
+    'blacklist'                 => '',
+    'consumer-timeout-ms'       => '-1',
+    'csv-reporter-enabled'      => '',
+    'fetch-size'                => '1048576',
+    'formatter'                 => 'kafka.consumer.DefaultMessageFormatter',
+    'from-beginning'            => '',
+    'group'                     => 'console-consumer-53705',
+    'max-messages'              => '',
+    'max-wait-ms'               => '100',
+    'metrics-dir'               => '',
+    'min-fetch-bytes'           => '1',
+    'property'                  => '',
+    'refresh-leader-backoff-ms' => '200',
+    'skip-message-on-error'     => '',
+    'socket-buffer-size'        => '2097152',
+    'socket-timeout-ms'         => '30000',
+    'topic'                     => '',
+    'whitelist'                 => '',
+    'zookeeper'                 => ''
+  }
+  
+  $producer_service_config = {
+    'batch-size'               => '200',
+    'broker-list'              => '',
+    'compress'                 => '',
+    'key-serializer'           => 'kafka.serializer.StringEncoder',
+    'line-reader'              => 'kafka.producer.ConsoleProducer$LineMessageReader',
+    'message-send-max-retries' => '3',
+    'property'                 => '',
+    'queue-enqueuetimeout-ms'  => '2147483647',
+    'queue-size'               => '10000',
+    'request-required-acks'    => '0',
+    'request-timeout-ms'       => '1500',
+    'retry-backoff-ms'         => '100',
+    'socket-buffer-size'       => '102400',
+    'sync'                     => '',
+    'timeout'                  => '1000',
+    'topic'                    => '',
+    'value-serializer'         => 'kafka.serializer.StringEncoder'
+  }
+  
 }

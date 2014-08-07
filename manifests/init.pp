@@ -50,6 +50,8 @@ class kafka (
       distribution => 'jdk'
     }
   }
+  
+  ensure_resource('package','wget', {'ensure' => 'present'})
 
   group { 'kafka':
     ensure => present
@@ -73,8 +75,17 @@ class kafka (
     group   => 'kafka',
     alias   => 'kafka-app-dir'
   }
+  
+  file { "/opt/kafka":
+    ensure => link,
+    target => $install_dir
+  }
 
-  ensure_resource('package','wget', {'ensure' => 'present'})
+  file { '/var/log/kafka':
+    ensure => directory,
+    owner  => 'kafka',
+    group  => 'kafka'
+  }
 
   exec { 'download-kafka-package':
     command => "wget -O ${package_dir}/${basefilename} ${package_url} 2> /dev/null",
@@ -90,12 +101,5 @@ class kafka (
     require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
     user    => 'kafka',
     path    => ['/bin', '/usr/bin', '/usr/sbin']
-  }
-
-  file { '/usr/local/kafka':
-    ensure => link,
-    owner  => 'kafka',
-    group  => 'kafka',
-    target => $install_dir
   }
 }
