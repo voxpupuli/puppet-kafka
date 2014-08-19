@@ -3,8 +3,8 @@
 # This private class is called from kafka::mirror to manage the configuration
 #
 class kafka::mirror::config(
-  $consumer_configs = $kafka::mirror::consumer_configs,
-  $producer_configs = $kafka::mirror::producer_configs
+  $consumer_config = $kafka::mirror::consumer_config,
+  $producer_config = $kafka::mirror::producer_config
 ) {
 
   if $caller_module_name != $module_name {
@@ -13,5 +13,5 @@ class kafka::mirror::config(
   
   include kafka::producer::config
   
-  create_resources('kafka::consumer::config', $consumer_configs)
+  create_resources('kafka::consumer::config', $consumer_config)
 }
