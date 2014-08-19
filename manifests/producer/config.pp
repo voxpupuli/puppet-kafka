@@ -8,7 +8,7 @@ class kafka::producer::config(
     ensure  => present,
     mode    => '0755',
     content => template('kafka/producer.properties.erb'),
-    require => File['/opt/kafka/conf']
+    require => File['/opt/kafka/config']
   }
   
 }
