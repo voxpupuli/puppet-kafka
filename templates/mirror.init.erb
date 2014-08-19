@@ -4,26 +4,26 @@ NAME=kafka-mirror
 PID_FILE=/var/run/$NAME.pid
 
 DAEMON="/usr/local/kafka/bin/kafka-run-class.sh"
-DAEMON_OPTS="kafka.tools.MirrorMaker <%= @consumer_configs.sort.each do |c| -%> --consumer.config <%= c -%> --num.streams <%= @num_streams %> --producer.config <%= @producer_config %> --num.producers <@= num_producers %> --whitelist=\"<%= @whitelist %>\" --blacklist=\"<%= @blacklist %>\""
+DAEMON_OPTS="kafka.tools.MirrorMaker <%- @consumer_config.sort.each do |c| -%> --consumer.config <%= c -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%> --num.producers <@= num_producers -%> --whitelist=\"<%= @whitelist -%>\" --blacklist=\"<%= @blacklist -%>\"<%- end -%>"
 
 start() {
   if [ -f $PID_FILE ]
-    then
-      PID=`cat $PID_FILE`
-      if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]; then
-        echo "\n$PID_FILE exists, process is already running"
-        exit 0
-      else
-        echo "\n$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
-        rm -f $PID_FILE
-        start
-      fi
+  then
+    PID=`cat $PID_FILE`
+    if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]; then
+      echo "\n$PID_FILE exists, process is already running"
+      exit 0
     else
-        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/mirror.log 2>&1 &
-        sleep 2
-        PID=`ps ax | grep -E '[k]afka.tools.MirrorMaker' | awk '{print $1}'`
-        echo $PID > $PID_FILE;
+      echo "\n$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
+      rm -f $PID_FILE
+      start
     fi
+  else
+    exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/mirror.log 2>&1 &
+    sleep 2
+    PID=`ps ax | grep -E '[k]afka.tools.MirrorMaker' | awk '{print $1}'`
+    echo $PID > $PID_FILE;
+  fi
 }
 
 stop() {
