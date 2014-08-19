@@ -7,7 +7,7 @@ define kafka::consumer::config(
   file { $name:
     ensure  => present,
     mode    => '0755',
-    content => template('kafka/consumer.config.erb'),
+    content => template('kafka/consumer.properties.erb'),
     require => File['/opt/kafka/conf']
   }
   
