@@ -80,6 +80,13 @@ class kafka (
     ensure => link,
     target => $install_dir
   }
+  
+  file { "/opt/kafka/conf":
+    ensure  => directory,
+    owner   => 'kafka',
+    group   => 'kafka',
+    require => File['/opt/kafka']
+  }
 
   file { '/var/log/kafka':
     ensure => directory,
