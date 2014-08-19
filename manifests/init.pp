@@ -81,7 +81,7 @@ class kafka (
     target => $install_dir
   }
   
-  file { "/opt/kafka/conf":
+  file { "/opt/kafka/config":
     ensure  => directory,
     owner   => 'kafka',
     group   => 'kafka',
