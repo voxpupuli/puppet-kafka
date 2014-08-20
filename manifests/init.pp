@@ -97,7 +97,7 @@ class kafka (
   exec { 'download-kafka-package':
     command => "wget -O ${package_dir}/${basefilename} ${package_url} 2> /dev/null",
     path    => ['/usr/bin', '/bin'],
-    creates => "${package_dir}/${basefilename}",
+    creates => "${package_dir}/${basefilename}/LICENSE",
     require => [ File[$package_dir], Package['wget'] ]
   }
 
