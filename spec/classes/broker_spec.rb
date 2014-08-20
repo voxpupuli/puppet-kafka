@@ -32,11 +32,11 @@ describe 'kafka::broker' do
         it { should contain_exec('download-kafka-package') }
         it { should contain_exec('untar-kafka-package') }
 
-        it { should contain_file('/usr/local/kafka').with('ensure' => 'link') }
+        it { should contain_file('/opt/kafka').with('ensure' => 'link') }
 
         it { should contain_file('/etc/init.d/kafka') }
 
-        it { should contain_file('/usr/local/kafka/config/server.properties') }
+        it { should contain_file('/opt/kafka/config/server.properties') }
         it { should contain_file('/var/log/kafka').with('ensure' => 'directory') }
 
         it { should contain_service('kafka') }
