@@ -128,8 +128,8 @@ class kafka::params {
   
   #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
   #https://kafka.apache.org/documentation.html#basic_ops_mirror_maker
-  $consumer_configs = ['/opt/kafka/conf/consumer-1.properties']
-  $producer_config = '/opt/kafka/conf/producer.properties'
+  $consumer_configs = ['/opt/kafka/config/consumer-1.properties']
+  $producer_config = '/opt/kafka/config/producer.properties'
   $num_streams = 2
   $num_producers = 1
   $whitelist = '.*'

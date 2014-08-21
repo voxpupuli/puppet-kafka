@@ -4,7 +4,7 @@ NAME=kafka-mirror
 PID_FILE=/var/run/$NAME.pid
 
 DAEMON="/opt/kafka/bin/kafka-run-class.sh"
-DAEMON_OPTS="kafka.tools.MirrorMaker <%- @consumer_config.sort.each do |c| -%> --consumer.config /opt/kafka/config/<%= c['name'] -%>.properties<%- end -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%> --num.producers <%= num_producers -%><%- if defined?(@whitelist) -%> --whitelist=\"<%= @whitelist -%>\"<%- end %><%- if defined?(@blacklist) -%> --blacklist=\"<%= @blacklist -%><%- end -%>\""
+DAEMON_OPTS="kafka.tools.MirrorMaker <%- @consumer_config.sort.each do |c| -%> --consumer.config /opt/kafka/conf/<%= c['name'] -%>.properties<%- end -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%> --num.producers <%= num_producers -%><%- if defined?(@whitelist) -%> --whitelist=\"<%= @whitelist -%>\"<%- end %><%- if defined?(@blacklist) -%> --blacklist=\"<%= @blacklist -%><%- end -%>\""
 
 start() {
   if [ -f $PID_FILE ]
