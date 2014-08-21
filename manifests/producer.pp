@@ -30,12 +30,12 @@
 #
 # === Examples
 #
-# Create the consumer service connecting to a local zookeeper
+# Create the producer service connecting to a local zookeeper
 #
-# class { 'kafka::consumer':
+# class { 'kafka::producer':
 #  config => { 'client.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
 # }
-class kafka::consumer (
+class kafka::producer (
   $version = $kafka::params::version,
   $scala_version = $kafka::params::scala_version,
   $install_dir = $kafka::params::install_dir,

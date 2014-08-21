@@ -1,5 +1,5 @@
 class kafka::producer::config(
-  $config = ''
+  $config = {}
 ) {
 
   $producer_config = deep_merge($kafka::params::producer_config_defaults, $config)

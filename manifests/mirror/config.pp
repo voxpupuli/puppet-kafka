@@ -11,7 +11,9 @@ class kafka::mirror::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
   
-  include kafka::producer::config
+  class { 'kafka::producer::config':
+    config => $producer_config
+  }
   
   create_resources('kafka::consumer::config', $consumer_config)
 }
