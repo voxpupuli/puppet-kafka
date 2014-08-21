@@ -2,7 +2,7 @@ class kafka::producer::config(
   $config = ''
 ) {
 
-  $producer_config = deep_merge($config, $kafka::params::producer_config_defaults)
+  $producer_config = deep_merge($kafka::params::producer_config_defaults, $config)
   
   file { '/opt/kafka/config/producer.properties':
     ensure  => present,

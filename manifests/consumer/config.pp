@@ -2,7 +2,7 @@ define kafka::consumer::config(
   $config = {}
 ) {
 
-  $consumer_config = deep_merge($config, $kafka::params::consumer_config_defaults)
+  $consumer_config = deep_merge($kafka::params::consumer_config_defaults, $config)
   
   file { "/opt/kafka/config/${name}.properties":
     ensure  => present,
