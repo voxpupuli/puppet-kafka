@@ -97,13 +97,13 @@ class kafka (
   exec { 'download-kafka-package':
     command => "wget -O ${package_dir}/${basefilename} ${package_url} 2> /dev/null",
     path    => ['/usr/bin', '/bin'],
-    creates => "${package_dir}/${basefilename}/LICENSE",
+    creates => "${package_dir}/${basefilename}",
     require => [ File[$package_dir], Package['wget'] ]
   }
 
   exec { 'untar-kafka-package':
     command => "tar xfvz ${package_dir}/${basefilename} -C ${install_dir} --strip-components=1",
-    creates => "${install_dir}/config",
+    creates => "${install_dir}/${basefilename}/LICENSE",
     alias   => 'untar-kafka',
     require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
     user    => 'kafka',
