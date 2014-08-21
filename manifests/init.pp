@@ -103,7 +103,7 @@ class kafka (
 
   exec { 'untar-kafka-package':
     command => "tar xfvz ${package_dir}/${basefilename} -C ${install_dir} --strip-components=1",
-    creates => "${install_dir}/${basefilename}/LICENSE",
+    creates => "${install_dir}/LICENSE",
     alias   => 'untar-kafka',
     require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
     user    => 'kafka',
