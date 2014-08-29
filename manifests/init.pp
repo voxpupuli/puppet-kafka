@@ -27,7 +27,7 @@
 class kafka (
   $version = $kafka::params::version,
   $scala_version = $kafka::params::scala_version,
-  $install_dir = $kafka::params::install_dir,
+  $install_dir = '',
   $mirror_url = $kafka::params::mirror_url,
   $install_java = $kafka::params::install_java,
   $package_dir = $kafka::params::package_dir
@@ -36,7 +36,7 @@ class kafka (
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
   #validate_re($version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
   #validate_re($scala_version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
-  validate_absolute_path($install_dir)
+  #validate_absolute_path($install_dir)
   validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
   validate_bool($install_java)
   validate_absolute_path($package_dir)
@@ -45,12 +45,16 @@ class kafka (
   $basename = regsubst($basefilename, '(.+)\.tgz$', '\1')
   $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
 
+  if $install_dir == '' {
+    $install_directory = "/opt/kafka-${scala_version}-${version}"
+  }
+
   if $install_java {
     class {'java':
       distribution => 'jdk'
     }
   }
-  
+
   ensure_resource('package','wget', {'ensure' => 'present'})
 
   group { 'kafka':
@@ -75,12 +79,12 @@ class kafka (
     group   => 'kafka',
     alias   => 'kafka-app-dir'
   }
-  
+
   file { "/opt/kafka":
     ensure => link,
-    target => $install_dir
+    target => $install_directory
   }
-  
+
   file { "/opt/kafka/config":
     ensure  => directory,
     owner   => 'kafka',
@@ -102,8 +106,8 @@ class kafka (
   }
 
   exec { 'untar-kafka-package':
-    command => "tar xfvz ${package_dir}/${basefilename} -C ${install_dir} --strip-components=1",
-    creates => "${install_dir}/LICENSE",
+    command => "tar xfvz ${package_dir}/${basefilename} -C ${install_directory} --strip-components=1",
+    creates => "${install_directory}/LICENSE",
     alias   => 'untar-kafka',
     require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
     user    => 'kafka',
