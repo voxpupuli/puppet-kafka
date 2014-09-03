@@ -73,7 +73,7 @@ class kafka (
     group  => 'kafka'
   }
 
-  file { $install_dir:
+  file { $install_directory:
     ensure  => directory,
     owner   => 'kafka',
     group   => 'kafka',
