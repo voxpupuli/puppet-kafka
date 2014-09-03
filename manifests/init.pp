@@ -47,6 +47,8 @@ class kafka (
 
   if $install_dir == '' {
     $install_directory = "/opt/kafka-${scala_version}-${version}"
+  } else {
+    $install_directory = $install_dir
   }
 
   if $install_java {
