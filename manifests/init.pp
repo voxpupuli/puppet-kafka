@@ -86,18 +86,18 @@ class kafka (
   }
 
   file { $install_directory:
-    ensure  => directory,
-    owner   => 'kafka',
-    group   => 'kafka',
-    alias   => 'kafka-app-dir'
+    ensure => directory,
+    owner  => 'kafka',
+    group  => 'kafka',
+    alias  => 'kafka-app-dir'
   }
 
-  file { "/opt/kafka":
+  file { '/opt/kafka':
     ensure => link,
     target => $install_directory
   }
 
-  file { "/opt/kafka/config":
+  file { '/opt/kafka/config':
     ensure  => directory,
     owner   => 'kafka',
     group   => 'kafka',

@@ -17,7 +17,7 @@ class kafka::broker::config(
 
   $server_config = deep_merge($kafka::params::broker_config_defaults, $kafka::broker::config)
 
-  file { "/opt/kafka/config/server.properties":
+  file { '/opt/kafka/config/server.properties':
     owner   => 'kafka',
     group   => 'kafka',
     mode    => '0644',
