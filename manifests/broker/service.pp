@@ -1,6 +1,11 @@
-# == Class kafka::service
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
+# == Class: kafka::broker::service
 #
-# This private class is meant to be called from kafka::broker. It ensures the service is running
+# This private class is meant to be called from `kafka::broker`.
+# It manages the kafka service
 #
 class kafka::broker::service {
 

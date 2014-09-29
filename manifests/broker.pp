@@ -1,3 +1,7 @@
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class: kafka::broker
 #
 # This class will install kafka with the broker role.
@@ -27,6 +31,8 @@
 # [*install_java*]
 # Install java if it's not already installed.
 #
+# [*package_dir*]
+# The directory to install kafka.
 #
 # === Examples
 #
@@ -35,6 +41,7 @@
 # class { 'kafka::broker':
 #  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
 # }
+#
 class kafka::broker (
   $version = $kafka::params::version,
   $scala_version = $kafka::params::scala_version,

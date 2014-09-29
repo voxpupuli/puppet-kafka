@@ -1,3 +1,7 @@
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class: kafka::consumer
 #
 # This class will install kafka with the consumer role.
@@ -27,6 +31,8 @@
 # [*install_java*]
 # Install java if it's not already installed.
 #
+# [*package_dir*]
+# The directory to install kafka.
 #
 # === Examples
 #

@@ -1,4 +1,8 @@
-# => Class kafka::params
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
+# == Class kafka::params
 #
 # This class is meant to be called from kafka::broker
 # It sets variables according to platform
@@ -79,7 +83,7 @@ class kafka::params {
     'leader.imbalance.check.interval.seconds'       => '300',
     'offset.metadata.max.bytes'                     => '1024'
   }
-  
+
   #http://kafka.apache.org/documentation.html#consumerconfigs
   $consumer_config_defaults = {
     'group.id'                        => '',
@@ -103,7 +107,7 @@ class kafka::params {
     'zookeeper.connection.timeout.ms' => '6000',
     'zookeeper.sync.time.ms'          => '2000'
   }
-  
+
   #http://kafka.apache.org/documentation.html#producerconfigs
   $producer_config_defaults = {
     'metadata.broker.list'               => '',
@@ -125,7 +129,7 @@ class kafka::params {
     'send.buffer.bytes'                  => '102400',
     'client.id'                          => ''
   }
-  
+
   #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
   #https://kafka.apache.org/documentation.html#basic_ops_mirror_maker
   $consumer_configs = ['/opt/kafka/config/consumer-1.properties']
@@ -134,7 +138,7 @@ class kafka::params {
   $num_producers = 1
   $whitelist = '.*'
   $blacklist = ''
-  
+
   $consumer_service_config = {
     'autocommit.interval.ms'    => '60000',
     'blacklist'                 => '',
@@ -157,7 +161,7 @@ class kafka::params {
     'whitelist'                 => '',
     'zookeeper'                 => ''
   }
-  
+
   $producer_service_config = {
     'batch-size'               => '200',
     'broker-list'              => '',
@@ -177,5 +181,5 @@ class kafka::params {
     'topic'                    => '',
     'value-serializer'         => 'kafka.serializer.StringEncoder'
   }
-  
+
 }

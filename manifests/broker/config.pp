@@ -1,6 +1,11 @@
-# == Class kafka::broker::config
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
+# == Class: kafka::broker::config
 #
-# This private class is called from kafka::broker to manage the configuration
+# This private class is meant to be called from `kafka::broker`.
+# It manages the broker config files
 #
 class kafka::broker::config(
   $install_dir = $kafka::broker::install_dir

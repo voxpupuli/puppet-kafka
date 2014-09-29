@@ -1,3 +1,7 @@
+# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
+# Copyright:: Copyright (c) 2013 OpenTable Inc
+# License::   MIT
+
 # == Class: kafka::producer
 #
 # This class will install kafka with the producer role.
@@ -27,6 +31,8 @@
 # [*install_java*]
 # Install java if it's not already installed.
 #
+# [*package_dir*]
+# The directory to install kafka.
 #
 # === Examples
 #
@@ -35,6 +41,7 @@
 # class { 'kafka::producer':
 #  config => { 'client.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
 # }
+#
 class kafka::producer (
   $version = $kafka::params::version,
   $scala_version = $kafka::params::scala_version,
