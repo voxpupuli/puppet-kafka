@@ -7,7 +7,7 @@ describe 'kafka::broker' do
       let(:facts) {{
         :osfamily => 'Ubuntu',
         :operatingsystem => 'ubuntu',
-        :operatingsystemrelease => '14.04'
+        :operatingsystemrelease => '14.04',
         :lsbdistcodename => 'lucid',
         :architecture => 'amd64'
       }}
