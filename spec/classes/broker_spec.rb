@@ -2,46 +2,71 @@ require 'spec_helper'
 
 describe 'kafka::broker' do
   context 'supported operating systems' do
-    ['Debian', 'RedHat'].each do |osfamily|
+    describe "kafka class without any parameters on Debian" do
+      let(:params) {{ }}
+      let(:facts) {{
+        :osfamily => 'Ubuntu',
+        :operatingsystem => 'ubuntu',
+        :operatingsystemrelease => '14.04'
+        :lsbdistcodename => 'lucid',
+        :architecture => 'amd64'
+      }}
 
-      if osfamily.eql?('RedHat')
-        test_os = 'centos'
-      else
-        test_os = 'ubuntu'
-      end
+      #it { should compile.with_all_deps }
 
-      describe "kafka class without any parameters on #{osfamily}" do
-        let(:params) {{ }}
-        let(:facts) {{
-          :osfamily => osfamily,
-          :operatingsystem => test_os,
-          :lsbdistcodename => 'lucid',
-          :architecture => 'amd64'
-        }}
+      it { should contain_class('kafka::broker::install').that_comes_before('kafka::broker::config') }
+      it { should contain_class('kafka::broker::config') }
+      it { should contain_class('kafka::broker::service').that_subscribes_to('kafka::broker::config') }
 
-        #it { should compile.with_all_deps }
+      it { should contain_class('java') }
 
-        it { should contain_class('kafka::broker::install').that_comes_before('kafka::broker::config') }
-        it { should contain_class('kafka::broker::config') }
-        it { should contain_class('kafka::broker::service').that_subscribes_to('kafka::broker::config') }
+      it { should contain_user('kafka') }
+      it { should contain_group('kafka') }
 
-        it { should contain_class('java') }
+      it { should contain_exec('download-kafka-package') }
+      it { should contain_exec('untar-kafka-package') }
 
-        it { should contain_user('kafka') }
-        it { should contain_group('kafka') }
+      it { should contain_file('/opt/kafka').with('ensure' => 'link') }
 
-        it { should contain_exec('download-kafka-package') }
-        it { should contain_exec('untar-kafka-package') }
+      it { should contain_file('/etc/init.d/kafka') }
 
-        it { should contain_file('/opt/kafka').with('ensure' => 'link') }
+      it { should contain_file('/opt/kafka/config/server.properties') }
+      it { should contain_file('/var/log/kafka').with('ensure' => 'directory') }
 
-        it { should contain_file('/etc/init.d/kafka') }
+      it { should contain_service('kafka') }
+    end
 
-        it { should contain_file('/opt/kafka/config/server.properties') }
-        it { should contain_file('/var/log/kafka').with('ensure' => 'directory') }
+    describe "kafka class without any parameters on RedHat" do
+      let(:params) {{ }}
+      let(:facts) {{
+        :osfamily => 'RedHat',
+        :operatingsystem => 'centos',
+        :operatingsystemrelease => '6'
+        :architecture => 'amd64'
+      }}
 
-        it { should contain_service('kafka') }
-      end
+      #it { should compile.with_all_deps }
+
+      it { should contain_class('kafka::broker::install').that_comes_before('kafka::broker::config') }
+      it { should contain_class('kafka::broker::config') }
+      it { should contain_class('kafka::broker::service').that_subscribes_to('kafka::broker::config') }
+
+      it { should contain_class('java') }
+
+      it { should contain_user('kafka') }
+      it { should contain_group('kafka') }
+
+      it { should contain_exec('download-kafka-package') }
+      it { should contain_exec('untar-kafka-package') }
+
+      it { should contain_file('/opt/kafka').with('ensure' => 'link') }
+
+      it { should contain_file('/etc/init.d/kafka') }
+
+      it { should contain_file('/opt/kafka/config/server.properties') }
+      it { should contain_file('/var/log/kafka').with('ensure' => 'directory') }
+
+      it { should contain_service('kafka') }
     end
   end
 
