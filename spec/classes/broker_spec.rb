@@ -15,7 +15,8 @@ describe 'kafka::broker' do
         let(:facts) {{
           :osfamily => osfamily,
           :operatingsystem => test_os,
-          :lsbdistcodename => 'lucid'
+          :lsbdistcodename => 'lucid',
+          :architecture => 'amd64'
         }}
 
         #it { should compile.with_all_deps }
@@ -49,6 +50,7 @@ describe 'kafka::broker' do
       let(:facts) {{
         :osfamily        => 'Solaris',
         :operatingsystem => 'Nexenta',
+        :architecture    => 'amd64'
       }}
 
       it { expect { should contain_package('kafka') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
