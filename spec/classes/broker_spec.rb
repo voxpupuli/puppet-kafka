@@ -41,7 +41,7 @@ describe 'kafka::broker' do
       let(:facts) {{
         :osfamily => 'RedHat',
         :operatingsystem => 'centos',
-        :operatingsystemrelease => '6'
+        :operatingsystemrelease => '6',
         :architecture => 'amd64'
       }}
 
