@@ -5,7 +5,7 @@ describe 'kafka::broker' do
     describe "kafka class without any parameters on Debian" do
       let(:params) {{ }}
       let(:facts) {{
-        :osfamily => 'Ubuntu',
+        :osfamily => 'Debian',
         :operatingsystem => 'ubuntu',
         :operatingsystemrelease => '14.04',
         :lsbdistcodename => 'lucid',
