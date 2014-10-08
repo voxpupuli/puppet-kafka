@@ -78,7 +78,7 @@ class kafka::params {
     'controlled.shutdown.enable'                    => false,
     'controlled.shutdown.max.retries'               => '3',
     'controlled.shutdown.retry.backoff.ms'          => '5000',
-    'auto.leader.rebalance.enable'                  => false,
+    'auto.leader.rebalance.enable'                  => true,
     'leader.imbalance.per.broker.percentage'        => '10',
     'leader.imbalance.check.interval.seconds'       => '300',
     'offset.metadata.max.bytes'                     => '1024'
