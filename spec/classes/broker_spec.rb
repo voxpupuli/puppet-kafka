@@ -15,8 +15,7 @@ describe 'kafka::broker' do
       #it { should compile.with_all_deps }
 
       it { should contain_class('kafka::broker::install').that_comes_before('kafka::broker::config') }
-      it { should contain_class('kafka::broker::config') }
-      it { should contain_class('kafka::broker::service').that_subscribes_to('kafka::broker::config') }
+      it { should contain_class('kafka::broker::config').that_comes_before('kafka::broker::service') }
 
       it { should contain_class('java') }
 
@@ -30,7 +29,13 @@ describe 'kafka::broker' do
 
       it { should contain_file('/etc/init.d/kafka') }
 
-      it { should contain_file('/opt/kafka/config/server.properties') }
+      it { should contain_file('/opt/kafka/config/server.properties').with(
+        'require' => '[Exec[untar-kafka]{:command=>"untar-kafka"}, File[/opt/kafka]{:path=>"/opt/kafka"}]'
+      ) }
+
+      it { should contain_file('/opt/kafka/config/server.properties').that_notifies('Service[kafka]') }
+
+
       it { should contain_file('/var/log/kafka').with('ensure' => 'directory') }
 
       it { should contain_service('kafka') }
@@ -48,8 +53,7 @@ describe 'kafka::broker' do
       #it { should compile.with_all_deps }
 
       it { should contain_class('kafka::broker::install').that_comes_before('kafka::broker::config') }
-      it { should contain_class('kafka::broker::config') }
-      it { should contain_class('kafka::broker::service').that_subscribes_to('kafka::broker::config') }
+      it { should contain_class('kafka::broker::config').that_comes_before('kafka::broker::service') }
 
       it { should contain_class('java') }
 

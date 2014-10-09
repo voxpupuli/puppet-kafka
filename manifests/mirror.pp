@@ -37,6 +37,9 @@
 # [*package_dir*]
 # The directory to install kafka.
 #
+# [*service_restart*]
+# Boolean, if the configuration files should trigger a service restart
+#
 # === Examples
 #
 # Create the mirror service connecting to a local zookeeper
@@ -53,7 +56,8 @@ class kafka::mirror (
   $consumer_config = $kafka::params::consumer_config_defaults,
   $producer_config = $kafka::params::producer_config_defaults,
   $install_java = $kafka::params::install_java,
-  $package_dir = $kafka::params::package_dir
+  $package_dir = $kafka::params::package_dir,
+  $service_restart = $kafka::params::service_restart
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -61,9 +65,10 @@ class kafka::mirror (
   validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
   validate_bool($install_java)
   validate_absolute_path($package_dir)
+  validate_bool($service_restart)
 
   class { 'kafka::mirror::install': } ->
-  class { 'kafka::mirror::config': } ~>
+  class { 'kafka::mirror::config': } ->
   class { 'kafka::mirror::service': } ->
   Class['kafka::mirror']
 }

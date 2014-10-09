@@ -34,6 +34,9 @@
 # [*package_dir*]
 # The directory to install kafka.
 #
+# [*service_restart*]
+# Boolean, if the configuration files should trigger a service restart
+#
 # === Examples
 #
 # Create a single broker instance which talks to a local zookeeper instance.
@@ -49,7 +52,8 @@ class kafka::broker (
   $mirror_url = $kafka::params::mirror_url,
   $config = $kafka::params::broker_config_defaults,
   $install_java = $kafka::params::install_java,
-  $package_dir = $kafka::params::package_dir
+  $package_dir = $kafka::params::package_dir,
+  $service_restart = $kafka::params::service_restart
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -60,9 +64,10 @@ class kafka::broker (
   validate_hash($config)
   validate_bool($install_java)
   validate_absolute_path($package_dir)
+  validate_bool($service_restart)
 
   class { 'kafka::broker::install': } ->
-  class { 'kafka::broker::config': } ~>
+  class { 'kafka::broker::config': } ->
   class { 'kafka::broker::service': } ->
   Class['kafka::broker']
 }

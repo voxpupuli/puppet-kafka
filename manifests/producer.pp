@@ -34,6 +34,9 @@
 # [*package_dir*]
 # The directory to install kafka.
 #
+# [*service_restart*]
+# Boolean, if the configuration files should trigger a service restart
+#
 # === Examples
 #
 # Create the producer service connecting to a local zookeeper
@@ -49,7 +52,8 @@ class kafka::producer (
   $mirror_url = $kafka::params::mirror_url,
   $config = $kafka::params::producer_config_defaults,
   $install_java = $kafka::params::install_java,
-  $package_dir = $kafka::params::package_dir
+  $package_dir = $kafka::params::package_dir,
+  $service_restart = $kafka::params::service_restart
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -57,9 +61,10 @@ class kafka::producer (
   validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
   validate_bool($install_java)
   validate_absolute_path($package_dir)
+  validate_bool($service_restart)
 
   class { 'kafka::producer::install': } ->
-  class { 'kafka::producer::config': } ~>
+  class { 'kafka::producer::config': } ->
   class { 'kafka::producer::service': } ->
   Class['kafka::producer']
 }
