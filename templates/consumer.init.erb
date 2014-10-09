@@ -30,12 +30,12 @@ stop() {
   if [ ! -f $PID_FILE ]
   then
     echo "\n$PID_FILE does not exist, process is not running"
-    exit 1
+    return 1
   else
     kill `cat $PID_FILE`;
     rm -f $PID_FILE;
     echo "\n$NAME stopped"
-    exit 0
+    return 0
   fi
 }
 
@@ -72,6 +72,7 @@ case "$1" in
   restart)
     echo -n "Restarting daemon: "$NAME
 	  stop
+    sleep 2
     start
 	;;
 
