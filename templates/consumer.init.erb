@@ -23,6 +23,7 @@ start() {
         sleep 2
         PID=`ps ax | grep -E '[k]afka-console-consumer' | awk '{print $1}'`
         echo $PID > $PID_FILE;
+        echo "\n$NAME started"
     fi
 }
 
