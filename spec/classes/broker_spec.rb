@@ -29,10 +29,6 @@ describe 'kafka::broker' do
 
       it { should contain_file('/etc/init.d/kafka') }
 
-      it { should contain_file('/opt/kafka/config/server.properties').with(
-        'require' => '[Exec[untar-kafka]{:command=>"untar-kafka"}, File[/opt/kafka]{:path=>"/opt/kafka"}]'
-      ) }
-
       it { should contain_file('/opt/kafka/config/server.properties').that_notifies('Service[kafka]') }
 
 
