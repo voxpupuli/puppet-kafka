@@ -1,3 +1,24 @@
+##2014-10-10 - Release 1.0.0
+###Summary
+
+This release adds a number of new features and fixes lots of idempotency issues.
+The main additions with this release are support for installing and configuring consumers, producers and mirrors
+
+####Features
+
+- added support for adding topics
+- added support for managing consumers, producers, and mirrors
+- improved documentation
+- improved testing
+
+####Bugfixes
+
+- updated install_dir to /opt
+- fixing install_dir symlink
+- fixing idempotency issue in kafka server.properties
+- fixing idempotency issue with untar-ing kafka package
+- fixing bug in service restart
+
 ##2014-06-02 - Release 0.2.1
 ###Summary
 
