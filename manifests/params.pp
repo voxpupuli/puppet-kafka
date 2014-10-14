@@ -95,7 +95,7 @@ class kafka::params {
     'socket.receive.buffer.bytes'     => '65536',
     'fetch.message.max.bytes'         => '1048576',
     'auto.commit.enable'              => true,
-    'auto.commit.interval.ms'         => '60000',
+    'auto.commit.interval.ms'         => '10000',
     'queued.max.message.chunks'       => '10',
     'rebalance.max.retries'           => '4',
     'fetch.min.bytes'                 => '1',
