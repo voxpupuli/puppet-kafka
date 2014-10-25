@@ -77,7 +77,7 @@ class kafka::params {
     'zookeeper.session.timeout.ms'                  => '6000',
     'zookeeper.connection.timeout.ms'               => '6000',
     'zookeeper.sync.time.ms'                        => '2000',
-    'controlled.shutdown.enable'                    => false,
+    'controlled.shutdown.enable'                    => true,
     'controlled.shutdown.max.retries'               => '3',
     'controlled.shutdown.retry.backoff.ms'          => '5000',
     'auto.leader.rebalance.enable'                  => true,
