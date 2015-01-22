@@ -9,13 +9,14 @@
 #
 class kafka::producer::config(
   $config = {},
-  $service_restart = $kafka::producer::service_restart
+  $service_restart = $kafka::producer::service_restart,
+  $service_name    = 'kafka-producer'
 ) {
 
   $producer_config = deep_merge($kafka::params::producer_config_defaults, $config)
 
   $config_notify = $service_restart ? {
-    true  => Service['kafka-producer'],
+    true  => Service[$service_name],
     false => undef
   }
 
