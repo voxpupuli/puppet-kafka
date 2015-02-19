@@ -37,6 +37,19 @@ describe 'kafka::broker', :type => :class do
     end
 
     describe 'kafka::broker::service' do
+      context 'service_install false' do
+        let :params do
+          {
+            :config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            :service_install => false,
+          }
+        end
+        it { is_expected.not_to contain_file('/etc/init.d/kafka') }
+
+        it { is_expected.not_to contain_service('kafka') }
+      end
       context 'defaults' do
         it { is_expected.to contain_file('/etc/init.d/kafka') }
 

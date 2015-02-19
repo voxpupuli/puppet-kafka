@@ -10,7 +10,9 @@
 class kafka::broker::config(
   $config          = $kafka::broker::config,
   $config_defaults = $kafka::broker::config_defaults,
-  $service_restart = $kafka::broker::service_restart
+  $install_dir     = $kafka::broker::install_dir,
+  $service_restart = $kafka::broker::service_restart,
+  $service_install = $kafka::broker::service_install
 ) {
 
   if $caller_module_name != $module_name {
@@ -19,9 +21,13 @@ class kafka::broker::config(
 
   $server_config = deep_merge($config_defaults, $config)
 
-  $config_notify = $service_restart ? {
-    true    => Service['kafka'],
-    default => undef
+  if $service_install {
+    $config_notify = $service_restart ? {
+      true  => Service['kafka'],
+      false => undef
+    }
+  } else {
+    $config_notify = undef
   }
 
   file { '/opt/kafka/config/server.properties':

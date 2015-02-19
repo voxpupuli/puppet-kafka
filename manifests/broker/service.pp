@@ -7,24 +7,31 @@
 # This private class is meant to be called from `kafka::broker`.
 # It manages the kafka service
 #
-class kafka::broker::service {
+class kafka::broker::service(
+  $service_install = $kafka::broker::service_install,
+  $service_ensure  = $kafka::broker::service_ensure
+) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  file { '/etc/init.d/kafka':
-    ensure  => present,
-    mode    => '0755',
-    content => template('kafka/init.erb'),
-  }
+  if $service_install {
+    file { '/etc/init.d/kafka':
+      ensure  => present,
+      mode    => '0755',
+      content => template('kafka/init.erb'),
+    }
 
-  service { 'kafka':
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => File['/etc/init.d/kafka'],
+    service { 'kafka':
+      ensure     => $service_ensure,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      require    => File['/etc/init.d/kafka'],
+    }
+  } else {
+    debug('Skipping service install')
   }
 
 }
