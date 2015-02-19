@@ -76,6 +76,10 @@ The url where the kafka is downloaded from.
 A hash of the configuration options.
 #####`install_java`
 Install java if it's not already installed.
+#####`service_ensure`
+Sets the ensure state of the broker service to stopped or running.
+#####`service_install`
+Install the init.d service.
 
 ##Reference
 
