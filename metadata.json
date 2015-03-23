@@ -1,12 +1,12 @@
 {
-  "name":         "opentable-kafka",
-  "version":      "1.0.0",
-  "author":       "opentable",
-  "license":      "MIT",
+  "name":         "puppet-kafka",
+  "version":      "1.0.1",
+  "author":       "puppet",
+  "license":      "Apache 2.0",
   "summary":      "Module for managing apache kafka",
-  "source":       "https://github.com/opentable/puppet-kafka",
-  "project_page": "https://github.com/opentable/puppet-kafka",
-  "issues_url": "https://github.com/opentable/puppet-kafka/issues",
+  "source":       "https://github.com/puppet-community/puppet-kafka",
+  "project_page": "https://github.com/puppet-community/puppet-kafka",
+  "issues_url": "https://github.com/puppet-community/puppet-kafka/issues",
   "tags": ["apache","kafka"],
   "operatingsystem_support": [
       {
