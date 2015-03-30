@@ -16,7 +16,7 @@
 The kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org)
 
 [![Build
-Status](https://secure.travis-ci.org/opentable/puppet-kafka.png)](https://secure.travis-ci.org/opentable/puppet-kafka.png)
+Status](https://secure.travis-ci.org/puppet-community/puppet-kafka.png)](https://secure.travis-ci.org/puppet-community/puppet-kafka.png)
 
 ##Module Description
 

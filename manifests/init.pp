@@ -8,7 +8,7 @@
 #
 # === Requirements/Dependencies
 #
-# Currently reequires the puppetlabs/stdlib module on the Puppet Forge in
+# Currently requires the puppetlabs/stdlib module on the Puppet Forge in
 # order to validate much of the the provided configuration.
 #
 # === Parameters
@@ -62,12 +62,12 @@ class kafka (
   }
 
   if $install_java {
-    class {'java':
+    class { 'java':
       distribution => 'jdk'
     }
   }
 
-  ensure_resource('package','wget', {'ensure' => 'present'})
+  ensure_resource('package','wget', { 'ensure' => 'present' })
 
   group { 'kafka':
     ensure => present
