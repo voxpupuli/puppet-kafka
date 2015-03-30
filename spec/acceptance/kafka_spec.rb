@@ -3,15 +3,42 @@ require 'spec_helper_acceptance'
 describe 'kafka class' do
 
   context 'default parameters' do
-    # Using puppet_apply as a helper
     it 'should work with no errors' do
+      if fact('osfamily') == 'RedHat'
+        pp = <<-EOS
+          class { 'java':
+            distribution => 'jre',
+          } ->
+
+          class {'zookeeper':
+            packages             => ['zookeeper', 'zookeeper-server'],
+            service_name         => 'zookeeper-server',
+            initialize_datastore => true,
+            repo                 => 'cloudera',
+          }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      else
+        pp = <<-EOS
+          class { 'java':
+            distribution => 'jre',
+          } ->
+
+          class {'zookeeper':
+          }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
       pp = <<-EOS
-      class { 'kafka': }
+        class { 'kafka': }
       EOS
 
       # Run it twice and test for idempotency
-      expect(apply_manifest(pp).exit_code).to_not eq(1)
-      expect(apply_manifest(pp).exit_code).to eq(0)
+      apply_manifest(pp, :catch_failures => true)
+      apply_manifest(pp, :catch_changes => true)
     end
   end
 end
