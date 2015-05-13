@@ -13,6 +13,8 @@ class kafka::broker::service {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  $jmx_port = $kafka::broker::jmx_port
+
   file { '/etc/init.d/kafka':
     ensure  => present,
     mode    => '0755',
