@@ -67,7 +67,11 @@ class kafka (
     }
   }
 
-  ensure_resource('package','wget', { 'ensure' => 'present' })
+  if ! defined(Package['wget']) {
+    package {'wget':
+      ensure => present
+    }
+  }
 
   group { 'kafka':
     ensure => present
