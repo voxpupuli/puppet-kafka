@@ -13,6 +13,9 @@ class kafka::broker::service {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  $service_user  = $::kafka::broker::service_user
+  $service_group = $::kafka::broker::service_group
+
   file { '/etc/init.d/kafka':
     ensure  => present,
     mode    => '0755',

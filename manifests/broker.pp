@@ -37,6 +37,12 @@
 # [*service_restart*]
 # Boolean, if the configuration files should trigger a service restart
 #
+# [*service_user*]
+# Name of user to run service as
+#
+# [*service_group*]
+# Name of group to run service as
+#
 # === Examples
 #
 # Create a single broker instance which talks to a local zookeeper instance.
@@ -53,7 +59,9 @@ class kafka::broker (
   $config = $kafka::params::broker_config_defaults,
   $install_java = $kafka::params::install_java,
   $package_dir = $kafka::params::package_dir,
-  $service_restart = $kafka::params::service_restart
+  $service_restart = $kafka::params::service_restart,
+  $service_user = $kafka::params::service_user,
+  $service_group = $kafka::params::service_group,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
