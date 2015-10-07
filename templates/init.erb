@@ -8,6 +8,7 @@
 
 NAME=kafka
 PID_FILE=/var/run/$NAME.pid
+KAFKA_USER=kafka
 
 DAEMON="/opt/kafka/bin/kafka-server-start.sh"
 DAEMON_OPTS="/opt/kafka/config/server.properties"
@@ -19,34 +20,35 @@ start() {
   ulimit -s 10240
   ulimit -c unlimited
   if [ -f $PID_FILE ]
+  then
+    PID=`cat $PID_FILE`
+    if [ ! -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]
     then
-      PID=`cat $PID_FILE`
-      if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]; then
-        echo "\n$PID_FILE exists, process is already running"
-        exit 0
-      else
-        echo "\n$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
-        rm -f $PID_FILE
-        start
-      fi
+      echo "$PID_FILE exists, process is already running"
+      exit 0
     else
-        exec sudo KAFKA_JMX_OPTS="$KAFKA_JMX_OPTS" $DAEMON $DAEMON_OPTS >> /var/log/kafka/server.log 2>&1 &
-        sleep 2
-        PID=`ps ax | grep -E '[k]afka.Kafka' | awk '{print $1}'`
-        echo $PID > $PID_FILE;
-        echo "\n$NAME started"
+      echo "$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
+      rm -f $PID_FILE
+      start
     fi
+  else
+    /sbin/runuser $KAFKA_USER -c "KAFKA_JMX_OPTS=\"$KAFKA_JMX_OPTS\" $DAEMON $DAEMON_OPTS > /var/log/kafka/server.out 2> /var/log/kafka/server.err &"
+    sleep 2
+    PID=`ps ax | grep -E '[k]afka.Kafka' | awk '{print $1}'`
+    echo $PID > $PID_FILE;
+    echo "$NAME started"
+  fi
 }
 
 stop() {
   if [ ! -f $PID_FILE ]
   then
-    echo "\n$PID_FILE does not exist, process is not running"
+    echo "$PID_FILE does not exist, process is not running"
     return 1
   else
     kill `cat $PID_FILE`;
     rm -f $PID_FILE;
-    echo "\n$NAME stopped"
+    echo "$NAME stopped"
     return 0
   fi
 }
@@ -74,15 +76,15 @@ case "$1" in
     status
 	;;
   start)
-    echo -n "Starting daemon: "$NAME
+    echo "Starting daemon: "$NAME
     start
 	;;
   stop)
-    echo -n "Stopping daemon: "$NAME
+    echo "Stopping daemon: "$NAME
     stop
 	;;
   restart)
-    echo -n "Restarting daemon: "$NAME
+    echo "Restarting daemon: "$NAME
 	  stop
     sleep 2
     start
