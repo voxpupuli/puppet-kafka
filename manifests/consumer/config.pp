@@ -15,8 +15,8 @@ define kafka::consumer::config(
   $consumer_config = deep_merge($kafka::params::consumer_config_defaults, $config)
 
   $config_notify = $service_restart ? {
-    true  => Service['kafka'],
-    false => undef
+    true    => Service['kafka'],
+    default => undef
   }
 
   file { "/opt/kafka/config/${name}.properties":
