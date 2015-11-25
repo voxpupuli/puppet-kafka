@@ -19,8 +19,8 @@ class kafka::broker::config(
   $server_config = deep_merge($kafka::params::broker_config_defaults, $kafka::broker::config)
 
   $config_notify = $service_restart ? {
-    true  => Service['kafka'],
-    false => undef
+    true    => Service['kafka'],
+    default => undef
   }
 
   file { '/opt/kafka/config/server.properties':
