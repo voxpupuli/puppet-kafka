@@ -1,3 +1,22 @@
+## 2015-12-10 - Release 1.0.2
+### Summary
+
+  This release fixes some issues regarding the init script. For example the
+  service is started as user kafka, uses su instead of runuser and will remove
+  stale pid files.
+
+### Features
+
+- Replace ensure_resource with explicit conditional.
+- Update readme with an example of use.
+
+### Bugfixes
+
+- Make Beaker run on CentOS. This closes #5.
+- Update init script of Kafka broker. This closes #17 and #26.
+- Added missing dependency on puppetlabs-java. This closes #27.
+- Using su instead of runuser. This closes #22 and #24.
+
 ## 2015-03-24 - Release 1.0.1
 ### Summary
 
@@ -6,8 +25,8 @@
 ## 2014-10-10 - Release 1.0.0
 ### Summary
 
-This release adds a number of new features and fixes lots of idempotency issues.
-The main additions with this release are support for installing and configuring consumers, producers and mirrors
+  This release adds a number of new features and fixes lots of idempotency issues.
+  The main additions with this release are support for installing and configuring consumers, producers and mirrors
 
 #### Features
 
