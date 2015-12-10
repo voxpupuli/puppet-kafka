@@ -1,3 +1,8 @@
+##2015-03-24 - Release 1.0.1
+###Summary
+
+  Adding deploy section for Travis CI.
+
 ##2014-10-10 - Release 1.0.0
 ###Summary
 
