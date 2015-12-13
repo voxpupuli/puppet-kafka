@@ -19,7 +19,8 @@ class kafka::mirror::config(
 
   class { 'kafka::producer::config':
     config          => $producer_config,
-    service_restart => $service_restart
+    service_restart => $service_restart,
+    service_name    => 'kafka-mirror'
   }
 
   create_resources('kafka::consumer::config', $consumer_config)
