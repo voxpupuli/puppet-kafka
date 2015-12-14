@@ -20,7 +20,7 @@ class kafka::producer::service(
   file { '/etc/init.d/kafka-producer':
     ensure  => present,
     mode    => '0755',
-    content => template('kafka/producer.init.erb')
+    content => template('kafka/producer.init.erb'),
   }
 
   service { 'kafka-producer':
@@ -28,6 +28,6 @@ class kafka::producer::service(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => File['/etc/init.d/kafka-producer']
+    require    => File['/etc/init.d/kafka-producer'],
   }
 }

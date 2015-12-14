@@ -65,9 +65,9 @@ class kafka::params {
     'default.replication.factor'                    => '1',
     'replica.lag.time.max.ms'                       => '10000',
     'replica.lag.max.messages'                      => '4000',
-    'replica.socket.timeout.ms'                     => '301000',
-    'replica.socket.receive.buffer.bytes'           => '641024',
-    'replica.fetch.max.bytes'                       => '10241024',
+    'replica.socket.timeout.ms'                     => '30000',
+    'replica.socket.receive.buffer.bytes'           => '65536',
+    'replica.fetch.max.bytes'                       => '1048576',
     'replica.fetch.wait.max.ms'                     => '500',
     'replica.fetch.min.bytes'                       => '1',
     'num.replica.fetchers'                          => '1',
@@ -83,7 +83,7 @@ class kafka::params {
     'auto.leader.rebalance.enable'                  => true,
     'leader.imbalance.per.broker.percentage'        => '10',
     'leader.imbalance.check.interval.seconds'       => '300',
-    'offset.metadata.max.bytes'                     => '1024'
+    'offset.metadata.max.bytes'                     => '1024',
   }
 
   #http://kafka.apache.org/documentation.html#consumerconfigs
@@ -107,7 +107,7 @@ class kafka::params {
     'client.id'                       => '',
     'zookeeper.session.timeout.ms'    => '6000',
     'zookeeper.connection.timeout.ms' => '6000',
-    'zookeeper.sync.time.ms'          => '2000'
+    'zookeeper.sync.time.ms'          => '2000',
   }
 
   #http://kafka.apache.org/documentation.html#producerconfigs
@@ -129,7 +129,7 @@ class kafka::params {
     'queue.enqueue.timeout.ms'           => '-1',
     'batch.num.messages'                 => '200',
     'send.buffer.bytes'                  => '102400',
-    'client.id'                          => ''
+    'client.id'                          => '',
   }
 
   #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
@@ -161,7 +161,7 @@ class kafka::params {
     'socket-timeout-ms'         => '30000',
     'topic'                     => '',
     'whitelist'                 => '',
-    'zookeeper'                 => ''
+    'zookeeper'                 => '',
   }
 
   $producer_service_config = {
@@ -181,7 +181,7 @@ class kafka::params {
     'sync'                     => '',
     'timeout'                  => '1000',
     'topic'                    => '',
-    'value-serializer'         => 'kafka.serializer.StringEncoder'
+    'value-serializer'         => 'kafka.serializer.StringEncoder',
   }
 
 }

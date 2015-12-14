@@ -8,7 +8,6 @@
 # It manages the broker config files
 #
 class kafka::broker::config(
-  $install_dir = $kafka::broker::install_dir,
   $service_restart = $kafka::broker::service_restart
 ) {
 
@@ -19,8 +18,8 @@ class kafka::broker::config(
   $server_config = deep_merge($kafka::params::broker_config_defaults, $kafka::broker::config)
 
   $config_notify = $service_restart ? {
-    true  => Service['kafka'],
-    false => undef
+    true    => Service['kafka'],
+    default => undef
   }
 
   file { '/opt/kafka/config/server.properties':
@@ -30,6 +29,6 @@ class kafka::broker::config(
     alias   => 'kafka-cfg',
     require => [ Exec['untar-kafka'], File['/opt/kafka'] ],
     content => template('kafka/server.properties.erb'),
-    notify  => $config_notify
+    notify  => $config_notify,
   }
 }
