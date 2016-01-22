@@ -23,7 +23,7 @@ class kafka::mirror::service(
   file { '/etc/init.d/kafka-mirror':
     ensure  => present,
     mode    => '0755',
-    content => template('kafka/mirror.init.erb')
+    content => template('kafka/mirror.init.erb'),
   }
 
   service { 'kafka-mirror':
@@ -31,6 +31,6 @@ class kafka::mirror::service(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => File['/etc/init.d/kafka-mirror']
+    require    => File['/etc/init.d/kafka-mirror'],
   }
 }

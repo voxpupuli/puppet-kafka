@@ -47,7 +47,7 @@
 class kafka::consumer (
   $version = $kafka::params::version,
   $scala_version = $kafka::params::scala_version,
-  $install_dir = $kafka::params::install_dir,
+  $install_dir = '',
   $mirror_url = $kafka::params::mirror_url,
   $config = $kafka::params::consumer_config_defaults,
   $install_java = $kafka::params::install_java,
@@ -56,14 +56,13 @@ class kafka::consumer (
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_absolute_path($install_dir)
   validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
   validate_bool($install_java)
   validate_absolute_path($package_dir)
   validate_bool($service_restart)
 
-  class { 'kafka::consumer::install': } ->
-  class { 'kafka::consumer::config': } ->
-  class { 'kafka::consumer::service': } ->
+  class { '::kafka::consumer::install': } ->
+  class { '::kafka::consumer::config': } ->
+  class { '::kafka::consumer::service': } ->
   Class['kafka::consumer']
 }

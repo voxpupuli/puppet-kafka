@@ -20,7 +20,7 @@ class kafka::consumer::install {
       install_dir   => $kafka::consumer::install_dir,
       mirror_url    => $kafka::consumer::mirror_url,
       install_java  => $kafka::consumer::install_java,
-      package_dir   => $kafka::consumer::package_dir
+      package_dir   => $kafka::consumer::package_dir,
     }
   }
 }

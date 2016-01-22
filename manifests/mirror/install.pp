@@ -20,7 +20,7 @@ class kafka::mirror::install {
       install_dir   => $kafka::mirror::install_dir,
       mirror_url    => $kafka::mirror::mirror_url,
       install_java  => $kafka::mirror::install_java,
-      package_dir   => $kafka::mirror::package_dir
+      package_dir   => $kafka::mirror::package_dir,
     }
   }
 }

@@ -1,3 +1,22 @@
+## 2015-12-14 - Release 1.0.3
+### Summary
+
+  This release fixes some issues regarding the detection of existing topics,
+  some lint issues, wrong calculated default values and the the correct
+  generation of the install directory.
+
+### Features
+
+- Add trailing comma etc. to comply with the Puppet style guide.
+
+### Bugfixes
+
+- Fix detection of existing topics. This closes #14.
+- Fix some lint issues. Use default instead of false. This closes #25.
+- Fix wrong calculated default values. This closes #21.
+- Remove parameter install_dir from params.pp and sub classes. This closes #9
+  and #10.
+
 ## 2015-12-10 - Release 1.0.2
 ### Summary
 

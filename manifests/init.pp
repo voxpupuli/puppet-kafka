@@ -44,9 +44,6 @@ class kafka (
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  #validate_re($version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
-  #validate_re($scala_version, '\d+\.\d+\.\d+\.*\d*', "${version} does not match semver")
-  #validate_absolute_path($install_dir)
   validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
   validate_bool($install_java)
   validate_absolute_path($package_dir)
@@ -62,63 +59,63 @@ class kafka (
   }
 
   if $install_java {
-    class { 'java':
-      distribution => 'jdk'
+    class { '::java':
+      distribution => 'jdk',
     }
   }
 
   if ! defined(Package['wget']) {
     package {'wget':
-      ensure => present
+      ensure => present,
     }
   }
 
   group { 'kafka':
-    ensure => present
+    ensure => present,
   }
 
   user { 'kafka':
     ensure  => present,
     shell   => '/bin/bash',
-    require => Group['kafka']
+    require => Group['kafka'],
   }
 
   file { $package_dir:
     ensure => 'directory',
     owner  => 'kafka',
-    group  => 'kafka'
+    group  => 'kafka',
   }
 
   file { $install_directory:
     ensure => directory,
     owner  => 'kafka',
     group  => 'kafka',
-    alias  => 'kafka-app-dir'
+    alias  => 'kafka-app-dir',
   }
 
   file { '/opt/kafka':
     ensure => link,
-    target => $install_directory
+    target => $install_directory,
   }
 
   file { '/opt/kafka/config':
     ensure  => directory,
     owner   => 'kafka',
     group   => 'kafka',
-    require => File['/opt/kafka']
+    require => File['/opt/kafka'],
   }
 
   file { '/var/log/kafka':
     ensure => directory,
     owner  => 'kafka',
-    group  => 'kafka'
+    group  => 'kafka',
   }
 
   exec { 'download-kafka-package':
     command => "wget -O ${package_dir}/${basefilename} ${package_url} 2> /dev/null",
     path    => ['/usr/bin', '/bin'],
     creates => "${package_dir}/${basefilename}",
-    require => [ File[$package_dir], Package['wget'] ]
+    require => [ File[$package_dir], Package['wget'] ],
   }
 
   exec { 'untar-kafka-package':
@@ -127,6 +124,6 @@ class kafka (
     alias   => 'untar-kafka',
     require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
     user    => 'kafka',
-    path    => ['/bin', '/usr/bin', '/usr/sbin']
+    path    => ['/bin', '/usr/bin', '/usr/sbin'],
   }
 }

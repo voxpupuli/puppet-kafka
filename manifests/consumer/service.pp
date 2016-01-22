@@ -20,7 +20,7 @@ class kafka::consumer::service(
   file { '/etc/init.d/kafka-consumer':
     ensure  => present,
     mode    => '0755',
-    content => template('kafka/consumer.init.erb')
+    content => template('kafka/consumer.init.erb'),
   }
 
   service { 'kafka-consumer':
@@ -28,6 +28,6 @@ class kafka::consumer::service(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => File['/etc/init.d/kafka-consumer']
+    require    => File['/etc/init.d/kafka-consumer'],
   }
 }
