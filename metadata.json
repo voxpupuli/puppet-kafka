@@ -11,10 +11,10 @@
   "operatingsystem_support": [
       {
         "operatingsystem": "RedHat",
-        "operatingsystemrelease": ["5.0","6.0"]
+        "operatingsystemrelease": ["5.0","6.0", "7.0"]
       },
       { "operatingsystem": "CentOS",
-        "operatingsystemrelease": ["5.0","6.0"]
+        "operatingsystemrelease": ["5.0","6.0", "7.0"]
       },
       { "operatingsystem": "Debian",
         "operatingsystemrelease": ["6.0","7.0"]
@@ -30,7 +30,7 @@
     },
     {
       "name": "puppetlabs/java",
-      "version_requirement": ">= 1.4.1 <2.0.0"
+      "version_requirement": ">= 1.4.2 <2.0.0"
     }
   ]
 }
