@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka::broker class' do
-
   context 'default parameters' do
     # Using puppet_apply as a helper
     it 'should work with no errors' do
@@ -62,9 +61,9 @@ describe 'kafka::broker class' do
 
     describe file('/opt/kafka/config/server.properties') do
       it { should be_file }
-      its(:content) { should match /broker\.id=0/ }
-      its(:content) { should match /log\.dirs=\/tmp\/kafka-logs/ }
-      its(:content) { should match /port=6667/ }
+      its(:content) { should match(/broker\.id=0/) }
+      its(:content) { should match %r{ /log\.dirs=\/tmp\/kafka-logs/ } }
+      its(:content) { should match(/port=6667/) }
     end
 
     describe file('/etc/init.d/kafka') do
@@ -74,6 +73,5 @@ describe 'kafka::broker class' do
     describe service('kafka') do
       it { should be_running }
     end
-
   end
 end
