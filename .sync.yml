@@ -1,7 +1,3 @@
 ---
-spec/spec_helper_acceptance.rb:
-  dependencies:
-    - puppetlabs-stdlib
-    - puppetlabs-java
-spec/acceptance/nodesets/windows-2008R2-serverstandard-x64.yml:
-  unmanaged: true
+.travis.yml:
+  secure: "j/Db/NnuJUwyFWGVwZEciC/0Xrhaes647UK49ZnlZTjUppUeTsqY/rKE8Pc4jpiW8DsfeGijCYP1O02tquH+KSKSwiwxIBjbToFjhNNJ6Qgh0DGIR29VZkiyirh5ZkK1yLMx9Ciyn8opwOXHqTRMk6JwAY05Gux1sD2T7Eu2c4w="

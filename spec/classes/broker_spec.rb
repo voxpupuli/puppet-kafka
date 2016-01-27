@@ -2,17 +2,19 @@ require 'spec_helper'
 
 describe 'kafka::broker' do
   context 'supported operating systems' do
-    describe "kafka class without any parameters on Debian" do
-      let(:params) {{ }}
-      let(:facts) {{
-        :osfamily => 'Debian',
-        :operatingsystem => 'ubuntu',
-        :operatingsystemrelease => '14.04',
-        :lsbdistcodename => 'lucid',
-        :architecture => 'amd64'
-      }}
+    describe 'kafka class without any parameters on Debian' do
+      let(:params) { {} }
+      let(:facts) do
+        {
+          :osfamily => 'Debian',
+          :operatingsystem => 'ubuntu',
+          :operatingsystemrelease => '14.04',
+          :lsbdistcodename => 'lucid',
+          :architecture => 'amd64'
+        }
+      end
 
-      #it { should compile.with_all_deps }
+      # it { should compile.with_all_deps }
 
       it { should contain_class('kafka::broker::install').that_comes_before('kafka::broker::config') }
       it { should contain_class('kafka::broker::config').that_comes_before('kafka::broker::service') }
@@ -31,22 +33,23 @@ describe 'kafka::broker' do
 
       it { should contain_file('/opt/kafka/config/server.properties').that_notifies('Service[kafka]') }
 
-
       it { should contain_file('/var/log/kafka').with('ensure' => 'directory') }
 
       it { should contain_service('kafka') }
     end
 
-    describe "kafka class without any parameters on RedHat" do
-      let(:params) {{ }}
-      let(:facts) {{
-        :osfamily => 'RedHat',
-        :operatingsystem => 'centos',
-        :operatingsystemrelease => '6',
-        :architecture => 'amd64'
-      }}
+    describe 'kafka class without any parameters on RedHat' do
+      let(:params) { {} }
+      let(:facts) do
+        {
+          :osfamily => 'RedHat',
+          :operatingsystem => 'centos',
+          :operatingsystemrelease => '6',
+          :architecture => 'amd64'
+        }
+      end
 
-      #it { should compile.with_all_deps }
+      # it { should compile.with_all_deps }
 
       it { should contain_class('kafka::broker::install').that_comes_before('kafka::broker::config') }
       it { should contain_class('kafka::broker::config').that_comes_before('kafka::broker::service') }
@@ -72,11 +75,13 @@ describe 'kafka::broker' do
 
   context 'unsupported operating system' do
     describe 'kafka class without any parameters on Solaris/Nexenta' do
-      let(:facts) {{
-        :osfamily        => 'Solaris',
-        :operatingsystem => 'Nexenta',
-        :architecture    => 'amd64'
-      }}
+      let(:facts) do
+        {
+          :osfamily        => 'Solaris',
+          :operatingsystem => 'Nexenta',
+          :architecture    => 'amd64'
+        }
+      end
 
       it { expect { should contain_package('kafka') }.to raise_error(Puppet::Error, /Nexenta not supported/) }
     end

@@ -1,7 +1,6 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka class' do
-
   context 'default parameters' do
     it 'should work with no errors' do
       if fact('osfamily') == 'RedHat'

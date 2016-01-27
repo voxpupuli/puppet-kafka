@@ -2,7 +2,7 @@
   "name":         "puppet-kafka",
   "version":      "1.0.3",
   "author":       "puppet",
-  "license":      "Apache 2.0",
+  "license":      "Apache-2.0",
   "summary":      "Module for managing apache kafka",
   "source":       "https://github.com/puppet-community/puppet-kafka",
   "project_page": "https://github.com/puppet-community/puppet-kafka",
