@@ -34,7 +34,7 @@ start() {
   else
     /bin/su $KAFKA_USER -c "KAFKA_JMX_OPTS=\"$KAFKA_JMX_OPTS\" $DAEMON $DAEMON_OPTS > /var/log/kafka/server.out 2> /var/log/kafka/server.err &"
     sleep 2
-    PID=`ps ax | grep -E '[k]afka.Kafka' | awk '{print $1}'`
+    PID=`ps axww | grep -E '[k]afka.Kafka' | awk '{print $1}'`
     echo $PID > $PID_FILE;
     echo "$NAME started"
   fi

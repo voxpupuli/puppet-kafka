@@ -24,7 +24,7 @@ start() {
   else
     exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/mirror.log 2>&1 &
     sleep 2
-    PID=`ps ax | grep -E '[k]afka.tools.MirrorMaker' | awk '{print $1}'`
+    PID=`ps axww | grep -E '[k]afka.tools.MirrorMaker' | awk '{print $1}'`
     echo $PID > $PID_FILE;
     echo "\n$NAME started"
   fi
