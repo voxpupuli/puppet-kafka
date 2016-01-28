@@ -55,6 +55,8 @@ class kafka::mirror (
   $mirror_url = $kafka::params::mirror_url,
   $consumer_config = $kafka::params::consumer_config_defaults,
   $producer_config = $kafka::params::producer_config_defaults,
+  $num_streams = $kafka::params::num_streams,
+  $num_producers = $kafka::params::num_producers,
   $install_java = $kafka::params::install_java,
   $package_dir = $kafka::params::package_dir,
   $service_restart = $kafka::params::service_restart
