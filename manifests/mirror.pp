@@ -31,6 +31,12 @@
 # [*producer_config*]
 # A hash of the producer configuration options.
 #
+# [*num_streams*]
+# Number of stream (consumer) threads to start.
+#
+# [*num_producers*]
+# Number of producer threads to start.
+#
 # [*install_java*]
 # Install java if it's not already installed.
 #
@@ -67,6 +73,8 @@ class kafka::mirror (
   validate_bool($install_java)
   validate_absolute_path($package_dir)
   validate_bool($service_restart)
+  validate_re($num_streams, '\d+', "'${num_streams}' is not an integer")
+  validate_re($num_producers, '\d+', "'${num_producers}' is not an integer")
 
   class { '::kafka::mirror::install': } ->
   class { '::kafka::mirror::config': } ->
