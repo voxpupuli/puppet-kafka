@@ -15,7 +15,7 @@
 
 The kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org)
 
-[![Puppet Forge](http://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka) [![Build Status](https://travis-ci.org/puppet-community/puppet-kafka.png?branch=master)](https://travis-ci.org/puppet-community/puppet-kafka)
+[![Puppet Forge](http://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka) [![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
 
 ##Module Description
 

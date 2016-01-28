@@ -4,10 +4,10 @@
   "author":       "puppet",
   "license":      "Apache-2.0",
   "summary":      "Module for managing apache kafka",
-  "source":       "https://github.com/puppet-community/puppet-kafka",
-  "project_page": "https://github.com/puppet-community/puppet-kafka",
-  "issues_url": "https://github.com/puppet-community/puppet-kafka/issues",
-  "tags": ["apache","kafka"],
+  "source":       "https://github.com/voxpupuli/puppet-kafka",
+  "project_page": "https://github.com/voxpupuli/puppet-kafka",
+  "issues_url": "https://github.com/voxpupuli/puppet-kafka/issues",
+  "tags": ["kafka", "pubsub"],
   "operatingsystem_support": [
       {
         "operatingsystem": "RedHat",
