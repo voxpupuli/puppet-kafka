@@ -6,6 +6,10 @@ PID_FILE=/var/run/$NAME.pid
 DAEMON="/opt/kafka/bin/kafka-run-class.sh"
 DAEMON_OPTS="kafka.tools.MirrorMaker <%- @consumer_config.sort.each do |c| -%> --consumer.config /opt/kafka/config/<%= c[0] -%>.properties<%- end -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%> --num.producers <%= num_producers -%><%- if !@whitelist.eql?('') -%> --whitelist=\"<%= @whitelist -%>\"<%- end %><%- if !@blacklist.eql?('') -%> --blacklist=\"<%= @blacklist -%>\"<%- end -%>"
 
+if [ -f /etc/default/kafka ]; then
+    . /etc/default/kafka
+fi
+
 start() {
   ulimit -n 65536
   ulimit -s 10240
