@@ -13,7 +13,8 @@ class kafka::mirror::service(
   $producer_config = $kafka::params::producer_config,
   $num_producers = $kafka::mirror::num_producers,
   $whitelist = $kafka::params::whitelist,
-  $blacklist = $kafka::params::blacklist
+  $blacklist = $kafka::params::blacklist,
+  $max_heap = $kafka::mirror::max_heap
 ) {
 
   if $caller_module_name != $module_name {
