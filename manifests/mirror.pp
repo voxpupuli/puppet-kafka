@@ -40,6 +40,9 @@
 # [*install_java*]
 # Install java if it's not already installed.
 #
+# [*max_heap*]
+# Max heap size passed to java with -Xmx (<size>[g|G|m|M|k|K])
+#
 # [*package_dir*]
 # The directory to install kafka.
 #
@@ -64,6 +67,7 @@ class kafka::mirror (
   $num_streams = $kafka::params::num_streams,
   $num_producers = $kafka::params::num_producers,
   $install_java = $kafka::params::install_java,
+  $max_heap = $kafka::params::mirror_max_heap,
   $package_dir = $kafka::params::package_dir,
   $service_restart = $kafka::params::service_restart
 ) inherits kafka::params {
@@ -75,6 +79,7 @@ class kafka::mirror (
   validate_bool($service_restart)
   validate_re($num_streams, '\d+', "'${num_streams}' is not an integer")
   validate_re($num_producers, '\d+', "'${num_producers}' is not an integer")
+  validate_re($max_heap, '\d+[g|G|m|M|k|K]', "${max_heap} is not a valid heap size")
 
   class { '::kafka::mirror::install': } ->
   class { '::kafka::mirror::config': } ->
