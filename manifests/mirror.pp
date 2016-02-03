@@ -31,8 +31,17 @@
 # [*producer_config*]
 # A hash of the producer configuration options.
 #
+# [*num_streams*]
+# Number of stream (consumer) threads to start.
+#
+# [*num_producers*]
+# Number of producer threads to start.
+#
 # [*install_java*]
 # Install java if it's not already installed.
+#
+# [*max_heap*]
+# Max heap size passed to java with -Xmx (<size>[g|G|m|M|k|K])
 #
 # [*package_dir*]
 # The directory to install kafka.
@@ -55,7 +64,10 @@ class kafka::mirror (
   $mirror_url = $kafka::params::mirror_url,
   $consumer_config = $kafka::params::consumer_config_defaults,
   $producer_config = $kafka::params::producer_config_defaults,
+  $num_streams = $kafka::params::num_streams,
+  $num_producers = $kafka::params::num_producers,
   $install_java = $kafka::params::install_java,
+  $max_heap = $kafka::params::mirror_max_heap,
   $package_dir = $kafka::params::package_dir,
   $service_restart = $kafka::params::service_restart
 ) inherits kafka::params {
@@ -65,6 +77,9 @@ class kafka::mirror (
   validate_bool($install_java)
   validate_absolute_path($package_dir)
   validate_bool($service_restart)
+  validate_re($num_streams, '\d+', "'${num_streams}' is not an integer")
+  validate_re($num_producers, '\d+', "'${num_producers}' is not an integer")
+  validate_re($max_heap, '\d+[g|G|m|M|k|K]', "${max_heap} is not a valid heap size")
 
   class { '::kafka::mirror::install': } ->
   class { '::kafka::mirror::config': } ->

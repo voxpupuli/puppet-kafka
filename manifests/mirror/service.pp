@@ -9,11 +9,12 @@
 #
 class kafka::mirror::service(
   $consumer_configs = $kafka::params::consumer_configs,
-  $num_streams = $kafka::params::num_streams,
+  $num_streams = $kafka::mirror::num_streams,
   $producer_config = $kafka::params::producer_config,
-  $num_producers = $kafka::params::num_producers,
+  $num_producers = $kafka::mirror::num_producers,
   $whitelist = $kafka::params::whitelist,
-  $blacklist = $kafka::params::blacklist
+  $blacklist = $kafka::params::blacklist,
+  $max_heap = $kafka::mirror::max_heap
 ) {
 
   if $caller_module_name != $module_name {
