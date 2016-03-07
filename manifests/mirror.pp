@@ -77,8 +77,8 @@ class kafka::mirror (
   validate_bool($install_java)
   validate_absolute_path($package_dir)
   validate_bool($service_restart)
-  validate_re($num_streams, '\d+', "'${num_streams}' is not an integer")
-  validate_re($num_producers, '\d+', "'${num_producers}' is not an integer")
+  validate_integer($num_streams)
+  validate_integer($num_producers)
   validate_re($max_heap, '\d+[g|G|m|M|k|K]', "${max_heap} is not a valid heap size")
 
   class { '::kafka::mirror::install': } ->

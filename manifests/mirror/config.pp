@@ -17,10 +17,13 @@ class kafka::mirror::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  ::kafka::consumer::config { 'consumer':
+    config          => $consumer_config,
+    service_restart => $service_restart,
+  }
+
   class { '::kafka::producer::config':
     config          => $producer_config,
     service_restart => $service_restart,
   }
-
-  create_resources('kafka::consumer::config', $consumer_config)
 }
