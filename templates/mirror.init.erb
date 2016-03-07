@@ -4,7 +4,7 @@ NAME=kafka-mirror
 PID_FILE=/var/run/$NAME.pid
 
 DAEMON="/opt/kafka/bin/kafka-run-class.sh"
-DAEMON_OPTS="kafka.tools.MirrorMaker <%- @consumer_config.sort.each do |c| -%> --consumer.config /opt/kafka/config/<%= c[0] -%>.properties<%- end -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%> --num.producers <%= num_producers -%><%- if !@whitelist.eql?('') -%> --whitelist=\"<%= @whitelist -%>\"<%- end %><%- if !@blacklist.eql?('') -%> --blacklist=\"<%= @blacklist -%>\"<%- end -%>"
+DAEMON_OPTS="kafka.tools.MirrorMaker <%- @consumer_configs.sort.each do |c| -%> --consumer.config /opt/kafka/config/<%= c[0] -%>.properties<%- end -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%> --num.producers <%= @num_producers -%><%- if !@whitelist.eql?('') -%> --whitelist=\"<%= @whitelist -%>\"<%- end %><%- if !@blacklist.eql?('') -%> --blacklist=\"<%= @blacklist -%>\"<%- end -%>"
 
 KAFKA_HEAP_OPTS="-Xmx<%= @max_heap -%>"
 export KAFKA_HEAP_OPTS

@@ -12,6 +12,8 @@ define kafka::consumer::config(
   $service_restart = $kafka::consumer::service_restart
 ) {
 
+  include ::kafka::params
+
   $consumer_config = deep_merge($kafka::params::consumer_config_defaults, $config)
 
   $config_notify = $service_restart ? {
