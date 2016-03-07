@@ -62,7 +62,6 @@ class kafka::consumer (
   validate_bool($service_restart)
 
   class { '::kafka::consumer::install': } ->
-  class { '::kafka::consumer::config': } ->
   class { '::kafka::consumer::service': } ->
   Class['kafka::consumer']
 }
