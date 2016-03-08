@@ -1,6 +1,7 @@
 fixtures:
   repositories:
-    stdlib: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-    java:   "https://github.com/puppetlabs/puppetlabs-java.git"
+    zookeeper: "https://github.com/deric/puppet-zookeeper.git"
+    java:      "https://github.com/puppetlabs/puppetlabs-java.git"
+    stdlib:    "https://github.com/puppetlabs/puppetlabs-stdlib.git"
   symlinks:
     kafka: "#{source_dir}"
