@@ -27,7 +27,7 @@ start() {
   else
     exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/mirror.log 2>&1 &
     sleep 2
-    PID=`ps axww | grep -E '[k]afka.tools.MirrorMaker' | awk '{print $1}'`
+    PID=`pgrep -f kafka.tools.MirrorMaker`
     if [ -z "$PID" ]; then
         echo "\n $NAME could not be started"
         exit 1
