@@ -7,7 +7,7 @@ describe 'kafka::consumer::config', :type => :define do
       :operatingsystem        => 'Ubuntu',
       :operatingsystemrelease => '14.04',
       :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64',
+      :architecture           => 'amd64'
     }
   end
   let(:title) { 'consumer' }
@@ -17,7 +17,7 @@ describe 'kafka::consumer::config', :type => :define do
       let :params do
         {
           'config'          => {},
-          'service_restart' => 'true',
+          'service_restart' => 'true'
         }
       end
 
