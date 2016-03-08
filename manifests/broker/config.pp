@@ -23,12 +23,12 @@ class kafka::broker::config(
   }
 
   file { '/opt/kafka/config/server.properties':
+    ensure  => present,
     owner   => 'kafka',
     group   => 'kafka',
     mode    => '0644',
-    alias   => 'kafka-cfg',
-    require => [ Exec['untar-kafka'], File['/opt/kafka'] ],
     content => template('kafka/server.properties.erb'),
     notify  => $config_notify,
+    require => File['/opt/kafka/config'],
   }
 }

@@ -17,16 +17,17 @@ define kafka::consumer::config(
   $consumer_config = deep_merge($kafka::params::consumer_config_defaults, $config)
 
   $config_notify = $service_restart ? {
-    true    => Service['kafka'],
+    true    => Service['kafka-consumer'],
     default => undef
   }
 
   file { "/opt/kafka/config/${name}.properties":
     ensure  => present,
-    mode    => '0755',
+    owner   => 'kafka',
+    group   => 'kafka',
+    mode    => '0644',
     content => template('kafka/consumer.properties.erb'),
-    require => File['/opt/kafka/config'],
     notify  => $config_notify,
+    require => File['/opt/kafka/config'],
   }
-
 }
