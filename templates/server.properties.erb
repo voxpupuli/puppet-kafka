@@ -1,9 +1,8 @@
 # Note: This file is managed by Puppet.
 #
 # See: http://kafka.apache.org/documentation.html#brokerconfigs for more details
-<%- @server_config.sort.map do |k,v|
-  if v.to_s.strip.length != 0 %>
+<% @server_config.sort.map do |k,v| -%>
+<% unless v.to_s.strip.empty? -%>
 <%= k %>=<%= v %>
-<%- end
-end
-%>
+<% end -%>
+<% end -%>
