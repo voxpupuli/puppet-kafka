@@ -7,7 +7,7 @@ describe 'kafka::producer', :type => :class do
       :operatingsystem        => 'Ubuntu',
       :operatingsystemrelease => '14.04',
       :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64',
+      :architecture           => 'amd64'
     }
   end
 
