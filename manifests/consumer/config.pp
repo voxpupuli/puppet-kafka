@@ -8,7 +8,7 @@
 # It manages the consumer config files
 #
 define kafka::consumer::config(
-  $config = {},
+  $config          = {},
   $service_restart = $kafka::consumer::service_restart
 ) {
 

@@ -35,12 +35,12 @@
 #
 #
 class kafka (
-  $version = $kafka::params::version,
+  $version       = $kafka::params::version,
   $scala_version = $kafka::params::scala_version,
-  $install_dir = '',
-  $mirror_url = $kafka::params::mirror_url,
-  $install_java = $kafka::params::install_java,
-  $package_dir = $kafka::params::package_dir
+  $install_dir   = '',
+  $mirror_url    = $kafka::params::mirror_url,
+  $install_java  = $kafka::params::install_java,
+  $package_dir   = $kafka::params::package_dir
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")

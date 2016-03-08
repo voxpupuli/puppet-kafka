@@ -8,10 +8,10 @@
 # It manages the creation of topics on the kafka broker
 #
 define kafka::broker::topic(
-  $ensure = '',
-  $zookeeper = '',
+  $ensure             = '',
+  $zookeeper          = '',
   $replication_factor = 1,
-  $partitions = 1
+  $partitions         = 1
 ) {
 
   if $ensure == 'present' {

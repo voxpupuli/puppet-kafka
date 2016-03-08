@@ -8,7 +8,7 @@
 # It manages the producer config files
 #
 class kafka::producer::config(
-  $config = {},
+  $config          = {},
   $service_restart = $kafka::producer::service_restart
 ) {
 

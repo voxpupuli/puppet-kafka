@@ -46,13 +46,13 @@
 # }
 #
 class kafka::producer (
-  $version = $kafka::params::version,
-  $scala_version = $kafka::params::scala_version,
-  $install_dir = '',
-  $mirror_url = $kafka::params::mirror_url,
-  $config = $kafka::params::producer_config_defaults,
-  $install_java = $kafka::params::install_java,
-  $package_dir = $kafka::params::package_dir,
+  $version         = $kafka::params::version,
+  $scala_version   = $kafka::params::scala_version,
+  $install_dir     = '',
+  $mirror_url      = $kafka::params::mirror_url,
+  $config          = $kafka::params::producer_config_defaults,
+  $install_java    = $kafka::params::install_java,
+  $package_dir     = $kafka::params::package_dir,
   $service_restart = $kafka::params::service_restart
 ) inherits kafka::params {
 
