@@ -10,6 +10,14 @@ describe 'kafka::producer', :type => :class do
       :architecture           => 'amd64'
     }
   end
+  let :params do
+    {
+      :service_config => {
+        'broker-list' => 'localhost:6667',
+        'topic'       => 'demo',
+      },
+    }
+  end
 
   it { is_expected.to contain_class('kafka::producer::install').that_comes_before('Class[kafka::producer::config]') }
   it { is_expected.to contain_class('kafka::producer::config').that_comes_before('Class[kafka::producer::service]') }

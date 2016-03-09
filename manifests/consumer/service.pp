@@ -18,6 +18,13 @@ class kafka::consumer::service(
 
   $consumer_service_config = deep_merge($service_defaults, $service_config)
 
+  if $consumer_service_config['topic'] == '' {
+    fail('[Consumer] You need to specify a value for topic')
+  }
+  if $consumer_service_config['zookeeper'] == '' {
+    fail('[Consumer] You need to specify a value for zookeeper')
+  }
+
   file { '/etc/init.d/kafka-consumer':
     ensure  => present,
     mode    => '0755',

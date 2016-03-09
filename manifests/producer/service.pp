@@ -18,6 +18,13 @@ class kafka::producer::service(
 
   $producer_service_config = deep_merge($service_defaults, $service_config)
 
+  if $producer_service_config['broker-list'] == '' {
+    fail('[Producer] You need to specify a value for broker-list')
+  }
+  if $producer_service_config['topic'] == '' {
+    fail('[Producer] You need to specify a value for topic')
+  }
+
   file { '/etc/init.d/kafka-producer':
     ensure  => present,
     mode    => '0755',
