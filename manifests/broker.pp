@@ -50,7 +50,8 @@ class kafka::broker (
   $scala_version   = $kafka::params::scala_version,
   $install_dir     = '',
   $mirror_url      = $kafka::params::mirror_url,
-  $config          = $kafka::params::broker_config_defaults,
+  $config          = {},
+  $config_defaults = $kafka::params::broker_config_defaults,
   $install_java    = $kafka::params::install_java,
   $package_dir     = $kafka::params::package_dir,
   $service_restart = $kafka::params::service_restart

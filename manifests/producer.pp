@@ -46,14 +46,17 @@
 # }
 #
 class kafka::producer (
-  $version         = $kafka::params::version,
-  $scala_version   = $kafka::params::scala_version,
-  $install_dir     = '',
-  $mirror_url      = $kafka::params::mirror_url,
-  $config          = $kafka::params::producer_config_defaults,
-  $install_java    = $kafka::params::install_java,
-  $package_dir     = $kafka::params::package_dir,
-  $service_restart = $kafka::params::service_restart
+  $version          = $kafka::params::version,
+  $scala_version    = $kafka::params::scala_version,
+  $install_dir      = '',
+  $mirror_url       = $kafka::params::mirror_url,
+  $config           = {},
+  $config_defaults  = $kafka::params::producer_config_defaults,
+  $service_config   = {},
+  $service_defaults = $kafka::params::producer_service_defaults,
+  $install_java     = $kafka::params::install_java,
+  $package_dir      = $kafka::params::package_dir,
+  $service_restart  = $kafka::params::service_restart
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")

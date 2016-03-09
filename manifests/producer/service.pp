@@ -8,14 +8,15 @@
 # It manages the kafka-producer service
 #
 class kafka::producer::service(
-  $config = $kafka::params::producer_service_config
+  $service_config   = $kafka::producer::service_config,
+  $service_defaults = $kafka::producer::service_defaults
 ) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  $producer_service_config = deep_merge($config, $kafka::params::producer_service_config)
+  $producer_service_config = deep_merge($service_defaults, $service_config)
 
   file { '/etc/init.d/kafka-producer':
     ensure  => present,

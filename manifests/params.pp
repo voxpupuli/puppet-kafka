@@ -142,7 +142,7 @@ class kafka::params {
   $whitelist = '.*'
   $blacklist = ''
 
-  $consumer_service_config = {
+  $consumer_service_defaults = {
     'blacklist'               => '',
     'csv-reporter-enabled'    => '',
     'delete-consumer-offsets' => '',
@@ -157,7 +157,7 @@ class kafka::params {
     'zookeeper'               => '',
   }
 
-  $producer_service_config = {
+  $producer_service_defaults = {
     'batch-size'                 => '200',
     'broker-list'                => '',
     'compression-codec'          => '',

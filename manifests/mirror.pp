@@ -58,18 +58,23 @@
 # }
 #
 class kafka::mirror (
-  $version         = $kafka::params::version,
-  $scala_version   = $kafka::params::scala_version,
-  $install_dir     = '',
-  $mirror_url      = $kafka::params::mirror_url,
-  $consumer_config = $kafka::params::consumer_config_defaults,
-  $producer_config = $kafka::params::producer_config_defaults,
-  $num_streams     = $kafka::params::num_streams,
-  $num_producers   = $kafka::params::num_producers,
-  $install_java    = $kafka::params::install_java,
-  $max_heap        = $kafka::params::mirror_max_heap,
-  $package_dir     = $kafka::params::package_dir,
-  $service_restart = $kafka::params::service_restart
+  $version                  = $kafka::params::version,
+  $scala_version            = $kafka::params::scala_version,
+  $install_dir              = '',
+  $mirror_url               = $kafka::params::mirror_url,
+  $consumer_config          = {},
+  $consumer_configs         = $kafka::params::consumer_configs,
+  $consumer_config_defaults = $kafka::params::consumer_config_defaults,
+  $producer_config          = {},
+  $producer_config_defaults = $kafka::params::producer_config_defaults,
+  $num_streams              = $kafka::params::num_streams,
+  $num_producers            = $kafka::params::num_producers,
+  $install_java             = $kafka::params::install_java,
+  $whitelist                = $kafka::params::whitelist,
+  $blacklist                = $kafka::params::blacklist,
+  $max_heap                 = $kafka::params::mirror_max_heap,
+  $package_dir              = $kafka::params::package_dir,
+  $service_restart          = $kafka::params::service_restart
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")

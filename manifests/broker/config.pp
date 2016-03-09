@@ -8,6 +8,8 @@
 # It manages the broker config files
 #
 class kafka::broker::config(
+  $config          = $kafka::broker::config,
+  $config_defaults = $kafka::broker::config_defaults,
   $service_restart = $kafka::broker::service_restart
 ) {
 
@@ -15,7 +17,7 @@ class kafka::broker::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  $server_config = deep_merge($kafka::params::broker_config_defaults, $kafka::broker::config)
+  $server_config = deep_merge($config_defaults, $config)
 
   $config_notify = $service_restart ? {
     true    => Service['kafka'],
