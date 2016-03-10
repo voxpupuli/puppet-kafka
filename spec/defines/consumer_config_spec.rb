@@ -17,6 +17,7 @@ describe 'kafka::consumer::config', :type => :define do
       let :params do
         {
           'config'          => {},
+          'config_defaults' => {},
           'service_restart' => 'true'
         }
       end

@@ -8,9 +8,11 @@
 # It manages the mirror-maker config files
 #
 class kafka::mirror::config(
-  $consumer_config = $kafka::mirror::consumer_config,
-  $producer_config = $kafka::mirror::producer_config,
-  $service_restart = $kafka::mirror::service_restart
+  $consumer_config          = $kafka::mirror::consumer_config,
+  $consumer_config_defaults = $kafka::mirror::consumer_config_defaults,
+  $producer_config          = $kafka::mirror::producer_config,
+  $producer_config_defaults = $kafka::mirror::producer_config_defaults,
+  $service_restart          = $kafka::mirror::service_restart
 ) {
 
   if $caller_module_name != $module_name {
@@ -19,11 +21,13 @@ class kafka::mirror::config(
 
   ::kafka::consumer::config { 'consumer':
     config          => $consumer_config,
+    config_defaults => $consumer_config_defaults,
     service_restart => $service_restart,
   }
 
   class { '::kafka::producer::config':
     config          => $producer_config,
+    config_defaults => $producer_config_defaults,
     service_restart => $service_restart,
   }
 }

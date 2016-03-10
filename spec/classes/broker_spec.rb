@@ -10,6 +10,13 @@ describe 'kafka::broker', :type => :class do
       :architecture           => 'amd64'
     }
   end
+  let :params do
+    {
+      :config => {
+        'zookeeper.connect' => 'localhost:2181',
+      },
+    }
+  end
 
   it { is_expected.to contain_class('kafka::broker::install').that_comes_before('Class[kafka::broker::config]') }
   it { is_expected.to contain_class('kafka::broker::config').that_comes_before('Class[kafka::broker::service]') }

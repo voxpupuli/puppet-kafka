@@ -8,14 +8,22 @@
 # It manages the kafka-consumer service
 #
 class kafka::consumer::service(
-  $config = $kafka::params::consumer_service_config
+  $service_config   = $kafka::consumer::service_config,
+  $service_defaults = $kafka::consumer::service_defaults
 ) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  $consumer_service_config = deep_merge($config, $kafka::params::consumer_service_config)
+  $consumer_service_config = deep_merge($service_defaults, $service_config)
+
+  if $consumer_service_config['topic'] == '' {
+    fail('[Consumer] You need to specify a value for topic')
+  }
+  if $consumer_service_config['zookeeper'] == '' {
+    fail('[Consumer] You need to specify a value for zookeeper')
+  }
 
   file { '/etc/init.d/kafka-consumer':
     ensure  => present,

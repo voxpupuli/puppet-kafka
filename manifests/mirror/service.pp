@@ -8,12 +8,12 @@
 # It manages the kafka-mirror service
 #
 class kafka::mirror::service(
-  $consumer_configs = $kafka::params::consumer_configs,
+  $consumer_configs = $kafka::mirror::consumer_configs,
+  $producer_config  = $kafka::mirror::producer_config,
   $num_streams      = $kafka::mirror::num_streams,
-  $producer_config  = $kafka::params::producer_config,
   $num_producers    = $kafka::mirror::num_producers,
-  $whitelist        = $kafka::params::whitelist,
-  $blacklist        = $kafka::params::blacklist,
+  $whitelist        = $kafka::mirror::whitelist,
+  $blacklist        = $kafka::mirror::blacklist,
   $max_heap         = $kafka::mirror::max_heap
 ) {
 
