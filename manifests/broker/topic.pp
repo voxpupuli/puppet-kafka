@@ -14,10 +14,15 @@ define kafka::broker::topic(
   $partitions         = 1
 ) {
 
+  $_zookeeper          = "--zookeeper ${zookeeper}"
+  $_replication_factor = "--replication-factor ${replication_factor}"
+  $_partitions         = "--partitions ${partitions}"
+
   if $ensure == 'present' {
     exec { "create topic ${name}":
-      command => "/opt/kafka/bin/kafka-topics.sh --create --zookeeper '${zookeeper}' --replication-factor ${replication_factor} --partitions ${partitions} --topic ${name}",
-      unless  => "/opt/kafka/bin/kafka-topics.sh --list --zookeeper ${zookeeper} | grep -x ${name}",
+      path    => '/usr/bin:/usr/sbin/:/bin:/sbin:/opt/kafka/bin',
+      command => "kafka-topics.sh --create ${_zookeeper} ${_replication_factor} ${_partitions} --topic ${name}",
+      unless  => "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}",
     }
   }
 }
