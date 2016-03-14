@@ -16,8 +16,6 @@ describe 'kafka', :type => :class do
   context 'on Debian' do
     describe 'kafka' do
       context 'defaults' do
-        it { is_expected.to contain_package('wget') }
-
         it { is_expected.to contain_group('kafka') }
         it { is_expected.to contain_user('kafka') }
 
@@ -26,9 +24,6 @@ describe 'kafka', :type => :class do
         it { is_expected.to contain_file('/opt/kafka') }
         it { is_expected.to contain_file('/opt/kafka/config') }
         it { is_expected.to contain_file('/var/log/kafka') }
-
-        it { is_expected.to contain_exec('download-kafka-package') }
-        it { is_expected.to contain_exec('untar-kafka-package') }
       end
     end
   end

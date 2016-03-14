@@ -49,7 +49,6 @@ class kafka (
   validate_absolute_path($package_dir)
 
   $basefilename = "kafka_${scala_version}-${version}.tgz"
-  $basename = regsubst($basefilename, '(.+)\.tgz$', '\1')
   $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
 
   if $install_dir == '' {
@@ -61,12 +60,6 @@ class kafka (
   if $install_java {
     class { '::java':
       distribution => 'jdk',
-    }
-  }
-
-  if ! defined(Package['wget']) {
-    package {'wget':
-      ensure => present,
     }
   }
 
@@ -94,7 +87,6 @@ class kafka (
     ensure  => directory,
     owner   => 'kafka',
     group   => 'kafka',
-    alias   => 'kafka-app-dir',
     require => [
       Group['kafka'],
       User['kafka'],
@@ -111,7 +103,7 @@ class kafka (
     ensure  => directory,
     owner   => 'kafka',
     group   => 'kafka',
-    require => File['/opt/kafka'],
+    require => Archive["${package_dir}/${basefilename}"],
   }
 
   file { '/var/log/kafka':
@@ -124,19 +116,23 @@ class kafka (
     ],
   }
 
-  exec { 'download-kafka-package':
-    command => "wget -O ${package_dir}/${basefilename} ${package_url} 2> /dev/null",
-    path    => ['/usr/bin', '/bin'],
-    creates => "${package_dir}/${basefilename}",
-    require => [ File[$package_dir], Package['wget'] ],
-  }
+  include '::archive'
 
-  exec { 'untar-kafka-package':
-    command => "tar xfvz ${package_dir}/${basefilename} -C ${install_directory} --strip-components=1",
-    creates => "${install_directory}/LICENSE",
-    alias   => 'untar-kafka',
-    require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
-    user    => 'kafka',
-    path    => ['/bin', '/usr/bin', '/usr/sbin'],
+  archive { "${package_dir}/${basefilename}":
+    ensure          => present,
+    extract         => true,
+    extract_command => 'tar xfz %s --strip-components=1',
+    extract_path    => $install_directory,
+    source          => $package_url,
+    creates         => "${install_directory}/config",
+    cleanup         => true,
+    user            => 'kafka',
+    group           => 'kafka',
+    require         => [
+      File[$package_dir],
+      File[$install_directory],
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 }
