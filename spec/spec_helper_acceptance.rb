@@ -20,6 +20,7 @@ RSpec.configure do |c|
 
       copy_module_to(host, :source => proj_root, :module_name => name)
 
+      on host, puppet('module', 'install', 'voxpupuli-archive'), :acceptable_exit_codes => [0, 1]
       on host, puppet('module', 'install', 'puppetlabs-stdlib'), :acceptable_exit_codes => [0, 1]
       on host, puppet('module', 'install', 'puppetlabs-java'), :acceptable_exit_codes => [0, 1]
       on host, puppet('module', 'install', 'deric-zookeeper'), :acceptable_exit_codes => [0, 1]
