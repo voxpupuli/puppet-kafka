@@ -10,13 +10,14 @@
 define kafka::consumer::config(
   $config          = $kafka::consumer::config,
   $config_defaults = $kafka::consumer::config_defaults,
+  $service_name    = 'kafka-consumer',
   $service_restart = $kafka::consumer::service_restart
 ) {
 
   $consumer_config = deep_merge($config_defaults, $config)
 
   $config_notify = $service_restart ? {
-    true    => Service['kafka-consumer'],
+    true    => Service[$service_name],
     default => undef
   }
 

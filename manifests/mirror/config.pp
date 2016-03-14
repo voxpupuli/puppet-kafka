@@ -22,12 +22,14 @@ class kafka::mirror::config(
   ::kafka::consumer::config { 'consumer':
     config          => $consumer_config,
     config_defaults => $consumer_config_defaults,
+    service_name    => 'kafka-mirror',
     service_restart => $service_restart,
   }
 
   class { '::kafka::producer::config':
     config          => $producer_config,
     config_defaults => $producer_config_defaults,
+    service_name    => 'kafka-mirror',
     service_restart => $service_restart,
   }
 }
