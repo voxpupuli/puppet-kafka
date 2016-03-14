@@ -19,6 +19,16 @@ class kafka::mirror::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  if $consumer_config['group.id'] == '' {
+    fail('[Consumer] You need to specify a value for group.id')
+  }
+  if $consumer_config['zookeeper.connect'] == '' {
+    fail('[Consumer] You need to specify a value for zookeeper.connect')
+  }
+  if $producer_config['metadata.broker.list'] == '' {
+    fail('[Producer] You need to specify a value for metadata.broker.list')
+  }
+
   ::kafka::consumer::config { 'consumer-1':
     config          => $consumer_config,
     config_defaults => $consumer_config_defaults,
