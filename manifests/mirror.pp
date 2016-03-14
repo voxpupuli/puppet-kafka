@@ -63,7 +63,6 @@ class kafka::mirror (
   $install_dir              = '',
   $mirror_url               = $kafka::params::mirror_url,
   $consumer_config          = {},
-  $consumer_configs         = $kafka::params::consumer_configs,
   $consumer_config_defaults = $kafka::params::consumer_config_defaults,
   $producer_config          = {},
   $producer_config_defaults = $kafka::params::producer_config_defaults,

@@ -11,6 +11,18 @@ describe 'kafka::mirror', :type => :class do
     }
   end
 
+  let :params do
+    {
+      :consumer_config => {
+        'group.id'          => 'kafka-mirror',
+        'zookeeper.connect' => 'localhost:2181',
+      },
+      :producer_config => {
+        'metadata.broker.list' => 'localhost:6667',
+      },
+    }
+  end
+
   it { is_expected.to contain_class('kafka::mirror::install').that_comes_before('Class[kafka::mirror::config]') }
   it { is_expected.to contain_class('kafka::mirror::config').that_comes_before('Class[kafka::mirror::service]') }
   it { is_expected.to contain_class('kafka::mirror::service').that_comes_before('Class[kafka::mirror]') }
