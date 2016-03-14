@@ -82,10 +82,10 @@ The scala version what kafka was built with.
 The directory to install kafka to.
 #####`mirror_url`
 The url where the kafka is downloaded from.
-#####`config`
-A hash of the configuration options.
 #####`install_java`
 Install java if it's not already installed.
+#####`package_dir`
+The directory to install kafka.
 
 ####Class: `kafka::broker`
 One of the primary classes of the kafka module. This class will install a kafka broker.
@@ -100,13 +100,17 @@ The directory to install kafka to.
 #####`mirror_url`
 The url where the kafka is downloaded from.
 #####`config`
-A hash of the configuration options.
+A hash of the configuration options. All values are used in the `server.properties` file directly.
 #####`install_java`
 Install java if it's not already installed.
 #####`service_ensure`
 Sets the ensure state of the broker service to stopped or running.
 #####`service_install`
 Install the init.d service.
+#####`service_restart`
+Whether the configuration files should trigger a service restart
+#####`package_dir`
+The directory to install kafka.
 
 ##Reference
 
