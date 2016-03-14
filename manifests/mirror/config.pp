@@ -19,7 +19,7 @@ class kafka::mirror::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  ::kafka::consumer::config { 'consumer':
+  ::kafka::consumer::config { 'consumer-1':
     config          => $consumer_config,
     config_defaults => $consumer_config_defaults,
     service_name    => 'kafka-mirror',
