@@ -81,21 +81,30 @@ class kafka (
   }
 
   file { $package_dir:
-    ensure => 'directory',
-    owner  => 'kafka',
-    group  => 'kafka',
+    ensure  => directory,
+    owner   => 'kafka',
+    group   => 'kafka',
+    require => [
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 
   file { $install_directory:
-    ensure => directory,
-    owner  => 'kafka',
-    group  => 'kafka',
-    alias  => 'kafka-app-dir',
+    ensure  => directory,
+    owner   => 'kafka',
+    group   => 'kafka',
+    alias   => 'kafka-app-dir',
+    require => [
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 
   file { '/opt/kafka':
-    ensure => link,
-    target => $install_directory,
+    ensure  => link,
+    target  => $install_directory,
+    require => File[$install_directory],
   }
 
   file { '/opt/kafka/config':
@@ -106,9 +115,13 @@ class kafka (
   }
 
   file { '/var/log/kafka':
-    ensure => directory,
-    owner  => 'kafka',
-    group  => 'kafka',
+    ensure  => directory,
+    owner   => 'kafka',
+    group   => 'kafka',
+    require => [
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 
   exec { 'download-kafka-package':
