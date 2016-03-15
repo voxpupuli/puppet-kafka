@@ -19,7 +19,7 @@ describe 'kafka', :type => :class do
         it { is_expected.to contain_group('kafka') }
         it { is_expected.to contain_user('kafka') }
 
-        it { is_expected.to contain_file('/var/lib/kafka') }
+        it { is_expected.to contain_file('/var/tmp/kafka') }
         it { is_expected.to contain_file('/opt/kafka-2.10-0.8.2.1') }
         it { is_expected.to contain_file('/opt/kafka') }
         it { is_expected.to contain_file('/opt/kafka/config') }

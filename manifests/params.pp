@@ -9,7 +9,7 @@
 #
 class kafka::params {
   $datastore  = '/var/kafka'
-  $package_dir = '/var/lib/kafka'
+  $package_dir = '/var/tmp/kafka'
   $mirror_url = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
   $version = '0.8.2.1'
   $scala_version = '2.10'
