@@ -1,32 +1,30 @@
 require 'spec_helper_acceptance'
 
-describe 'kafka::broker' do
+describe 'kafka::producer' do
   it 'should work with no errors' do
     pp = <<-EOS
       class { 'zookeeper': } ->
-      class { 'kafka::broker':
-        config => {
-          'zookeeper.connect' => 'localhost:2181',
+      class { 'kafka::producer':
+        service_config => {
+          'broker-list' => 'localhost:6667',
+          topic         => 'demo',
         },
-      } ->
-      kafka::broker::topic { 'demo':
-        ensure    => present,
-        zookeeper => 'localhost:2181',
       }
     EOS
 
     apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :expect_changes => true)
+    apply_manifest(pp, :catch_changes => true)
   end
 
-  describe 'kafka::broker::install' do
+  describe 'kafka::producer::install' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            config => {
-              'zookeeper.connect' => 'localhost:2181',
+          class { 'kafka::producer':
+            service_config => {
+              'broker-list' => 'localhost:6667',
+              topic         => 'demo',
             },
           }
         EOS
@@ -74,14 +72,15 @@ describe 'kafka::broker' do
     end
   end
 
-  describe 'kafka::broker::config' do
+  describe 'kafka::producer::config' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            config => {
-              'zookeeper.connect' => 'localhost:2181',
+          class { 'kafka::producer':
+            service_config => {
+              'broker-list' => 'localhost:6667',
+              topic         => 'demo',
             },
           }
         EOS
@@ -89,7 +88,7 @@ describe 'kafka::broker' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file('/opt/kafka/config/server.properties') do
+      describe file('/opt/kafka/config/producer.properties') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
@@ -97,14 +96,15 @@ describe 'kafka::broker' do
     end
   end
 
-  describe 'kafka::broker::service' do
+  describe 'kafka::producer::service' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            config => {
-              'zookeeper.connect' => 'localhost:2181',
+          class { 'kafka::producer':
+            service_config => {
+              'broker-list' => 'localhost:6667',
+              topic         => 'demo',
             },
           }
         EOS
@@ -112,13 +112,13 @@ describe 'kafka::broker' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file('/etc/init.d/kafka') do
+      describe file('/etc/init.d/kafka-producer') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
       end
 
-      describe service('kafka') do
+      describe service('kafka-producer') do
         it { is_expected.to be_running }
         it { is_expected.to be_enabled }
       end
