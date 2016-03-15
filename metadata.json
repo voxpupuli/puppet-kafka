@@ -9,8 +9,8 @@
   "issues_url": "https://github.com/voxpupuli/puppet-kafka/issues",
   "dependencies": [
     {
-      "name": "deric/zookeeper",
-      "version_requirement": ">= 0.5.1"
+      "name": "puppet/archive",
+      "version_requirement": ">= 0.5.0"
     },
     {
       "name": "puppetlabs/java",
@@ -21,8 +21,8 @@
       "version_requirement": ">= 3.0.0"
     },
     {
-      "name": "voxpupuli/archive",
-      "version_requirement": ">= 0.5.0"
+      "name": "deric/zookeeper",
+      "version_requirement": ">= 0.5.1"
     }
   ],
   "operatingsystem_support": [
