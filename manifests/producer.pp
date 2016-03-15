@@ -48,7 +48,7 @@
 class kafka::producer (
   $version          = $kafka::params::version,
   $scala_version    = $kafka::params::scala_version,
-  $install_dir      = '',
+  $install_dir      = $kafka::params::install_dir,
   $mirror_url       = $kafka::params::mirror_url,
   $config           = {},
   $config_defaults  = $kafka::params::producer_config_defaults,
