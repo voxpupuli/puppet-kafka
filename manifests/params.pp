@@ -164,8 +164,8 @@ class kafka::params {
     'batch-size'                 => '200',
     'broker-list'                => '',
     'compression-codec'          => '',
-    'key-serializer'             => 'kafka.serializer.StringEncoder',
-    'line-reader'                => 'kafka.tools.ConsoleProducer$LineMessageReader',
+    'key-serializer'             => 'kafka.serializer.DefaultEncoder',
+    'line-reader'                => 'kafka.tools.ConsoleProducer\$LineMessageReader',
     'max-memory-bytes'           => '',
     'max-partition-memory-bytes' => '',
     'message-send-max-retries'   => '3',
@@ -182,7 +182,7 @@ class kafka::params {
     'sync'                       => '',
     'timeout'                    => '1000',
     'topic'                      => '',
-    'value-serializer'           => 'kafka.serializer.StringEncoder',
+    'value-serializer'           => 'kafka.serializer.DefaultEncoder',
   }
 
 }
