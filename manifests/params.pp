@@ -8,13 +8,12 @@
 # It sets variables according to platform
 #
 class kafka::params {
-  $datastore  = '/var/kafka'
-  $package_dir = '/var/tmp/kafka'
-  $mirror_url = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
-  $version = '0.8.2.1'
-  $scala_version = '2.10'
-  $install_java = true
-  $install_dir = "/opt/kafka-${scala_version}-${version}"
+  $version       = '0.9.0.1'
+  $scala_version = '2.11'
+  $install_dir   = "/opt/kafka-${scala_version}-${version}"
+  $mirror_url    = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
+  $install_java  = true
+  $package_dir   = '/var/tmp/kafka'
 
   $broker_service_install = true
   $broker_service_ensure = 'running'
@@ -87,6 +86,7 @@ class kafka::params {
     'leader.imbalance.per.broker.percentage'        => '10',
     'leader.imbalance.check.interval.seconds'       => '300',
     'offset.metadata.max.bytes'                     => '1024',
+    'inter.broker.protocol.version'                 => '0.8.2.2',
   }
 
   #http://kafka.apache.org/documentation.html#consumerconfigs
