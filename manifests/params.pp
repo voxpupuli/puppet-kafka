@@ -165,7 +165,7 @@ class kafka::params {
     'broker-list'                => '',
     'compression-codec'          => '',
     'key-serializer'             => 'kafka.serializer.DefaultEncoder',
-    'line-reader'                => 'kafka.tools.ConsoleProducer\$LineMessageReader',
+    'line-reader'                => 'kafka.tools.ConsoleProducer$LineMessageReader',
     'max-memory-bytes'           => '',
     'max-partition-memory-bytes' => '',
     'message-send-max-retries'   => '3',
