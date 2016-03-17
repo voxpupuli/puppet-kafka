@@ -10,7 +10,7 @@ describe 'kafka::mirror' do
           'zookeeper.connect' => 'localhost:2181',
         },
         producer_config => {
-          'metadata.broker.list' => 'localhost:6667',
+          'bootstrap.servers' => 'localhost:9092',
         },
       }
     EOS
@@ -30,7 +30,7 @@ describe 'kafka::mirror' do
               'zookeeper.connect' => 'localhost:2181',
             },
             producer_config => {
-              'metadata.broker.list' => 'localhost:6667',
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS
@@ -89,7 +89,7 @@ describe 'kafka::mirror' do
               'zookeeper.connect' => 'localhost:2181',
             },
             producer_config => {
-              'metadata.broker.list' => 'localhost:6667',
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS
@@ -122,7 +122,7 @@ describe 'kafka::mirror' do
               'zookeeper.connect' => 'localhost:2181',
             },
             producer_config => {
-              'metadata.broker.list' => 'localhost:6667',
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS

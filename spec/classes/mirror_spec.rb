@@ -18,7 +18,7 @@ describe 'kafka::mirror', :type => :class do
         'zookeeper.connect' => 'localhost:2181',
       },
       :producer_config => {
-        'metadata.broker.list' => 'localhost:6667',
+        'bootstrap.servers' => 'localhost:9092',
       },
     }
   end

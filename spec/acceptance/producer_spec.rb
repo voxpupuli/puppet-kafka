@@ -6,7 +6,7 @@ describe 'kafka::producer' do
       class { 'zookeeper': } ->
       class { 'kafka::producer':
         service_config => {
-          'broker-list' => 'localhost:6667',
+          'broker-list' => 'localhost:9092',
           topic         => 'demo',
         },
       }
@@ -23,7 +23,7 @@ describe 'kafka::producer' do
           class { 'zookeeper': } ->
           class { 'kafka::producer':
             service_config => {
-              'broker-list' => 'localhost:6667',
+              'broker-list' => 'localhost:9092',
               topic         => 'demo',
             },
           }
@@ -79,7 +79,7 @@ describe 'kafka::producer' do
           class { 'zookeeper': } ->
           class { 'kafka::producer':
             service_config => {
-              'broker-list' => 'localhost:6667',
+              'broker-list' => 'localhost:9092',
               topic         => 'demo',
             },
           }
@@ -103,7 +103,7 @@ describe 'kafka::producer' do
           class { 'zookeeper': } ->
           class { 'kafka::producer':
             service_config => {
-              'broker-list' => 'localhost:6667',
+              'broker-list' => 'localhost:9092',
               topic         => 'demo',
             },
           }
