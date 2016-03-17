@@ -95,6 +95,29 @@ describe 'kafka::broker' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
     end
+
+    context 'with specific version' do
+      it 'should work with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            version => '0.8.2.2',
+            config  => {
+              'broker.id'         => '1',
+              'zookeeper.connect' => 'localhost:2181',
+            },
+          }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file('/opt/kafka/config/server.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+    end
   end
 
   describe 'kafka::broker::service' do

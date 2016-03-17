@@ -25,8 +25,15 @@ class kafka::mirror::config(
   if $consumer_config['zookeeper.connect'] == '' {
     fail('[Consumer] You need to specify a value for zookeeper.connect')
   }
-  if $producer_config['metadata.broker.list'] == '' {
-    fail('[Producer] You need to specify a value for metadata.broker.list')
+
+  if versioncmp($kafka::version, '0.9.0.0') < 0 {
+    if $producer_config['metadata.broker.list'] == '' {
+      fail('[Producer] You need to specify a value for metadata.broker.list')
+    }
+  } else {
+    if $producer_config['bootstrap.servers'] == '' {
+      fail('[Producer] You need to specify a value for bootstrap.servers')
+    }
   }
 
   ::kafka::consumer::config { 'consumer-1':

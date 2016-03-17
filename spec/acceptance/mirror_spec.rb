@@ -109,6 +109,38 @@ describe 'kafka::mirror' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
     end
+
+    context 'with specific version' do
+      it 'should work with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::mirror':
+            version         => '0.8.2.2',
+            consumer_config => {
+              'group.id'          => 'kafka-mirror',
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            producer_config => {
+              'metadata.broker.list' => 'localhost:9092',
+            },
+          }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file('/opt/kafka/config/consumer-1.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/opt/kafka/config/producer.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+    end
   end
 
   describe 'kafka::mirror::service' do
