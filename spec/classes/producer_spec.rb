@@ -13,7 +13,7 @@ describe 'kafka::producer', :type => :class do
   let :params do
     {
       :service_config => {
-        'broker-list' => 'localhost:6667',
+        'broker-list' => 'localhost:9092',
         'topic'       => 'demo',
       },
     }

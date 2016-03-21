@@ -10,7 +10,7 @@ describe 'kafka::mirror' do
           'zookeeper.connect' => 'localhost:2181',
         },
         producer_config => {
-          'metadata.broker.list' => 'localhost:6667',
+          'bootstrap.servers' => 'localhost:9092',
         },
       }
     EOS
@@ -30,7 +30,7 @@ describe 'kafka::mirror' do
               'zookeeper.connect' => 'localhost:2181',
             },
             producer_config => {
-              'metadata.broker.list' => 'localhost:6667',
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS
@@ -54,14 +54,14 @@ describe 'kafka::mirror' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.10-0.8.2.1') do
+      describe file('/opt/kafka-2.11-0.9.0.1') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.10-0.8.2.1') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.9.0.1') }
       end
 
       describe file('/opt/kafka/config') do
@@ -89,7 +89,39 @@ describe 'kafka::mirror' do
               'zookeeper.connect' => 'localhost:2181',
             },
             producer_config => {
-              'metadata.broker.list' => 'localhost:6667',
+              'bootstrap.servers' => 'localhost:9092',
+            },
+          }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+      end
+
+      describe file('/opt/kafka/config/consumer-1.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/opt/kafka/config/producer.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+    end
+
+    context 'with specific version' do
+      it 'should work with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::mirror':
+            version         => '0.8.2.2',
+            consumer_config => {
+              'group.id'          => 'kafka-mirror',
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            producer_config => {
+              'metadata.broker.list' => 'localhost:9092',
             },
           }
         EOS
@@ -122,7 +154,7 @@ describe 'kafka::mirror' do
               'zookeeper.connect' => 'localhost:2181',
             },
             producer_config => {
-              'metadata.broker.list' => 'localhost:6667',
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS

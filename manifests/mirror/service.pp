@@ -8,7 +8,7 @@
 # It manages the kafka-mirror service
 #
 class kafka::mirror::service(
-  $consumer_configs = $kafka::params::consumer_configs,
+  $consumer_config  = $kafka::params::consumer_config,
   $producer_config  = $kafka::params::producer_config,
   $num_streams      = $kafka::mirror::num_streams,
   $num_producers    = $kafka::mirror::num_producers,

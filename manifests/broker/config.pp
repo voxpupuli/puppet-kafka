@@ -19,6 +19,12 @@ class kafka::broker::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  if versioncmp($kafka::version, '0.9.0.0') < 0 {
+    if $config['broker.id'] == '-1' {
+      fail('[Broker] You need to specify a value for broker.id')
+    }
+  }
+
   $server_config = deep_merge($config_defaults, $config)
 
   if $service_install {
