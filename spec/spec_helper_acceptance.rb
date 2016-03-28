@@ -24,6 +24,10 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'puppetlabs-stdlib'), :acceptable_exit_codes => [0, 1]
       on host, puppet('module', 'install', 'puppetlabs-java'), :acceptable_exit_codes => [0, 1]
       on host, puppet('module', 'install', 'deric-zookeeper'), :acceptable_exit_codes => [0, 1]
+
+      write_hiera_config_on(host, ['%{::osfamily}'])
+
+      copy_hiera_data_to(host, './spec/acceptance/hieradata/')
     end
   end
 end

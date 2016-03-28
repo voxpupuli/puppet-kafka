@@ -31,6 +31,15 @@ class kafka::consumer::service(
     content => template('kafka/consumer.init.erb'),
   }
 
+  if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
+    exec { 'systemctl daemon-reload # for kafka-consumer':
+      command     => '/bin/systemctl daemon-reload',
+      refreshonly => true,
+      subscribe   => File['/etc/init.d/kafka-consumer'],
+      before      => Service['kafka-consumer'],
+    }
+  }
+
   service { 'kafka-consumer':
     ensure     => running,
     enable     => true,

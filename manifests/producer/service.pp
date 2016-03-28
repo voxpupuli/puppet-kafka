@@ -31,6 +31,15 @@ class kafka::producer::service(
     content => template('kafka/producer.init.erb'),
   }
 
+  if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
+    exec { 'systemctl daemon-reload # for kafka-producer':
+      command     => '/bin/systemctl daemon-reload',
+      refreshonly => true,
+      subscribe   => File['/etc/init.d/kafka-producer'],
+      before      => Service['kafka-producer'],
+    }
+  }
+
   service { 'kafka-producer':
     ensure     => running,
     enable     => true,

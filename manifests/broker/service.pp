@@ -9,7 +9,10 @@
 #
 class kafka::broker::service(
   $service_install = $kafka::broker::service_install,
-  $service_ensure  = $kafka::broker::service_ensure
+  $service_ensure  = $kafka::broker::service_ensure,
+  $jmx_opts        = $kafka::broker::jmx_opts,
+  $gc_opts         = $kafka::broker::gc_opts,
+  $log4j_opts      = $kafka::broker::log4j_opts,
 ) {
 
   if $caller_module_name != $module_name {
@@ -23,6 +26,15 @@ class kafka::broker::service(
       content => template('kafka/init.erb'),
     }
 
+    if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
+      exec { 'systemctl daemon-reload # for kafka':
+        command     => '/bin/systemctl daemon-reload',
+        refreshonly => true,
+        subscribe   => File['/etc/init.d/kafka'],
+        before      => Service['kafka'],
+      }
+    }
+
     service { 'kafka':
       ensure     => $service_ensure,
       enable     => true,
@@ -33,5 +45,4 @@ class kafka::broker::service(
   } else {
     debug('Skipping service install')
   }
-
 }

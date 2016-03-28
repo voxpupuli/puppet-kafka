@@ -57,4 +57,49 @@ describe 'kafka::broker', :type => :class do
       end
     end
   end
+
+  context 'on Centos' do
+    let :facts do
+      {
+        :osfamily                  => 'RedHat',
+        :operatingsystem           => 'CentOS',
+        :operatingsystemrelease    => '7',
+        :operatingsystemmajrelease => '7',
+        :architecture              => 'amd64'
+      }
+    end
+
+    describe 'kafka::broker::install' do
+      context 'defaults' do
+        it { is_expected.to contain_class('kafka') }
+      end
+    end
+
+    describe 'kafka::broker::config' do
+      context 'defaults' do
+        it { is_expected.to contain_file('/opt/kafka/config/server.properties') }
+      end
+    end
+
+    describe 'kafka::broker::service' do
+      context 'service_install false' do
+        let :params do
+          {
+            :config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            :service_install => false,
+          }
+        end
+        it { is_expected.not_to contain_file('/etc/init.d/kafka') }
+
+        it { is_expected.not_to contain_service('kafka') }
+      end
+      context 'defaults' do
+        it { is_expected.to contain_file('/etc/init.d/kafka') }
+
+        it { is_expected.to contain_service('kafka') }
+      end
+    end
+  end
 end

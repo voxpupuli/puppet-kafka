@@ -1,4 +1,10 @@
 #!/bin/sh
+#
+# Init file for Apache Kafka Mirror
+#
+# chkconfig: 35 85 15
+# description: Apache Kafka is a distributed publish-subscribe messaging system
+# pidfile: /var/run/kafka-mirror.pid
 
 NAME=kafka-mirror
 PID_FILE=/var/run/$NAME.pid

@@ -1,4 +1,10 @@
 #!/bin/sh
+#
+# Init file for Apache Kafka Consumer
+#
+# chkconfig: 35 85 15
+# description: Apache Kafka is a distributed publish-subscribe messaging system
+# pidfile: /var/run/kafka-consumer.pid
 
 NAME=kafka-consumer
 PID_FILE=/var/run/$NAME.pid

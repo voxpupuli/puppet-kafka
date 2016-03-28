@@ -1,4 +1,10 @@
 #!/bin/sh
+#
+# Init file for Apache Kafka Producer
+#
+# chkconfig: 35 85 15
+# description: Apache Kafka is a distributed publish-subscribe messaging system
+# pidfile: /var/run/kafka-producer.pid
 
 NAME=kafka-producer
 PID_FILE=/var/run/$NAME.pid
