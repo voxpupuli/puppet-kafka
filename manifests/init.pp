@@ -35,12 +35,12 @@
 #
 #
 class kafka (
-  $version = $kafka::params::version,
+  $version       = $kafka::params::version,
   $scala_version = $kafka::params::scala_version,
-  $install_dir = '',
-  $mirror_url = $kafka::params::mirror_url,
-  $install_java = $kafka::params::install_java,
-  $package_dir = $kafka::params::package_dir
+  $install_dir   = $kafka::params::install_dir,
+  $mirror_url    = $kafka::params::mirror_url,
+  $install_java  = $kafka::params::install_java,
+  $package_dir   = $kafka::params::package_dir
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -49,10 +49,11 @@ class kafka (
   validate_absolute_path($package_dir)
 
   $basefilename = "kafka_${scala_version}-${version}.tgz"
-  $basename = regsubst($basefilename, '(.+)\.tgz$', '\1')
   $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
 
-  if $install_dir == '' {
+  if $version != $kafka::params::version {
+    $install_directory = "/opt/kafka-${scala_version}-${version}"
+  } elsif $scala_version != $kafka::params::scala_version {
     $install_directory = "/opt/kafka-${scala_version}-${version}"
   } else {
     $install_directory = $install_dir
@@ -61,12 +62,6 @@ class kafka (
   if $install_java {
     class { '::java':
       distribution => 'jdk',
-    }
-  }
-
-  if ! defined(Package['wget']) {
-    package {'wget':
-      ensure => present,
     }
   }
 
@@ -81,49 +76,65 @@ class kafka (
   }
 
   file { $package_dir:
-    ensure => 'directory',
-    owner  => 'kafka',
-    group  => 'kafka',
+    ensure  => directory,
+    owner   => 'kafka',
+    group   => 'kafka',
+    require => [
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 
   file { $install_directory:
-    ensure => directory,
-    owner  => 'kafka',
-    group  => 'kafka',
-    alias  => 'kafka-app-dir',
+    ensure  => directory,
+    owner   => 'kafka',
+    group   => 'kafka',
+    require => [
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 
   file { '/opt/kafka':
-    ensure => link,
-    target => $install_directory,
+    ensure  => link,
+    target  => $install_directory,
+    require => File[$install_directory],
   }
 
   file { '/opt/kafka/config':
     ensure  => directory,
     owner   => 'kafka',
     group   => 'kafka',
-    require => File['/opt/kafka'],
+    require => Archive["${package_dir}/${basefilename}"],
   }
 
   file { '/var/log/kafka':
-    ensure => directory,
-    owner  => 'kafka',
-    group  => 'kafka',
+    ensure  => directory,
+    owner   => 'kafka',
+    group   => 'kafka',
+    require => [
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 
-  exec { 'download-kafka-package':
-    command => "wget -O ${package_dir}/${basefilename} ${package_url} 2> /dev/null",
-    path    => ['/usr/bin', '/bin'],
-    creates => "${package_dir}/${basefilename}",
-    require => [ File[$package_dir], Package['wget'] ],
-  }
+  include '::archive'
 
-  exec { 'untar-kafka-package':
-    command => "tar xfvz ${package_dir}/${basefilename} -C ${install_directory} --strip-components=1",
-    creates => "${install_directory}/LICENSE",
-    alias   => 'untar-kafka',
-    require => [ Exec['download-kafka-package'], File['kafka-app-dir'] ],
-    user    => 'kafka',
-    path    => ['/bin', '/usr/bin', '/usr/sbin'],
+  archive { "${package_dir}/${basefilename}":
+    ensure          => present,
+    extract         => true,
+    extract_command => 'tar xfz %s --strip-components=1',
+    extract_path    => $install_directory,
+    source          => $package_url,
+    creates         => "${install_directory}/config",
+    cleanup         => true,
+    user            => 'kafka',
+    group           => 'kafka',
+    require         => [
+      File[$package_dir],
+      File[$install_directory],
+      Group['kafka'],
+      User['kafka'],
+    ],
   }
 }

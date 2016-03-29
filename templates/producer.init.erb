@@ -1,14 +1,10 @@
 #!/bin/sh
 
-NAME=kafka-consumer
+NAME=kafka-producer
 PID_FILE=/var/run/$NAME.pid
 
-DAEMON="/opt/kafka/bin/kafka-console-consumer.sh"
-DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>"
-
-if [ -f /etc/default/kafka ]; then
-    . /etc/default/kafka
-fi
+DAEMON="/opt/kafka/bin/kafka-console-producer.sh"
+DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>"
 
 start() {
   if [ -f $PID_FILE ]
@@ -23,9 +19,9 @@ start() {
         start
       fi
     else
-        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/consumer.log 2>&1 &
+        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/producer.log 2>&1 &
         sleep 2
-        PID=`pgrep -f kafka.tools.ConsoleConsumer`
+        PID=`pgrep -f kafka.tools.ConsoleProducer`
         if [ -z "$PID" ]; then
             echo "\n $NAME could not be started"
             exit 1

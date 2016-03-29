@@ -4,7 +4,10 @@ NAME=kafka-mirror
 PID_FILE=/var/run/$NAME.pid
 
 DAEMON="/opt/kafka/bin/kafka-run-class.sh"
-DAEMON_OPTS="kafka.tools.MirrorMaker <%- @consumer_config.sort.each do |c| -%> --consumer.config /opt/kafka/config/<%= c[0] -%>.properties<%- end -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%> --num.producers <%= num_producers -%><%- if !@whitelist.eql?('') -%> --whitelist=\"<%= @whitelist -%>\"<%- end %><%- if !@blacklist.eql?('') -%> --blacklist=\"<%= @blacklist -%>\"<%- end -%>"
+DAEMON_OPTS="kafka.tools.MirrorMaker --consumer.config <%= @consumer_config -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%><%- if (scope.function_versioncmp([scope.lookupvar('kafka::version'), '0.9.0.0']) < 0) -%> --num.producers <%= @num_producers -%><%- end -%><%- if !@whitelist.eql?('') -%> --whitelist='<%= @whitelist -%>'<%- end %><%- if !@blacklist.eql?('') -%> --blacklist='<%= @blacklist -%>'<%- end -%>"
+
+KAFKA_HEAP_OPTS="-Xmx<%= @max_heap -%>"
+export KAFKA_HEAP_OPTS
 
 if [ -f /etc/default/kafka ]; then
     . /etc/default/kafka
@@ -28,9 +31,14 @@ start() {
   else
     exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/mirror.log 2>&1 &
     sleep 2
-    PID=`ps axww | grep -E '[k]afka.tools.MirrorMaker' | awk '{print $1}'`
-    echo $PID > $PID_FILE;
-    echo "\n$NAME started"
+    PID=`pgrep -f kafka.tools.MirrorMaker`
+    if [ -z "$PID" ]; then
+        echo "\n $NAME could not be started"
+        exit 1
+    else
+        echo $PID > $PID_FILE;
+        echo "\n$NAME started"
+    fi
   fi
 }
 

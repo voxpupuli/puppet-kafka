@@ -1,17 +1,17 @@
 require 'spec_helper_acceptance'
 
-describe 'kafka::broker' do
+describe 'kafka::mirror' do
   it 'should work with no errors' do
     pp = <<-EOS
       class { 'zookeeper': } ->
-      class { 'kafka::broker':
-        config => {
+      class { 'kafka::mirror':
+        consumer_config => {
+          'group.id'          => 'kafka-mirror',
           'zookeeper.connect' => 'localhost:2181',
         },
-      } ->
-      kafka::broker::topic { 'demo':
-        ensure    => present,
-        zookeeper => 'localhost:2181',
+        producer_config => {
+          'bootstrap.servers' => 'localhost:9092',
+        },
       }
     EOS
 
@@ -19,14 +19,18 @@ describe 'kafka::broker' do
     apply_manifest(pp, :catch_changes => true)
   end
 
-  describe 'kafka::broker::install' do
+  describe 'kafka::mirror::install' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            config => {
+          class { 'kafka::mirror':
+            consumer_config => {
+              'group.id'          => 'kafka-mirror',
               'zookeeper.connect' => 'localhost:2181',
+            },
+            producer_config => {
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS
@@ -74,14 +78,18 @@ describe 'kafka::broker' do
     end
   end
 
-  describe 'kafka::broker::config' do
+  describe 'kafka::mirror::config' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            config => {
+          class { 'kafka::mirror':
+            consumer_config => {
+              'group.id'          => 'kafka-mirror',
               'zookeeper.connect' => 'localhost:2181',
+            },
+            producer_config => {
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS
@@ -89,7 +97,13 @@ describe 'kafka::broker' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file('/opt/kafka/config/server.properties') do
+      describe file('/opt/kafka/config/consumer-1.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/opt/kafka/config/producer.properties') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
@@ -100,11 +114,14 @@ describe 'kafka::broker' do
       it 'should work with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            version => '0.8.2.2',
-            config  => {
-              'broker.id'         => '1',
+          class { 'kafka::mirror':
+            version         => '0.8.2.2',
+            consumer_config => {
+              'group.id'          => 'kafka-mirror',
               'zookeeper.connect' => 'localhost:2181',
+            },
+            producer_config => {
+              'metadata.broker.list' => 'localhost:9092',
             },
           }
         EOS
@@ -112,7 +129,13 @@ describe 'kafka::broker' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file('/opt/kafka/config/server.properties') do
+      describe file('/opt/kafka/config/consumer-1.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/opt/kafka/config/producer.properties') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
@@ -120,14 +143,18 @@ describe 'kafka::broker' do
     end
   end
 
-  describe 'kafka::broker::service' do
+  describe 'kafka::mirror::service' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            config => {
+          class { 'kafka::mirror':
+            consumer_config => {
+              'group.id'          => 'kafka-mirror',
               'zookeeper.connect' => 'localhost:2181',
+            },
+            producer_config => {
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS
@@ -135,13 +162,13 @@ describe 'kafka::broker' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file('/etc/init.d/kafka') do
+      describe file('/etc/init.d/kafka-mirror') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
       end
 
-      describe service('kafka') do
+      describe service('kafka-mirror') do
         it { is_expected.to be_running }
         it { is_expected.to be_enabled }
       end
