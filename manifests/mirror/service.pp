@@ -27,13 +27,10 @@ class kafka::mirror::service(
     content => template('kafka/mirror.init.erb'),
   }
 
-  if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
-    exec { 'systemctl daemon-reload # for kafka-mirror':
-      command     => '/bin/systemctl daemon-reload',
-      refreshonly => true,
-      subscribe   => File['/etc/init.d/kafka-mirror'],
-      before      => Service['kafka-mirror'],
-    }
+  if $::service_provider == 'systemd' {
+    include ::systemd
+
+    File['/etc/init.d/kafka-mirror'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka-mirror']
   }
 
   service { 'kafka-mirror':

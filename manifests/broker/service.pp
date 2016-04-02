@@ -26,13 +26,10 @@ class kafka::broker::service(
       content => template('kafka/init.erb'),
     }
 
-    if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
-      exec { 'systemctl daemon-reload # for kafka':
-        command     => '/bin/systemctl daemon-reload',
-        refreshonly => true,
-        subscribe   => File['/etc/init.d/kafka'],
-        before      => Service['kafka'],
-      }
+    if $::service_provider == 'systemd' {
+      include ::systemd
+
+      File['/etc/init.d/kafka'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka']
     }
 
     service { 'kafka':

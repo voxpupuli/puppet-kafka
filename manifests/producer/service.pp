@@ -8,8 +8,9 @@
 # It manages the kafka-producer service
 #
 class kafka::producer::service(
+  $input            = $kafka::producer::input,
   $service_config   = $kafka::producer::service_config,
-  $service_defaults = $kafka::producer::service_defaults
+  $service_defaults = $kafka::producer::service_defaults,
 ) {
 
   if $caller_module_name != $module_name {
@@ -31,13 +32,10 @@ class kafka::producer::service(
     content => template('kafka/producer.init.erb'),
   }
 
-  if $::osfamily == 'RedHat' and $::operatingsystemmajrelease == '7' {
-    exec { 'systemctl daemon-reload # for kafka-producer':
-      command     => '/bin/systemctl daemon-reload',
-      refreshonly => true,
-      subscribe   => File['/etc/init.d/kafka-producer'],
-      before      => Service['kafka-producer'],
-    }
+  if $::service_provider == 'systemd' {
+    include ::systemd
+
+    File['/etc/init.d/kafka-producer'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka-producer']
   }
 
   service { 'kafka-producer':

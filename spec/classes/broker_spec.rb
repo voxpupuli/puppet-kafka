@@ -7,7 +7,8 @@ describe 'kafka::broker', :type => :class do
       :operatingsystem        => 'Ubuntu',
       :operatingsystemrelease => '14.04',
       :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64'
+      :architecture           => 'amd64',
+      :service_provider       => 'upstart',
     }
   end
   let :params do
@@ -65,7 +66,9 @@ describe 'kafka::broker', :type => :class do
         :operatingsystem           => 'CentOS',
         :operatingsystemrelease    => '7',
         :operatingsystemmajrelease => '7',
-        :architecture              => 'amd64'
+        :architecture              => 'amd64',
+        :path                      => '/usr/local/sbin',
+        :service_provider          => 'systemd',
       }
     end
 
@@ -96,7 +99,9 @@ describe 'kafka::broker', :type => :class do
         it { is_expected.not_to contain_service('kafka') }
       end
       context 'defaults' do
-        it { is_expected.to contain_file('/etc/init.d/kafka') }
+        it { is_expected.to contain_file('/etc/init.d/kafka').that_notifies('Exec[systemctl-daemon-reload]') }
+
+        it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka]') }
 
         it { is_expected.to contain_service('kafka') }
       end

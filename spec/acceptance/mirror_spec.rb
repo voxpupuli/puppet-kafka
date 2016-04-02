@@ -115,13 +115,13 @@ describe 'kafka::mirror' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::mirror':
-            version         => '0.8.2.2',
+            version         => '0.9.0.0',
             consumer_config => {
               'group.id'          => 'kafka-mirror',
               'zookeeper.connect' => 'localhost:2181',
             },
             producer_config => {
-              'metadata.broker.list' => 'localhost:9092',
+              'bootstrap.servers' => 'localhost:9092',
             },
           }
         EOS

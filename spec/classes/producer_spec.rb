@@ -7,7 +7,8 @@ describe 'kafka::producer', :type => :class do
       :operatingsystem        => 'Ubuntu',
       :operatingsystemrelease => '14.04',
       :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64'
+      :architecture           => 'amd64',
+      :service_provider       => 'upstart',
     }
   end
   let :params do
@@ -16,6 +17,7 @@ describe 'kafka::producer', :type => :class do
         'broker-list' => 'localhost:9092',
         'topic'       => 'demo',
       },
+      :input => '/tmp/kafka-producer'
     }
   end
 
@@ -40,6 +42,42 @@ describe 'kafka::producer', :type => :class do
     describe 'kafka::producer::service' do
       context 'defaults' do
         it { is_expected.to contain_file('/etc/init.d/kafka-producer') }
+
+        it { is_expected.to contain_service('kafka-producer') }
+      end
+    end
+  end
+
+  context 'on CentOS' do
+    let :facts do
+      {
+        :osfamily                  => 'RedHat',
+        :operatingsystem           => 'CentOS',
+        :operatingsystemrelease    => '7',
+        :operatingsystemmajrelease => '7',
+        :architecture              => 'amd64',
+        :path                      => '/usr/local/sbin',
+        :service_provider          => 'systemd',
+      }
+    end
+
+    describe 'kafka::producer::install' do
+      context 'defaults' do
+        it { is_expected.to contain_class('kafka') }
+      end
+    end
+
+    describe 'kafka::producer::config' do
+      context 'defaults' do
+        it { is_expected.to contain_file('/opt/kafka/config/producer.properties') }
+      end
+    end
+
+    describe 'kafka::producer::service' do
+      context 'defaults' do
+        it { is_expected.to contain_file('/etc/init.d/kafka-producer').that_notifies('Exec[systemctl-daemon-reload]') }
+
+        it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-producer]') }
 
         it { is_expected.to contain_service('kafka-producer') }
       end

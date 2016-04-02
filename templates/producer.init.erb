@@ -8,9 +8,11 @@
 
 NAME=kafka-producer
 PID_FILE=/var/run/$NAME.pid
+KAFKA_USER=kafka
 
 DAEMON="/opt/kafka/bin/kafka-console-producer.sh"
 DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>"
+PRODUCER_INPUT="<%= @input %>"
 
 start() {
   if [ -f $PID_FILE ]
@@ -25,7 +27,7 @@ start() {
         start
       fi
     else
-        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/producer.log 2>&1 &
+        /bin/su $KAFKA_USER -c "$DAEMON $DAEMON_OPTS $PRODUCER_INPUT 1>>/var/log/kafka/producer.log 2>&1 &"
         sleep 2
         PID=`pgrep -f kafka.tools.ConsoleProducer`
         if [ -z "$PID" ]; then
