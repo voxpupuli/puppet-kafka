@@ -94,12 +94,18 @@ describe 'kafka::broker', :type => :class do
             :service_install => false,
           }
         end
-        it { is_expected.not_to contain_file('/etc/init.d/kafka') }
+        it { is_expected.not_to contain_file('/usr/lib/systemd/system/kafka.service') }
 
         it { is_expected.not_to contain_service('kafka') }
       end
       context 'defaults' do
-        it { is_expected.to contain_file('/etc/init.d/kafka').that_notifies('Exec[systemctl-daemon-reload]') }
+        it { is_expected.to contain_file('/usr/lib/systemd/system/kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
+
+        it {
+          is_expected.to contain_file('/etc/init.d/kafka').with(
+            :ensure => 'absent',
+          )
+        }
 
         it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka]') }
 

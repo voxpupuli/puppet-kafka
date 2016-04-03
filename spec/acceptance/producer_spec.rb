@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'kafka::producer' do
+describe 'kafka::producer', :if => !(fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
   it 'should work with no errors' do
     pp = <<-EOS
       exec { 'create fifo':
@@ -134,7 +134,13 @@ describe 'kafka::producer' do
         apply_manifest(pp, :catch_changes => true)
       end
 
-      describe file('/etc/init.d/kafka-producer') do
+      describe file('/etc/init.d/kafka-producer'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+      end
+
+      describe file('/usr/lib/systemd/system/kafka-producer.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }

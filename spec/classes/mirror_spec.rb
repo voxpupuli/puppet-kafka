@@ -78,7 +78,13 @@ describe 'kafka::mirror', :type => :class do
 
     describe 'kafka::mirror::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('/etc/init.d/kafka-mirror').that_notifies('Exec[systemctl-daemon-reload]') }
+        it { is_expected.to contain_file('/usr/lib/systemd/system/kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
+
+        it {
+          is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
+            :ensure => 'absent',
+          )
+        }
 
         it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-mirror]') }
 

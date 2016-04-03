@@ -21,7 +21,7 @@ class kafka::params {
   $broker_jmx_opts = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9990'
   $broker_gc_opts = '-Xmx1G -Xms1G'
-  $broker_log4j_opts = '-Dlog4j.configuration=file:$base_dir/../config/log4j.properties'
+    $broker_log4j_opts = '-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties'
 
   $service_restart = true
 

@@ -20,16 +20,27 @@ class kafka::broker::service(
   }
 
   if $service_install {
-    file { '/etc/init.d/kafka':
-      ensure  => present,
-      mode    => '0755',
-      content => template('kafka/init.erb'),
-    }
-
     if $::service_provider == 'systemd' {
       include ::systemd
 
-      File['/etc/init.d/kafka'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka']
+      file { '/usr/lib/systemd/system/kafka.service':
+        ensure  => present,
+        mode    => '0644',
+        content => template('kafka/broker.unit.erb'),
+      }
+
+      file { '/etc/init.d/kafka':
+        ensure => absent,
+      }
+
+      File['/usr/lib/systemd/system/kafka.service'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka']
+    } else {
+      file { '/etc/init.d/kafka':
+        ensure  => present,
+        mode    => '0755',
+        content => template('kafka/init.erb'),
+        before  => Service['kafka'],
+      }
     }
 
     service { 'kafka':
@@ -37,7 +48,6 @@ class kafka::broker::service(
       enable     => true,
       hasstatus  => true,
       hasrestart => true,
-      require    => File['/etc/init.d/kafka'],
     }
   } else {
     debug('Skipping service install')

@@ -26,16 +26,15 @@ class kafka::producer::service(
     fail('[Producer] You need to specify a value for topic')
   }
 
-  file { '/etc/init.d/kafka-producer':
-    ensure  => present,
-    mode    => '0755',
-    content => template('kafka/producer.init.erb'),
-  }
-
   if $::service_provider == 'systemd' {
-    include ::systemd
-
-    File['/etc/init.d/kafka-producer'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka-producer']
+    fail('Console Producer is not supported on systemd, because the stdin of the process cannot be redirected')
+  } else {
+    file { '/etc/init.d/kafka-producer':
+      ensure  => present,
+      mode    => '0755',
+      content => template('kafka/producer.init.erb'),
+      before  => Service['kafka-producer'],
+    }
   }
 
   service { 'kafka-producer':
@@ -43,6 +42,5 @@ class kafka::producer::service(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => File['/etc/init.d/kafka-producer'],
   }
 }

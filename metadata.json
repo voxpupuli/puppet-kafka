@@ -18,7 +18,7 @@
     },
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.10.0"
+      "version_requirement": ">= 4.11.0"
     },
     {
       "name": "deric/zookeeper",

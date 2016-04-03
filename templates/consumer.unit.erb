@@ -1,0 +1,17 @@
+[Unit]
+Description=Apache Kafka server (consumer)
+Documentation=http://kafka.apache.org/documentation.html
+Requires=network.target
+After=network.target
+
+[Service]
+Type=simple
+User=kafka
+Group=kafka
+SyslogIdentifier=kafka-consumer
+ExecStart=/opt/kafka/bin/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>
+LimitNOFILE=65536
+LimitCORE=infinity
+
+[Install]
+WantedBy=multi-user.target

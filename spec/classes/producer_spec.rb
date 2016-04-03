@@ -61,25 +61,9 @@ describe 'kafka::producer', :type => :class do
       }
     end
 
-    describe 'kafka::producer::install' do
-      context 'defaults' do
-        it { is_expected.to contain_class('kafka') }
-      end
-    end
-
-    describe 'kafka::producer::config' do
-      context 'defaults' do
-        it { is_expected.to contain_file('/opt/kafka/config/producer.properties') }
-      end
-    end
-
     describe 'kafka::producer::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('/etc/init.d/kafka-producer').that_notifies('Exec[systemctl-daemon-reload]') }
-
-        it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-producer]') }
-
-        it { is_expected.to contain_service('kafka-producer') }
+        it { is_expected.to raise_error(Puppet::Error, /Console Producer is not supported on systemd, because the stdin of the process cannot be redirected/) }
       end
     end
   end
