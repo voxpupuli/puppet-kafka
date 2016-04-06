@@ -1,14 +1,20 @@
 require 'spec_helper_acceptance'
 
-describe 'kafka::producer' do
+describe 'kafka::producer', :if => !(fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
   it 'should work with no errors' do
     pp = <<-EOS
+      exec { 'create fifo':
+        command => '/bin/mkfifo /tmp/kafka-producer',
+        user    => 'kafka',
+        creates => '/tmp/kafka-producer',
+      } ->
       class { 'zookeeper': } ->
       class { 'kafka::producer':
         service_config => {
           'broker-list' => 'localhost:9092',
           topic         => 'demo',
         },
+        input => '3<>/tmp/kafka-producer 0>&3',
       }
     EOS
 
@@ -20,16 +26,23 @@ describe 'kafka::producer' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
+          exec { 'create fifo':
+            command => '/bin/mkfifo /tmp/kafka-producer',
+            user    => 'kafka',
+            creates => '/tmp/kafka-producer',
+          } ->
           class { 'zookeeper': } ->
           class { 'kafka::producer':
             service_config => {
               'broker-list' => 'localhost:9092',
               topic         => 'demo',
             },
+            input          => '3<>/tmp/kafka-producer 0>&3',
           }
         EOS
 
         apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
       end
 
       describe group('kafka') do
@@ -76,16 +89,23 @@ describe 'kafka::producer' do
     context 'with default parameters' do
       it 'should work with no errors' do
         pp = <<-EOS
+          exec { 'create fifo':
+            command => '/bin/mkfifo /tmp/kafka-producer',
+            user    => 'kafka',
+            creates => '/tmp/kafka-producer',
+          } ->
           class { 'zookeeper': } ->
           class { 'kafka::producer':
             service_config => {
               'broker-list' => 'localhost:9092',
               topic         => 'demo',
             },
+            input          => '3<>/tmp/kafka-producer 0>&3',
           }
         EOS
 
         apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
       end
 
       describe file('/opt/kafka/config/producer.properties') do
@@ -106,13 +126,21 @@ describe 'kafka::producer' do
               'broker-list' => 'localhost:9092',
               topic         => 'demo',
             },
+            input          => '3<>/tmp/kafka-producer 0>&3',
           }
         EOS
 
         apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
       end
 
-      describe file('/etc/init.d/kafka-producer') do
+      describe file('/etc/init.d/kafka-producer'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+      end
+
+      describe file('/usr/lib/systemd/system/kafka-producer.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }

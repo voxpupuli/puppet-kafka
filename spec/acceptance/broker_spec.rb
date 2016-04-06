@@ -135,10 +135,60 @@ describe 'kafka::broker' do
         apply_manifest(pp, :catch_failures => true)
       end
 
-      describe file('/etc/init.d/kafka') do
+      describe file('/etc/init.d/kafka'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
+      end
+
+      describe file('/usr/lib/systemd/system/kafka.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+      end
+
+      describe service('kafka') do
+        it { is_expected.to be_running }
+        it { is_expected.to be_enabled }
+      end
+    end
+  end
+
+  describe 'kafka::broker::service' do
+    context 'with gc/log4j/jmx parameters' do
+      it 'should work with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            gc_opts    => '-Xmx512M -Xms512M',
+            log4j_opts => '-Dlog4j.configuration=file:/tmp/log4j.properties',
+            jmx_opts   => '-Dcom.sun.management.jmxremote'
+          }
+        EOS
+
+        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, :catch_changes => true)
+      end
+
+      describe file('/etc/init.d/kafka'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+        it { should contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9999"' }
+        it { should contain 'export KAFKA_GC_OPTS="-Xmx512M -Xms512M"' }
+        it { should contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
+      end
+
+      describe file('/usr/lib/systemd/system/kafka.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+        it { should contain "Environment='KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote'" }
+        it { should contain "Environment='KAFKA_GC_OPTS=-Xmx512M -Xms512M'" }
+        it { should contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
       end
 
       describe service('kafka') do

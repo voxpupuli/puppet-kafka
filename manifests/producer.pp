@@ -46,6 +46,7 @@
 # }
 #
 class kafka::producer (
+  $input,
   $version          = $kafka::params::version,
   $scala_version    = $kafka::params::scala_version,
   $install_dir      = $kafka::params::install_dir,
