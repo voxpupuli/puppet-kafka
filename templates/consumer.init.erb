@@ -1,7 +1,14 @@
 #!/bin/sh
+#
+# Init file for Apache Kafka Consumer
+#
+# chkconfig: 35 85 15
+# description: Apache Kafka is a distributed publish-subscribe messaging system
+# pidfile: /var/run/kafka-consumer.pid
 
 NAME=kafka-consumer
 PID_FILE=/var/run/$NAME.pid
+KAFKA_USER=kafka
 
 DAEMON="/opt/kafka/bin/kafka-console-consumer.sh"
 DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>"
@@ -23,7 +30,7 @@ start() {
         start
       fi
     else
-        exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/consumer.log 2>&1 &
+        /bin/su $KAFKA_USER -c "$DAEMON $DAEMON_OPTS >> /var/log/kafka/consumer.log 2>&1 &"
         sleep 2
         PID=`pgrep -f kafka.tools.ConsoleConsumer`
         if [ -z "$PID" ]; then

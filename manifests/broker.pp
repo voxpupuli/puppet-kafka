@@ -56,7 +56,10 @@ class kafka::broker (
   $package_dir     = $kafka::params::package_dir,
   $service_install = $kafka::params::broker_service_install,
   $service_ensure  = $kafka::params::broker_service_ensure,
-  $service_restart = $kafka::params::service_restart
+  $service_restart = $kafka::params::service_restart,
+  $jmx_opts        = $kafka::params::broker_jmx_opts,
+  $gc_opts         = $kafka::params::broker_gc_opts,
+  $log4j_opts      = $kafka::params::broker_log4j_opts,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
