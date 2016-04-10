@@ -10,6 +10,7 @@ User=kafka
 Group=kafka
 SyslogIdentifier=kafka
 Environment='KAFKA_GC_OPTS=<%= @gc_opts %>'
+Environment='KAFKA_HEAP_OPTS=<%= @heap_opts %>'
 Environment='KAFKA_LOG4J_OPTS=<%= @log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @jmx_opts %>'
 ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties

@@ -19,6 +19,8 @@ export KAFKA_GC_OPTS="<%= @gc_opts %>"
 
 export KAFKA_LOG4J_OPTS="<%= @log4j_opts %>"
 
+export KAFKA_HEAP_OPTS="<%= @heap_opts %>"
+
 start() {
   ulimit -n 65536
   ulimit -s 10240
