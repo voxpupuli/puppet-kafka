@@ -118,8 +118,6 @@ class kafka (
     ],
   }
 
-  include '::archive'
-
   archive { "${package_dir}/${basefilename}":
     ensure          => present,
     extract         => true,
