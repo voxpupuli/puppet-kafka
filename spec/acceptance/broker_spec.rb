@@ -164,6 +164,7 @@ describe 'kafka::broker' do
               'zookeeper.connect' => 'localhost:2181',
             },
             gc_opts    => '-Xmx512M -Xms512M',
+            heap_opts  => '-Xmx512M -Xmx512M',
             log4j_opts => '-Dlog4j.configuration=file:/tmp/log4j.properties',
             jmx_opts   => '-Dcom.sun.management.jmxremote'
           }
@@ -179,6 +180,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_grouped_into 'root' }
         it { should contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9999"' }
         it { should contain 'export KAFKA_GC_OPTS="-Xmx512M -Xms512M"' }
+        it { should contain 'export KAFKA_HEAP_OPTS="-Xmx512M -Xmx512M"' }
         it { should contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
       end
 
@@ -188,6 +190,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_grouped_into 'root' }
         it { should contain "Environment='KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote'" }
         it { should contain "Environment='KAFKA_GC_OPTS=-Xmx512M -Xms512M'" }
+        it { should contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xmx512M'" }
         it { should contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
       end
 
