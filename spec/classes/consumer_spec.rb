@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe 'kafka::consumer', :type => :class do
+describe 'kafka::consumer', type: :class do
   let :facts do
     {
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Ubuntu',
-      :operatingsystemrelease => '14.04',
-      :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64',
-      :service_provider       => 'upstart',
+      osfamily: 'Debian',
+      operatingsystem: 'Ubuntu',
+      operatingsystemrelease: '14.04',
+      lsbdistcodename: 'trusty',
+      architecture: 'amd64',
+      service_provider: 'upstart',
     }
   end
 
   let :params do
     {
-      :service_config => {
+      service_config: {
         'topic'     => 'demo',
         'zookeeper' => 'localhost:2181',
       },
@@ -44,13 +44,13 @@ describe 'kafka::consumer', :type => :class do
   context 'on CentOS' do
     let :facts do
       {
-        :osfamily                  => 'RedHat',
-        :operatingsystem           => 'CentOS',
-        :operatingsystemrelease    => '7',
-        :operatingsystemmajrelease => '7',
-        :architecture              => 'amd64',
-        :path                      => '/usr/local/sbin',
-        :service_provider          => 'systemd',
+        osfamily: 'RedHat',
+        operatingsystem: 'CentOS',
+        operatingsystemrelease: '7',
+        operatingsystemmajrelease: '7',
+        architecture: 'amd64',
+        path: '/usr/local/sbin',
+        service_provider: 'systemd',
       }
     end
 
@@ -66,7 +66,7 @@ describe 'kafka::consumer', :type => :class do
 
         it {
           is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
-            :ensure => 'absent',
+            ensure: 'absent',
           )
         }
 

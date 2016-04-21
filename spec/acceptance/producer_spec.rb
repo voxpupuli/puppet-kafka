@@ -1,6 +1,6 @@
 require 'spec_helper_acceptance'
 
-describe 'kafka::producer', :if => !(fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+describe 'kafka::producer', if: !(fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
   it 'should work with no errors' do
     pp = <<-EOS
       exec { 'create fifo':
@@ -18,8 +18,8 @@ describe 'kafka::producer', :if => !(fact('operatingsystemmajrelease') == '7' &&
       }
     EOS
 
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   describe 'kafka::producer::install' do
@@ -41,8 +41,8 @@ describe 'kafka::producer', :if => !(fact('operatingsystemmajrelease') == '7' &&
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
       describe group('kafka') do
@@ -104,8 +104,8 @@ describe 'kafka::producer', :if => !(fact('operatingsystemmajrelease') == '7' &&
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
       describe file('/opt/kafka/config/producer.properties') do
@@ -130,17 +130,17 @@ describe 'kafka::producer', :if => !(fact('operatingsystemmajrelease') == '7' &&
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
-      describe file('/etc/init.d/kafka-producer'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+      describe file('/etc/init.d/kafka-producer'), if: (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
       end
 
-      describe file('/usr/lib/systemd/system/kafka-producer.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+      describe file('/usr/lib/systemd/system/kafka-producer.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }

@@ -1,13 +1,13 @@
 require 'spec_helper'
 
-describe 'kafka::consumer::config', :type => :define do
+describe 'kafka::consumer::config', type: :define do
   let :facts do
     {
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Ubuntu',
-      :operatingsystemrelease => '14.04',
-      :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64'
+      osfamily: 'Debian',
+      operatingsystem: 'Ubuntu',
+      operatingsystemrelease: '14.04',
+      lsbdistcodename: 'trusty',
+      architecture: 'amd64'
     }
   end
   let(:title) { 'consumer' }

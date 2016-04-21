@@ -1,14 +1,14 @@
 require 'spec_helper'
 
-describe 'kafka', :type => :class do
+describe 'kafka', type: :class do
   let :facts do
     {
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Ubuntu',
-      :operatingsystemrelease => '14.04',
-      :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64',
-      :service_provider       => 'upstart',
+      osfamily: 'Debian',
+      operatingsystem: 'Ubuntu',
+      operatingsystemrelease: '14.04',
+      lsbdistcodename: 'trusty',
+      architecture: 'amd64',
+      service_provider: 'upstart',
     }
   end
 
