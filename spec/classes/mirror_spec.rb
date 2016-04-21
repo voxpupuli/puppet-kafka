@@ -1,24 +1,24 @@
 require 'spec_helper'
 
-describe 'kafka::mirror', :type => :class do
+describe 'kafka::mirror', type: :class do
   let :facts do
     {
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Ubuntu',
-      :operatingsystemrelease => '14.04',
-      :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64',
-      :service_provider       => 'upstart',
+      osfamily: 'Debian',
+      operatingsystem: 'Ubuntu',
+      operatingsystemrelease: '14.04',
+      lsbdistcodename: 'trusty',
+      architecture: 'amd64',
+      service_provider: 'upstart',
     }
   end
 
   let :params do
     {
-      :consumer_config => {
+      consumer_config: {
         'group.id'          => 'kafka-mirror',
         'zookeeper.connect' => 'localhost:2181',
       },
-      :producer_config => {
+      producer_config: {
         'bootstrap.servers' => 'localhost:9092',
       },
     }
@@ -54,13 +54,13 @@ describe 'kafka::mirror', :type => :class do
   context 'on CentOS' do
     let :facts do
       {
-        :osfamily                  => 'RedHat',
-        :operatingsystem           => 'CentOS',
-        :operatingsystemrelease    => '7',
-        :operatingsystemmajrelease => '7',
-        :architecture              => 'amd64',
-        :path                      => '/usr/local/sbin',
-        :service_provider          => 'systemd',
+        osfamily: 'RedHat',
+        operatingsystem: 'CentOS',
+        operatingsystemrelease: '7',
+        operatingsystemmajrelease: '7',
+        architecture: 'amd64',
+        path: '/usr/local/sbin',
+        service_provider: 'systemd',
       }
     end
 
@@ -82,7 +82,7 @@ describe 'kafka::mirror', :type => :class do
 
         it {
           is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
-            :ensure => 'absent',
+            ensure: 'absent',
           )
         }
 

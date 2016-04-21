@@ -1,23 +1,23 @@
 require 'spec_helper'
 
-describe 'kafka::producer', :type => :class do
+describe 'kafka::producer', type: :class do
   let :facts do
     {
-      :osfamily               => 'Debian',
-      :operatingsystem        => 'Ubuntu',
-      :operatingsystemrelease => '14.04',
-      :lsbdistcodename        => 'trusty',
-      :architecture           => 'amd64',
-      :service_provider       => 'upstart',
+      osfamily: 'Debian',
+      operatingsystem: 'Ubuntu',
+      operatingsystemrelease: '14.04',
+      lsbdistcodename: 'trusty',
+      architecture: 'amd64',
+      service_provider: 'upstart',
     }
   end
   let :params do
     {
-      :service_config => {
+      service_config: {
         'broker-list' => 'localhost:9092',
         'topic'       => 'demo',
       },
-      :input => '/tmp/kafka-producer'
+      input: '/tmp/kafka-producer'
     }
   end
 
@@ -51,13 +51,13 @@ describe 'kafka::producer', :type => :class do
   context 'on CentOS' do
     let :facts do
       {
-        :osfamily                  => 'RedHat',
-        :operatingsystem           => 'CentOS',
-        :operatingsystemrelease    => '7',
-        :operatingsystemmajrelease => '7',
-        :architecture              => 'amd64',
-        :path                      => '/usr/local/sbin',
-        :service_provider          => 'systemd',
+        osfamily: 'RedHat',
+        operatingsystem: 'CentOS',
+        operatingsystemrelease: '7',
+        operatingsystemmajrelease: '7',
+        architecture: 'amd64',
+        path: '/usr/local/sbin',
+        service_provider: 'systemd',
       }
     end
 

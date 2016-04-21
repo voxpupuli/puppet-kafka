@@ -15,8 +15,8 @@ describe 'kafka::mirror' do
       }
     EOS
 
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   describe 'kafka::mirror::install' do
@@ -35,7 +35,7 @@ describe 'kafka::mirror' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
       describe group('kafka') do
@@ -94,7 +94,7 @@ describe 'kafka::mirror' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
       describe file('/opt/kafka/config/consumer-1.properties') do
@@ -126,7 +126,7 @@ describe 'kafka::mirror' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
       describe file('/opt/kafka/config/consumer-1.properties') do
@@ -159,16 +159,16 @@ describe 'kafka::mirror' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
-      describe file('/etc/init.d/kafka-mirror'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+      describe file('/etc/init.d/kafka-mirror'), if: (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
       end
 
-      describe file('/usr/lib/systemd/system/kafka-mirror.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+      describe file('/usr/lib/systemd/system/kafka-mirror.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }

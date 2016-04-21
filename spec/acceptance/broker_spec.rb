@@ -15,8 +15,8 @@ describe 'kafka::broker' do
       }
     EOS
 
-    apply_manifest(pp, :catch_failures => true)
-    apply_manifest(pp, :catch_changes => true)
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
   end
 
   describe 'kafka::broker::install' do
@@ -31,7 +31,7 @@ describe 'kafka::broker' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
       describe group('kafka') do
@@ -86,7 +86,7 @@ describe 'kafka::broker' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
       describe file('/opt/kafka/config/server.properties') do
@@ -109,7 +109,7 @@ describe 'kafka::broker' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
       describe file('/opt/kafka/config/server.properties') do
@@ -132,16 +132,16 @@ describe 'kafka::broker' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
-      describe file('/etc/init.d/kafka'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
       end
 
-      describe file('/usr/lib/systemd/system/kafka.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+      describe file('/usr/lib/systemd/system/kafka.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
@@ -169,11 +169,11 @@ describe 'kafka::broker' do
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-        apply_manifest(pp, :catch_changes => true)
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
-      describe file('/etc/init.d/kafka'), :if => (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
@@ -182,7 +182,7 @@ describe 'kafka::broker' do
         it { should contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
       end
 
-      describe file('/usr/lib/systemd/system/kafka.service'), :if => (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+      describe file('/usr/lib/systemd/system/kafka.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
