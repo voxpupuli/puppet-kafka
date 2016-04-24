@@ -23,6 +23,18 @@ class kafka::params {
   $broker_heap_opts = '-Xmx1G -Xms1G'
   $broker_log4j_opts = '-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties'
 
+  $mirror_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
+  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991'
+  $mirror_log4j_opts = $broker_log4j_opts
+
+  $producer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
+  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9992'
+  $producer_log4j_opts = $broker_log4j_opts
+
+  $consumer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
+  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
+  $consumer_log4j_opts = $broker_log4j_opts
+
   $service_restart = true
 
   #http://kafka.apache.org/documentation.html#brokerconfigs

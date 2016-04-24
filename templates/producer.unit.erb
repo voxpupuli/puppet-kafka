@@ -9,6 +9,8 @@ Type=simple
 User=kafka
 Group=kafka
 SyslogIdentifier=kafka-producer
+Environment='KAFKA_LOG4J_OPTS=<%= @producer_log4j_opts %>'
+Environment='KAFKA_JMX_OPTS=<%= @producer_jmx_opts %>'
 ExecStart=/opt/kafka/bin/kafka-console-producer.sh <% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%> <%= @input %>
 LimitNOFILE=65536
 LimitCORE=infinity

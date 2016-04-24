@@ -9,6 +9,8 @@ Type=simple
 User=kafka
 Group=kafka
 SyslogIdentifier=kafka-mirror
+Environment='KAFKA_LOG4J_OPTS=<%= @mirror_log4j_opts %>'
+Environment='KAFKA_JMX_OPTS=<%= @mirror_jmx_opts %>'
 Environment='KAFKA_HEAP_OPTS=-Xmx<%= @max_heap -%>'
 ExecStart=/opt/kafka/bin/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @consumer_config -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%><%- if (scope.function_versioncmp([scope.lookupvar('kafka::version'), '0.9.0.0']) < 0) -%> --num.producers <%= @num_producers -%><%- end -%><%- if !@whitelist.eql?('') -%> --whitelist='<%= @whitelist -%>'<%- end %><%- if !@blacklist.eql?('') -%> --blacklist='<%= @blacklist -%>'<%- end -%>
 

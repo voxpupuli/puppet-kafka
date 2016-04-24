@@ -73,7 +73,9 @@ class kafka::mirror (
   $blacklist                = $kafka::params::blacklist,
   $max_heap                 = $kafka::params::mirror_max_heap,
   $package_dir              = $kafka::params::package_dir,
-  $service_restart          = $kafka::params::service_restart
+  $service_restart          = $kafka::params::service_restart,
+  $mirror_jmx_opts          = $kafka::params::mirror_jmx_opts,
+  $mirror_log4j_opts        = $kafka::params::mirror_log4j_opts
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
