@@ -58,7 +58,6 @@ class kafka::broker (
   $service_ensure  = $kafka::params::broker_service_ensure,
   $service_restart = $kafka::params::service_restart,
   $jmx_opts        = $kafka::params::broker_jmx_opts,
-  $gc_opts         = $kafka::params::broker_gc_opts,
   $heap_opts       = $kafka::params::broker_heap_opts,
   $log4j_opts      = $kafka::params::broker_log4j_opts,
 ) inherits kafka::params {
