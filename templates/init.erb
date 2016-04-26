@@ -14,11 +14,7 @@ DAEMON="/opt/kafka/bin/kafka-server-start.sh"
 DAEMON_OPTS="/opt/kafka/config/server.properties"
 
 export KAFKA_JMX_OPTS="<%= @jmx_opts %>"
-
-export KAFKA_GC_OPTS="<%= @gc_opts %>"
-
 export KAFKA_LOG4J_OPTS="<%= @log4j_opts %>"
-
 export KAFKA_HEAP_OPTS="<%= @heap_opts %>"
 
 start() {
