@@ -12,6 +12,7 @@ class kafka::broker::service(
   $service_ensure  = $kafka::broker::service_ensure,
   $jmx_opts        = $kafka::broker::jmx_opts,
   $log4j_opts      = $kafka::broker::log4j_opts,
+  $opts            = $kafka::broker::opts
 ) {
 
   if $caller_module_name != $module_name {
