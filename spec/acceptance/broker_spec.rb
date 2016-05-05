@@ -165,7 +165,8 @@ describe 'kafka::broker' do
             },
             heap_opts  => '-Xmx512M -Xmx512M',
             log4j_opts => '-Dlog4j.configuration=file:/tmp/log4j.properties',
-            jmx_opts   => '-Dcom.sun.management.jmxremote'
+            jmx_opts   => '-Dcom.sun.management.jmxremote',
+            opts       => '-Djava.security.policy=/some/path/my.policy'
           }
         EOS
 
@@ -189,6 +190,7 @@ describe 'kafka::broker' do
         it { should contain "Environment='KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote'" }
         it { should contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xmx512M'" }
         it { should contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
+        it { should contain "Environment='KAFKA_OPTS=-Djava.security.policy=/some/path/my.policy'" }
       end
 
       describe service('kafka') do

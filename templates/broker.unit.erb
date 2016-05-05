@@ -12,6 +12,7 @@ SyslogIdentifier=kafka
 Environment='KAFKA_HEAP_OPTS=<%= @heap_opts %>'
 Environment='KAFKA_LOG4J_OPTS=<%= @log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @jmx_opts %>'
+Environment='KAFKA_OPTS=<%= @opts %>'
 ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
 LimitNOFILE=65536
 LimitCORE=infinity
