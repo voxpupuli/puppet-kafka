@@ -15,10 +15,15 @@ class kafka::broker::service {
 
   $jmx_port = $kafka::broker::jmx_port
 
-  file { '/etc/init.d/kafka':
-    ensure  => present,
-    mode    => '0755',
-    content => template('kafka/init.erb')
+  file {
+      'kafka-upstart':
+        path    => '/etc/init/kafka.conf',
+        mode    => '0644',
+        content => template('kafka/upstart.erb');
+      'kafka-init-helper':
+        ensure => 'link',
+        path   => '/etc/init.d/kafka',
+        target => $common::upstart_helper;
   }
 
   service { 'kafka':
@@ -26,7 +31,7 @@ class kafka::broker::service {
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => File['/etc/init.d/kafka']
+    require    => File['kafka-upstart']
   }
 
 }
