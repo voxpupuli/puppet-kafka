@@ -13,6 +13,8 @@ class kafka::broker::service {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  $jmx_port = $kafka::broker::jmx_port
+
   file {
       'kafka-upstart':
         path    => '/etc/init/kafka.conf',
