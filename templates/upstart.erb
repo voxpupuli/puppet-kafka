@@ -15,10 +15,4 @@ env DAEMON="/opt/kafka/bin/kafka-server-start.sh"
 env DAEMON_OPTS="/opt/kafka/config/server.properties"
 env KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=<%= @jmx_port %>"
 
-script
-    /sbin/start-stop-daemon --start --make-pidfile --pidfile $PID_FILE --exec $DAEMON $DAEMON_OPTS  >> /var/log/kafka/server.log 2>&1
-end script
-
-pre-stop script
-  /sbin/start-stop-daemon --stop --pidfile $PID_FILE --exec $DAEMON $DAEMON  >> /var/log/kafka/server.log 2>&1
-end script
+exec $DAEMON $DAEMON_OPTS >> /var/log/kafka/server.log 2>&1
