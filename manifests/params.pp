@@ -146,7 +146,7 @@ class kafka::params {
     'security.inter.broker.protocol'                => 'PLAINTEXT',
     'ssl.cipher.suites'                             => '',
     'ssl.client.auth'                               => 'none',
-    'ssl.enabled.protocols'                         => '[TLSv1.2, TLSv1.1, TLSv1]',
+    'ssl.enabled.protocols'                         => 'TLSv1.2, TLSv1.1, TLSv1',
     'ssl.key.password'                              => '',
     'ssl.keymanager.algorithm'                      => 'SunX509',
     'ssl.keystore.location'                         => '',
