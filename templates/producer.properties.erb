@@ -3,6 +3,6 @@
 # See: http://kafka.apache.org/documentation.html#producerconfigs for more details
 <% @producer_config.sort.each do |k,v| -%>
 <% unless v.to_s.strip.empty? -%>
-<%= k %>=<%= v %>
+<%= k %>=<%= v.is_a?(Array) ? v.join(',') : v %>
 <% end -%>
 <% end -%>

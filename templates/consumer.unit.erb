@@ -11,7 +11,7 @@ Group=kafka
 SyslogIdentifier=kafka-consumer
 Environment='KAFKA_LOG4J_OPTS=<%= @consumer_log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @consumer_jmx_opts %>'
-ExecStart=/opt/kafka/bin/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>
+ExecStart=/opt/kafka/bin/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>
 LimitNOFILE=65536
 LimitCORE=infinity
 
