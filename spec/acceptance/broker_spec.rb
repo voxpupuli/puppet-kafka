@@ -93,6 +93,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
+        it { should contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
       end
     end
 

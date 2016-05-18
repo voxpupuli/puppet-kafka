@@ -11,7 +11,7 @@ PID_FILE=/var/run/$NAME.pid
 KAFKA_USER=kafka
 
 DAEMON="/opt/kafka/bin/kafka-console-producer.sh"
-DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>"
+DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
 PRODUCER_INPUT="<%= @input %>"
 
 export KAFKA_JMX_OPTS="<%= @producer_jmx_opts %>"

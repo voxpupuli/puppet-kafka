@@ -11,7 +11,7 @@ PID_FILE=/var/run/$NAME.pid
 KAFKA_USER=kafka
 
 DAEMON="/opt/kafka/bin/kafka-console-consumer.sh"
-DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v %> <% end -%><% end -%>"
+DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
 
 export KAFKA_JMX_OPTS="<%= @consumer_jmx_opts %>"
 export KAFKA_LOG4J_OPTS="<%= @consumer_log4j_opts %>"
