@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka' do
-  it 'should work with no errors' do
+  it 'works with no errors' do
     pp = <<-EOS
       class { 'kafka': }
     EOS
@@ -12,7 +12,7 @@ describe 'kafka' do
 
   describe 'kafka::init' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka': }
         EOS
@@ -60,7 +60,7 @@ describe 'kafka' do
     end
 
     context 'with specific kafka version' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka':
             version => '0.8.2.2',
@@ -110,7 +110,7 @@ describe 'kafka' do
     end
 
     context 'with specific scala version' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka':
             scala_version => '2.11',

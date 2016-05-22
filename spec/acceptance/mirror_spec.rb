@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka::mirror' do
-  it 'should work with no errors' do
+  it 'works with no errors' do
     pp = <<-EOS
       class { 'zookeeper': } ->
       class { 'kafka::mirror':
@@ -21,7 +21,7 @@ describe 'kafka::mirror' do
 
   describe 'kafka::mirror::install' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::mirror':
@@ -80,7 +80,7 @@ describe 'kafka::mirror' do
 
   describe 'kafka::mirror::config' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::mirror':
@@ -111,7 +111,7 @@ describe 'kafka::mirror' do
     end
 
     context 'with specific version' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::mirror':
@@ -145,7 +145,7 @@ describe 'kafka::mirror' do
 
   describe 'kafka::mirror::service' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::mirror':

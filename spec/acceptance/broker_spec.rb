@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka::broker' do
-  it 'should work with no errors' do
+  it 'works with no errors' do
     pp = <<-EOS
       class { 'zookeeper': } ->
       class { 'kafka::broker':
@@ -21,7 +21,7 @@ describe 'kafka::broker' do
 
   describe 'kafka::broker::install' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::broker':
@@ -76,7 +76,7 @@ describe 'kafka::broker' do
 
   describe 'kafka::broker::config' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::broker':
@@ -98,7 +98,7 @@ describe 'kafka::broker' do
     end
 
     context 'with specific version' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::broker':
@@ -123,7 +123,7 @@ describe 'kafka::broker' do
 
   describe 'kafka::broker::service' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::broker':
@@ -157,7 +157,7 @@ describe 'kafka::broker' do
 
   describe 'kafka::broker::service' do
     context 'with log4j/jmx parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::broker':
