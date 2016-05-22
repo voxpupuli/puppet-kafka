@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka::producer', if: !(fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
-  it 'should work with no errors' do
+  it 'works with no errors' do
     pp = <<-EOS
       exec { 'create fifo':
         command => '/bin/mkfifo /tmp/kafka-producer',
@@ -24,7 +24,7 @@ describe 'kafka::producer', if: !(fact('operatingsystemmajrelease') == '7' && fa
 
   describe 'kafka::producer::install' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           exec { 'create fifo':
             command => '/bin/mkfifo /tmp/kafka-producer',
@@ -87,7 +87,7 @@ describe 'kafka::producer', if: !(fact('operatingsystemmajrelease') == '7' && fa
 
   describe 'kafka::producer::config' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           exec { 'create fifo':
             command => '/bin/mkfifo /tmp/kafka-producer',
@@ -118,7 +118,7 @@ describe 'kafka::producer', if: !(fact('operatingsystemmajrelease') == '7' && fa
 
   describe 'kafka::producer::service' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::producer':

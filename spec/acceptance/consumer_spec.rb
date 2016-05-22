@@ -1,7 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka::consumer' do
-  it 'should work with no errors' do
+  it 'works with no errors' do
     pp = <<-EOS
       class { 'zookeeper': } ->
       class { 'kafka::consumer':
@@ -18,7 +18,7 @@ describe 'kafka::consumer' do
 
   describe 'kafka::consumer::install' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::consumer':
@@ -74,7 +74,7 @@ describe 'kafka::consumer' do
 
   describe 'kafka::consumer::config' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::consumer':
@@ -98,7 +98,7 @@ describe 'kafka::consumer' do
 
   describe 'kafka::consumer::service' do
     context 'with default parameters' do
-      it 'should work with no errors' do
+      it 'works with no errors' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::consumer':
