@@ -1,6 +1,6 @@
 {
   "name": "puppet-kafka",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "author": "puppet",
   "summary": "Puppet module for Kafka",
   "license": "Apache-2.0",

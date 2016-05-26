@@ -1,3 +1,18 @@
+## 2016-05-26 - Release 2.0.0
+### Summary
+Big change: drop of ruby1.8 support!
+
+- Support CentOS 7
+- Configure  num_streams & num_producers
+- Add max_heap parameter to kafka::mirror
+- Fix empty PID file creation on failed daemon start
+- Add missing Init Script for Kafka producer
+- Remove non-existend class
+- Increase spec coverage
+- Add support for Kafka 0.9.0.1
+- Lots of small improvements (correct docs, wrong quotes, correct template format)
+
+
 ## 2015-12-14 - Release 1.0.3
 ### Summary
 
