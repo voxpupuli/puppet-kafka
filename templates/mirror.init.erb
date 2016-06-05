@@ -17,6 +17,10 @@ export KAFKA_HEAP_OPTS="-Xmx<%= @max_heap -%>"
 export KAFKA_JMX_OPTS="<%= @mirror_jmx_opts %>"
 export KAFKA_LOG4J_OPTS="<%= @mirror_log4j_opts %>"
 
+if [ -f /etc/default/kafka ]; then
+    . /etc/default/kafka
+fi
+
 start() {
   ulimit -n 65536
   ulimit -s 10240

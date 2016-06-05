@@ -16,6 +16,10 @@ DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.
 export KAFKA_JMX_OPTS="<%= @consumer_jmx_opts %>"
 export KAFKA_LOG4J_OPTS="<%= @consumer_log4j_opts %>"
 
+if [ -f /etc/default/kafka ]; then
+    . /etc/default/kafka
+fi
+
 start() {
   if [ -f $PID_FILE ]
     then

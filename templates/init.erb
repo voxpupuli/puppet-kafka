@@ -19,6 +19,10 @@ export KAFKA_HEAP_OPTS="<%= @heap_opts %>"
 
 export KAFKA_HEAP_OPTS="<%= @opts %>"
 
+if [ -f /etc/default/kafka ]; then
+    . /etc/default/kafka
+fi
+
 start() {
   ulimit -n 65536
   ulimit -s 10240
