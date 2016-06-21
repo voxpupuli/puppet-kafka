@@ -61,6 +61,8 @@ class kafka::broker (
   $heap_opts       = $kafka::params::broker_heap_opts,
   $log4j_opts      = $kafka::params::broker_log4j_opts,
   $opts            = $kafka::params::broker_opts,
+  $group_id        = $kafka::params::group_id,
+  $user_id         = $kafka::params::user_id,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")

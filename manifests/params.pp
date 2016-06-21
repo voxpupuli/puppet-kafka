@@ -16,6 +16,8 @@ class kafka::params {
   $package_dir    = '/var/tmp/kafka'
   $package_name   = undef
   $package_ensure = 'present'
+  $group_id       = undef
+  $user_id        = undef
 
   $broker_service_install = true
   $broker_service_ensure = 'running'
