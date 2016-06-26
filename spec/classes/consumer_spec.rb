@@ -66,7 +66,7 @@ describe 'kafka::consumer', type: :class do
 
         it {
           is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
-            ensure: 'absent',
+            ensure: 'absent'
           )
         }
 

@@ -82,7 +82,7 @@ describe 'kafka::mirror', type: :class do
 
         it {
           is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
-            ensure: 'absent',
+            ensure: 'absent'
           )
         }
 

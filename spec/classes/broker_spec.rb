@@ -103,7 +103,7 @@ describe 'kafka::broker', type: :class do
 
         it {
           is_expected.to contain_file('/etc/init.d/kafka').with(
-            ensure: 'absent',
+            ensure: 'absent'
           )
         }
 
