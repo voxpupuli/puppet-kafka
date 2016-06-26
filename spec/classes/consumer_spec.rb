@@ -64,11 +64,11 @@ describe 'kafka::consumer', type: :class do
       context 'defaults' do
         it { is_expected.to contain_file('/usr/lib/systemd/system/kafka-consumer.service').that_notifies('Exec[systemctl-daemon-reload]') }
 
-        it {
+        it do
           is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
             ensure: 'absent'
           )
-        }
+        end
 
         it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-consumer]') }
 
