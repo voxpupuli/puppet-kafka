@@ -63,7 +63,7 @@ describe 'kafka::producer', type: :class do
 
     describe 'kafka::producer::service' do
       context 'defaults' do
-        it { is_expected.to raise_error(Puppet::Error, /Console Producer is not supported on systemd, because the stdin of the process cannot be redirected/) }
+        it { is_expected.to raise_error(Puppet::Error, %r{Console Producer is not supported on systemd, because the stdin of the process cannot be redirected}) }
       end
     end
   end
