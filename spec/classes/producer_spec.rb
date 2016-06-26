@@ -8,14 +8,14 @@ describe 'kafka::producer', type: :class do
       operatingsystemrelease: '14.04',
       lsbdistcodename: 'trusty',
       architecture: 'amd64',
-      service_provider: 'upstart',
+      service_provider: 'upstart'
     }
   end
   let :params do
     {
       service_config: {
         'broker-list' => 'localhost:9092',
-        'topic'       => 'demo',
+        'topic'       => 'demo'
       },
       input: '/tmp/kafka-producer'
     }
@@ -57,7 +57,7 @@ describe 'kafka::producer', type: :class do
         operatingsystemmajrelease: '7',
         architecture: 'amd64',
         path: '/usr/local/sbin',
-        service_provider: 'systemd',
+        service_provider: 'systemd'
       }
     end
 

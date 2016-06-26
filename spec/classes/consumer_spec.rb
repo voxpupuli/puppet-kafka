@@ -8,7 +8,7 @@ describe 'kafka::consumer', type: :class do
       operatingsystemrelease: '14.04',
       lsbdistcodename: 'trusty',
       architecture: 'amd64',
-      service_provider: 'upstart',
+      service_provider: 'upstart'
     }
   end
 
@@ -16,8 +16,8 @@ describe 'kafka::consumer', type: :class do
     {
       service_config: {
         'topic'     => 'demo',
-        'zookeeper' => 'localhost:2181',
-      },
+        'zookeeper' => 'localhost:2181'
+      }
     }
   end
 
@@ -50,7 +50,7 @@ describe 'kafka::consumer', type: :class do
         operatingsystemmajrelease: '7',
         architecture: 'amd64',
         path: '/usr/local/sbin',
-        service_provider: 'systemd',
+        service_provider: 'systemd'
       }
     end
 

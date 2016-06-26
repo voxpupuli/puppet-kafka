@@ -8,7 +8,7 @@ describe 'kafka::mirror', type: :class do
       operatingsystemrelease: '14.04',
       lsbdistcodename: 'trusty',
       architecture: 'amd64',
-      service_provider: 'upstart',
+      service_provider: 'upstart'
     }
   end
 
@@ -16,11 +16,11 @@ describe 'kafka::mirror', type: :class do
     {
       consumer_config: {
         'group.id'          => 'kafka-mirror',
-        'zookeeper.connect' => 'localhost:2181',
+        'zookeeper.connect' => 'localhost:2181'
       },
       producer_config: {
-        'bootstrap.servers' => 'localhost:9092',
-      },
+        'bootstrap.servers' => 'localhost:9092'
+      }
     }
   end
 
@@ -60,7 +60,7 @@ describe 'kafka::mirror', type: :class do
         operatingsystemmajrelease: '7',
         architecture: 'amd64',
         path: '/usr/local/sbin',
-        service_provider: 'systemd',
+        service_provider: 'systemd'
       }
     end
 

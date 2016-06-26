@@ -8,14 +8,14 @@ describe 'kafka::broker', type: :class do
       operatingsystemrelease: '14.04',
       lsbdistcodename: 'trusty',
       architecture: 'amd64',
-      service_provider: 'upstart',
+      service_provider: 'upstart'
     }
   end
   let :params do
     {
       config: {
-        'zookeeper.connect' => 'localhost:2181',
-      },
+        'zookeeper.connect' => 'localhost:2181'
+      }
     }
   end
 
@@ -42,9 +42,9 @@ describe 'kafka::broker', type: :class do
         let :params do
           {
             config: {
-              'zookeeper.connect' => 'localhost:2181',
+              'zookeeper.connect' => 'localhost:2181'
             },
-            service_install: false,
+            service_install: false
           }
         end
         it { is_expected.not_to contain_file('/etc/init.d/kafka') }
@@ -68,7 +68,7 @@ describe 'kafka::broker', type: :class do
         operatingsystemmajrelease: '7',
         architecture: 'amd64',
         path: '/usr/local/sbin',
-        service_provider: 'systemd',
+        service_provider: 'systemd'
       }
     end
 
@@ -89,9 +89,9 @@ describe 'kafka::broker', type: :class do
         let :params do
           {
             config: {
-              'zookeeper.connect' => 'localhost:2181',
+              'zookeeper.connect' => 'localhost:2181'
             },
-            service_install: false,
+            service_install: false
           }
         end
         it { is_expected.not_to contain_file('/usr/lib/systemd/system/kafka.service') }
