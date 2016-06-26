@@ -8,7 +8,7 @@ describe 'kafka', type: :class do
       operatingsystemrelease: '14.04',
       lsbdistcodename: 'trusty',
       architecture: 'amd64',
-      service_provider: 'upstart',
+      service_provider: 'upstart'
     }
   end
 

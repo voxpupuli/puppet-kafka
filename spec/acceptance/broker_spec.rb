@@ -136,7 +136,7 @@ describe 'kafka::broker' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
@@ -175,7 +175,7 @@ describe 'kafka::broker' do
         apply_manifest(pp, catch_changes: true)
       end
 
-      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ /(5|6)/ && fact('osfamily') == 'RedHat') do
+      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
