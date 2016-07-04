@@ -1,8 +1,9 @@
 [Unit]
 Description=Apache Kafka server (mirror)
 Documentation=http://kafka.apache.org/documentation.html
-Requires=network.target
-After=network.target
+Wants=zookeeper.service
+After=zookeeper.service
+Requires=zookeeper.service
 
 [Service]
 Type=simple

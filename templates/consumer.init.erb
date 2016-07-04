@@ -2,9 +2,21 @@
 #
 # Init file for Apache Kafka Consumer
 #
+<%- if @osfamily == 'Debian' -%>
+### BEGIN INIT INFO
+# Provides:          kafka-consumer
+# Required-Start:    zookeeper
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Apache Kafka is a distributed publish-subscribe messaging system
+### END INIT INFO
+<%- else -%>
 # chkconfig: 35 85 15
 # description: Apache Kafka is a distributed publish-subscribe messaging system
 # pidfile: /var/run/kafka-consumer.pid
+<%- end -%>
 
 NAME=kafka-consumer
 PID_FILE=/var/run/$NAME.pid
