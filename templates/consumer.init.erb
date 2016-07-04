@@ -21,6 +21,7 @@
 NAME=kafka-consumer
 PID_FILE=/var/run/$NAME.pid
 KAFKA_USER=kafka
+PGREP_PATTERN=kafka.tools.ConsoleConsumer
 
 DAEMON="/opt/kafka/bin/kafka-console-consumer.sh"
 DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
@@ -33,29 +34,29 @@ if [ -f /etc/default/kafka ]; then
 fi
 
 start() {
-  if [ -f $PID_FILE ]
-    then
+  if [ -f $PID_FILE ]; then
       PID=`cat $PID_FILE`
-      if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]; then
+      if `ps -p "$PID" -o pid= ` -eq `pgrep -f "$PGREP_PATTERN"`; then
         echo "\n$PID_FILE exists, process is already running"
         exit 0
-      else
-        echo "\n$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
-        rm -f $PID_FILE
-        start
       fi
-    else
-        /bin/su $KAFKA_USER -c "$DAEMON $DAEMON_OPTS >> /var/log/kafka/consumer.log 2>&1 &"
-        sleep 2
-        PID=`pgrep -f kafka.tools.ConsoleConsumer`
-        if [ -z "$PID" ]; then
-            echo "\n $NAME could not be started"
-            exit 1
-        else
-            echo $PID > $PID_FILE;
-            echo "\n$NAME started"
-        fi
-    fi
+
+      echo "\n$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
+      rm -f $PID_FILE
+      start
+      return $?
+  fi
+
+  /bin/su $KAFKA_USER -c "$DAEMON $DAEMON_OPTS >> /var/log/kafka/consumer.log 2>&1 &"
+  sleep 2
+  PID=`pgrep -f "$PGREP_PATTERN"`
+  if [ -z "$PID" ]; then
+    echo "\n $NAME could not be started"
+    exit 1
+  fi
+
+  echo $PID > $PID_FILE;
+  echo "\n$NAME started"
 }
 
 stop() {
@@ -72,21 +73,19 @@ stop() {
 }
 
 status() {
-  if [ -f $PID_FILE ]
-  then
-    PID=`cat $PID_FILE`
-    if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]
-    then
-      echo "$NAME stopped but pid file exists"
-      exit 1
-    else
-      echo "$NAME running with pid $PID"
-      exit 0
-    fi
-  else
+  if [ ! -f $PID_FILE ]; then
     echo "$NAME stopped"
     exit 1
   fi
+
+  PID=`cat $PID_FILE`
+  if `ps -p "$PID" -o pid= ` -eq `pgrep -f "$PGREP_PATTERN"`; then
+    echo "$NAME stopped but pid file exists"
+    exit 1
+  fi
+
+  echo "$NAME running with pid $PID"
+  exit 0
 }
 
 case "$1" in
