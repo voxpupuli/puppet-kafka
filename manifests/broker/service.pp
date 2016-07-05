@@ -23,7 +23,15 @@ class kafka::broker::service(
     if $::service_provider == 'systemd' {
       include ::systemd
 
-      file { '/usr/lib/systemd/system/kafka.service':
+      if $operatingsystem == 'Ubuntu' {
+        $systemd_directory = "/etc/systemd/system"
+      } else {
+        $systemd_directory = "/usr/lib/systemd/system"
+      }
+
+      $systemd_file = "${systemd_directory}/kafka.service"
+
+      file { $systemd_file:
         ensure  => present,
         mode    => '0644',
         content => template('kafka/broker.unit.erb'),
@@ -33,7 +41,7 @@ class kafka::broker::service(
         ensure => absent,
       }
 
-      File['/usr/lib/systemd/system/kafka.service'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka']
+      File[$systemd_file] ~> Exec['systemctl-daemon-reload'] -> Service['kafka']
     } else {
       file { '/etc/init.d/kafka':
         ensure  => present,
