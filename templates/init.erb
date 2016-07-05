@@ -19,7 +19,7 @@
 <%- end -%>
 
 NAME=<%= @service_name %>
-PID_FILE=/var/run/$NAME.pid
+PID_FILE="/var/run/$NAME.pid"
 KAFKA_USER=kafka
 <%- case @service_name
   when 'kafka' -%>
@@ -69,19 +69,19 @@ start() {
   ulimit -n 65536
   ulimit -s 10240
   ulimit -c unlimited
-  if [ -f $PID_FILE ]; then
-    PID=`cat $PID_FILE`
+  if [ -f "$PID_FILE" ]; then
+    PID=`cat "$PID_FILE"`
     if `ps -p "$PID" -o pid= ` -eq `pgrep -f "$PGREP_PATTERN"`; then
       echo "$PID_FILE exists, process is already running"
       exit 0
     fi
     echo "$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
-    rm -f $PID_FILE
+    rm -f "$PID_FILE"
     start
     return $?
   fi
 
-  /bin/su $KAFKA_USER -c "KAFKA_JMX_OPTS=\"$KAFKA_JMX_OPTS\" $DAEMON $DAEMON_OPTS<%- if @service_name == 'kafka-producer' -%> $PRODUCER_INPUT<%- end -%>"
+  /bin/su "$KAFKA_USER" -c "KAFKA_JMX_OPTS=\"$KAFKA_JMX_OPTS\" $DAEMON $DAEMON_OPTS<%- if @service_name == 'kafka-producer' -%> $PRODUCER_INPUT<%- end -%>"
   sleep 2
   PID=`pgrep -f "$PGREP_PATTERN"`
   if [ -z "$PID" ]; then
@@ -89,29 +89,29 @@ start() {
     exit 1
   fi
 
-  echo $PID > $PID_FILE;
+  echo "$PID" > "$PID_FILE";
   echo "\n$NAME started"
 }
 
 stop() {
-  if [ ! -f $PID_FILE ]; then
+  if [ ! -f "$PID_FILE" ]; then
     echo "$PID_FILE does not exist, process is not running"
     return 1
   fi
 
-  kill `cat $PID_FILE`;
-  rm -f $PID_FILE;
+  kill `cat "$PID_FILE"`;
+  rm -f "$PID_FILE";
   echo "$NAME stopped"
   return 0
 }
 
 status() {
-  if [ ! -f $PID_FILE ]; then
+  if [ ! -f "$PID_FILE" ]; then
     echo "$NAME stopped"
     exit 1
   fi
 
-  PID=`cat $PID_FILE`
+  PID=`cat "$PID_FILE"`
   if `ps -p "$PID" -o pid= ` -eq `pgrep -f "$PGREP_PATTERN"`; then
     echo "$NAME stopped but pid file exists"
     exit 1
@@ -126,15 +126,15 @@ case "$1" in
     status
 	;;
   start)
-    echo "Starting daemon: "$NAME
+    echo "Starting daemon: $NAME"
     start
 	;;
   stop)
-    echo "Stopping daemon: "$NAME
+    echo "Stopping daemon: $NAME"
     stop
 	;;
   restart)
-    echo "Restarting daemon: "$NAME
+    echo "Restarting daemon: $NAME"
 	  stop
     sleep 2
     start
