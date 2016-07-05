@@ -76,7 +76,7 @@ start() {
       exit 0
     fi
     echo "$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
-    rm -f "$PID_FILE"
+    rm -f -- "$PID_FILE"
     start
     return $?
   fi
@@ -100,7 +100,7 @@ stop() {
   fi
 
   kill `cat "$PID_FILE"`;
-  rm -f "$PID_FILE";
+  rm -f -- "$PID_FILE";
   echo "$NAME stopped"
   return 0
 }
