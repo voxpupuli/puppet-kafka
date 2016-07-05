@@ -25,30 +25,38 @@ class kafka::consumer::service(
     fail('[Consumer] You need to specify a value for zookeeper')
   }
 
+  $service_name = 'kafka-consumer'
+
   if $::service_provider == 'systemd' {
     include ::systemd
 
-    file { '/usr/lib/systemd/system/kafka-consumer.service':
-      ensure  => present,
+    file { "${service_name}.service":
+      ensure  => file,
+      path    => "/usr/lib/systemd/system/${service_name}.service",
       mode    => '0644',
-      content => template('kafka/consumer.unit.erb'),
+      content => template('kafka/unit.erb'),
     }
 
-    file { '/etc/init.d/kafka-consumer':
+    file { "/etc/init.d/${service_name}":
       ensure => absent,
     }
 
-    File['/usr/lib/systemd/system/kafka-consumer.service'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka-consumer']
+    File["${service_name}.service"] ~>
+    Exec['systemctl-daemon-reload'] ->
+    Service[$service_name]
+
   } else {
-    file { '/etc/init.d/kafka-consumer':
-      ensure  => present,
+
+    file { "${service_name}.service":
+      ensure  => file,
+      path    => "/etc/init.d/${service_name}",
       mode    => '0755',
-      content => template('kafka/consumer.init.erb'),
-      before  => Service['kafka-consumer'],
+      content => template('kafka/init.erb'),
+      before  => Service[$service_name],
     }
   }
 
-  service { 'kafka-consumer':
+  service { $service_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,
