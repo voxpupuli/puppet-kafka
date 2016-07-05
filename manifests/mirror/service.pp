@@ -21,30 +21,38 @@ class kafka::mirror::service(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  $service_name = 'kafka-mirror'
+
   if $::service_provider == 'systemd' {
     include ::systemd
 
-    file { '/usr/lib/systemd/system/kafka-mirror.service':
-      ensure  => present,
+    file { "${service_name}.service":
+      ensure  => file,
+      path    => "/etc/systemd/system/${service_name}.service",
       mode    => '0644',
-      content => template('kafka/mirror.unit.erb'),
+      content => template('kafka/unit.erb'),
     }
 
-    file { '/etc/init.d/kafka-mirror':
+    file { "/etc/init.d/${service_name}":
       ensure => absent,
     }
 
-    File['/usr/lib/systemd/system/kafka-mirror.service'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka-mirror']
+    File["${service_name}.service"] ~>
+    Exec['systemctl-daemon-reload'] ->
+    Service[$service_name]
+
   } else {
-    file { '/etc/init.d/kafka-mirror':
-      ensure  => present,
+
+    file { "${service_name}.service":
+      ensure  => file,
+      path    => "/etc/init.d/${service_name}",
       mode    => '0755',
-      content => template('kafka/mirror.init.erb'),
-      before  => Service['kafka-mirror'],
+      content => template('kafka/init.erb'),
+      before  => Service[$service_name],
     }
   }
 
-  service { 'kafka-mirror':
+  service { $service_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,
