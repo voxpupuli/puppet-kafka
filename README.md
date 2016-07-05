@@ -42,7 +42,7 @@ If you want a Kafka broker server that connects to zookeeper listenting on port 
 ```puppet
 	class { 'kafka::broker':
 	  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-	} 
+	}
 ```
 
 ##Usage
@@ -65,7 +65,7 @@ Then we set a minimal Kafka broker configuration with:
 ```puppet
 	class { 'kafka::broker':
 	  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-	} 
+	}
 ```
 
 ###Classes and Defined Types
