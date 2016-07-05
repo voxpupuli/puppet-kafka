@@ -71,7 +71,7 @@ start() {
   ulimit -c unlimited
   if [ -f "$PID_FILE" ]; then
     PID=`cat "$PID_FILE"`
-    if [ `ps -p "$PID" -o pid= ` -eq `pgrep -f "$PGREP_PATTERN"`]; then
+    if [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
       echo "$PID_FILE exists, process is already running"
       exit 0
     fi
@@ -85,12 +85,13 @@ start() {
   sleep 2
   PID=`pgrep -f "$PGREP_PATTERN"`
   if [ -z "$PID" ]; then
-    echo "\n $NAME could not be started"
+    echo "$NAME could not be started"
     exit 1
   fi
 
   echo "$PID" > "$PID_FILE";
-  echo "\n$NAME started"
+  echo "$NAME started"
+  return 0
 }
 
 stop() {
@@ -112,7 +113,7 @@ status() {
   fi
 
   PID=`cat "$PID_FILE"`
-  if [ `ps -p "$PID" -o pid= ` -ne `pgrep -f "$PGREP_PATTERN"`]; then
+  if [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
     echo "$NAME stopped but pid file exists"
     exit 1
   fi
