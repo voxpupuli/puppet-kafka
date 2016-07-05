@@ -28,7 +28,7 @@ class kafka::mirror::service(
 
     file { "${service_name}.service":
       ensure  => file,
-      path    => "/usr/lib/systemd/system/${service_name}.service",
+      path    => "/etc/systemd/system/${service_name}.service",
       mode    => '0644',
       content => template('kafka/unit.erb'),
     }
