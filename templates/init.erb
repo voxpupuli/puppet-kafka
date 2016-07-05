@@ -32,7 +32,7 @@ export KAFKA_JMX_OPTS="<%= @jmx_opts %>"
 export KAFKA_LOG4J_OPTS="<%= @log4j_opts %>"
 export KAFKA_HEAP_OPTS="<%= @heap_opts %>"
 
-export KAFKA_HEAP_OPTS="<%= @opts %>"
+export KAFKA_OPTS="<%= @opts %>"
 <%- when 'kafka-consumer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleConsumer
 
@@ -47,7 +47,7 @@ PGREP_PATTERN=kafka.tools.MirrorMaker
 DAEMON="/opt/kafka/bin/kafka-run-class.sh"
 DAEMON_OPTS="kafka.tools.MirrorMaker --consumer.config <%= @consumer_config -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%><%- if (scope.function_versioncmp([scope.lookupvar('kafka::version'), '0.9.0.0']) < 0) -%> --num.producers <%= @num_producers -%><%- end -%><%- if !@whitelist.eql?('') -%> --whitelist='<%= @whitelist -%>'<%- end %><%- if !@blacklist.eql?('') -%> --blacklist='<%= @blacklist -%>'<%- end -%>"
 
-export KAFKA_HEAP_OPTS="-Xmx<%= @max_heap -%>"
+export KAFKA_HEAP_OPTS="-Xmx<%= @max_heap -%> -Xms<%= @max_heap -%>"
 export KAFKA_JMX_OPTS="<%= @mirror_jmx_opts %>"
 export KAFKA_LOG4J_OPTS="<%= @mirror_log4j_opts %>"
 <%- when 'kafka-producer' -%>
