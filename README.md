@@ -37,12 +37,12 @@ The default configuration installs Kafka 0.8.2.1 binaries with Scala 2.10
   class { 'kafka': }
 ```
 
-If you want a Kafka broker server that connects to zookeeper listenting on port 2181:
+If you want a Kafka broker server that connects to zookeeper listening on port 2181:
 
 ```puppet
 	class { 'kafka::broker':
 	  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-	} 
+	}
 ```
 
 ##Usage
@@ -65,7 +65,7 @@ Then we set a minimal Kafka broker configuration with:
 ```puppet
 	class { 'kafka::broker':
 	  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-	} 
+	}
 ```
 
 ###Classes and Defined Types

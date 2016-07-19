@@ -28,16 +28,18 @@ class kafka::producer::service(
 
   if $::service_provider == 'systemd' {
     fail('Console Producer is not supported on systemd, because the stdin of the process cannot be redirected')
-  } else {
-    file { '/etc/init.d/kafka-producer':
-      ensure  => present,
-      mode    => '0755',
-      content => template('kafka/producer.init.erb'),
-      before  => Service['kafka-producer'],
-    }
   }
 
-  service { 'kafka-producer':
+  $service_name = 'kafka-producer'
+
+  file { "/etc/init.d/${service_name}":
+    ensure  => file,
+    mode    => '0755',
+    content => template('kafka/init.erb'),
+    before  => Service[$service_name],
+  }
+
+  service { $service_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,

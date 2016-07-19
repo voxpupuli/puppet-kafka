@@ -8,7 +8,7 @@ describe 'kafka::mirror', type: :class do
       operatingsystemrelease: '14.04',
       lsbdistcodename: 'trusty',
       architecture: 'amd64',
-      service_provider: 'upstart',
+      service_provider: 'upstart'
     }
   end
 
@@ -16,11 +16,11 @@ describe 'kafka::mirror', type: :class do
     {
       consumer_config: {
         'group.id'          => 'kafka-mirror',
-        'zookeeper.connect' => 'localhost:2181',
+        'zookeeper.connect' => 'localhost:2181'
       },
       producer_config: {
-        'bootstrap.servers' => 'localhost:9092',
-      },
+        'bootstrap.servers' => 'localhost:9092'
+      }
     }
   end
 
@@ -44,7 +44,7 @@ describe 'kafka::mirror', type: :class do
 
     describe 'kafka::mirror::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('/etc/init.d/kafka-mirror') }
+        it { is_expected.to contain_file('kafka-mirror.service') }
 
         it { is_expected.to contain_service('kafka-mirror') }
       end
@@ -60,7 +60,7 @@ describe 'kafka::mirror', type: :class do
         operatingsystemmajrelease: '7',
         architecture: 'amd64',
         path: '/usr/local/sbin',
-        service_provider: 'systemd',
+        service_provider: 'systemd'
       }
     end
 
@@ -78,13 +78,13 @@ describe 'kafka::mirror', type: :class do
 
     describe 'kafka::mirror::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('/usr/lib/systemd/system/kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
+        it { is_expected.to contain_file('kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
 
-        it {
+        it do
           is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
-            ensure: 'absent',
+            ensure: 'absent'
           )
-        }
+        end
 
         it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-mirror]') }
 

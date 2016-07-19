@@ -1,14 +1,29 @@
 #!/bin/sh
 #
-# Init file for Apache Kafka
+# Init file for Apache Kafka <%= @service_name.split(/-/)[1] and @service_name.split(/-/)[1].capitalize %>
 #
+<%- if @osfamily == 'Debian' -%>
+### BEGIN INIT INFO
+# Provides:          <%- @service_name -%>
+# Required-Start:    zookeeper
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# X-Interactive:     true
+# Short-Description: Apache Kafka is a distributed publish-subscribe messaging system
+### END INIT INFO
+<%- else -%>
 # chkconfig: 35 85 15
 # description: Apache Kafka is a distributed publish-subscribe messaging system
-# pidfile: /var/run/kafka.pid
+# pidfile: /var/run/<%= @service_name -%>.pid
+<%- end -%>
 
-NAME=kafka
-PID_FILE=/var/run/$NAME.pid
+NAME=<%= @service_name %>
+PID_FILE="/var/run/$NAME.pid"
 KAFKA_USER=kafka
+<%- case @service_name
+  when 'kafka' -%>
+PGREP_PATTERN=kafka.Kafka
 
 DAEMON="/opt/kafka/bin/kafka-server-start.sh"
 DAEMON_OPTS="/opt/kafka/config/server.properties"
@@ -17,7 +32,34 @@ export KAFKA_JMX_OPTS="<%= @jmx_opts %>"
 export KAFKA_LOG4J_OPTS="<%= @log4j_opts %>"
 export KAFKA_HEAP_OPTS="<%= @heap_opts %>"
 
-export KAFKA_HEAP_OPTS="<%= @opts %>"
+export KAFKA_OPTS="<%= @opts %>"
+<%- when 'kafka-consumer' -%>
+PGREP_PATTERN=kafka.tools.ConsoleConsumer
+
+DAEMON="/opt/kafka/bin/kafka-console-consumer.sh"
+DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
+
+export KAFKA_JMX_OPTS="<%= @consumer_jmx_opts %>"
+export KAFKA_LOG4J_OPTS="<%= @consumer_log4j_opts %>"
+<%- when 'kafka-mirror' -%>
+PGREP_PATTERN=kafka.tools.MirrorMaker
+
+DAEMON="/opt/kafka/bin/kafka-run-class.sh"
+DAEMON_OPTS="kafka.tools.MirrorMaker --consumer.config <%= @consumer_config -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%><%- if (scope.function_versioncmp([scope.lookupvar('kafka::version'), '0.9.0.0']) < 0) -%> --num.producers <%= @num_producers -%><%- end -%><%- if !@whitelist.eql?('') -%> --whitelist='<%= @whitelist -%>'<%- end %><%- if !@blacklist.eql?('') -%> --blacklist='<%= @blacklist -%>'<%- end -%>"
+
+export KAFKA_HEAP_OPTS="-Xmx<%= @max_heap -%> -Xms<%= @max_heap -%>"
+export KAFKA_JMX_OPTS="<%= @mirror_jmx_opts %>"
+export KAFKA_LOG4J_OPTS="<%= @mirror_log4j_opts %>"
+<%- when 'kafka-producer' -%>
+PGREP_PATTERN=kafka.tools.ConsoleProducer
+
+DAEMON="/opt/kafka/bin/kafka-console-producer.sh"
+DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
+PRODUCER_INPUT="<%= @input %>"
+
+export KAFKA_JMX_OPTS="<%= @producer_jmx_opts %>"
+export KAFKA_LOG4J_OPTS="<%= @producer_log4j_opts %>"
+<%- end -%>
 
 if [ -f /etc/default/kafka ]; then
     . /etc/default/kafka
@@ -27,61 +69,57 @@ start() {
   ulimit -n 65536
   ulimit -s 10240
   ulimit -c unlimited
-  if [ -f $PID_FILE ]
-  then
-    PID=`cat $PID_FILE`
-    if [ ! -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]
-    then
+  if [ -f "$PID_FILE" ]; then
+    PID=`cat "$PID_FILE"`
+    if [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
       echo "$PID_FILE exists, process is already running"
       exit 0
-    else
-      echo "$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
-      rm -f $PID_FILE
-      start
     fi
-  else
-    /bin/su $KAFKA_USER -c "KAFKA_JMX_OPTS=\"$KAFKA_JMX_OPTS\" $DAEMON $DAEMON_OPTS > /var/log/kafka/server.out 2> /var/log/kafka/server.err &"
-    sleep 2
-    PID=`pgrep -f kafka.Kafka`
-    if [ -z "$PID" ]; then
-        echo "\n $NAME could not be started"
-        exit 1
-    else
-        echo $PID > $PID_FILE;
-        echo "\n$NAME started"
-    fi
+    echo "$PID_FILE exists but the process is not running. Deleting $PID_FILE and re-trying"
+    rm -f -- "$PID_FILE"
+    start
+    return $?
   fi
+
+  /bin/su "$KAFKA_USER" -c "KAFKA_JMX_OPTS=\"$KAFKA_JMX_OPTS\" $DAEMON $DAEMON_OPTS<%- if @service_name == 'kafka-producer' -%> $PRODUCER_INPUT<%- end -%> >/dev/null 2>&1 &"
+  sleep 2
+  PID=`pgrep -f "$PGREP_PATTERN"`
+  if [ -z "$PID" ]; then
+    echo "$NAME could not be started"
+    exit 1
+  fi
+
+  echo "$PID" > "$PID_FILE";
+  echo "$NAME started"
+  return 0
 }
 
 stop() {
-  if [ ! -f $PID_FILE ]
-  then
+  if [ ! -f "$PID_FILE" ]; then
     echo "$PID_FILE does not exist, process is not running"
     return 1
-  else
-    kill `cat $PID_FILE`;
-    rm -f $PID_FILE;
-    echo "$NAME stopped"
-    return 0
   fi
+
+  kill `cat "$PID_FILE"`;
+  rm -f -- "$PID_FILE";
+  echo "$NAME stopped"
+  return 0
 }
 
 status() {
-  if [ -f $PID_FILE ]
-  then
-    PID=`cat $PID_FILE`
-    if [ -z "`ps -ef | awk '{print $2}' | grep "^$PID$"`" ]
-    then
-      echo "$NAME stopped but pid file exists"
-      exit 1
-    else
-      echo "$NAME running with pid $PID"
-      exit 0
-    fi
-  else
+  if [ ! -f "$PID_FILE" ]; then
     echo "$NAME stopped"
     exit 1
   fi
+
+  PID=`cat "$PID_FILE"`
+  if [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
+    echo "$NAME stopped but pid file exists"
+    exit 1
+  fi
+
+  echo "$NAME running with pid $PID"
+  exit 0
 }
 
 case "$1" in
@@ -89,15 +127,15 @@ case "$1" in
     status
 	;;
   start)
-    echo "Starting daemon: "$NAME
+    echo "Starting daemon: $NAME"
     start
 	;;
   stop)
-    echo "Stopping daemon: "$NAME
+    echo "Stopping daemon: $NAME"
     stop
 	;;
   restart)
-    echo "Restarting daemon: "$NAME
+    echo "Restarting daemon: $NAME"
 	  stop
     sleep 2
     start

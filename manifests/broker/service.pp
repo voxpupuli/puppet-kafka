@@ -12,38 +12,46 @@ class kafka::broker::service(
   $service_ensure  = $kafka::broker::service_ensure,
   $jmx_opts        = $kafka::broker::jmx_opts,
   $log4j_opts      = $kafka::broker::log4j_opts,
-  $opts            = $kafka::broker::opts
+  $heap_opts       = $kafka::broker::heap_opts,
+  $opts            = $kafka::broker::opts,
 ) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
+  $service_name = 'kafka'
+
   if $service_install {
     if $::service_provider == 'systemd' {
       include ::systemd
 
-      file { '/usr/lib/systemd/system/kafka.service':
-        ensure  => present,
+      file { "${service_name}.service":
+        ensure  => file,
+        path    => "/etc/systemd/system/${service_name}.service",
         mode    => '0644',
-        content => template('kafka/broker.unit.erb'),
+        content => template('kafka/unit.erb'),
       }
 
-      file { '/etc/init.d/kafka':
+      file { "/etc/init.d/${service_name}":
         ensure => absent,
       }
 
-      File['/usr/lib/systemd/system/kafka.service'] ~> Exec['systemctl-daemon-reload'] -> Service['kafka']
+      File["${service_name}.service"] ~>
+      Exec['systemctl-daemon-reload'] ->
+      Service[$service_name]
+
     } else {
-      file { '/etc/init.d/kafka':
-        ensure  => present,
+      file { "${service_name}.service":
+        ensure  => file,
+        path    => "/etc/init.d/${service_name}",
         mode    => '0755',
         content => template('kafka/init.erb'),
-        before  => Service['kafka'],
+        before  => Service[$service_name],
       }
     }
 
-    service { 'kafka':
+    service { $service_name:
       ensure     => $service_ensure,
       enable     => true,
       hasstatus  => true,
