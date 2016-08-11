@@ -138,10 +138,12 @@ class kafka (
         Group['kafka'],
         User['kafka'],
       ],
+      before          => File['/opt/kafka/config'],
     }
   } else {
     package { $package_name:
       ensure => $package_ensure,
+      before => File['/opt/kafka/config'],
     }
   }
 }
