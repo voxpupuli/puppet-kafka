@@ -107,13 +107,13 @@ stop() {
 }
 
 status() {
-  if [ ! -f "$PID_FILE" ]; then
+  if ! [ -f "$PID_FILE" ]; then
     echo "$NAME stopped"
     exit 1
   fi
 
   PID=`cat "$PID_FILE"`
-  if [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
+  if ! [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
     echo "$NAME stopped but pid file exists"
     exit 1
   fi
