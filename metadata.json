@@ -21,10 +21,6 @@
       "version_requirement": ">= 4.11.0"
     },
     {
-      "name": "deric/zookeeper",
-      "version_requirement": ">= 0.5.1"
-    },
-    {
       "name": "camptocamp/systemd",
       "version_requirement": ">= 0.2.2 < 0.3.0"
     }
