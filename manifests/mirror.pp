@@ -37,6 +37,9 @@
 # [*num_producers*]
 # Number of producer threads to start.
 #
+# [*abort_on_send_failure*]
+# Abort immediately if MirrorMaker fails to send to receiving cluster
+#
 # [*install_java*]
 # Install java if it's not already installed.
 #
@@ -68,6 +71,7 @@ class kafka::mirror (
   $producer_config_defaults = $kafka::params::producer_config_defaults,
   $num_streams              = $kafka::params::num_streams,
   $num_producers            = $kafka::params::num_producers,
+  $abort_on_send_failure    = $kafka::params::abort_on_send_failure,
   $install_java             = $kafka::params::install_java,
   $whitelist                = $kafka::params::whitelist,
   $blacklist                = $kafka::params::blacklist,
@@ -82,6 +86,7 @@ class kafka::mirror (
   validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
   validate_integer($num_streams)
   validate_integer($num_producers)
+  validate_bool($abort_on_send_failure)
   validate_bool($install_java)
   validate_re($max_heap, '\d+[g|G|m|M|k|K]', "${max_heap} is not a valid heap size")
   validate_absolute_path($package_dir)

@@ -308,6 +308,7 @@ class kafka::params {
   $producer_config = '/opt/kafka/config/producer.properties'
   $num_streams = 2
   $num_producers = 1
+  $abort_on_send_failure = true
   $mirror_max_heap = '256M'
   $whitelist = '.*'
   $blacklist = ''
