@@ -22,15 +22,15 @@ matrix:
   - rvm: 2.1
     env: PUPPET_VERSION="~> 3.0" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 2.1
-    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+    env: PUPPET_VERSION="~> 4.5.0" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 2.2
-    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+    env: PUPPET_VERSION="~> 4.5.0" STRICT_VARIABLES="yes" CHECK=test
   - rvm: 2.3.1
-    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=build
+    env: PUPPET_VERSION="~> 4.5.0" STRICT_VARIABLES="yes" CHECK=build
   - rvm: 2.3.1
-    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=rubocop
+    env: PUPPET_VERSION="~> 4.5.0" STRICT_VARIABLES="yes" CHECK=rubocop
   - rvm: 2.3.1
-    env: PUPPET_VERSION="~> 4.0" STRICT_VARIABLES="yes" CHECK=test
+    env: PUPPET_VERSION="~> 4.5.0" STRICT_VARIABLES="yes" CHECK=test
 notifications:
   email: false
 deploy:

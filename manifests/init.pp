@@ -104,10 +104,9 @@ class kafka (
   }
 
   file { '/opt/kafka/config':
-    ensure  => directory,
-    owner   => 'kafka',
-    group   => 'kafka',
-    require => Archive["${package_dir}/${basefilename}"],
+    ensure => directory,
+    owner  => 'kafka',
+    group  => 'kafka',
   }
 
   file { '/var/log/kafka':
@@ -139,10 +138,12 @@ class kafka (
         Group['kafka'],
         User['kafka'],
       ],
+      before          => File['/opt/kafka/config'],
     }
   } else {
     package { $package_name:
       ensure => $package_ensure,
+      before => File['/opt/kafka/config'],
     }
   }
 }
