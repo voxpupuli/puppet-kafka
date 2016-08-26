@@ -95,9 +95,15 @@ start() {
 }
 
 stop() {
-  if [ ! -f "$PID_FILE" ]; then
-    echo "$PID_FILE does not exist, process is not running"
-    return 1
+  if ! [ -f "$PID_FILE" ]; then
+    echo -n "$PID_FILE does not exist"
+    if PID=`pgrep -f "$PGREP_PATTERN"` ; then
+      echo -n ", but process is running"
+      echo "$PID" > "$PID_FILE"
+    else
+      echo -n ", and process is not running"
+      return 1
+    fi
   fi
 
   kill `cat "$PID_FILE"`;
@@ -107,13 +113,13 @@ stop() {
 }
 
 status() {
-  if [ ! -f "$PID_FILE" ]; then
+  if ! [ -f "$PID_FILE" ]; then
     echo "$NAME stopped"
     exit 1
   fi
 
   PID=`cat "$PID_FILE"`
-  if [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
+  if ! [ `ps -p "$PID" -o pid= || echo 1` -eq `pgrep -f "$PGREP_PATTERN" || echo 2` ] ; then
     echo "$NAME stopped but pid file exists"
     exit 1
   fi
