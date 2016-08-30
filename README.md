@@ -86,6 +86,14 @@ The url where the kafka is downloaded from.
 Install java if it's not already installed.
 #####`package_dir`
 The directory to install kafka.
+####`package_name`
+Package name, when installing kafka from a package.
+####`package_ensure`
+Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
+####`group_id`
+Create kafka group with this ID
+####`user_id`
+Create kafka user with this ID
 
 ####Class: `kafka::broker`
 One of the primary classes of the kafka module. This class will install a kafka broker.

@@ -31,6 +31,18 @@
 # [*package_dir*]
 # The directory to install kafka.
 #
+# [*package_name*]
+# Package name, when installing kafka from a package.
+#
+# [*package_ensure*]
+# Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
+#
+# [*group_id*]
+# Create kafka group with this ID
+#
+# [*user_id*]
+# Create kafka user with this ID
+#
 # === Examples
 #
 #
