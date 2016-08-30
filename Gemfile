@@ -11,7 +11,7 @@ def location_for(place, fake_version = nil)
 end
 
 group :test do
-  gem 'puppetlabs_spec_helper',                                     :require => false
+  gem 'puppetlabs_spec_helper', '~> 1.2.2',                         :require => false
   gem 'rspec-puppet',                                               :require => false, :git => 'https://github.com/rodjek/rspec-puppet.git'
   gem 'rspec-puppet-facts',                                         :require => false
   gem 'rspec-puppet-utils',                                         :require => false
@@ -26,7 +26,7 @@ group :test do
   gem 'puppet-blacksmith',                                          :require => false
   gem 'voxpupuli-release',                                          :require => false, :git => 'https://github.com/voxpupuli/voxpupuli-release-gem.git'
   gem 'puppet-strings',                                             :require => false, :git => 'https://github.com/puppetlabs/puppetlabs-strings.git'
-  gem 'rubocop-rspec', '~> 1.5',                                    :require => false if RUBY_VERSION >= '2.3.0'
+  gem 'rubocop-rspec', '~> 1.6',                                    :require => false if RUBY_VERSION >= '2.3.0'
   gem 'json_pure', '<= 2.0.1',                                      :require => false if RUBY_VERSION < '2.0.0'
 end
 
@@ -56,7 +56,7 @@ else
   gem 'facter', :require => false, :groups => [:test]
 end
 
-ENV['PUPPET_VERSION'].nil? ? puppetversion = '~> 4.5.0' : puppetversion = ENV['PUPPET_VERSION'].to_s
+ENV['PUPPET_VERSION'].nil? ? puppetversion = '~> 4.0' : puppetversion = ENV['PUPPET_VERSION'].to_s
 gem 'puppet', puppetversion, :require => false, :groups => [:test]
 
 # vim: syntax=ruby
