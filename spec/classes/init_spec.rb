@@ -28,4 +28,29 @@ describe 'kafka', type: :class do
       end
     end
   end
+
+  context 'on Debian' do
+    describe 'kafka' do
+      context 'all (compatible) parameters' do
+        let :params do
+          {
+            version: '0.10.0.1',
+            scala_version: '2.13',
+            install_dir: '/usr/local/kafka',
+            user_id: 9092,
+            group_id: 9092,
+            install_java: false
+          }
+        end
+        it { is_expected.to contain_group('kafka').with(gid: 9092) }
+        it { is_expected.to contain_user('kafka').with(uid: 9092) }
+
+        it { is_expected.to contain_file('/var/tmp/kafka') }
+        it { is_expected.to contain_file('/opt/kafka') }
+        it { is_expected.to contain_file('/usr/local/kafka') }
+        it { is_expected.to contain_file('/opt/kafka/config') }
+        it { is_expected.to contain_file('/var/log/kafka') }
+      end
+    end
+  end
 end
