@@ -1,3 +1,16 @@
+## 2016-08-31 - Release 2.1.0
+### Summary
+Lots of work on the init scripts
+
+- System-V init scripts now source defaults
+- We can install kafka from packages
+- The licence in metadata has been aligned with reality
+- If you're running kafka on NFS, you can now set the UID and group ID
+- All System-S init scripts are created *equal*, from one template
+- Systemd init scripts are placed in `/etc` now
+- All inits will wait for zookeeper before starting kafka
+- Documentation has been updated!
+
 ## 2016-05-26 - Release 2.0.0
 ### Summary
 Big change: drop of ruby1.8 support!

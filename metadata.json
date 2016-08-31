@@ -1,7 +1,7 @@
 {
   "name": "puppet-kafka",
-  "version": "2.0.1-rc0",
-  "author": "puppet",
+  "version": "2.1.0",
+  "author": "Vox Pupuli",
   "summary": "Puppet module for Kafka",
   "license": "MIT",
   "source": "https://github.com/voxpupuli/puppet-kafka",
