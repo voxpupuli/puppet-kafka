@@ -66,12 +66,12 @@ class kafka (
   $basefilename = "kafka_${scala_version}-${version}.tgz"
   $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
 
-  if $version != $kafka::params::version {
-    $install_directory = "/opt/kafka-${scala_version}-${version}"
-  } elsif $scala_version != $kafka::params::scala_version {
-    $install_directory = "/opt/kafka-${scala_version}-${version}"
-  } else {
-    $install_directory = $install_dir
+  $install_directory = $install_dir ? {
+    # if install_dir was not changed,
+    # we adapt it for the scala_version and the version
+    $kafka::params::install_dir => "/opt/kafka-${scala_version}-${version}",
+    # else, we just take whatever was supplied:
+    default                     => $install_dir,
   }
 
   if $install_java {
