@@ -8,14 +8,15 @@
 # It manages the kafka-mirror service
 #
 class kafka::mirror::service(
-  $consumer_config       = $kafka::params::consumer_config,
-  $producer_config       = $kafka::params::producer_config,
-  $num_streams           = $kafka::mirror::num_streams,
-  $num_producers         = $kafka::mirror::num_producers,
-  $abort_on_send_failure = $kafka::mirror::abort_on_send_failure,
-  $whitelist             = $kafka::mirror::whitelist,
-  $blacklist             = $kafka::mirror::blacklist,
-  $max_heap              = $kafka::mirror::max_heap
+  $service_requires_zookeeper = $kafka::mirror::service_requires_zookeeper,
+  $consumer_config            = $kafka::params::consumer_config,
+  $producer_config            = $kafka::params::producer_config,
+  $num_streams                = $kafka::mirror::num_streams,
+  $num_producers              = $kafka::mirror::num_producers,
+  $abort_on_send_failure      = $kafka::mirror::abort_on_send_failure,
+  $whitelist                  = $kafka::mirror::whitelist,
+  $blacklist                  = $kafka::mirror::blacklist,
+  $max_heap                   = $kafka::mirror::max_heap
 ) inherits ::kafka::params {
 
   if $caller_module_name != $module_name {

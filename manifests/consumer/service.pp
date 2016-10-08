@@ -8,8 +8,9 @@
 # It manages the kafka-consumer service
 #
 class kafka::consumer::service(
-  $service_config   = $kafka::consumer::service_config,
-  $service_defaults = $kafka::consumer::service_defaults
+  $service_config             = $kafka::consumer::service_config,
+  $service_defaults           = $kafka::consumer::service_defaults,
+  $service_requires_zookeeper = $kafka::consumer::service_requires_zookeeper,
 ) {
 
   if $caller_module_name != $module_name {

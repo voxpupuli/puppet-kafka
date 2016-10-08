@@ -61,25 +61,26 @@
 # }
 #
 class kafka::mirror (
-  $version                  = $kafka::params::version,
-  $scala_version            = $kafka::params::scala_version,
-  $install_dir              = $kafka::params::install_dir,
-  $mirror_url               = $kafka::params::mirror_url,
-  $consumer_config          = {},
-  $consumer_config_defaults = $kafka::params::consumer_config_defaults,
-  $producer_config          = {},
-  $producer_config_defaults = $kafka::params::producer_config_defaults,
-  $num_streams              = $kafka::params::num_streams,
-  $num_producers            = $kafka::params::num_producers,
-  $abort_on_send_failure    = $kafka::params::abort_on_send_failure,
-  $install_java             = $kafka::params::install_java,
-  $whitelist                = $kafka::params::whitelist,
-  $blacklist                = $kafka::params::blacklist,
-  $max_heap                 = $kafka::params::mirror_max_heap,
-  $package_dir              = $kafka::params::package_dir,
-  $service_restart          = $kafka::params::service_restart,
-  $mirror_jmx_opts          = $kafka::params::mirror_jmx_opts,
-  $mirror_log4j_opts        = $kafka::params::mirror_log4j_opts
+  $version                    = $kafka::params::version,
+  $scala_version              = $kafka::params::scala_version,
+  $install_dir                = $kafka::params::install_dir,
+  $mirror_url                 = $kafka::params::mirror_url,
+  $consumer_config            = {},
+  $consumer_config_defaults   = $kafka::params::consumer_config_defaults,
+  $producer_config            = {},
+  $producer_config_defaults   = $kafka::params::producer_config_defaults,
+  $num_streams                = $kafka::params::num_streams,
+  $num_producers              = $kafka::params::num_producers,
+  $abort_on_send_failure      = $kafka::params::abort_on_send_failure,
+  $install_java               = $kafka::params::install_java,
+  $whitelist                  = $kafka::params::whitelist,
+  $blacklist                  = $kafka::params::blacklist,
+  $max_heap                   = $kafka::params::mirror_max_heap,
+  $package_dir                = $kafka::params::package_dir,
+  $service_restart            = $kafka::params::service_restart,
+  $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
+  $mirror_jmx_opts            = $kafka::params::mirror_jmx_opts,
+  $mirror_log4j_opts          = $kafka::params::mirror_log4j_opts
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")

@@ -19,6 +19,8 @@ class kafka::params {
   $group_id       = undef
   $user_id        = undef
 
+  $service_requires_zookeeper = true
+
   $broker_service_install = true
   $broker_service_ensure = 'running'
 
