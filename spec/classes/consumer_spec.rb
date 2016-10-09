@@ -74,6 +74,34 @@ describe 'kafka::consumer', type: :class do
 
         it { is_expected.to contain_service('kafka-consumer') }
       end
+
+      context 'service_requires_zookeeper disabled' do
+        let :params do
+          {
+            service_requires_zookeeper: false,
+            service_config: {
+              'topic'     => 'demo',
+              'zookeeper' => 'localhost:2181'
+            }
+          }
+        end
+
+        it { should_not contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
+      end
+
+      context 'service_requires_zookeeper enabled' do
+        let :params do
+          {
+            service_requires_zookeeper: true,
+            service_config: {
+              'topic'     => 'demo',
+              'zookeeper' => 'localhost:2181'
+            }
+          }
+        end
+
+        it { should contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
+      end
     end
   end
 end

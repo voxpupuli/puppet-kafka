@@ -8,9 +8,10 @@
 # It manages the kafka-producer service
 #
 class kafka::producer::service(
-  $input            = $kafka::producer::input,
-  $service_config   = $kafka::producer::service_config,
-  $service_defaults = $kafka::producer::service_defaults,
+  $input                      = $kafka::producer::input,
+  $service_config             = $kafka::producer::service_config,
+  $service_defaults           = $kafka::producer::service_defaults,
+  $service_requires_zookeeper = $kafka::producer::service_requires_zookeeper,
 ) {
 
   if $caller_module_name != $module_name {

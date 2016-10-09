@@ -98,6 +98,7 @@ describe 'kafka::broker', type: :class do
 
         it { is_expected.not_to contain_service('kafka') }
       end
+
       context 'defaults' do
         it { is_expected.to contain_file('kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
 
@@ -110,6 +111,26 @@ describe 'kafka::broker', type: :class do
         it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka]') }
 
         it { is_expected.to contain_service('kafka') }
+      end
+
+      context 'service_requires_zookeeper disabled' do
+        let :params do
+          {
+            service_requires_zookeeper: false
+          }
+        end
+
+        it { should_not contain_file('kafka.service').with_content %r{^Requires=zookeeper.service$} }
+      end
+
+      context 'service_requires_zookeeper enabled' do
+        let :params do
+          {
+            service_requires_zookeeper: true
+          }
+        end
+
+        it { should contain_file('kafka.service').with_content %r{^Requires=zookeeper.service$} }
       end
     end
   end

@@ -47,19 +47,20 @@
 #
 class kafka::producer (
   $input,
-  $version               = $kafka::params::version,
-  $scala_version         = $kafka::params::scala_version,
-  $install_dir           = $kafka::params::install_dir,
-  $mirror_url            = $kafka::params::mirror_url,
-  $config                = {},
-  $config_defaults       = $kafka::params::producer_config_defaults,
-  $service_config        = {},
-  $service_defaults      = $kafka::params::producer_service_defaults,
-  $install_java          = $kafka::params::install_java,
-  $package_dir           = $kafka::params::package_dir,
-  $service_restart       = $kafka::params::service_restart,
-  $producer_jmx_opts     = $kafka::params::producer_jmx_opts,
-  $producer_log4j_opts   = $kafka::params::producer_log4j_opts
+  $version                    = $kafka::params::version,
+  $scala_version              = $kafka::params::scala_version,
+  $install_dir                = $kafka::params::install_dir,
+  $mirror_url                 = $kafka::params::mirror_url,
+  $config                     = {},
+  $config_defaults            = $kafka::params::producer_config_defaults,
+  $service_config             = {},
+  $service_defaults           = $kafka::params::producer_service_defaults,
+  $install_java               = $kafka::params::install_java,
+  $package_dir                = $kafka::params::package_dir,
+  $service_restart            = $kafka::params::service_restart,
+  $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
+  $producer_jmx_opts          = $kafka::params::producer_jmx_opts,
+  $producer_log4j_opts        = $kafka::params::producer_log4j_opts
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
