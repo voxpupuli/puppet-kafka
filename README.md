@@ -1,5 +1,12 @@
 # Kafka module for Puppet
 
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
+[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-kafka/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-kafka)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+
 #### Table of Contents
 
 1. [Overview](#overview)
@@ -16,9 +23,6 @@
 ## Overview
 
 The kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org)
-
-[![Puppet Forge](http://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
 
 ## Module Description
 
