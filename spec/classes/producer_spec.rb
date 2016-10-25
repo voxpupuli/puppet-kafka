@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_param_validation'
 
 describe 'kafka::producer', type: :class do
   let :facts do
@@ -11,7 +12,7 @@ describe 'kafka::producer', type: :class do
       service_provider: 'upstart'
     }
   end
-  let :params do
+  let :common_params do
     {
       service_config: {
         'broker-list' => 'localhost:9092',
@@ -19,6 +20,10 @@ describe 'kafka::producer', type: :class do
       },
       input: '/tmp/kafka-producer'
     }
+  end
+
+  let :params do
+    common_params
   end
 
   it { is_expected.to contain_class('kafka::producer::install').that_comes_before('Class[kafka::producer::config]') }
@@ -67,4 +72,7 @@ describe 'kafka::producer', type: :class do
       end
     end
   end
+
+  it_validates_parameter 'mirror_url'
+
 end
