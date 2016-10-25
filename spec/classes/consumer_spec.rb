@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_param_validation'
 
 describe 'kafka::consumer', type: :class do
   let :facts do
@@ -12,13 +13,17 @@ describe 'kafka::consumer', type: :class do
     }
   end
 
-  let :params do
+  let :common_params do
     {
       service_config: {
         'topic'     => 'demo',
         'zookeeper' => 'localhost:2181'
       }
     }
+  end
+
+  let :params do
+    common_params
   end
 
   it { is_expected.to contain_class('kafka::consumer::install').that_comes_before('Class[kafka::consumer::service]') }
@@ -77,13 +82,7 @@ describe 'kafka::consumer', type: :class do
 
       context 'service_requires_zookeeper disabled' do
         let :params do
-          {
-            service_requires_zookeeper: false,
-            service_config: {
-              'topic'     => 'demo',
-              'zookeeper' => 'localhost:2181'
-            }
-          }
+          common_params.merge(service_requires_zookeeper: false)
         end
 
         it { should_not contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
@@ -91,17 +90,14 @@ describe 'kafka::consumer', type: :class do
 
       context 'service_requires_zookeeper enabled' do
         let :params do
-          {
-            service_requires_zookeeper: true,
-            service_config: {
-              'topic'     => 'demo',
-              'zookeeper' => 'localhost:2181'
-            }
-          }
+          common_params.merge(service_requires_zookeeper: true)
         end
 
         it { should contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
       end
     end
   end
+
+  it_validates_parameter 'mirror_url'
+
 end
