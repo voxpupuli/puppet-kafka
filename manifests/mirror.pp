@@ -84,7 +84,7 @@ class kafka::mirror (
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_re($mirror_url, '^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})(:[\d]{2,5})?(\/[\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
+  validate_re($mirror_url, $kafka::params::mirror_url_regex, "${mirror_url} is not a valid url")
   validate_integer($num_streams)
   validate_integer($num_producers)
   validate_bool($abort_on_send_failure)
