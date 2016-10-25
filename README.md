@@ -1,4 +1,13 @@
-####Table of Contents
+# Kafka module for Puppet
+
+[![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
+[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-kafka/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-kafka)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+[![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+
+#### Table of Contents
 
 1. [Overview](#overview)
 2. [Module Description - What the module does and why it is useful](#module-description)
@@ -11,25 +20,26 @@
 5. [Limitations - OS compatibility, etc.](#limitations)
 6. [Development - Guide for contributing to the module](#development)
 
-##Overview
+## Overview
 
 The kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org)
 
-[![Puppet Forge](http://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka) [![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
+## Module Description
 
-##Module Description
+The Kafka module for managing the installation and configuration of Apache Kafka:
+it's brokers, producers and consumers.
 
-The Kafka module for managing the installation and configuration of Apache Kafka: it's brokers, producers and consumers.
+## Setup
 
-##Setup
-
-###What kafka affects
+### What kafka affects
 
 Installs the Kafka package and creates a new service.
 
-###Beginning with Kafka
+### Beginning with Kafka
 
-To successfully install Kafka using this module you need to have Apache Zookeeper already running at localhost:2181. You can specify another Zookeeper host:port configuration using the config hash of the kafka:broker class.
+To successfully install Kafka using this module you need to have Apache Zookeeper
+already running at localhost:2181. You can specify another Zookeeper host:port
+configuration using the config hash of the kafka:broker class.
 
 The default configuration installs Kafka 0.8.2.1 binaries with Scala 2.10
 
@@ -40,99 +50,150 @@ The default configuration installs Kafka 0.8.2.1 binaries with Scala 2.10
 If you want a Kafka broker server that connects to zookeeper listening on port 2181:
 
 ```puppet
-	class { 'kafka::broker':
-	  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-	}
+  class { 'kafka::broker':
+    config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
+  }
 ```
 
-##Usage
+## Usage
 
-You can specify different Kafka binaries packages versions to install. Please take a look at the different Scala and Kafka versions combinations at the [Apache Kafka Website](http://kafka.apache.org/downloads.html)
+You can specify different Kafka binaries packages versions to install. Please
+take a look at the different Scala and Kafka versions combinations at the
+[Apache Kafka Website](http://kafka.apache.org/downloads.html)
 
 ### Installing Kafka version 0.8.2.2 with scala 2.10
 
 We first install the binary package with:
 
 ```puppet
-	class { 'kafka':
-		version => '0.8.2.2',
-		scala_version => '2.10'
-	}
+  class { 'kafka':
+    version => '0.8.2.2',
+    scala_version => '2.10'
+  }
 ```
 
 Then we set a minimal Kafka broker configuration with:
 
 ```puppet
-	class { 'kafka::broker':
-	  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-	}
+  class { 'kafka::broker':
+    config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
+  }
 ```
 
-###Classes and Defined Types
+### Classes and Defined Types
 
-####Class: `kafka`
-One of the primary classes of the kafka module. This class will install the kafka binaries
+#### Class: `kafka`
+
+One of the primary classes of the kafka module. This class will install the
+kafka binaries
 
 **Parameters within `kafka`:**
-#####`version`
+
+##### `version`
+
 The version of kafka that should be installed.
-#####`scala_version`
+
+##### `scala_version`
+
 The scala version what kafka was built with.
-#####`install_dir`
+
+##### `install_dir`
+
 The directory to install kafka to.
-#####`mirror_url`
+
+##### `mirror_url`
+
 The url where the kafka is downloaded from.
-#####`install_java`
+
+##### `install_java`
+
 Install java if it's not already installed.
-#####`package_dir`
+
+##### `package_dir`
+
 The directory to install kafka.
-####`package_name`
+
+#### `package_name`
+
 Package name, when installing kafka from a package.
-####`package_ensure`
-Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
-####`group_id`
+
+#### `package_ensure`
+
+Package version (or 'present', 'absent', 'latest'), when installing kafka from
+a package.
+
+#### `group_id`
+
 Create kafka group with this ID
-####`user_id`
+
+#### `user_id`
+
 Create kafka user with this ID
 
-####Class: `kafka::broker`
+#### Class: `kafka::broker`
+
 One of the primary classes of the kafka module. This class will install a kafka broker.
 
 **Parameters within `kafka::broker`:**
-#####`version`
+
+##### `version`
+
 The version of kafka that should be installed.
-#####`scala_version`
+
+##### `scala_version`
+
 The scala version what kafka was built with.
-#####`install_dir`
+
+##### `install_dir`
+
 The directory to install kafka to.
-#####`mirror_url`
+
+##### `mirror_url`
+
 The url where the kafka is downloaded from.
-#####`config`
-A hash of the configuration options. All values are used in the `server.properties` file directly.
-#####`install_java`
+
+##### `config`
+
+A hash of the configuration options. All values are used in the
+`server.properties` file directly.
+
+##### `install_java`
+
 Install java if it's not already installed.
-#####`service_ensure`
+
+##### `service_ensure`
+
 Sets the ensure state of the broker service to stopped or running.
-#####`service_install`
+
+##### `service_install`
+
 Install the init.d service.
-#####`service_restart`
+
+##### `service_restart`
+
 Whether the configuration files should trigger a service restart
-#####`package_dir`
+
+##### `package_dir`
+
 The directory to install kafka.
 
-##Reference
+## Reference
 
-###Classes
-####Public Classes
+### Classes
+
+#### Public Classes
+
 * [`kafka`](#class-kafka-broker): Guides the basic installation of kafka binaries
-* [`kafka::broker`](#class-kafka-broker): Guides the basic installation of a kafka broker
+* [`kafka::broker`](#class-kafka-broker): Guides the basic installation of a
+  kafka broker
 
-####Private Classes
+#### Private Classes
+
 * [`kafka::broker::config`]  Manages all the default configuration of the kafka application
 * [`kafka::broker::install`] Manages the installation of the kafka packages
 * [`kafka::broker::service`] Manages the kafka server service
 
-##Limitations
+## Limitations
 
 This module is tested on the following platforms:
 
@@ -143,8 +204,8 @@ This module is tested on the following platforms:
 
 It is tested with the OSS version of Puppet only.
 
-##Development
+## Development
 
-###Contributing
+### Contributing
 
 Please read CONTRIBUTING.md for full details on contributing to this project.
