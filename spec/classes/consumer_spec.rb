@@ -86,7 +86,7 @@ describe 'kafka::consumer', type: :class do
           }
         end
 
-        it { should_not contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.not_to contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
       end
 
       context 'service_requires_zookeeper enabled' do
@@ -100,7 +100,7 @@ describe 'kafka::consumer', type: :class do
           }
         end
 
-        it { should contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.to contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
       end
     end
   end

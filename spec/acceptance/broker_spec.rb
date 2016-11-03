@@ -93,7 +93,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
-        it { should contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
+        it { is_expected.to contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
       end
     end
 
@@ -146,7 +146,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { should contain 'Requires=zookeeper.service' }
+        it { is_expected.to contain 'Requires=zookeeper.service' }
       end
 
       describe service('kafka') do
@@ -182,7 +182,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { should_not contain 'Requires=zookeeper.service' }
+        it { is_expected.not_to contain 'Requires=zookeeper.service' }
       end
 
       describe service('kafka') do
@@ -216,19 +216,19 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { should contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9999"' }
-        it { should contain 'export KAFKA_HEAP_OPTS="-Xmx512M -Xmx512M"' }
-        it { should contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
+        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9999"' }
+        it { is_expected.to contain 'export KAFKA_HEAP_OPTS="-Xmx512M -Xmx512M"' }
+        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
       end
 
       describe file('/usr/lib/systemd/system/kafka.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { should contain "Environment='KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote'" }
-        it { should contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xmx512M'" }
-        it { should contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
-        it { should contain "Environment='KAFKA_OPTS=-Djava.security.policy=/some/path/my.policy'" }
+        it { is_expected.to contain "Environment='KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote'" }
+        it { is_expected.to contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xmx512M'" }
+        it { is_expected.to contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
+        it { is_expected.to contain "Environment='KAFKA_OPTS=-Djava.security.policy=/some/path/my.policy'" }
       end
 
       describe service('kafka') do
