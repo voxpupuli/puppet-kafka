@@ -4,20 +4,19 @@ RSpec.configure do |c|
 end
 
 shared_examples 'mirror_url' do
-
   domain_names = {
     'foobar.com'  => true,
     'foo.bar.com' => true,
     '999.bar.com' => true,
     'foo-bar.com' => true,
     'no-tld'      => false,
-    'foo.longtld' => false,
+    'foo.longtld' => false
   }
 
   prefixes = {
     'http://'   => true,
     'https://'  => true,
-    'random://' => false,
+    'random://' => false
   }
 
   paths = {
@@ -26,7 +25,7 @@ shared_examples 'mirror_url' do
     '/package'              => true,
     '/package/'             => true,
     '/another/package'      => true,
-    '/yet/another/package/' => true,
+    '/yet/another/package/' => true
   }
 
   ports = {
@@ -34,21 +33,17 @@ shared_examples 'mirror_url' do
     ':9'      => false,
     ':10'     => true,
     ':99999'  => true,
-    ':100000' => false,
+    ':100000' => false
   }
 
   prefixes.each do |prefix, valid_prefix|
     context "with prefix <#{prefix}>" do
-
       domain_names.each do |domain_name, valid_domain|
         context "with domain name <#{domain_name}>" do
-
           paths.each do |path, valid_path|
             context "with path <#{path}>" do
-
               ports.each do |port, valid_port|
                 context "with port <#{port}>" do
-
                   mirror_url = "#{prefix}#{domain_name}#{port}#{path}"
                   context "URL => <#{mirror_url}>" do
                     let :params do
@@ -58,7 +53,7 @@ shared_examples 'mirror_url' do
                     if valid_domain && valid_prefix && valid_path && valid_port
                       it { is_expected.to compile }
                     else
-                      it { expect { is_expected.to compile }.to raise_error(/#{mirror_url} is not a valid url/) }
+                      it { expect { is_expected.to compile }.to raise_error(%r(#{mirror_url} is not a valid url)) }
                     end
                   end
                 end

@@ -99,5 +99,4 @@ describe 'kafka::consumer', type: :class do
   end
 
   it_validates_parameter 'mirror_url'
-
 end
