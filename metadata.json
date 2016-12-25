@@ -1,6 +1,6 @@
 {
   "name": "puppet-kafka",
-  "version": "2.2.0",
+  "version": "2.2.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Puppet module for Kafka",
   "license": "MIT",
@@ -62,7 +62,10 @@
     }
   ],
   "requirements": [
-    {"name":"puppet","version_requirement":">= 3.8.7 < 5.0.0" }
+    {
+      "name": "puppet",
+      "version_requirement": ">= 3.8.7 < 5.0.0"
+    }
   ],
   "tags": [
     "kafka",
