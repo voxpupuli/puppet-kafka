@@ -1,3 +1,12 @@
+# Changelog
+
+## 2016-12-25 - Release 2.2.0
+
+- Modulesync with latext Vox Pupuli defaults
+- Make the systemd manifest configurable
+- Add the port to the mirror URL
+- Fix puppet 4 versioncmp need for string
+
 ## 2016-08-31 - Release 2.1.0
 ### Summary
 Lots of work on the init scripts
