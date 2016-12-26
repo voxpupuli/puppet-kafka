@@ -64,7 +64,7 @@ class kafka::producer (
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_re($mirror_url, '^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$', "${mirror_url} is not a valid url")
+  validate_re($mirror_url, $kafka::params::mirror_url_regex, "${mirror_url} is not a valid url")
   validate_bool($install_java)
   validate_absolute_path($package_dir)
   validate_bool($service_restart)

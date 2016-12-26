@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_param_validation'
 
 describe 'kafka::mirror', type: :class do
   let :facts do
@@ -12,7 +13,7 @@ describe 'kafka::mirror', type: :class do
     }
   end
 
-  let :params do
+  let :common_params do
     {
       consumer_config: {
         'group.id'          => 'kafka-mirror',
@@ -22,6 +23,10 @@ describe 'kafka::mirror', type: :class do
         'bootstrap.servers' => 'localhost:9092'
       }
     }
+  end
+
+  let :params do
+    common_params
   end
 
   it { is_expected.to contain_class('kafka::mirror::install').that_comes_before('Class[kafka::mirror::config]') }
@@ -93,16 +98,7 @@ describe 'kafka::mirror', type: :class do
 
       context 'service_requires_zookeeper disabled' do
         let :params do
-          {
-            service_requires_zookeeper: false,
-            consumer_config: {
-              'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181'
-            },
-            producer_config: {
-              'bootstrap.servers' => 'localhost:9092'
-            }
-          }
+          common_params.merge(service_requires_zookeeper: false)
         end
 
         it { is_expected.not_to contain_file('kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
@@ -110,20 +106,13 @@ describe 'kafka::mirror', type: :class do
 
       context 'service_requires_zookeeper enabled' do
         let :params do
-          {
-            service_requires_zookeeper: true,
-            consumer_config: {
-              'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181'
-            },
-            producer_config: {
-              'bootstrap.servers' => 'localhost:9092'
-            }
-          }
+          common_params.merge(service_requires_zookeeper: true)
         end
 
         it { is_expected.to contain_file('kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
       end
     end
   end
+
+  it_validates_parameter 'mirror_url'
 end

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'shared_examples_param_validation'
 
 describe 'kafka::broker', type: :class do
   let :facts do
@@ -11,12 +12,16 @@ describe 'kafka::broker', type: :class do
       service_provider: 'upstart'
     }
   end
-  let :params do
+  let :common_params do
     {
       config: {
         'zookeeper.connect' => 'localhost:2181'
       }
     }
+  end
+
+  let :params do
+    common_params
   end
 
   it { is_expected.to contain_class('kafka::broker::install').that_comes_before('Class[kafka::broker::config]') }
@@ -40,12 +45,7 @@ describe 'kafka::broker', type: :class do
     describe 'kafka::broker::service' do
       context 'service_install false' do
         let :params do
-          {
-            config: {
-              'zookeeper.connect' => 'localhost:2181'
-            },
-            service_install: false
-          }
+          common_params.merge(service_install: false)
         end
         it { is_expected.not_to contain_file('kafka.service') }
 
@@ -87,12 +87,7 @@ describe 'kafka::broker', type: :class do
     describe 'kafka::broker::service' do
       context 'service_install false' do
         let :params do
-          {
-            config: {
-              'zookeeper.connect' => 'localhost:2181'
-            },
-            service_install: false
-          }
+          common_params.merge(service_install: false)
         end
         it { is_expected.not_to contain_file('kafka.service') }
 
@@ -134,4 +129,6 @@ describe 'kafka::broker', type: :class do
       end
     end
   end
+
+  it_validates_parameter 'mirror_url'
 end
