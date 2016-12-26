@@ -66,6 +66,11 @@ class kafka (
   $basefilename = "kafka_${scala_version}-${version}.tgz"
   $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
 
+  $source = $mirror_url ?{
+    /tgz$/ => $mirror_url,
+    default  => $package_url,
+  }
+
   $install_directory = $install_dir ? {
     # if install_dir was not changed,
     # we adapt it for the scala_version and the version
@@ -142,7 +147,7 @@ class kafka (
       extract         => true,
       extract_command => 'tar xfz %s --strip-components=1',
       extract_path    => $install_directory,
-      source          => $package_url,
+      source          => $source,
       creates         => "${install_directory}/config",
       cleanup         => true,
       user            => 'kafka',
