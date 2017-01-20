@@ -38,12 +38,21 @@ class kafka::broker::config(
   }
 
   file { '/opt/kafka/config/server.properties':
-    ensure  => present,
+    ensure  => file,
     owner   => 'kafka',
     group   => 'kafka',
     mode    => '0644',
     content => template('kafka/server.properties.erb'),
     notify  => $config_notify,
     require => File['/opt/kafka/config'],
+  }
+
+  if $config['broker.id'] != '-1' {
+    file_line { 'sync_broker_id':
+      path   => "${config['log.dir']}/meta.properties",
+      match  => '^broker.id=',
+      line   => "broker=id=${config['broker.id']}",
+      notify => $config_notify,
+    }
   }
 }
