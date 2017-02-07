@@ -11,7 +11,8 @@ define kafka::consumer::config(
   $config          = $kafka::consumer::config,
   $config_defaults = $kafka::consumer::config_defaults,
   $service_name    = 'kafka-consumer',
-  $service_restart = $kafka::consumer::service_restart
+  $service_restart = $kafka::consumer::service_restart,
+  $config_dir      = $kafka::consumer::config_dir,
 ) {
 
   $consumer_config = deep_merge($config_defaults, $config)
@@ -21,13 +22,13 @@ define kafka::consumer::config(
     default => undef
   }
 
-  file { "/opt/kafka/config/${name}.properties":
+  file { "${config_dir}/${name}.properties":
     ensure  => present,
     owner   => 'kafka',
     group   => 'kafka',
     mode    => '0644',
     content => template('kafka/consumer.properties.erb'),
     notify  => $config_notify,
-    require => File['/opt/kafka/config'],
+    require => File[$config_dir],
   }
 }

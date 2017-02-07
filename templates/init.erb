@@ -26,7 +26,7 @@ KAFKA_USER=kafka
 PGREP_PATTERN=kafka.Kafka
 
 DAEMON="/opt/kafka/bin/kafka-server-start.sh"
-DAEMON_OPTS="/opt/kafka/config/server.properties"
+DAEMON_OPTS="<%= @config_dir %>/server.properties"
 
 export KAFKA_JMX_OPTS="<%= @jmx_opts %>"
 export KAFKA_LOG4J_OPTS="<%= @log4j_opts %>"

@@ -11,7 +11,8 @@ class kafka::producer::config(
   $config          = $kafka::producer::config,
   $config_defaults = $kafka::producer::config_defaults,
   $service_name    = 'kafka-producer',
-  $service_restart = $kafka::producer::service_restart
+  $service_restart = $kafka::producer::service_restart,
+  $config_dir      = $kafka::producer::config_dir,
 ) {
 
   $producer_config = deep_merge($config_defaults, $config)
@@ -21,13 +22,13 @@ class kafka::producer::config(
     default => undef
   }
 
-  file { '/opt/kafka/config/producer.properties':
+  file { "${config_dir}/producer.properties":
     ensure  => present,
     owner   => 'kafka',
     group   => 'kafka',
     mode    => '0644',
     content => template('kafka/producer.properties.erb'),
     notify  => $config_notify,
-    require => File['/opt/kafka/config'],
+    require => File[$config_dir],
   }
 }

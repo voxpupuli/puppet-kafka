@@ -110,6 +110,38 @@ describe 'kafka::mirror' do
       end
     end
 
+    context 'with custom config_dir' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::mirror':
+            consumer_config => {
+              'group.id'          => 'kafka-mirror',
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            producer_config => {
+              'bootstrap.servers' => 'localhost:9092',
+            },
+            config_dir => '/opt/kafka/custom_config'
+          }
+        EOS
+
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      describe file('/opt/kafka/custom_config/consumer-1.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/opt/kafka/custom_config/producer.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+    end
+
     context 'with specific version' do
       it 'works with no errors' do
         pp = <<-EOS
