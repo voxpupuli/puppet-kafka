@@ -16,7 +16,8 @@ class kafka::mirror::service(
   $abort_on_send_failure      = $kafka::mirror::abort_on_send_failure,
   $whitelist                  = $kafka::mirror::whitelist,
   $blacklist                  = $kafka::mirror::blacklist,
-  $max_heap                   = $kafka::mirror::max_heap
+  $max_heap                   = $kafka::mirror::max_heap,
+  $config_dir                 = $kafka::params::config_dir,
 ) inherits ::kafka::params {
 
   if $caller_module_name != $module_name {

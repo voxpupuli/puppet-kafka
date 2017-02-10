@@ -39,7 +39,8 @@ describe 'kafka', type: :class do
             install_dir: '/usr/local/kafka',
             user_id: 9092,
             group_id: 9092,
-            install_java: false
+            install_java: false,
+            config_dir: '/opt/kafka/custom_config'
           }
         end
         it { is_expected.to contain_group('kafka').with(gid: 9092) }
@@ -48,7 +49,7 @@ describe 'kafka', type: :class do
         it { is_expected.to contain_file('/var/tmp/kafka') }
         it { is_expected.to contain_file('/opt/kafka') }
         it { is_expected.to contain_file('/usr/local/kafka') }
-        it { is_expected.to contain_file('/opt/kafka/config') }
+        it { is_expected.to contain_file('/opt/kafka/custom_config') }
         it { is_expected.to contain_file('/var/log/kafka') }
       end
     end

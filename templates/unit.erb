@@ -18,7 +18,7 @@ Environment='KAFKA_HEAP_OPTS=<%= @heap_opts %>'
 Environment='KAFKA_LOG4J_OPTS=<%= @log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @jmx_opts %>'
 Environment='KAFKA_OPTS=<%= @opts %>'
-ExecStart=/opt/kafka/bin/kafka-server-start.sh /opt/kafka/config/server.properties
+ExecStart=/opt/kafka/bin/kafka-server-start.sh <%= @config_dir %>/server.properties
   <%- when 'kafka-consumer' -%>
 Environment='KAFKA_LOG4J_OPTS=<%= @consumer_log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @consumer_jmx_opts %>'
