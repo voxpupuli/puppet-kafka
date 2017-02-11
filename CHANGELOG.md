@@ -1,5 +1,10 @@
 # Changelog
 
+## 2017-02-11 - Release 2.3.0
+
+This is the last release with Puppet3 support!
+- Bump dependencies for Puppet4 support
+
 ## 2016-12-25 - Release 2.2.0
 
 - Modulesync with latext Vox Pupuli defaults
