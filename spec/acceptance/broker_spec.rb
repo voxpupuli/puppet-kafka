@@ -97,6 +97,29 @@ describe 'kafka::broker' do
       end
     end
 
+    context 'with custom config dir' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            config_dir => '/opt/kafka/custom_config'
+          }
+        EOS
+
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      describe file('/opt/kafka/custom_config/server.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+        it { is_expected.to contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
+      end
+    end
+
     context 'with specific version' do
       it 'works with no errors' do
         pp = <<-EOS

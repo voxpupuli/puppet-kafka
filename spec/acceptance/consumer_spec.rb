@@ -96,6 +96,31 @@ describe 'kafka::consumer' do
     end
   end
 
+  describe 'kafka::consumer::config' do
+    context 'with custom config_dir' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::consumer':
+            service_config => {
+              topic     => 'demo',
+              zookeeper => 'localhost:2181',
+            },
+            config_dir => '/opt/kafka/custom_config',
+          }
+        EOS
+
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      describe file('/opt/kafka/custom_config/consumer.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+    end
+  end
+
   describe 'kafka::consumer::service' do
     context 'with default parameters' do
       it 'works with no errors' do

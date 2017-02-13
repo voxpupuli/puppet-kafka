@@ -11,6 +11,7 @@ class kafka::params {
   $version        = '0.9.0.1'
   $scala_version  = '2.11'
   $install_dir    = "/opt/kafka-${scala_version}-${version}"
+  $config_dir     = '/opt/kafka/config'
   $mirror_url     = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
   $install_java   = true
   $package_dir    = '/var/tmp/kafka'
@@ -24,10 +25,11 @@ class kafka::params {
   $broker_service_install = true
   $broker_service_ensure = 'running'
 
+
   $broker_jmx_opts = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9990'
   $broker_heap_opts = '-Xmx1G -Xms1G'
-  $broker_log4j_opts = '-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties'
+  $broker_log4j_opts = "-Dlog4j.configuration=file:${config_dir}/log4j.properties"
   $broker_opts = ''
 
   $mirror_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
@@ -308,8 +310,8 @@ class kafka::params {
 
   #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
   #https://kafka.apache.org/documentation.html#basic_ops_mirror_maker
-  $consumer_config = '/opt/kafka/config/consumer-1.properties'
-  $producer_config = '/opt/kafka/config/producer.properties'
+  $consumer_config = "${config_dir}/consumer-1.properties"
+  $producer_config = "${config_dir}/producer.properties"
   $num_streams = 2
   $num_producers = 1
   $abort_on_send_failure = true

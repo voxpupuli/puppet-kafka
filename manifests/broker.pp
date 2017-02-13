@@ -37,6 +37,9 @@
 # [*service_restart*]
 # Boolean, if the configuration files should trigger a service restart
 #
+# [*config_dir*]
+# The directory to create the kafka config files to
+#
 # === Examples
 #
 # Create a single broker instance which talks to a local zookeeper instance.
@@ -64,6 +67,7 @@ class kafka::broker (
   $opts                       = $kafka::params::broker_opts,
   $group_id                   = $kafka::params::group_id,
   $user_id                    = $kafka::params::user_id,
+  $config_dir                 = $kafka::params::config_dir,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")

@@ -18,7 +18,8 @@ describe 'kafka::consumer::config', type: :define do
         {
           'config'          => {},
           'config_defaults' => {},
-          'service_restart' => 'true'
+          'service_restart' => 'true',
+          'config_dir'      => '/opt/kafka/config'
         }
       end
 

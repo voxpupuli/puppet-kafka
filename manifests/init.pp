@@ -43,6 +43,9 @@
 # [*user_id*]
 # Create kafka user with this ID
 #
+# [*config_dir*]
+# The directory to create the kafka config files to
+#
 # === Examples
 #
 #
@@ -57,6 +60,7 @@ class kafka (
   $package_ensure = $kafka::params::package_ensure,
   $group_id       = $kafka::params::group_id,
   $user_id        = $kafka::params::user_id,
+  $config_dir     = $kafka::params::config_dir,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -123,7 +127,7 @@ class kafka (
     require => File[$install_directory],
   }
 
-  file { '/opt/kafka/config':
+  file { $config_dir:
     ensure => directory,
     owner  => 'kafka',
     group  => 'kafka',
@@ -158,12 +162,12 @@ class kafka (
         Group['kafka'],
         User['kafka'],
       ],
-      before          => File['/opt/kafka/config'],
+      before          => File[$config_dir],
     }
   } else {
     package { $package_name:
       ensure => $package_ensure,
-      before => File['/opt/kafka/config'],
+      before => File[$config_dir],
     }
   }
 }

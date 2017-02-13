@@ -12,7 +12,8 @@ class kafka::broker::config(
   $config_defaults = $kafka::broker::config_defaults,
   $install_dir     = $kafka::broker::install_dir,
   $service_restart = $kafka::broker::service_restart,
-  $service_install = $kafka::broker::service_install
+  $service_install = $kafka::broker::service_install,
+  $config_dir      = $kafka::broker::config_dir,
 ) {
 
   if $caller_module_name != $module_name {
@@ -37,13 +38,13 @@ class kafka::broker::config(
     $config_notify = undef
   }
 
-  file { '/opt/kafka/config/server.properties':
+  file { "${config_dir}/server.properties":
     ensure  => present,
     owner   => 'kafka',
     group   => 'kafka',
     mode    => '0644',
     content => template('kafka/server.properties.erb'),
     notify  => $config_notify,
-    require => File['/opt/kafka/config'],
+    require => File[$config_dir],
   }
 }

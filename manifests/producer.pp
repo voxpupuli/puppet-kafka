@@ -37,6 +37,9 @@
 # [*service_restart*]
 # Boolean, if the configuration files should trigger a service restart
 #
+# [*config_dir*]
+# The directory to create the kafka config files to
+#
 # === Examples
 #
 # Create the producer service connecting to a local zookeeper
@@ -60,7 +63,8 @@ class kafka::producer (
   $service_restart            = $kafka::params::service_restart,
   $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
   $producer_jmx_opts          = $kafka::params::producer_jmx_opts,
-  $producer_log4j_opts        = $kafka::params::producer_log4j_opts
+  $producer_log4j_opts        = $kafka::params::producer_log4j_opts,
+  $config_dir                 = $kafka::params::config_dir,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
