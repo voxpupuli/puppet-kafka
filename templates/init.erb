@@ -92,6 +92,12 @@ stop() {
 
   kill `cat "$PID_FILE"`;
   rm -f -- "$PID_FILE";
+
+  # wait until the process is finished
+  while [ ! -z `pgrep -f "$PGREP_PATTERN"` ]; do
+    sleep 1
+  done
+
   echo "$NAME stopped"
   return 0
 }
