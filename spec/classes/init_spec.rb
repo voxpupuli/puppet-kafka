@@ -4,6 +4,7 @@ describe 'kafka', type: :class do
   let :facts do
     {
       osfamily: 'Debian',
+      os: { family: 'Debian' },
       operatingsystem: 'Ubuntu',
       operatingsystemrelease: '14.04',
       lsbdistcodename: 'trusty',
