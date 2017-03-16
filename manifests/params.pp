@@ -12,6 +12,7 @@ class kafka::params {
   $scala_version  = '2.11'
   $install_dir    = "/opt/kafka-${scala_version}-${version}"
   $config_dir     = '/opt/kafka/config'
+  $log_dir        = '/var/log/kafka'
   $mirror_url     = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
   $install_java   = true
   $package_dir    = '/var/tmp/kafka'
@@ -19,6 +20,8 @@ class kafka::params {
   $package_ensure = 'present'
   $group_id       = undef
   $user_id        = undef
+  $user           = 'kafka'
+  $group          = 'kafka'
 
   $service_requires_zookeeper = true
 

@@ -43,8 +43,17 @@
 # [*user_id*]
 # Create kafka user with this ID
 #
+# [*group*]
+# Group to install kafka as
+#
+# [*user*]
+# User to install kafka as
+#
 # [*config_dir*]
 # The directory to create the kafka config files to
+#
+# [*log_dir*]
+# The directory for kafka log files
 #
 # === Examples
 #
@@ -60,7 +69,10 @@ class kafka (
   $package_ensure = $kafka::params::package_ensure,
   $group_id       = $kafka::params::group_id,
   $user_id        = $kafka::params::user_id,
+  $user           = $kafka::params::user,
+  $group          = $kafka::params::group,
   $config_dir     = $kafka::params::config_dir,
+  $log_dir        = $kafka::params::log_dir,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -89,35 +101,35 @@ class kafka (
     }
   }
 
-  group { 'kafka':
+  group { $group:
     ensure => present,
     gid    => $group_id,
   }
 
-  user { 'kafka':
+  user { $user:
     ensure  => present,
     shell   => '/bin/bash',
-    require => Group['kafka'],
+    require => Group[$group],
     uid     => $user_id,
   }
 
   file { $package_dir:
     ensure  => directory,
-    owner   => 'kafka',
-    group   => 'kafka',
+    owner   => $user,
+    group   => $group,
     require => [
-      Group['kafka'],
-      User['kafka'],
+      Group[$group],
+      User[$user],
     ],
   }
 
   file { $install_directory:
     ensure  => directory,
-    owner   => 'kafka',
-    group   => 'kafka',
+    owner   => $user,
+    group   => $group,
     require => [
-      Group['kafka'],
-      User['kafka'],
+      Group[$group],
+      User[$user],
     ],
   }
 
@@ -129,17 +141,17 @@ class kafka (
 
   file { $config_dir:
     ensure => directory,
-    owner  => 'kafka',
-    group  => 'kafka',
+    owner  => $user,
+    group  => $group,
   }
 
-  file { '/var/log/kafka':
+  file { $log_dir:
     ensure  => directory,
-    owner   => 'kafka',
-    group   => 'kafka',
+    owner   => $user,
+    group   => $group,
     require => [
-      Group['kafka'],
-      User['kafka'],
+      Group[$group],
+      User[$user],
     ],
   }
 
@@ -154,13 +166,13 @@ class kafka (
       source          => $source,
       creates         => "${install_directory}/config",
       cleanup         => true,
-      user            => 'kafka',
-      group           => 'kafka',
+      user            => $user,
+      group           => $group,
       require         => [
         File[$package_dir],
         File[$install_directory],
-        Group['kafka'],
-        User['kafka'],
+        Group[$group],
+        User[$user],
       ],
       before          => File[$config_dir],
     }
