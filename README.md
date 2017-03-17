@@ -130,6 +130,22 @@ Create kafka group with this ID
 
 Create kafka user with this ID
 
+#### `user`
+
+User to install kafka as. Defaults to the kafka user.
+
+#### `group`
+
+Group to install kafka as. Defaults to the kafka group.
+
+#### `config_dir`
+
+Directory for kafka config files. Defaults to /opt/kafka/config.
+
+#### `log_dir`
+
+Directory for kafka log files. Defaults to /var/log/kafka.
+
 #### Class: `kafka::broker`
 
 One of the primary classes of the kafka module. This class will install a kafka broker.
