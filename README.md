@@ -193,21 +193,139 @@ Whether the configuration files should trigger a service restart
 
 The directory to install kafka.
 
+#### Class: `kafka::consumer`
+
+One of the primary classes of the kafka module. This class will install a kafka consumer.
+
+**Parameters within `kafka::consumer`:**
+
+#### `version`
+
+The version of kafka that should be installed.
+
+#### `scala_version`
+
+The scala version that kafka was built with.
+
+#### `install_dir`
+
+The directory to install kafka to.
+
+#### `mirror_url`
+
+The url where the kafka is downloaded from.
+
+#### `install_java`
+
+Install java if it's not already installed.
+
+#### `package_dir`
+
+The directory to install kafka.
+
+#### Class: `kafka::mirror`
+
+One of the primary classes of the kafka module. This class will install a kafka mirror.
+
+**Parameters within `kafka::mirror`:**
+
+#### `version`
+
+The version of kafka that should be installed.
+
+#### `scala_version`
+
+The scala version that kafka was built with.
+
+#### `install_dir`
+
+The directory to install kafka to.
+
+#### `mirror_url`
+
+The url where the kafka is downloaded from.
+
+#### `install_java`
+
+Install java if it's not already installed.
+
+#### `package_dir`
+
+The directory to install kafka.
+
+#### Class: `kafka::producer`
+
+One of the primary classes of the kafka module. This class will install a kafka producer.
+
+**Parameters within `kafka::producer`:**
+
+#### `version`
+
+The version of kafka that should be installed.
+
+#### `scala_version`
+
+The scala version that kafka was built with.
+
+#### `install_dir`
+
+The directory to install kafka to.
+
+#### `mirror_url`
+
+The url where the kafka is downloaded from.
+
+#### `install_java`
+
+Install java if it's not already installed.
+
+#### `package_dir`
+
+The directory to install kafka.
+
+#### Define: `kafka::broker::topic`
+
+Defined type that creates Kafka broker topics.
+
+#### Define: `kafka::consumer::config`
+
+Defined type that configures kafka consumers.
+
 ## Reference
 
 ### Classes
 
 #### Public Classes
 
-* [`kafka`](#class-kafka-broker): Guides the basic installation of kafka binaries
-* [`kafka::broker`](#class-kafka-broker): Guides the basic installation of a
+* `kafka`: Guides the basic installation of kafka binaries
+* `kafka::broker`: Guides the basic installation of a
   kafka broker
+* `kafka::consumer`: Guides the basic installation of a
+  kafka consumer
+* `kafka::mirror`: Guides the basic installation of a
+  kafka mirror
+* `kafka::producer`: Guides the basic installation of a
+  kafka producer
 
 #### Private Classes
 
-* [`kafka::broker::config`]  Manages all the default configuration of the kafka application
+* [`kafka::broker::config`]  Manages all the default configuration of the kafka broker application
 * [`kafka::broker::install`] Manages the installation of the kafka packages
 * [`kafka::broker::service`] Manages the kafka server service
+* [`kafka::consumer::config`]  Manages all the default configuration of the kafka consumer application
+* [`kafka::consumer::install`] Manages the installation of the kafka packages
+* [`kafka::consumer::service`] Manages the kafka server service
+* [`kafka::mirror::config`]  Manages all the default configuration of the kafka mirror application
+* [`kafka::mirror::install`] Manages the installation of the kafka packages
+* [`kafka::mirror::service`] Manages the kafka server service
+* [`kafka::producer::config`]  Manages all the default configuration of the kafka producer application
+* [`kafka::producer::install`] Manages the installation of the kafka packages
+* [`kafka::producer::service`] Manages the kafka server service
+
+#### Defined Types
+
+* `kafka::broker::topic` Create kafka broker topics
+* `kafka::consumer::config` Create kafka broker topics
 
 ## Limitations
 
