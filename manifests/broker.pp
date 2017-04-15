@@ -79,8 +79,8 @@ class kafka::broker (
   validate_re($service_ensure, '^(running|stopped)$')
   validate_bool($service_restart)
 
-  class { '::kafka::broker::install': } ->
-  class { '::kafka::broker::config': } ->
-  class { '::kafka::broker::service': } ->
-  Class['kafka::broker']
+  class { '::kafka::broker::install': }
+  -> class { '::kafka::broker::config': }
+  -> class { '::kafka::broker::service': }
+  -> Class['kafka::broker']
 }

@@ -73,8 +73,8 @@ class kafka::producer (
   validate_absolute_path($package_dir)
   validate_bool($service_restart)
 
-  class { '::kafka::producer::install': } ->
-  class { '::kafka::producer::config': } ->
-  class { '::kafka::producer::service': } ->
-  Class['kafka::producer']
+  class { '::kafka::producer::install': }
+  -> class { '::kafka::producer::config': }
+  -> class { '::kafka::producer::service': }
+  -> Class['kafka::producer']
 }
