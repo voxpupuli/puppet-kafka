@@ -48,6 +48,7 @@ describe 'kafka::broker', type: :class do
         let :params do
           common_params.merge(service_install: false)
         end
+
         it { is_expected.not_to contain_file('kafka.service') }
 
         it { is_expected.not_to contain_service('kafka') }
@@ -91,6 +92,7 @@ describe 'kafka::broker', type: :class do
         let :params do
           common_params.merge(service_install: false)
         end
+
         it { is_expected.not_to contain_file('kafka.service') }
 
         it { is_expected.not_to contain_service('kafka') }
