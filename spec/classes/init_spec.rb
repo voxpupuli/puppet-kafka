@@ -47,6 +47,7 @@ describe 'kafka', type: :class do
             log_dir: '/var/log/custom_kafka'
           }
         end
+
         it { is_expected.to contain_group('mykafka').with(gid: 9092) }
         it { is_expected.to contain_user('mykafka').with(uid: 9092) }
 
