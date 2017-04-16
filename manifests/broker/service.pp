@@ -39,9 +39,9 @@ class kafka::broker::service(
         ensure => absent,
       }
 
-      File["${service_name}.service"] ~>
-      Exec['systemctl-daemon-reload'] ->
-      Service[$service_name]
+      File["${service_name}.service"]
+      ~> Exec['systemctl-daemon-reload']
+      -> Service[$service_name]
 
     } else {
       file { "${service_name}.service":
