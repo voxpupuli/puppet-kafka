@@ -12,6 +12,7 @@ class kafka::params {
   $scala_version  = '2.11'
   $install_dir    = "/opt/kafka-${scala_version}-${version}"
   $config_dir     = '/opt/kafka/config'
+  $bin_dir        = '/opt/kafka/bin'
   $log_dir        = '/var/log/kafka'
   $mirror_url     = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
   $install_java   = true

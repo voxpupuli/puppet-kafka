@@ -18,6 +18,7 @@ class kafka::mirror::service(
   $blacklist                  = $kafka::mirror::blacklist,
   $max_heap                   = $kafka::mirror::max_heap,
   $config_dir                 = $kafka::params::config_dir,
+  $bin_dir                    = $kafka::params::bin_dir,
 ) inherits ::kafka::params {
 
   if $caller_module_name != $module_name {

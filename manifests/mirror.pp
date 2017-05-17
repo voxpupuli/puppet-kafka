@@ -55,6 +55,9 @@
 # [*config_dir*]
 # The directory to create the kafka config files to
 #
+# [*bin_dir*]
+# The directory where the kafka scripts are
+#
 # === Examples
 #
 # Create the mirror service connecting to a local zookeeper
@@ -85,6 +88,7 @@ class kafka::mirror (
   $mirror_jmx_opts            = $kafka::params::mirror_jmx_opts,
   $mirror_log4j_opts          = $kafka::params::mirror_log4j_opts,
   $config_dir                 = $kafka::params::config_dir,
+  $bin_dir                    = $kafka::params::bin_dir,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")

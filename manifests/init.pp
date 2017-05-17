@@ -52,6 +52,9 @@
 # [*config_dir*]
 # The directory to create the kafka config files to
 #
+# [*bin_dir*]
+# The directory where the kafka scripts are
+#
 # [*log_dir*]
 # The directory for kafka log files
 #
@@ -72,6 +75,7 @@ class kafka (
   $user           = $kafka::params::user,
   $group          = $kafka::params::group,
   $config_dir     = $kafka::params::config_dir,
+  $bin_dir        = $kafka::params::bin_dir,
   $log_dir        = $kafka::params::log_dir,
 ) inherits kafka::params {
 
