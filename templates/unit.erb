@@ -18,20 +18,20 @@ Environment='KAFKA_HEAP_OPTS=<%= @heap_opts %>'
 Environment='KAFKA_LOG4J_OPTS=<%= @log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @jmx_opts %>'
 Environment='KAFKA_OPTS=<%= @opts %>'
-ExecStart=/opt/kafka/bin/kafka-server-start.sh <%= @config_dir %>/server.properties
+ExecStart=<%= @bin_dir %>/kafka-server-start.sh <%= @config_dir %>/server.properties
   <%- when 'kafka-consumer' -%>
 Environment='KAFKA_LOG4J_OPTS=<%= @consumer_log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @consumer_jmx_opts %>'
-ExecStart=/opt/kafka/bin/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>
+ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>
   <%- when 'kafka-mirror' -%>
 Environment='KAFKA_LOG4J_OPTS=<%= @mirror_log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @mirror_jmx_opts %>'
 Environment='KAFKA_HEAP_OPTS=-Xmx<%= @max_heap -%>'
-ExecStart=/opt/kafka/bin/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @consumer_config -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%><%- if (scope.function_versioncmp([scope.lookupvar('kafka::version'), '0.9.0.0']) < 0) -%> --num.producers <%= @num_producers -%><%- end -%><%- if !@whitelist.eql?('') -%> --whitelist='<%= @whitelist -%>'<%- end %><%- if !@blacklist.eql?('') -%> --blacklist='<%= @blacklist -%>'<%- end -%> <%= @abort_on_send_failure_opt %>
+ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @consumer_config -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%><%- if (scope.function_versioncmp([scope.lookupvar('kafka::version'), '0.9.0.0']) < 0) -%> --num.producers <%= @num_producers -%><%- end -%><%- if !@whitelist.eql?('') -%> --whitelist='<%= @whitelist -%>'<%- end %><%- if !@blacklist.eql?('') -%> --blacklist='<%= @blacklist -%>'<%- end -%> <%= @abort_on_send_failure_opt %>
   <%- when 'kafka-producer' -%>
 Environment='KAFKA_LOG4J_OPTS=<%= @producer_log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @producer_jmx_opts %>'
-ExecStart=/opt/kafka/bin/kafka-console-producer.sh <% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%> <%= @input %>
+ExecStart=<%= @bin_dir %>/kafka-console-producer.sh <% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%> <%= @input %>
 <%- end -%>
 LimitNOFILE=65536
 LimitCORE=infinity

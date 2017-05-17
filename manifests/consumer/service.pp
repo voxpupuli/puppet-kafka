@@ -11,6 +11,7 @@ class kafka::consumer::service(
   $service_config             = $kafka::consumer::service_config,
   $service_defaults           = $kafka::consumer::service_defaults,
   $service_requires_zookeeper = $kafka::consumer::service_requires_zookeeper,
+  $bin_dir                    = $kafka::consumer::bin_dir,
 ) {
 
   if $caller_module_name != $module_name {

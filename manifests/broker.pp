@@ -40,6 +40,9 @@
 # [*config_dir*]
 # The directory to create the kafka config files to
 #
+# [*bin_dir*]
+# The directory where the kafka scripts are
+#
 # === Examples
 #
 # Create a single broker instance which talks to a local zookeeper instance.
@@ -68,6 +71,7 @@ class kafka::broker (
   $group_id                   = $kafka::params::group_id,
   $user_id                    = $kafka::params::user_id,
   $config_dir                 = $kafka::params::config_dir,
+  $bin_dir                    = $kafka::params::bin_dir,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
