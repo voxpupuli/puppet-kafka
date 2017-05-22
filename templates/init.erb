@@ -33,6 +33,7 @@ export KAFKA_LOG4J_OPTS="<%= @log4j_opts %>"
 export KAFKA_HEAP_OPTS="<%= @heap_opts %>"
 
 export KAFKA_OPTS="<%= @opts %>"
+export LOG_DIR="<%= @log_dir %>"
 <%- when 'kafka-consumer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleConsumer
 
