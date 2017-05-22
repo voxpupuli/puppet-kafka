@@ -16,6 +16,7 @@ class kafka::broker::service(
   $heap_opts                  = $kafka::broker::heap_opts,
   $opts                       = $kafka::broker::opts,
   $config_dir                 = $kafka::broker::config_dir,
+  $log_dir                    = $kafka::broker::log_dir,
 ) {
 
   if $caller_module_name != $module_name {
