@@ -17,7 +17,9 @@ class kafka::params {
   $package_name   = undef
   $package_ensure = 'present'
   $group_id       = undef
+  $system_group   = false
   $user_id        = undef
+  $system_user    = false
 
   $service_requires_zookeeper = true
 
