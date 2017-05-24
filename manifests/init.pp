@@ -56,7 +56,9 @@ class kafka (
   $package_name   = $kafka::params::package_name,
   $package_ensure = $kafka::params::package_ensure,
   $group_id       = $kafka::params::group_id,
+  $system_group   = $kafka::params::system_group,
   $user_id        = $kafka::params::user_id,
+  $system_user    = $kafka::params::system_user,
 ) inherits kafka::params {
 
   validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
@@ -88,6 +90,7 @@ class kafka (
   group { 'kafka':
     ensure => present,
     gid    => $group_id,
+    system => $system_group,
   }
 
   user { 'kafka':
@@ -95,6 +98,7 @@ class kafka (
     shell   => '/bin/bash',
     require => Group['kafka'],
     uid     => $user_id,
+    system  => $system_user,
   }
 
   file { $package_dir:
