@@ -64,39 +64,29 @@
 # }
 #
 class kafka::mirror (
-  $version                    = $kafka::params::version,
-  $scala_version              = $kafka::params::scala_version,
-  $install_dir                = $kafka::params::install_dir,
-  $mirror_url                 = $kafka::params::mirror_url,
-  $consumer_config            = {},
-  $consumer_config_defaults   = $kafka::params::consumer_config_defaults,
-  $producer_config            = {},
-  $producer_config_defaults   = $kafka::params::producer_config_defaults,
-  $num_streams                = $kafka::params::num_streams,
-  $num_producers              = $kafka::params::num_producers,
-  $abort_on_send_failure      = $kafka::params::abort_on_send_failure,
-  $install_java               = $kafka::params::install_java,
-  $limit_nofile               = $kafka::params::limit_nofile,
-  $whitelist                  = $kafka::params::whitelist,
-  $blacklist                  = $kafka::params::blacklist,
-  $max_heap                   = $kafka::params::mirror_max_heap,
-  $package_dir                = $kafka::params::package_dir,
-  $service_restart            = $kafka::params::service_restart,
-  $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
-  $mirror_jmx_opts            = $kafka::params::mirror_jmx_opts,
-  $mirror_log4j_opts          = $kafka::params::mirror_log4j_opts,
-  $config_dir                 = $kafka::params::config_dir,
+  $version                              = $kafka::params::version,
+  $scala_version                        = $kafka::params::scala_version,
+  $install_dir                          = $kafka::params::install_dir,
+  Stdlib::HTTPUrl $mirror_url           = $kafka::params::mirror_url,
+  $consumer_config                      = {},
+  $consumer_config_defaults             = $kafka::params::consumer_config_defaults,
+  $producer_config                      = {},
+  $producer_config_defaults             = $kafka::params::producer_config_defaults,
+  Integer $num_streams                  = $kafka::params::num_streams,
+  Integer $num_producers                = $kafka::params::num_producers,
+  Boolean $abort_on_send_failure        = $kafka::params::abort_on_send_failure,
+  Boolean $install_java                 = $kafka::params::install_java,
+  Integer $limit_nofile                 = $kafka::params::limit_nofile,
+  $whitelist                            = $kafka::params::whitelist,
+  $blacklist                            = $kafka::params::blacklist,
+  Pattern[/\d+[g|G|m|M|k|K]/] $max_heap = $kafka::params::mirror_max_heap,
+  Stdlib::Absolutepath $package_dir     = $kafka::params::package_dir,
+  Boolean $service_restart              = $kafka::params::service_restart,
+  $service_requires_zookeeper           = $kafka::params::service_requires_zookeeper,
+  $mirror_jmx_opts                      = $kafka::params::mirror_jmx_opts,
+  $mirror_log4j_opts                    = $kafka::params::mirror_log4j_opts,
+  $config_dir                           = $kafka::params::config_dir,
 ) inherits kafka::params {
-
-  validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_re($mirror_url, $kafka::params::mirror_url_regex, "${mirror_url} is not a valid url")
-  validate_integer($num_streams)
-  validate_integer($num_producers)
-  validate_bool($abort_on_send_failure)
-  validate_bool($install_java)
-  validate_re($max_heap, '\d+[g|G|m|M|k|K]', "${max_heap} is not a valid heap size")
-  validate_absolute_path($package_dir)
-  validate_bool($service_restart)
 
   class { '::kafka::mirror::install': }
   -> class { '::kafka::mirror::config': }
