@@ -48,29 +48,23 @@
 #  config => { 'client.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
 # }
 class kafka::consumer (
-  $version                    = $kafka::params::version,
-  $scala_version              = $kafka::params::scala_version,
-  $install_dir                = $kafka::params::install_dir,
-  $mirror_url                 = $kafka::params::mirror_url,
-  $config                     = {},
-  $config_defaults            = $kafka::params::consumer_config_defaults,
-  $service_config             = {},
-  $service_defaults           = $kafka::params::consumer_service_defaults,
-  $install_java               = $kafka::params::install_java,
-  $limit_nofile               = $kafka::params::limit_nofile,
-  $package_dir                = $kafka::params::package_dir,
-  $service_restart            = $kafka::params::service_restart,
-  $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
-  $consumer_jmx_opts          = $kafka::params::consumer_jmx_opts,
-  $consumer_log4j_opts        = $kafka::params::consumer_log4j_opts,
-  $config_dir                 = $kafka::params::config_dir,
+  $version                          = $kafka::params::version,
+  $scala_version                    = $kafka::params::scala_version,
+  $install_dir                      = $kafka::params::install_dir,
+  Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
+  $config                           = {},
+  $config_defaults                  = $kafka::params::consumer_config_defaults,
+  $service_config                   = {},
+  $service_defaults                 = $kafka::params::consumer_service_defaults,
+  Boolean $install_java             = $kafka::params::install_java,
+  Integer $limit_nofile             = $kafka::params::limit_nofile,
+  Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
+  Boolean $service_restart          = $kafka::params::service_restart,
+  $service_requires_zookeeper       = $kafka::params::service_requires_zookeeper,
+  $consumer_jmx_opts                = $kafka::params::consumer_jmx_opts,
+  $consumer_log4j_opts              = $kafka::params::consumer_log4j_opts,
+  $config_dir                       = $kafka::params::config_dir,
 ) inherits kafka::params {
-
-  validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_re($mirror_url, $kafka::params::mirror_url_regex, "${mirror_url} is not a valid url")
-  validate_bool($install_java)
-  validate_absolute_path($package_dir)
-  validate_bool($service_restart)
 
   class { '::kafka::consumer::install': }
   -> class { '::kafka::consumer::service': }
