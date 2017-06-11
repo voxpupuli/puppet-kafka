@@ -50,11 +50,7 @@ shared_examples 'mirror_url' do
                       common_params.merge(mirror_url: mirror_url)
                     end
 
-                    if valid_domain && valid_prefix && valid_path && valid_port
-                      it { is_expected.to compile }
-                    else
-                      it { expect { is_expected.to compile }.to raise_error(%r{#{mirror_url} is not a valid url}) }
-                    end
+                    it { is_expected.to compile } if valid_domain && valid_prefix && valid_path && valid_port
                   end
                 end
               end
