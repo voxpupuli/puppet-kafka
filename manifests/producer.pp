@@ -50,28 +50,22 @@
 #
 class kafka::producer (
   $input,
-  $version                    = $kafka::params::version,
-  $scala_version              = $kafka::params::scala_version,
-  $install_dir                = $kafka::params::install_dir,
-  $mirror_url                 = $kafka::params::mirror_url,
-  $config                     = {},
-  $config_defaults            = $kafka::params::producer_config_defaults,
-  $service_config             = {},
-  $service_defaults           = $kafka::params::producer_service_defaults,
-  $install_java               = $kafka::params::install_java,
-  $package_dir                = $kafka::params::package_dir,
-  $service_restart            = $kafka::params::service_restart,
-  $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
-  $producer_jmx_opts          = $kafka::params::producer_jmx_opts,
-  $producer_log4j_opts        = $kafka::params::producer_log4j_opts,
-  $config_dir                 = $kafka::params::config_dir,
+  $version                          = $kafka::params::version,
+  $scala_version                    = $kafka::params::scala_version,
+  $install_dir                      = $kafka::params::install_dir,
+  Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
+  $config                           = {},
+  $config_defaults                  = $kafka::params::producer_config_defaults,
+  $service_config                   = {},
+  $service_defaults                 = $kafka::params::producer_service_defaults,
+  Boolean $install_java             = $kafka::params::install_java,
+  Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
+  Boolean $service_restart          = $kafka::params::service_restart,
+  $service_requires_zookeeper       = $kafka::params::service_requires_zookeeper,
+  $producer_jmx_opts                = $kafka::params::producer_jmx_opts,
+  $producer_log4j_opts              = $kafka::params::producer_log4j_opts,
+  $config_dir                       = $kafka::params::config_dir,
 ) inherits kafka::params {
-
-  validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_re($mirror_url, $kafka::params::mirror_url_regex, "${mirror_url} is not a valid url")
-  validate_bool($install_java)
-  validate_absolute_path($package_dir)
-  validate_bool($service_restart)
 
   class { '::kafka::producer::install': }
   -> class { '::kafka::producer::config': }
