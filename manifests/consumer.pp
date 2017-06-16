@@ -71,7 +71,7 @@ class kafka::consumer (
   validate_absolute_path($package_dir)
   validate_bool($service_restart)
 
-  class { '::kafka::consumer::install': } ->
-  class { '::kafka::consumer::service': } ->
-  Class['kafka::consumer']
+  class { '::kafka::consumer::install': }
+  -> class { '::kafka::consumer::service': }
+  -> Class['kafka::consumer']
 }
