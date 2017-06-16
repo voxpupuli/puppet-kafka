@@ -252,6 +252,7 @@ describe 'kafka::broker' do
         it { is_expected.to contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xmx512M'" }
         it { is_expected.to contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
         it { is_expected.to contain "Environment='KAFKA_OPTS=-Djava.security.policy=/some/path/my.policy'" }
+        it { is_expected.to contain "LimitNOFILE='65536'"}
       end
 
       describe service('kafka') do
