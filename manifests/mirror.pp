@@ -97,8 +97,8 @@ class kafka::mirror (
   validate_absolute_path($package_dir)
   validate_bool($service_restart)
 
-  class { '::kafka::mirror::install': } ->
-  class { '::kafka::mirror::config': } ->
-  class { '::kafka::mirror::service': } ->
-  Class['kafka::mirror']
+  class { '::kafka::mirror::install': }
+  -> class { '::kafka::mirror::config': }
+  -> class { '::kafka::mirror::service': }
+  -> Class['kafka::mirror']
 }
