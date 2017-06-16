@@ -46,9 +46,9 @@ class kafka::mirror::service(
       ensure => absent,
     }
 
-    File["${service_name}.service"] ~>
-    Exec['systemctl-daemon-reload'] ->
-    Service[$service_name]
+    File["${service_name}.service"]
+    ~> Exec['systemctl-daemon-reload']
+    -> Service[$service_name]
 
   } else {
 
