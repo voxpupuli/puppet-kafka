@@ -57,6 +57,7 @@ class kafka::consumer (
   $service_config             = {},
   $service_defaults           = $kafka::params::consumer_service_defaults,
   $install_java               = $kafka::params::install_java,
+  $limit_nofile               = $kafka::params::limit_nofile,
   $package_dir                = $kafka::params::package_dir,
   $service_restart            = $kafka::params::service_restart,
   $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
