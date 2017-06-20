@@ -87,6 +87,8 @@ describe 'kafka::mirror', type: :class do
       context 'defaults' do
         it { is_expected.to contain_file('kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
 
+        it { is_expected.to contain_file('kafka-mirror.service').with_content(/LimitNOFILE=65536/)}
+
         it do
           is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
             ensure: 'absent'
