@@ -36,7 +36,7 @@ ExecStart=/opt/kafka/bin/kafka-console-producer.sh <% @producer_service_config.s
 <%- end -%>
 
 LimitNOFILE=<%= @limit_nofile %>
-LimitCORE=infinity2
+LimitCORE=infinity
 
 [Install]
 WantedBy=multi-user.target
