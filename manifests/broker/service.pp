@@ -12,6 +12,7 @@ class kafka::broker::service(
   $service_ensure             = $kafka::broker::service_ensure,
   $service_requires_zookeeper = $kafka::broker::service_requires_zookeeper,
   $jmx_opts                   = $kafka::broker::jmx_opts,
+  $limit_nofile               = $kafka::broker::limit_nofile,
   $log4j_opts                 = $kafka::broker::log4j_opts,
   $heap_opts                  = $kafka::broker::heap_opts,
   $opts                       = $kafka::broker::opts,
