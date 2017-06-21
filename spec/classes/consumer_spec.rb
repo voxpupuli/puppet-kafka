@@ -69,6 +69,8 @@ describe 'kafka::consumer', type: :class do
       context 'defaults' do
         it { is_expected.to contain_file('kafka-consumer.service').that_notifies('Exec[systemctl-daemon-reload]') }
 
+        it { is_expected.to contain_file('kafka-consumer.service').with_content %r{^LimitNOFILE=65536$} }
+
         it do
           is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
             ensure: 'absent'

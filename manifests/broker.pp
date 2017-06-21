@@ -56,6 +56,7 @@ class kafka::broker (
   $config                     = {},
   $config_defaults            = $kafka::params::broker_config_defaults,
   $install_java               = $kafka::params::install_java,
+  $limit_nofile               = $kafka::params::limit_nofile,
   $package_dir                = $kafka::params::package_dir,
   $service_install            = $kafka::params::broker_service_install,
   $service_ensure             = $kafka::params::broker_service_ensure,
