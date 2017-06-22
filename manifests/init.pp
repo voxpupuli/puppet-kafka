@@ -37,6 +37,12 @@
 # [*package_ensure*]
 # Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
 #
+# [*manage_group*]
+# creates $group if set to true
+#
+# [*manage_user*]
+# creates $user if set to true
+#
 # [*group_id*]
 # Create kafka group with this ID
 #
@@ -67,6 +73,8 @@ class kafka (
   $package_dir    = $kafka::params::package_dir,
   $package_name   = $kafka::params::package_name,
   $package_ensure = $kafka::params::package_ensure,
+  $manage_group   = $kafka::params::manage_group,
+  $manage_user    = $kafka::params::manage_user,
   $group_id       = $kafka::params::group_id,
   $user_id        = $kafka::params::user_id,
   $user           = $kafka::params::user,
@@ -101,16 +109,20 @@ class kafka (
     }
   }
 
-  group { $group:
-    ensure => present,
-    gid    => $group_id,
+  if $manage_group {
+    group { $group:
+      ensure => present,
+      gid    => $group_id,
+    }
   }
 
-  user { $user:
-    ensure  => present,
-    shell   => '/bin/bash',
-    require => Group[$group],
-    uid     => $user_id,
+  if $manage_user {
+    user { $user:
+      ensure  => present,
+      shell   => '/bin/bash',
+      require => Group[$group],
+      uid     => $user_id,
+    }
   }
 
   file { $package_dir:

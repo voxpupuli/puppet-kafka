@@ -18,6 +18,8 @@ class kafka::params {
   $package_dir    = '/var/tmp/kafka'
   $package_name   = undef
   $package_ensure = 'present'
+  $manage_group   = true
+  $manage_user    = true
   $group_id       = undef
   $user_id        = undef
   $user           = 'kafka'
