@@ -76,6 +76,7 @@ class kafka::mirror (
   $num_producers              = $kafka::params::num_producers,
   $abort_on_send_failure      = $kafka::params::abort_on_send_failure,
   $install_java               = $kafka::params::install_java,
+  $limit_nofile               = $kafka::params::limit_nofile,
   $whitelist                  = $kafka::params::whitelist,
   $blacklist                  = $kafka::params::blacklist,
   $max_heap                   = $kafka::params::mirror_max_heap,
