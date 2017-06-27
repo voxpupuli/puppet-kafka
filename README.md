@@ -122,6 +122,14 @@ Package name, when installing kafka from a package.
 Package version (or 'present', 'absent', 'latest'), when installing kafka from
 a package.
 
+#### `manage_group`
+
+Creates group if set to true
+
+#### `manage_user`
+
+Creates user if set to true
+
 #### `group_id`
 
 Create kafka group with this ID
