@@ -62,26 +62,22 @@
 #
 #
 class kafka (
-  $version        = $kafka::params::version,
-  $scala_version  = $kafka::params::scala_version,
-  $install_dir    = $kafka::params::install_dir,
-  $mirror_url     = $kafka::params::mirror_url,
-  $install_java   = $kafka::params::install_java,
-  $package_dir    = $kafka::params::package_dir,
-  $package_name   = $kafka::params::package_name,
-  $package_ensure = $kafka::params::package_ensure,
-  $group_id       = $kafka::params::group_id,
-  $user_id        = $kafka::params::user_id,
-  $user           = $kafka::params::user,
-  $group          = $kafka::params::group,
-  $config_dir     = $kafka::params::config_dir,
-  $bin_dir        = $kafka::params::bin_dir,
-  $log_dir        = $kafka::params::log_dir,
+  $version                          = $kafka::params::version,
+  $scala_version                    = $kafka::params::scala_version,
+  $install_dir                      = $kafka::params::install_dir,
+  Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
+  Boolean $install_java             = $kafka::params::install_java,
+  Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
+  $package_name                     = $kafka::params::package_name,
+  $package_ensure                   = $kafka::params::package_ensure,
+  $group_id                         = $kafka::params::group_id,
+  $user_id                          = $kafka::params::user_id,
+  $user                             = $kafka::params::user,
+  $group                            = $kafka::params::group,
+  $config_dir                       = $kafka::params::config_dir,
+  $bin_dir                          = $kafka::params::bin_dir,
+  $log_dir                          = $kafka::params::log_dir,
 ) inherits kafka::params {
-
-  validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_bool($install_java)
-  validate_absolute_path($package_dir)
 
   $basefilename = "kafka_${scala_version}-${version}.tgz"
   $package_url = "${mirror_url}/kafka/${version}/${basefilename}"

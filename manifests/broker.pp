@@ -52,36 +52,29 @@
 # }
 #
 class kafka::broker (
-  $version                    = $kafka::params::version,
-  $scala_version              = $kafka::params::scala_version,
-  $install_dir                = $kafka::params::install_dir,
-  $mirror_url                 = $kafka::params::mirror_url,
-  $config                     = {},
-  $config_defaults            = $kafka::params::broker_config_defaults,
-  $install_java               = $kafka::params::install_java,
-  $package_dir                = $kafka::params::package_dir,
-  $service_install            = $kafka::params::broker_service_install,
-  $service_ensure             = $kafka::params::broker_service_ensure,
-  $service_restart            = $kafka::params::service_restart,
-  $service_requires_zookeeper = $kafka::params::service_requires_zookeeper,
-  $jmx_opts                   = $kafka::params::broker_jmx_opts,
-  $heap_opts                  = $kafka::params::broker_heap_opts,
-  $log4j_opts                 = $kafka::params::broker_log4j_opts,
-  $opts                       = $kafka::params::broker_opts,
-  $group_id                   = $kafka::params::group_id,
-  $user_id                    = $kafka::params::user_id,
-  $config_dir                 = $kafka::params::config_dir,
-  $bin_dir                    = $kafka::params::bin_dir,
+  $version                                   = $kafka::params::version,
+  $scala_version                             = $kafka::params::scala_version,
+  $install_dir                               = $kafka::params::install_dir,
+  Stdlib::HTTPUrl $mirror_url                = $kafka::params::mirror_url,
+  Hash $config                               = {},
+  $config_defaults                           = $kafka::params::broker_config_defaults,
+  Boolean $install_java                      = $kafka::params::install_java,
+  Integer $limit_nofile                      = $kafka::params::limit_nofile,
+  Stdlib::Absolutepath $package_dir          = $kafka::params::package_dir,
+  Boolean $service_install                   = $kafka::params::broker_service_install,
+  Enum['running', 'stopped'] $service_ensure = $kafka::params::broker_service_ensure,
+  Boolean $service_restart                   = $kafka::params::service_restart,
+  $service_requires_zookeeper                = $kafka::params::service_requires_zookeeper,
+  $jmx_opts                                  = $kafka::params::broker_jmx_opts,
+  $heap_opts                                 = $kafka::params::broker_heap_opts,
+  $log4j_opts                                = $kafka::params::broker_log4j_opts,
+  $opts                                      = $kafka::params::broker_opts,
+  $group_id                                  = $kafka::params::group_id,
+  $user_id                                   = $kafka::params::user_id,
+  $config_dir                                = $kafka::params::config_dir,
+  $bin_dir                                   = $kafka::params::bin_dir,
+  $log_dir                                   = $kafka::params::log_dir,
 ) inherits kafka::params {
-
-  validate_re($::osfamily, 'RedHat|Debian\b', "${::operatingsystem} not supported")
-  validate_re($mirror_url, $kafka::params::mirror_url_regex, "${mirror_url} is not a valid url")
-  validate_hash($config)
-  validate_bool($install_java)
-  validate_absolute_path($package_dir)
-  validate_bool($service_install)
-  validate_re($service_ensure, '^(running|stopped)$')
-  validate_bool($service_restart)
 
   class { '::kafka::broker::install': }
   -> class { '::kafka::broker::config': }

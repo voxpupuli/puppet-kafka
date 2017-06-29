@@ -12,12 +12,13 @@ Type=simple
 User=kafka
 Group=kafka
 SyslogIdentifier=<%= @service_name %>
-<%- case @service_name 
+<%- case @service_name
   when 'kafka' -%>
 Environment='KAFKA_HEAP_OPTS=<%= @heap_opts %>'
 Environment='KAFKA_LOG4J_OPTS=<%= @log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @jmx_opts %>'
 Environment='KAFKA_OPTS=<%= @opts %>'
+Environment='LOG_DIR=<%= @log_dir %>'
 ExecStart=<%= @bin_dir %>/kafka-server-start.sh <%= @config_dir %>/server.properties
   <%- when 'kafka-consumer' -%>
 Environment='KAFKA_LOG4J_OPTS=<%= @consumer_log4j_opts %>'
@@ -32,8 +33,8 @@ ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.
 Environment='KAFKA_LOG4J_OPTS=<%= @producer_log4j_opts %>'
 Environment='KAFKA_JMX_OPTS=<%= @producer_jmx_opts %>'
 ExecStart=<%= @bin_dir %>/kafka-console-producer.sh <% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%> <%= @input %>
-<%- end -%>
-LimitNOFILE=65536
+<%- end %>
+LimitNOFILE=<%= @limit_nofile %>
 LimitCORE=infinity
 
 [Install]
