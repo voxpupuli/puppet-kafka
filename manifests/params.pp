@@ -47,7 +47,7 @@ class kafka::params {
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
   $consumer_log4j_opts = $broker_log4j_opts
 
-  $limit_nofile = '65536'
+  $limit_nofile = 65536
 
   $service_restart = true
 
