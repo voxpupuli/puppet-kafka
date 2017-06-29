@@ -75,7 +75,7 @@ class kafka (
   $user                             = $kafka::params::user,
   $group                            = $kafka::params::group,
   $config_dir                       = $kafka::params::config_dir,
-  $bin_dir                          = $kafka::params::bin_dir,
+  Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
   $log_dir                          = $kafka::params::log_dir,
 ) inherits kafka::params {
 

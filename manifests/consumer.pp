@@ -67,7 +67,7 @@ class kafka::consumer (
   $consumer_jmx_opts                = $kafka::params::consumer_jmx_opts,
   $consumer_log4j_opts              = $kafka::params::consumer_log4j_opts,
   $config_dir                       = $kafka::params::config_dir,
-  $bin_dir                          = $kafka::params::bin_dir,
+  Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
 ) inherits kafka::params {
 
   class { '::kafka::consumer::install': }

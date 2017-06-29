@@ -68,7 +68,7 @@ class kafka::producer (
   $producer_jmx_opts                = $kafka::params::producer_jmx_opts,
   $producer_log4j_opts              = $kafka::params::producer_log4j_opts,
   $config_dir                       = $kafka::params::config_dir,
-  $bin_dir                          = $kafka::params::bin_dir,
+  Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
 ) inherits kafka::params {
 
   class { '::kafka::producer::install': }

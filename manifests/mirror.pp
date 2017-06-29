@@ -89,7 +89,7 @@ class kafka::mirror (
   $mirror_jmx_opts                      = $kafka::params::mirror_jmx_opts,
   $mirror_log4j_opts                    = $kafka::params::mirror_log4j_opts,
   $config_dir                           = $kafka::params::config_dir,
-  $bin_dir                              = $kafka::params::bin_dir,
+  Stdlib::Absolutepath $bin_dir         = $kafka::params::bin_dir,
 ) inherits kafka::params {
 
   class { '::kafka::mirror::install': }
