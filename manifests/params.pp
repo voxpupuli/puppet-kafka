@@ -12,7 +12,7 @@ class kafka::params {
   # this is all only tested on Debian and RedHat
   # params gets included everywhere so we can do the validation here
   unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
-    fail("${facts['os']['family']} is not supported")
+    warning("${facts['os']['family']} is not supported")
   }
   $version        = '0.9.0.1'
   $scala_version  = '2.11'
