@@ -17,6 +17,7 @@ class kafka::broker::service(
   $heap_opts                  = $kafka::broker::heap_opts,
   $opts                       = $kafka::broker::opts,
   $config_dir                 = $kafka::broker::config_dir,
+  $bin_dir                    = $kafka::broker::bin_dir,
   $log_dir                    = $kafka::broker::log_dir,
 ) {
 
