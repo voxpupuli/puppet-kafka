@@ -1,13 +1,9 @@
 fixtures:
   repositories:
-    archive:   "https://github.com/voxpupuli/puppet-archive.git"
-    java:      "https://github.com/puppetlabs/puppetlabs-java.git"
-    stdlib:
-      repo: "https://github.com/puppetlabs/puppetlabs-stdlib.git"
-      ref: "4.11.0"
-    zookeeper: "https://github.com/deric/puppet-zookeeper.git"
-    systemd:
-      repo: "git://github.com/camptocamp/puppet-systemd"
-      ref: "0.2.2"
+    archive: 'https://github.com/voxpupuli/puppet-archive.git'
+    java: 'https://github.com/puppetlabs/puppetlabs-java.git'
+    stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
+    zookeeper: 'https://github.com/deric/puppet-zookeeper.git'
+    systemd: 'https://github.com/camptocamp/puppet-systemd.git'
   symlinks:
     kafka: "#{source_dir}"

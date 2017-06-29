@@ -8,6 +8,12 @@
 # It sets variables according to platform
 #
 class kafka::params {
+
+  # this is all only tested on Debian and RedHat
+  # params gets included everywhere so we can do the validation here
+  unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
+    warning("${facts['os']['family']} is not supported")
+  }
   $version        = '0.9.0.1'
   $scala_version  = '2.11'
   $install_dir    = "/opt/kafka-${scala_version}-${version}"
@@ -47,7 +53,7 @@ class kafka::params {
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
   $consumer_log4j_opts = $broker_log4j_opts
 
-  $limit_nofile = '65536'
+  $limit_nofile = 65536
 
   $service_restart = true
 
