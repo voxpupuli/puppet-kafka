@@ -40,6 +40,9 @@
 # [*config_dir*]
 # The directory to create the kafka config files to
 #
+# [*bin_dir*]
+# The directory where the kafka scripts are
+#
 # === Examples
 #
 # Create the consumer service connecting to a local zookeeper
@@ -64,6 +67,7 @@ class kafka::consumer (
   $consumer_jmx_opts                = $kafka::params::consumer_jmx_opts,
   $consumer_log4j_opts              = $kafka::params::consumer_log4j_opts,
   $config_dir                       = $kafka::params::config_dir,
+  Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
 ) inherits kafka::params {
 
   class { '::kafka::consumer::install': }
