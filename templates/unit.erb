@@ -3,8 +3,10 @@ Description=Apache Kafka server (<%= (@service_name.split(/-/)[1] and @service_n
 Documentation=http://kafka.apache.org/documentation.html
 <%- if @service_requires_zookeeper -%>
 Wants=zookeeper.service
-After=zookeeper.service
+After=network.target syslog.target zookeeper.service
 Requires=zookeeper.service
+<%- else -%>
+After=network.target syslog.target
 <%- end -%>
 
 [Service]
