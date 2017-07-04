@@ -136,6 +136,7 @@ class kafka::params {
     'group.max.session.timeout.ms'                  => '30000',
     'group.min.session.timeout.ms'                  => '6000',
     'inter.broker.protocol.version'                 => '0.8.2.2',
+    'log.message.format.version'                    => '0.8.2.2',
     'log.cleaner.backoff.ms'                        => '15000',
     'log.cleaner.dedupe.buffer.size'                => '134217728',
     'log.cleaner.delete.retention.ms'               => '86400000',
