@@ -79,22 +79,6 @@ class kafka (
   $log_dir                          = $kafka::params::log_dir,
 ) inherits kafka::params {
 
-  $basefilename = "kafka_${scala_version}-${version}.tgz"
-  $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
-
-  $source = $mirror_url ?{
-    /tgz$/ => $mirror_url,
-    default  => $package_url,
-  }
-
-  $install_directory = $install_dir ? {
-    # if install_dir was not changed,
-    # we adapt it for the scala_version and the version
-    $kafka::params::install_dir => "/opt/kafka-${scala_version}-${version}",
-    # else, we just take whatever was supplied:
-    default                     => $install_dir,
-  }
-
   if $install_java {
     class { '::java':
       distribution => 'jdk',
@@ -111,32 +95,6 @@ class kafka (
     shell   => '/bin/bash',
     require => Group[$group],
     uid     => $user_id,
-  }
-
-  file { $package_dir:
-    ensure  => directory,
-    owner   => $user,
-    group   => $group,
-    require => [
-      Group[$group],
-      User[$user],
-    ],
-  }
-
-  file { $install_directory:
-    ensure  => directory,
-    owner   => $user,
-    group   => $group,
-    require => [
-      Group[$group],
-      User[$user],
-    ],
-  }
-
-  file { '/opt/kafka':
-    ensure  => link,
-    target  => $install_directory,
-    require => File[$install_directory],
   }
 
   file { $config_dir:
@@ -156,7 +114,50 @@ class kafka (
   }
 
   if $package_name == undef {
+
     include '::archive'
+
+    $basefilename = "kafka_${scala_version}-${version}.tgz"
+    $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
+
+    $source = $mirror_url ?{
+      /tgz$/ => $mirror_url,
+      default  => $package_url,
+    }
+
+    $install_directory = $install_dir ? {
+      # if install_dir was not changed,
+      # we adapt it for the scala_version and the version
+      $kafka::params::install_dir => "/opt/kafka-${scala_version}-${version}",
+      # else, we just take whatever was supplied:
+      default                     => $install_dir,
+    }
+
+    file { $package_dir:
+      ensure  => directory,
+      owner   => $user,
+      group   => $group,
+      require => [
+        Group[$group],
+        User[$user],
+      ],
+    }
+
+    file { $install_directory:
+      ensure  => directory,
+      owner   => $user,
+      group   => $group,
+      require => [
+        Group[$group],
+        User[$user],
+      ],
+    }
+
+    file { '/opt/kafka':
+      ensure  => link,
+      target  => $install_directory,
+      require => File[$install_directory],
+    }
 
     archive { "${package_dir}/${basefilename}":
       ensure          => present,
@@ -176,10 +177,13 @@ class kafka (
       ],
       before          => File[$config_dir],
     }
+
   } else {
+
     package { $package_name:
       ensure => $package_ensure,
       before => File[$config_dir],
     }
+
   }
 }
