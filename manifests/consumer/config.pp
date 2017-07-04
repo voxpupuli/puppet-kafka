@@ -24,8 +24,8 @@ define kafka::consumer::config(
 
   file { "${config_dir}/${name}.properties":
     ensure  => present,
-    owner   => 'kafka',
-    group   => 'kafka',
+    owner   => 'root',
+    group   => 'root',
     mode    => '0644',
     content => template('kafka/consumer.properties.erb'),
     notify  => $config_notify,

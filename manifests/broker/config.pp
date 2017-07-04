@@ -40,8 +40,8 @@ class kafka::broker::config(
 
   file { "${config_dir}/server.properties":
     ensure  => present,
-    owner   => 'kafka',
-    group   => 'kafka',
+    owner   => 'root',
+    group   => 'root',
     mode    => '0644',
     content => template('kafka/server.properties.erb'),
     notify  => $config_notify,
