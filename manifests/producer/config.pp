@@ -24,8 +24,8 @@ class kafka::producer::config(
 
   file { "${config_dir}/producer.properties":
     ensure  => present,
-    owner   => 'kafka',
-    group   => 'kafka',
+    owner   => 'root',
+    group   => 'root',
     mode    => '0644',
     content => template('kafka/producer.properties.erb'),
     notify  => $config_notify,
