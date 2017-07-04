@@ -141,8 +141,8 @@ class kafka (
 
   file { $config_dir:
     ensure => directory,
-    owner  => $user,
-    group  => $group,
+    owner  => 'root',
+    group  => 'root',
   }
 
   file { $log_dir:
