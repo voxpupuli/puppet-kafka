@@ -5,7 +5,11 @@
 <%- if @osfamily == 'Debian' -%>
 ### BEGIN INIT INFO
 # Provides:          <%- @service_name -%>
+<%- if @service_requires_zookeeper -%>
 # Required-Start:    zookeeper
+<%- else -%>
+# Required-Start:
+<%- end -%>
 # Required-Stop:
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
