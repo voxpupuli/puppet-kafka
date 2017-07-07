@@ -16,6 +16,7 @@ class kafka::broker::service(
   $log4j_opts                   = $kafka::broker::log4j_opts,
   $heap_opts                    = $kafka::broker::heap_opts,
   $opts                         = $kafka::broker::opts,
+  Hash $env                     = $kafka::broker::env,
   $config_dir                   = $kafka::broker::config_dir,
   Stdlib::Absolutepath $bin_dir = $kafka::broker::bin_dir,
   $log_dir                      = $kafka::broker::log_dir,
@@ -26,6 +27,14 @@ class kafka::broker::service(
   }
 
   $service_name = 'kafka'
+  $env_defaults = {
+    'KAFKA_HEAP_OPTS'  => $heap_opts,
+    'KAFKA_LOG4J_OPTS' => $log4j_opts,
+    'KAFKA_JMX_OPTS'   => $jmx_opts,
+    'KAFKA_OPTS'       => $opts,
+    'LOG_DIR'          => $log_dir,
+  }
+  $environment = deep_merge($env_defaults, $env)
 
   if $service_install {
     if $::service_provider == 'systemd' {

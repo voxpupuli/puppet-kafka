@@ -25,6 +25,9 @@
 # [*mirror_url*]
 # The url where the kafka is downloaded from.
 #
+# [*env*]
+# A hash of the environment variables to set.
+#
 # [*config*]
 # A hash of the configuration options.
 #
@@ -56,6 +59,7 @@ class kafka::broker (
   $scala_version                             = $kafka::params::scala_version,
   $install_dir                               = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url                = $kafka::params::mirror_url,
+  Hash $env                                  = {},
   Hash $config                               = {},
   $config_defaults                           = $kafka::params::broker_config_defaults,
   Boolean $install_java                      = $kafka::params::install_java,

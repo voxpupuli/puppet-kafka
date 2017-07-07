@@ -9,6 +9,9 @@
 #
 class kafka::mirror::service(
   $service_requires_zookeeper   = $kafka::mirror::service_requires_zookeeper,
+  Hash $env                     = $kafka::mirror::env,
+  $mirror_jmx_opts              = $kafka::mirror::mirror_jmx_opts,
+  $mirror_log4j_opts            = $kafka::mirror::mirror_log4j_opts,
   $consumer_config              = $kafka::mirror::consumer_config,
   $producer_config              = $kafka::mirror::producer_config,
   $num_streams                  = $kafka::mirror::num_streams,
@@ -26,6 +29,12 @@ class kafka::mirror::service(
   }
 
   $service_name = 'kafka-mirror'
+  $env_defaults = {
+    'KAFKA_JMX_OPTS'   => $mirror_jmx_opts,
+    'KAFKA_LOG4J_OPTS' => $mirror_log4j_opts,
+    'KAFKA_HEAP_OPTS'  => "-Xmx${max_heap}",
+  }
+  $environment = deep_merge($env_defaults, $env)
 
   if versioncmp($kafka::mirror::version, '0.9.0') >= 0 {
     $abort_on_send_failure_opt = "--abort.on.send.failure=${abort_on_send_failure}"
