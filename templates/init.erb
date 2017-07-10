@@ -29,7 +29,7 @@ export <%= k %>="<%= v %>"
 <% end -%>
 <% end -%>
 PID_FILE="/var/run/$NAME.pid"
-KAFKA_USER=kafka
+KAFKA_USER=<%- @user -%>
 <%- case @service_name
   when 'kafka' -%>
 PGREP_PATTERN=kafka.Kafka

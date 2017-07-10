@@ -21,6 +21,10 @@ class kafka::consumer::install {
       mirror_url    => $kafka::consumer::mirror_url,
       install_java  => $kafka::consumer::install_java,
       package_dir   => $kafka::consumer::package_dir,
+      user          => $kafka::consumer::user,
+      group         => $kafka::consumer::group,
+      user_id       => $kafka::consumer::user_id,
+      group_id      => $kafka::consumer::group_id,
     }
   }
 }

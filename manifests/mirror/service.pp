@@ -22,6 +22,8 @@ class kafka::mirror::service(
   $max_heap                     = $kafka::mirror::max_heap,
   $config_dir                   = $kafka::mirror::config_dir,
   Stdlib::Absolutepath $bin_dir = $kafka::mirror::bin_dir,
+  $user                         = $kafka::mirror::user,
+  $group                        = $kafka::mirror::group,
 ) inherits ::kafka::params {
 
   if $caller_module_name != $module_name {

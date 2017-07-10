@@ -37,17 +37,17 @@
 # [*package_ensure*]
 # Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
 #
-# [*group_id*]
-# Create kafka group with this ID
-#
-# [*user_id*]
-# Create kafka user with this ID
+# [*user*]
+# User to run kafka as.
 #
 # [*group*]
-# Group to install kafka as
+# Group to run kafka as.
 #
-# [*user*]
-# User to install kafka as
+# [*user_id*]
+# Create kafka user with this ID.
+#
+# [*group_id*]
+# Create kafka group with this ID.
 #
 # [*config_dir*]
 # The directory to create the kafka config files to
@@ -70,10 +70,10 @@ class kafka (
   Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
   $package_name                     = $kafka::params::package_name,
   $package_ensure                   = $kafka::params::package_ensure,
-  $group_id                         = $kafka::params::group_id,
-  $user_id                          = $kafka::params::user_id,
   $user                             = $kafka::params::user,
   $group                            = $kafka::params::group,
+  $user_id                          = $kafka::params::user_id,
+  $group_id                         = $kafka::params::group_id,
   $config_dir                       = $kafka::params::config_dir,
   Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
   $log_dir                          = $kafka::params::log_dir,
