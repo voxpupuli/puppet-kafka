@@ -77,6 +77,8 @@ class kafka (
   $config_dir                       = $kafka::params::config_dir,
   Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
   $log_dir                          = $kafka::params::log_dir,
+  $manage_group                     = $kafka::params::manage_group,
+  $manage_user                      = $kafka::params::manage_user,
 ) inherits kafka::params {
 
   if $install_java {
@@ -85,16 +87,22 @@ class kafka (
     }
   }
 
-  group { $group:
-    ensure => present,
-    gid    => $group_id,
+  validate_bool($manage_group)
+  if $manage_group {
+    group { $group:
+      ensure => present,
+      gid    => $group_id,
+    }
   }
 
-  user { $user:
-    ensure  => present,
-    shell   => '/bin/bash',
-    require => Group[$group],
-    uid     => $user_id,
+  validate_bool($manage_user)
+  if $manage_user {
+    user { $user:
+      ensure  => present,
+      shell   => '/bin/bash',
+      require => Group[$group],
+      uid     => $user_id,
+    }
   }
 
   file { $config_dir:
