@@ -9,6 +9,9 @@
 #
 class kafka::producer::service(
   $input                        = $kafka::producer::input,
+  Hash $env                     = $kafka::producer::env,
+  $producer_jmx_opts            = $kafka::producer::producer_jmx_opts,
+  $producer_log4j_opts          = $kafka::producer::producer_log4j_opts,
   $service_config               = $kafka::producer::service_config,
   $service_defaults             = $kafka::producer::service_defaults,
   $service_requires_zookeeper   = $kafka::producer::service_requires_zookeeper,
@@ -33,6 +36,11 @@ class kafka::producer::service(
   }
 
   $service_name = 'kafka-producer'
+  $env_defaults = {
+    'KAFKA_JMX_OPTS'   => $producer_jmx_opts,
+    'KAFKA_LOG4J_OPTS' => $producer_log4j_opts,
+  }
+  $environment = deep_merge($env_defaults, $env)
 
   file { "/etc/init.d/${service_name}":
     ensure  => file,

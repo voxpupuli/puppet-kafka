@@ -25,6 +25,9 @@
 # [*mirror_url*]
 # The url where the kafka is downloaded from.
 #
+# [*env*]
+# A hash of the environment variables to set.
+#
 # [*config*]
 # A hash of the consumer configuration options.
 #
@@ -55,6 +58,7 @@ class kafka::consumer (
   $scala_version                    = $kafka::params::scala_version,
   $install_dir                      = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
+  Hash $env                         = {},
   $config                           = {},
   $config_defaults                  = $kafka::params::consumer_config_defaults,
   $service_config                   = {},

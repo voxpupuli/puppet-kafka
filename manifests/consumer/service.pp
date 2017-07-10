@@ -8,6 +8,9 @@
 # It manages the kafka-consumer service
 #
 class kafka::consumer::service(
+  Hash $env                     = $kafka::consumer::env,
+  $consumer_jmx_opts            = $kafka::consumer::consumer_jmx_opts,
+  $consumer_log4j_opts          = $kafka::consumer::consumer_log4j_opts,
   $service_config               = $kafka::consumer::service_config,
   $service_defaults             = $kafka::consumer::service_defaults,
   $service_requires_zookeeper   = $kafka::consumer::service_requires_zookeeper,
@@ -29,6 +32,11 @@ class kafka::consumer::service(
   }
 
   $service_name = 'kafka-consumer'
+  $env_defaults = {
+    'KAFKA_JMX_OPTS'   => $consumer_jmx_opts,
+    'KAFKA_LOG4J_OPTS' => $consumer_log4j_opts,
+  }
+  $environment = deep_merge($env_defaults, $env)
 
   if $::service_provider == 'systemd' {
     include ::systemd
