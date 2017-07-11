@@ -87,7 +87,6 @@ class kafka (
     }
   }
 
-  validate_bool($manage_group)
   if $manage_group {
     group { $group:
       ensure => present,
@@ -95,7 +94,6 @@ class kafka (
     }
   }
 
-  validate_bool($manage_user)
   if $manage_user {
     user { $user:
       ensure  => present,
