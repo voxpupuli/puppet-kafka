@@ -58,6 +58,12 @@
 # [*log_dir*]
 # The directory for kafka log files
 #
+# [*manage_group*]
+# Whether or not this module should create the group defined in the "group" variable. Default true.
+#
+# [*manage_user*]
+# Whether or not this module should create the user defined in the "user" variable.  Default true.
+# 
 # === Examples
 #
 #
@@ -77,6 +83,8 @@ class kafka (
   $config_dir                       = $kafka::params::config_dir,
   Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
   $log_dir                          = $kafka::params::log_dir,
+  $manage_group                     = $kafka::params::manage_group,
+  $manage_user                      = $kafka::params::manage_user,
 ) inherits kafka::params {
 
   if $install_java {
@@ -85,16 +93,20 @@ class kafka (
     }
   }
 
-  group { $group:
-    ensure => present,
-    gid    => $group_id,
+  if $manage_group {
+    group { $group:
+      ensure => present,
+      gid    => $group_id,
+    }
   }
 
-  user { $user:
-    ensure  => present,
-    shell   => '/bin/bash',
-    require => Group[$group],
-    uid     => $user_id,
+  if $manage_user {
+    user { $user:
+      ensure  => present,
+      shell   => '/bin/bash',
+      require => Group[$group],
+      uid     => $user_id,
+    }
   }
 
   file { $config_dir:
