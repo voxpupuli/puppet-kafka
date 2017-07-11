@@ -58,6 +58,12 @@
 # [*log_dir*]
 # The directory for kafka log files
 #
+# [*manage_group*]
+# Whether or not this module should create the group defined in the "group" variable. Default true.
+#
+# [*manage_user*]
+# Whether or not this module should create the user defined in the "user" variable.  Default true.
+# 
 # === Examples
 #
 #
