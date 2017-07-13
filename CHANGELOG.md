@@ -4,12 +4,57 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not impact the functionality of the module.
 
+## [v3.0.1-rc0](https://github.com/voxpupuli/puppet-kafka/tree/v3.0.1-rc0) (2017-07-13)
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.0.0...v3.0.1-rc0)
+
+**Implemented enhancements:**
+
+- handle the user, group, user\_id and group\_id parameters consistently [\#172](https://github.com/voxpupuli/puppet-kafka/pull/172) ([LionelCons](https://github.com/LionelCons))
+- the \*.properties configuration files are now owned by root [\#166](https://github.com/voxpupuli/puppet-kafka/pull/166) ([LionelCons](https://github.com/LionelCons))
+- added a "bin\_dir" parameter to configure where the Kafka scripts are [\#159](https://github.com/voxpupuli/puppet-kafka/pull/159) ([LionelCons](https://github.com/LionelCons))
+- Allow changing the LimitNOFILE parameter for systemd unit file [\#157](https://github.com/voxpupuli/puppet-kafka/pull/157) ([jacobmw](https://github.com/jacobmw))
+- add support to kafka::broker logs dir [\#148](https://github.com/voxpupuli/puppet-kafka/pull/148) ([jolivares](https://github.com/jolivares))
+- Add log.message.format.version to broker params [\#142](https://github.com/voxpupuli/puppet-kafka/pull/142) ([winks](https://github.com/winks))
+
+**Fixed bugs:**
+
+- create $package\_dir and $install\_directory ony when needed [\#167](https://github.com/voxpupuli/puppet-kafka/pull/167) ([LionelCons](https://github.com/LionelCons))
+- fix wrong defaults for mirror/service.pp [\#164](https://github.com/voxpupuli/puppet-kafka/pull/164) ([LionelCons](https://github.com/LionelCons))
+- declared service dependencies: Kafka requires networking and syslog [\#162](https://github.com/voxpupuli/puppet-kafka/pull/162) ([LionelCons](https://github.com/LionelCons))
+- change ownership of the configuration directory [\#160](https://github.com/voxpupuli/puppet-kafka/pull/160) ([LionelCons](https://github.com/LionelCons))
+
+**Closed issues:**
+
+- The user and group are hard-coded in the service templates [\#171](https://github.com/voxpupuli/puppet-kafka/issues/171)
+- The init script always requires the zookeeper service [\#168](https://github.com/voxpupuli/puppet-kafka/issues/168)
+- The configuration files should be owned by root [\#165](https://github.com/voxpupuli/puppet-kafka/issues/165)
+- mirror/service.pp gets some defaults from params.pp instead of mirror.pp [\#163](https://github.com/voxpupuli/puppet-kafka/issues/163)
+- The Systemd unit file should declare dependencies [\#161](https://github.com/voxpupuli/puppet-kafka/issues/161)
+- Centos 7 install [\#151](https://github.com/voxpupuli/puppet-kafka/issues/151)
+- systemd config should not contain dependencies on zookeeper [\#150](https://github.com/voxpupuli/puppet-kafka/issues/150)
+- The configuration directory should be owned by root [\#146](https://github.com/voxpupuli/puppet-kafka/issues/146)
+- The "bin" directory is not configurable [\#145](https://github.com/voxpupuli/puppet-kafka/issues/145)
+- Arbitrary shell variables cannot be set [\#144](https://github.com/voxpupuli/puppet-kafka/issues/144)
+- Package-based installation creates useless directories [\#143](https://github.com/voxpupuli/puppet-kafka/issues/143)
+
+**Merged pull requests:**
+
+- added an $env parameter to control the environment passed to Kafka [\#170](https://github.com/voxpupuli/puppet-kafka/pull/170) ([LionelCons](https://github.com/LionelCons))
+- the init script now uses the service\_requires\_zookeeper parameter [\#169](https://github.com/voxpupuli/puppet-kafka/pull/169) ([LionelCons](https://github.com/LionelCons))
+- replace validate\_\* with datatypes [\#153](https://github.com/voxpupuli/puppet-kafka/pull/153) ([bastelfreak](https://github.com/bastelfreak))
+- Add missing documentation [\#138](https://github.com/voxpupuli/puppet-kafka/pull/138) ([seanmalloy](https://github.com/seanmalloy))
+- Add params to allow customizing user, group, and log\_dir [\#137](https://github.com/voxpupuli/puppet-kafka/pull/137) ([seanmalloy](https://github.com/seanmalloy))
+
 ## [v3.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.0.0) (2017-02-13)
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v2.3.0...v3.0.0)
 
 **Implemented enhancements:**
 
 - Add custom config dir [\#130](https://github.com/voxpupuli/puppet-kafka/pull/130) ([antyale](https://github.com/antyale))
+
+**Merged pull requests:**
+
+- release 3.0.0 [\#134](https://github.com/voxpupuli/puppet-kafka/pull/134) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.3.0](https://github.com/voxpupuli/puppet-kafka/tree/v2.3.0) (2017-02-11)
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v2.2.0...v2.3.0)
@@ -90,10 +135,8 @@ These should not impact the functionality of the module.
 
 **Merged pull requests:**
 
-- Update based on voxpupuli/modulesync\_config 0.6.2 [\#71](https://github.com/voxpupuli/puppet-kafka/pull/71) ([dhoppe](https://github.com/dhoppe))
 - Fix wrong syntax \(default value for ssl.enabled.protocols\) [\#70](https://github.com/voxpupuli/puppet-kafka/pull/70) ([jolivares](https://github.com/jolivares))
 - Allow to set KAFKA\_OPTS [\#69](https://github.com/voxpupuli/puppet-kafka/pull/69) ([jolivares](https://github.com/jolivares))
-- Update based on voxpupuli/modulesync\_config [\#68](https://github.com/voxpupuli/puppet-kafka/pull/68) ([dhoppe](https://github.com/dhoppe))
 - add the jmx\_opts and log4j\_opts to the init scripts [\#67](https://github.com/voxpupuli/puppet-kafka/pull/67) ([DjxDeaf](https://github.com/DjxDeaf))
 - Removing broker gc opts [\#66](https://github.com/voxpupuli/puppet-kafka/pull/66) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
 - add the ability to optimize all the different roles, not just the broker [\#65](https://github.com/voxpupuli/puppet-kafka/pull/65) ([DjxDeaf](https://github.com/DjxDeaf))
