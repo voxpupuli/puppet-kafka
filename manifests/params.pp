@@ -25,10 +25,10 @@ class kafka::params {
   $package_dir    = '/var/tmp/kafka'
   $package_name   = undef
   $package_ensure = 'present'
-  $group_id       = undef
-  $user_id        = undef
   $user           = 'kafka'
   $group          = 'kafka'
+  $user_id        = undef
+  $group_id       = undef
 
   $service_requires_zookeeper = true
 

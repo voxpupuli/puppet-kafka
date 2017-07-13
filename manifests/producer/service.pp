@@ -16,6 +16,8 @@ class kafka::producer::service(
   $service_defaults             = $kafka::producer::service_defaults,
   $service_requires_zookeeper   = $kafka::producer::service_requires_zookeeper,
   Stdlib::Absolutepath $bin_dir = $kafka::producer::bin_dir,
+  String $user                  = $kafka::producer::user,
+  String $group                 = $kafka::producer::group,
 ) {
 
   if $caller_module_name != $module_name {

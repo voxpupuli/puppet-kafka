@@ -20,6 +20,8 @@ class kafka::broker::service(
   $config_dir                   = $kafka::broker::config_dir,
   Stdlib::Absolutepath $bin_dir = $kafka::broker::bin_dir,
   $log_dir                      = $kafka::broker::log_dir,
+  String $user                  = $kafka::broker::user,
+  String $group                 = $kafka::broker::group,
 ) {
 
   if $caller_module_name != $module_name {

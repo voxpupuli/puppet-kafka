@@ -21,6 +21,10 @@ class kafka::producer::install {
       mirror_url    => $kafka::producer::mirror_url,
       install_java  => $kafka::producer::install_java,
       package_dir   => $kafka::producer::package_dir,
+      user          => $kafka::producer::user,
+      group         => $kafka::producer::group,
+      user_id       => $kafka::producer::user_id,
+      group_id      => $kafka::producer::group_id,
     }
   }
 }

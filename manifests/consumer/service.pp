@@ -16,6 +16,8 @@ class kafka::consumer::service(
   $service_requires_zookeeper   = $kafka::consumer::service_requires_zookeeper,
   $limit_nofile                 = $kafka::consumer::limit_nofile,
   Stdlib::Absolutepath $bin_dir = $kafka::consumer::bin_dir,
+  String $user                  = $kafka::consumer::user,
+  String $group                 = $kafka::consumer::group,
 ) {
 
   if $caller_module_name != $module_name {

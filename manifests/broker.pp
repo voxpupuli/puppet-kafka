@@ -40,6 +40,18 @@
 # [*service_restart*]
 # Boolean, if the configuration files should trigger a service restart
 #
+# [*user*]
+# User to run kafka as.
+#
+# [*group*]
+# Group to run kafka as.
+#
+# [*user_id*]
+# Create kafka user with this ID.
+#
+# [*group_id*]
+# Create kafka group with this ID.
+#
 # [*config_dir*]
 # The directory to create the kafka config files to
 #
@@ -73,8 +85,10 @@ class kafka::broker (
   $heap_opts                                 = $kafka::params::broker_heap_opts,
   $log4j_opts                                = $kafka::params::broker_log4j_opts,
   $opts                                      = $kafka::params::broker_opts,
-  $group_id                                  = $kafka::params::group_id,
-  $user_id                                   = $kafka::params::user_id,
+  String $user                               = $kafka::params::user,
+  String $group                              = $kafka::params::group,
+  Optional[Integer] $user_id                 = $kafka::params::user_id,
+  Optional[Integer] $group_id                = $kafka::params::group_id,
   $config_dir                                = $kafka::params::config_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::params::bin_dir,
   $log_dir                                   = $kafka::params::log_dir,

@@ -21,6 +21,10 @@ class kafka::mirror::install {
       mirror_url    => $kafka::mirror::mirror_url,
       install_java  => $kafka::mirror::install_java,
       package_dir   => $kafka::mirror::package_dir,
+      user          => $kafka::mirror::user,
+      group         => $kafka::mirror::group,
+      user_id       => $kafka::mirror::user_id,
+      group_id      => $kafka::mirror::group_id,
     }
   }
 }
