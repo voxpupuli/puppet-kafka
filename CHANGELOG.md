@@ -4,8 +4,8 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not impact the functionality of the module.
 
-## [v3.0.1-rc0](https://github.com/voxpupuli/puppet-kafka/tree/v3.0.1-rc0) (2017-07-13)
-[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.0.0...v3.0.1-rc0)
+## [v3.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.1.0) (2017-07-13)
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.0.0...v3.1.0)
 
 **Implemented enhancements:**
 
