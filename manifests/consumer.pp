@@ -91,6 +91,7 @@ class kafka::consumer (
 ) inherits kafka::params {
 
   class { '::kafka::consumer::install': }
+  -> class { '::kafka::consumer::config': }
   -> class { '::kafka::consumer::service': }
   -> Class['kafka::consumer']
 }
