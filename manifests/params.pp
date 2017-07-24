@@ -21,7 +21,7 @@ class kafka::params {
   $bin_dir        = '/opt/kafka/bin'
   $log_dir        = '/var/log/kafka'
   $mirror_url     = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
-  $install_java   = true
+  $install_java   = false
   $package_dir    = '/var/tmp/kafka'
   $package_name   = undef
   $package_ensure = 'present'
