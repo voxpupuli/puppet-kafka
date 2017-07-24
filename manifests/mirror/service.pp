@@ -14,6 +14,7 @@ class kafka::mirror::service(
   $mirror_log4j_opts            = $kafka::mirror::mirror_log4j_opts,
   $consumer_config              = $kafka::mirror::consumer_config,
   $producer_config              = $kafka::mirror::producer_config,
+  $limit_nofile                 = $kafka::mirror::limit_nofile,
   $num_streams                  = $kafka::mirror::num_streams,
   $num_producers                = $kafka::mirror::num_producers,
   $abort_on_send_failure        = $kafka::mirror::abort_on_send_failure,
@@ -24,7 +25,7 @@ class kafka::mirror::service(
   Stdlib::Absolutepath $bin_dir = $kafka::mirror::bin_dir,
   String $user                  = $kafka::mirror::user,
   String $group                 = $kafka::mirror::group,
-) inherits ::kafka::params {
+) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
