@@ -14,6 +14,7 @@ class kafka::mirror::service(
   $mirror_log4j_opts            = $kafka::mirror::mirror_log4j_opts,
   $consumer_config              = $kafka::mirror::consumer_config,
   $producer_config              = $kafka::mirror::producer_config,
+  $limit_nofile                 = $kafka::mirror::limit_nofile,
   $num_streams                  = $kafka::mirror::num_streams,
   $num_producers                = $kafka::mirror::num_producers,
   $abort_on_send_failure        = $kafka::mirror::abort_on_send_failure,
