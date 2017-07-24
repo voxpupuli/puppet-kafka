@@ -44,19 +44,25 @@
 # Group to run kafka as.
 #
 # [*user_id*]
-# Create kafka user with this ID.
+# Create the kafka user with this ID.
 #
 # [*group_id*]
-# Create kafka group with this ID.
+# Create the kafka group with this ID.
+#
+# [*manage_user*]
+# Create the kafka user if it's not already present.
+#
+# [*manage_group*]
+# Create the kafka group if it's not already present.
 #
 # [*config_dir*]
-# The directory to create the kafka config files to
+# The directory to create the kafka config files to.
 #
 # [*bin_dir*]
-# The directory where the kafka scripts are
+# The directory where the kafka scripts are.
 #
 # [*log_dir*]
-# The directory for kafka log files
+# The directory for kafka log files.
 #
 # === Examples
 #
@@ -74,6 +80,8 @@ class kafka (
   String $group                     = $kafka::params::group,
   Optional[Integer] $user_id        = $kafka::params::user_id,
   Optional[Integer] $group_id       = $kafka::params::group_id,
+  Boolean $manage_user              = $kafka::params::manage_user,
+  Boolean $manage_group             = $kafka::params::manage_group,
   $config_dir                       = $kafka::params::config_dir,
   Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
   $log_dir                          = $kafka::params::log_dir,
@@ -85,16 +93,20 @@ class kafka (
     }
   }
 
-  group { $group:
-    ensure => present,
-    gid    => $group_id,
+  if $manage_group {
+    group { $group:
+      ensure => present,
+      gid    => $group_id,
+    }
   }
 
-  user { $user:
-    ensure  => present,
-    shell   => '/bin/bash',
-    require => Group[$group],
-    uid     => $user_id,
+  if $manage_user {
+    user { $user:
+      ensure  => present,
+      shell   => '/bin/bash',
+      require => Group[$group],
+      uid     => $user_id,
+    }
   }
 
   file { $config_dir:
