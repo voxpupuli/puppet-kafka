@@ -115,7 +115,7 @@ class kafka (
 
   if $package_name == undef {
 
-    include '::archive'
+    include ::archive
 
     $basefilename = "kafka_${scala_version}-${version}.tgz"
     $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
