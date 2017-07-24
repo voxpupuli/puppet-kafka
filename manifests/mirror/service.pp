@@ -24,7 +24,7 @@ class kafka::mirror::service(
   Stdlib::Absolutepath $bin_dir = $kafka::mirror::bin_dir,
   String $user                  = $kafka::mirror::user,
   String $group                 = $kafka::mirror::group,
-) inherits ::kafka::params {
+) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
