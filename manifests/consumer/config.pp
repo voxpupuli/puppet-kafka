@@ -7,7 +7,7 @@
 # This private class is meant to be called from `kafka::consumer`.
 # It manages the consumer config files
 #
-define kafka::consumer::config(
+class kafka::consumer::config(
   $config          = $kafka::consumer::config,
   $config_defaults = $kafka::consumer::config_defaults,
   $service_name    = 'kafka-consumer',
@@ -22,7 +22,7 @@ define kafka::consumer::config(
     default => undef
   }
 
-  file { "${config_dir}/${name}.properties":
+  file { "${config_dir}/consumer.properties":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
