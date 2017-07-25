@@ -9,7 +9,7 @@ describe 'kafka::broker' do
           'zookeeper.connect' => 'localhost:2181',
         },
       } ->
-      kafka::broker::topic { 'demo':
+      kafka::topic { 'demo':
         ensure    => present,
         zookeeper => 'localhost:2181',
       }

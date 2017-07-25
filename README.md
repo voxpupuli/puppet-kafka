@@ -283,9 +283,9 @@ Install java if it's not already installed.
 
 The directory to install kafka.
 
-#### Define: `kafka::broker::topic`
+#### Define: `kafka::topic`
 
-Defined type that creates Kafka broker topics.
+Defined type that creates Kafka topics.
 
 ## Reference
 
@@ -316,7 +316,7 @@ Defined type that creates Kafka broker topics.
 
 #### Defined Types
 
-* `kafka::broker::topic` Create kafka broker topics
+* `kafka::topic` Create kafka topics
 
 ## Limitations
 

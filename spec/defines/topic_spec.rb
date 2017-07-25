@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'kafka::broker::topic', type: :define do
+describe 'kafka::topic', type: :define do
   let :facts do
     {
       osfamily: 'Debian',
