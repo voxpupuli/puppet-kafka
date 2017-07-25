@@ -287,10 +287,6 @@ The directory to install kafka.
 
 Defined type that creates Kafka broker topics.
 
-#### Define: `kafka::consumer::config`
-
-Defined type that configures kafka consumers.
-
 ## Reference
 
 ### Classes
@@ -298,14 +294,10 @@ Defined type that configures kafka consumers.
 #### Public Classes
 
 * `kafka`: Guides the basic installation of kafka binaries
-* `kafka::broker`: Guides the basic installation of a
-  kafka broker
-* `kafka::consumer`: Guides the basic installation of a
-  kafka consumer
-* `kafka::mirror`: Guides the basic installation of a
-  kafka mirror
-* `kafka::producer`: Guides the basic installation of a
-  kafka producer
+* `kafka::broker`: Guides the basic installation of a kafka broker
+* `kafka::consumer`: Guides the basic installation of a kafka consumer
+* `kafka::mirror`: Guides the basic installation of a kafka mirror
+* `kafka::producer`: Guides the basic installation of a kafka producer
 
 #### Private Classes
 
@@ -325,7 +317,6 @@ Defined type that configures kafka consumers.
 #### Defined Types
 
 * `kafka::broker::topic` Create kafka broker topics
-* `kafka::consumer::config` Create kafka broker topics
 
 ## Limitations
 

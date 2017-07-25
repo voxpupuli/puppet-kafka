@@ -37,7 +37,7 @@ class kafka::mirror::config(
     }
   }
 
-  ::kafka::consumer::config { 'consumer-1':
+  class { '::kafka::consumer::config':
     config          => $consumer_config,
     config_defaults => $consumer_config_defaults,
     service_name    => 'kafka-mirror',
