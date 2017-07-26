@@ -8,18 +8,20 @@
 # It manages the consumer config files
 #
 class kafka::consumer::config(
-  $config          = $kafka::consumer::config,
-  $config_defaults = $kafka::consumer::config_defaults,
-  $service_name    = 'kafka-consumer',
-  $service_restart = $kafka::consumer::service_restart,
-  $config_dir      = $kafka::consumer::config_dir,
+  Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
+  String $service_name             = $kafka::consumer::service_name,
+  Boolean $service_install         = $kafka::consumer::service_install,
+  Boolean $service_restart         = $kafka::consumer::service_restart,
+  Hash $config                     = $kafka::consumer::config,
+  Hash $config_defaults            = $kafka::consumer::config_defaults,
 ) {
 
   $consumer_config = deep_merge($config_defaults, $config)
 
-  $config_notify = $service_restart ? {
-    true    => Service[$service_name],
-    default => undef
+  if ($service_install and $service_restart) {
+    $config_notify = Service[$service_name]
+  } else {
+    $config_notify = undef
   }
 
   file { "${config_dir}/consumer.properties":
