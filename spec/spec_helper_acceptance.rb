@@ -26,7 +26,7 @@ RSpec.configure do |c|
       on host, puppet('module', 'install', 'deric-zookeeper'), acceptable_exit_codes: [0, 1]
       on host, puppet('module', 'install', 'camptocamp-systemd', '--version 0.2.2'), acceptable_exit_codes: [0, 1]
 
-      write_hiera_config_on(host, ['%{::osfamily}'])
+      write_hiera_config_on(host, ['%<::osfamily>s'])
 
       copy_hiera_data_to(host, './spec/acceptance/hieradata/')
     end
