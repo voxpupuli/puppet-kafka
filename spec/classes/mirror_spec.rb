@@ -50,7 +50,7 @@ describe 'kafka::mirror', type: :class do
 
     describe 'kafka::mirror::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('kafka-mirror.service') }
+        it { is_expected.to contain_file('/etc/init.d/kafka-mirror') }
 
         it { is_expected.to contain_service('kafka-mirror') }
       end
@@ -85,9 +85,9 @@ describe 'kafka::mirror', type: :class do
 
     describe 'kafka::mirror::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
 
-        it { is_expected.to contain_file('kafka-mirror.service').with_content %r{^LimitNOFILE=65536$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{^LimitNOFILE=65536$} }
 
         it do
           is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
@@ -105,7 +105,7 @@ describe 'kafka::mirror', type: :class do
           common_params.merge(service_requires_zookeeper: false)
         end
 
-        it { is_expected.not_to contain_file('kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.not_to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
       end
 
       context 'service_requires_zookeeper enabled' do
@@ -113,7 +113,7 @@ describe 'kafka::mirror', type: :class do
           common_params.merge(service_requires_zookeeper: true)
         end
 
-        it { is_expected.to contain_file('kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
       end
     end
   end

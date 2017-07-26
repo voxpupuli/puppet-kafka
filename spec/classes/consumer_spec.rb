@@ -40,7 +40,7 @@ describe 'kafka::consumer', type: :class do
 
     describe 'kafka::consumer::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('kafka-consumer.service') }
+        it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
 
         it { is_expected.to contain_service('kafka-consumer') }
       end
@@ -69,9 +69,9 @@ describe 'kafka::consumer', type: :class do
 
     describe 'kafka::consumer::service' do
       context 'defaults' do
-        it { is_expected.to contain_file('kafka-consumer.service').that_notifies('Exec[systemctl-daemon-reload]') }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').that_notifies('Exec[systemctl-daemon-reload]') }
 
-        it { is_expected.to contain_file('kafka-consumer.service').with_content %r{^LimitNOFILE=65536$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').with_content %r{^LimitNOFILE=65536$} }
 
         it do
           is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
@@ -89,7 +89,7 @@ describe 'kafka::consumer', type: :class do
           common_params.merge(service_requires_zookeeper: false)
         end
 
-        it { is_expected.not_to contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.not_to contain_file('/etc/systemd/system/kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
       end
 
       context 'service_requires_zookeeper enabled' do
@@ -97,7 +97,7 @@ describe 'kafka::consumer', type: :class do
           common_params.merge(service_requires_zookeeper: true)
         end
 
-        it { is_expected.to contain_file('kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').with_content %r{^Requires=zookeeper.service$} }
       end
     end
   end
