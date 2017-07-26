@@ -58,9 +58,6 @@
 # [*config_dir*]
 # The directory to create the kafka config files to.
 #
-# [*bin_dir*]
-# The directory where the kafka scripts are.
-#
 # [*log_dir*]
 # The directory for kafka log files.
 #
@@ -68,23 +65,22 @@
 #
 #
 class kafka (
-  $version                          = $kafka::params::version,
-  $scala_version                    = $kafka::params::scala_version,
-  $install_dir                      = $kafka::params::install_dir,
+  String $version                   = $kafka::params::version,
+  String $scala_version             = $kafka::params::scala_version,
+  Stdlib::Absolutepath $install_dir = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
   Boolean $install_java             = $kafka::params::install_java,
   Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
-  $package_name                     = $kafka::params::package_name,
-  $package_ensure                   = $kafka::params::package_ensure,
+  Optional[String] $package_name    = $kafka::params::package_name,
+  String $package_ensure            = $kafka::params::package_ensure,
   String $user                      = $kafka::params::user,
   String $group                     = $kafka::params::group,
   Optional[Integer] $user_id        = $kafka::params::user_id,
   Optional[Integer] $group_id       = $kafka::params::group_id,
   Boolean $manage_user              = $kafka::params::manage_user,
   Boolean $manage_group             = $kafka::params::manage_group,
-  $config_dir                       = $kafka::params::config_dir,
-  Stdlib::Absolutepath $bin_dir     = $kafka::params::bin_dir,
-  $log_dir                          = $kafka::params::log_dir,
+  Stdlib::Absolutepath $config_dir  = $kafka::params::config_dir,
+  Stdlib::Absolutepath $log_dir     = $kafka::params::log_dir,
 ) inherits kafka::params {
 
   if $install_java {
