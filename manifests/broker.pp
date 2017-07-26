@@ -61,17 +61,32 @@
 # [*log_dir*]
 # The directory for kafka log files.
 #
+# [*bin_dir*]
+# The directory where the kafka scripts are.
+#
+# [*service_name*]
+# Set the name of the service.
+#
+# [*service_install*]
+# Install the init.d or systemd service.
+#
+# [*service_ensure*]
+# Set the ensure state of the service to 'stopped' or 'running'.
+#
+# [*service_restart*]
+# Whether the configuration files should trigger a service restart.
+#
+# [*service_requires_zookeeper*]
+# Whether the service should require the ZooKeeper service.
+#
+# [*limit_nofile*]
+# Set the 'LimitNOFILE' option of the systemd service.
+#
 # [*env*]
 # A hash of the environment variables to set.
 #
 # [*config*]
 # A hash of the configuration options.
-#
-# [*service_restart*]
-# Boolean, if the configuration files should trigger a service restart
-#
-# [*bin_dir*]
-# The directory where the kafka scripts are
 #
 # === Examples
 #
@@ -98,19 +113,20 @@ class kafka::broker (
   Boolean $manage_group                      = $kafka::params::manage_group,
   Stdlib::Absolutepath $config_dir           = $kafka::params::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::params::log_dir,
+  Stdlib::Absolutepath $bin_dir              = $kafka::params::bin_dir,
+  String $service_name                       = 'kafka',
+  Boolean $service_install                   = $kafka::params::service_install,
+  Enum['running', 'stopped'] $service_ensure = $kafka::params::service_ensure,
+  Boolean $service_restart                   = $kafka::params::service_restart,
+  Boolean $service_requires_zookeeper        = $kafka::params::service_requires_zookeeper,
+  Integer $limit_nofile                      = $kafka::params::limit_nofile,
   Hash $env                                  = {},
   Hash $config                               = {},
   Hash $config_defaults                      = $kafka::params::broker_config_defaults,
-  Integer $limit_nofile                      = $kafka::params::limit_nofile,
-  Boolean $service_install                   = $kafka::params::broker_service_install,
-  Enum['running', 'stopped'] $service_ensure = $kafka::params::broker_service_ensure,
-  Boolean $service_restart                   = $kafka::params::service_restart,
-  Boolean $service_requires_zookeeper        = $kafka::params::service_requires_zookeeper,
   $jmx_opts                                  = $kafka::params::broker_jmx_opts,
   $heap_opts                                 = $kafka::params::broker_heap_opts,
   $log4j_opts                                = $kafka::params::broker_log4j_opts,
   $opts                                      = $kafka::params::broker_opts,
-  Stdlib::Absolutepath $bin_dir              = $kafka::params::bin_dir,
 ) inherits kafka::params {
 
   class { '::kafka::broker::install': }

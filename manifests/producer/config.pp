@@ -8,18 +8,20 @@
 # It manages the producer config files
 #
 class kafka::producer::config(
-  $config          = $kafka::producer::config,
-  $config_defaults = $kafka::producer::config_defaults,
-  $service_name    = 'kafka-producer',
-  $service_restart = $kafka::producer::service_restart,
-  $config_dir      = $kafka::producer::config_dir,
+  Stdlib::Absolutepath $config_dir = $kafka::producer::config_dir,
+  String $service_name             = $kafka::producer::service_name,
+  Boolean $service_install         = $kafka::producer::service_install,
+  Boolean $service_restart         = $kafka::producer::service_restart,
+  Hash $config                     = $kafka::producer::config,
+  Hash $config_defaults            = $kafka::producer::config_defaults,
 ) {
 
   $producer_config = deep_merge($config_defaults, $config)
 
-  $config_notify = $service_restart ? {
-    true    => Service[$service_name],
-    default => undef
+  if ($service_install and $service_restart) {
+    $config_notify = Service[$service_name]
+  } else {
+    $config_notify = undef
   }
 
   file { "${config_dir}/producer.properties":

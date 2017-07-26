@@ -32,11 +32,11 @@ class kafka::params {
   $manage_user    = true
   $manage_group   = true
 
+  $service_install = true
+  $service_ensure = 'running'
   $service_requires_zookeeper = false
-
-  $broker_service_install = true
-  $broker_service_ensure = 'running'
-
+  $service_restart = true
+  $limit_nofile = 65536
 
   $broker_jmx_opts = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9990'
@@ -55,10 +55,6 @@ class kafka::params {
   $consumer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
   $consumer_log4j_opts = $broker_log4j_opts
-
-  $limit_nofile = 65536
-
-  $service_restart = true
 
   #http://kafka.apache.org/documentation.html#brokerconfigs
   $broker_config_defaults = {
