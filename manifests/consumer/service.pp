@@ -58,7 +58,7 @@ class kafka::consumer::service(
         ensure => absent,
       }
 
-      File["${service_name}.service"]
+      File["/etc/systemd/system/${service_name}.service"]
       ~> Exec['systemctl-daemon-reload']
       -> Service[$service_name]
 

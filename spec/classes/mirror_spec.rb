@@ -44,6 +44,7 @@ describe 'kafka::mirror', type: :class do
 
     describe 'kafka::mirror::config' do
       context 'defaults' do
+        it { is_expected.to contain_class('kafka::consumer::config') }
         it { is_expected.to contain_class('kafka::producer::config') }
       end
     end
@@ -79,6 +80,7 @@ describe 'kafka::mirror', type: :class do
 
     describe 'kafka::mirror::config' do
       context 'defaults' do
+        it { is_expected.to contain_class('kafka::consumer::config') }
         it { is_expected.to contain_class('kafka::producer::config') }
       end
     end
