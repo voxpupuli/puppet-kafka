@@ -49,9 +49,8 @@ class kafka::producer::service(
     if $::service_provider == 'systemd' {
       fail('Console Producer is not supported on systemd, because the stdin of the process cannot be redirected')
     } else {
-      file { "${service_name}.service":
+      file { "/etc/init.d/${service_name}":
         ensure  => file,
-        path    => "/etc/init.d/${service_name}",
         mode    => '0755',
         content => template('kafka/init.erb'),
         before  => Service[$service_name],

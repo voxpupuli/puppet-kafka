@@ -52,9 +52,8 @@ class kafka::mirror::service(
     if $::service_provider == 'systemd' {
       include ::systemd
 
-      file { "${service_name}.service":
+      file { "/etc/systemd/system/${service_name}.service":
         ensure  => file,
-        path    => "/etc/systemd/system/${service_name}.service",
         mode    => '0644',
         content => template('kafka/unit.erb'),
       }
@@ -68,9 +67,8 @@ class kafka::mirror::service(
       -> Service[$service_name]
 
     } else {
-      file { "${service_name}.service":
+      file { "/etc/init.d/${service_name}":
         ensure  => file,
-        path    => "/etc/init.d/${service_name}",
         mode    => '0755',
         content => template('kafka/init.erb'),
         before  => Service[$service_name],
