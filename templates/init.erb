@@ -5,7 +5,11 @@
 <%- if @osfamily == 'Debian' -%>
 ### BEGIN INIT INFO
 # Provides:          <%- @service_name -%>
+<%- if @service_requires_zookeeper -%>
 # Required-Start:    zookeeper
+<%- else -%>
+# Required-Start:
+<%- end -%>
 # Required-Stop:
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
@@ -19,47 +23,35 @@
 <%- end -%>
 
 NAME=<%= @service_name %>
+<% @environment.sort.map do |k,v| -%>
+<% unless v.to_s.strip.empty? -%>
+export <%= k %>="<%= v %>"
+<% end -%>
+<% end -%>
 PID_FILE="/var/run/$NAME.pid"
-KAFKA_USER=kafka
+KAFKA_USER=<%- @user -%>
 <%- case @service_name
   when 'kafka' -%>
 PGREP_PATTERN=kafka.Kafka
 
-DAEMON="/opt/kafka/bin/kafka-server-start.sh"
+DAEMON="<%= @bin_dir %>/kafka-server-start.sh"
 DAEMON_OPTS="<%= @config_dir %>/server.properties"
-
-export KAFKA_JMX_OPTS="<%= @jmx_opts %>"
-export KAFKA_LOG4J_OPTS="<%= @log4j_opts %>"
-export KAFKA_HEAP_OPTS="<%= @heap_opts %>"
-
-export KAFKA_OPTS="<%= @opts %>"
-export LOG_DIR="<%= @log_dir %>"
 <%- when 'kafka-consumer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleConsumer
 
-DAEMON="/opt/kafka/bin/kafka-console-consumer.sh"
+DAEMON="<%= @bin_dir %>/kafka-console-consumer.sh"
 DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
-
-export KAFKA_JMX_OPTS="<%= @consumer_jmx_opts %>"
-export KAFKA_LOG4J_OPTS="<%= @consumer_log4j_opts %>"
 <%- when 'kafka-mirror' -%>
 PGREP_PATTERN=kafka.tools.MirrorMaker
 
-DAEMON="/opt/kafka/bin/kafka-run-class.sh"
+DAEMON="<%= @bin_dir %>/kafka-run-class.sh"
 DAEMON_OPTS="kafka.tools.MirrorMaker --consumer.config <%= @consumer_config -%> --num.streams <%= @num_streams -%> --producer.config <%= @producer_config -%><%- if (scope.function_versioncmp([scope.lookupvar('kafka::version'), '0.9.0.0']) < 0) -%> --num.producers <%= @num_producers -%><%- end -%><%- if !@whitelist.eql?('') -%> --whitelist='<%= @whitelist -%>'<%- end %><%- if !@blacklist.eql?('') -%> --blacklist='<%= @blacklist -%>'<%- end -%> <%= @abort_on_send_failure_opt %>"
-
-export KAFKA_HEAP_OPTS="-Xmx<%= @max_heap -%> -Xms<%= @max_heap -%>"
-export KAFKA_JMX_OPTS="<%= @mirror_jmx_opts %>"
-export KAFKA_LOG4J_OPTS="<%= @mirror_log4j_opts %>"
 <%- when 'kafka-producer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleProducer
 
-DAEMON="/opt/kafka/bin/kafka-console-producer.sh"
+DAEMON="<%= @bin_dir %>/kafka-console-producer.sh"
 DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
 PRODUCER_INPUT="<%= @input %>"
-
-export KAFKA_JMX_OPTS="<%= @producer_jmx_opts %>"
-export KAFKA_LOG4J_OPTS="<%= @producer_log4j_opts %>"
 <%- end -%>
 
 if [ -f /etc/default/kafka ]; then

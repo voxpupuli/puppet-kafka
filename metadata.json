@@ -1,6 +1,6 @@
 {
   "name": "puppet-kafka",
-  "version": "3.0.1-rc0",
+  "version": "3.1.1-rc0",
   "author": "Vox Pupuli",
   "summary": "Puppet module for Kafka",
   "license": "MIT",
@@ -18,7 +18,7 @@
     },
     {
       "name": "puppetlabs/stdlib",
-      "version_requirement": ">= 4.11.0 < 5.0.0"
+      "version_requirement": ">= 4.13.1 < 5.0.0"
     },
     {
       "name": "deric/zookeeper",
@@ -60,7 +60,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 4.6.1 < 5.0.0"
+      "version_requirement": ">= 4.7.0 < 5.0.0"
     }
   ],
   "tags": [

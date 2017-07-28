@@ -49,12 +49,12 @@ describe 'kafka::broker', type: :class do
           common_params.merge(service_install: false)
         end
 
-        it { is_expected.not_to contain_file('kafka.service') }
+        it { is_expected.not_to contain_file('/etc/init.d/kafka') }
 
         it { is_expected.not_to contain_service('kafka') }
       end
       context 'defaults' do
-        it { is_expected.to contain_file('kafka.service') }
+        it { is_expected.to contain_file('/etc/init.d/kafka') }
 
         it { is_expected.to contain_service('kafka') }
       end
@@ -93,13 +93,15 @@ describe 'kafka::broker', type: :class do
           common_params.merge(service_install: false)
         end
 
-        it { is_expected.not_to contain_file('kafka.service') }
+        it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service') }
 
         it { is_expected.not_to contain_service('kafka') }
       end
 
       context 'defaults' do
-        it { is_expected.to contain_file('kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
+
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
 
         it do
           is_expected.to contain_file('/etc/init.d/kafka').with(
@@ -119,7 +121,7 @@ describe 'kafka::broker', type: :class do
           }
         end
 
-        it { is_expected.not_to contain_file('kafka.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=zookeeper.service$} }
       end
 
       context 'service_requires_zookeeper enabled' do
@@ -129,7 +131,7 @@ describe 'kafka::broker', type: :class do
           }
         end
 
-        it { is_expected.to contain_file('kafka.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=zookeeper.service$} }
       end
     end
   end

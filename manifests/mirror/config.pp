@@ -8,12 +8,14 @@
 # It manages the mirror-maker config files
 #
 class kafka::mirror::config(
-  $consumer_config          = $kafka::mirror::consumer_config,
-  $consumer_config_defaults = $kafka::mirror::consumer_config_defaults,
-  $producer_config          = $kafka::mirror::producer_config,
-  $producer_config_defaults = $kafka::mirror::producer_config_defaults,
-  $service_restart          = $kafka::mirror::service_restart,
-  $config_dir               = $kafka::mirror::config_dir,
+  Stdlib::Absolutepath $config_dir = $kafka::mirror::config_dir,
+  String $service_name             = $kafka::mirror::service_name,
+  Boolean $service_install         = $kafka::mirror::service_install,
+  Boolean $service_restart         = $kafka::mirror::service_restart,
+  Hash $consumer_config            = $kafka::mirror::consumer_config,
+  Hash $consumer_config_defaults   = $kafka::mirror::consumer_config_defaults,
+  Hash $producer_config            = $kafka::mirror::producer_config,
+  Hash $producer_config_defaults   = $kafka::mirror::producer_config_defaults,
 ) {
 
   if $caller_module_name != $module_name {
@@ -37,19 +39,21 @@ class kafka::mirror::config(
     }
   }
 
-  ::kafka::consumer::config { 'consumer-1':
+  class { '::kafka::consumer::config':
+    config_dir      => $config_dir,
+    service_name    => $service_name,
+    service_install => $service_install,
+    service_restart => $service_restart,
     config          => $consumer_config,
     config_defaults => $consumer_config_defaults,
-    service_name    => 'kafka-mirror',
-    service_restart => $service_restart,
-    config_dir      => $config_dir,
   }
 
   class { '::kafka::producer::config':
+    config_dir      => $config_dir,
+    service_name    => $service_name,
+    service_install => $service_install,
+    service_restart => $service_restart,
     config          => $producer_config,
     config_defaults => $producer_config_defaults,
-    service_name    => 'kafka-mirror',
-    service_restart => $service_restart,
-    config_dir      => $config_dir,
   }
 }
