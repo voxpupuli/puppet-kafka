@@ -8,6 +8,7 @@ describe 'kafka::mirror' do
         consumer_config => {
           'group.id'          => 'kafka-mirror',
           'zookeeper.connect' => 'localhost:2181',
+          'whitelist'         => 'mytest'
         },
         producer_config => {
           'bootstrap.servers' => 'localhost:9092',
@@ -209,6 +210,7 @@ describe 'kafka::mirror' do
         it { is_expected.to contain 'export KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
         it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
         it { is_expected.to contain 'Requires=zookeeper.service' }
+        it { is_expected.to contain 'whitelist=\'mytest\'' }
       end
 
       describe service('kafka-mirror') do
