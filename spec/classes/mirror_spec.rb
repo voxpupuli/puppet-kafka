@@ -51,7 +51,10 @@ describe 'kafka::mirror', type: :class do
 
     describe 'kafka::mirror::service' do
       context 'defaults' do
+        it { is_expected.to contain_file('/etc/init.d/kafka-mirror') }
         it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_content %r{whitelist='.*'} }
+        it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).properties} }
+
         it { is_expected.to contain_service('kafka-mirror') }
       end
       context 'new consumer enabled' do
@@ -94,9 +97,9 @@ describe 'kafka::mirror', type: :class do
     describe 'kafka::mirror::service' do
       context 'defaults' do
         it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
-
         it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{^LimitNOFILE=65536$} }
         it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{whitelist='.*'} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).properties} }
 
         it do
           is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
