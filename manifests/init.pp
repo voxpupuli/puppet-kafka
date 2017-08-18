@@ -46,8 +46,14 @@
 # [*user_id*]
 # Create the kafka user with this ID.
 #
+# [*system_user*]
+# Whether the kafka user is a system user or not.
+#
 # [*group_id*]
 # Create the kafka group with this ID.
+#
+# [*system_group*]
+# Whether the kafka group is a system group or not.
 #
 # [*manage_user*]
 # Create the kafka user if it's not already present.
@@ -75,6 +81,8 @@ class kafka (
   String $package_ensure            = $kafka::params::package_ensure,
   String $user                      = $kafka::params::user,
   String $group                     = $kafka::params::group,
+  Boolean $system_user              = $kafka::params::system_user,
+  Boolean $system_group             = $kafka::params::system_group,
   Optional[Integer] $user_id        = $kafka::params::user_id,
   Optional[Integer] $group_id       = $kafka::params::group_id,
   Boolean $manage_user              = $kafka::params::manage_user,
@@ -93,6 +101,7 @@ class kafka (
     group { $group:
       ensure => present,
       gid    => $group_id,
+      system => $system_group,
     }
   }
 
@@ -102,6 +111,7 @@ class kafka (
       shell   => '/bin/bash',
       require => Group[$group],
       uid     => $user_id,
+      system  => $system_user,
     }
   }
 
