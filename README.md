@@ -327,7 +327,7 @@ This module is tested on the following platforms:
 * Ubuntu 12.04
 * Ubuntu 14.04
 
-It is tested with the OSS version of Puppet only.
+It is tested with the OSS version of 4< Puppet  only.
 
 ## Development
 
