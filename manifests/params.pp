@@ -29,6 +29,8 @@ class kafka::params {
   $group          = 'kafka'
   $user_id        = undef
   $group_id       = undef
+  $system_user    = false
+  $system_group   = false
   $manage_user    = true
   $manage_group   = true
 
