@@ -102,5 +102,6 @@ describe 'kafka::consumer', type: :class do
     end
   end
 
+  it { is_expected.to contain_file('/opt/kafka/config/consumer.properties') }
   it_validates_parameter 'mirror_url'
 end
