@@ -1,10 +1,49 @@
-# Change log
+# Changelog
 
 All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
-These should not impact the functionality of the module.
+These should not affect the functionality of the module.
 
-## [v3.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.1.0) (2017-07-13)
+## [v3.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.2.0) (2017-09-24)
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.1.0...v3.2.0)
+
+**Implemented enhancements:**
+
+- Added manage\_user and manage\_group parameters [\#185](https://github.com/voxpupuli/puppet-kafka/pull/185) ([LionelCons](https://github.com/LionelCons))
+
+**Fixed bugs:**
+
+- Typo in init.erb [\#198](https://github.com/voxpupuli/puppet-kafka/issues/198)
+- Fixed typo in init.erb [\#199](https://github.com/voxpupuli/puppet-kafka/pull/199) ([LionelCons](https://github.com/LionelCons))
+- kafka::consumer now calls kafka::consumer::config [\#187](https://github.com/voxpupuli/puppet-kafka/pull/187) ([LionelCons](https://github.com/LionelCons))
+- kafka::mirror::service does not inherit from ::kafka::params anymore [\#177](https://github.com/voxpupuli/puppet-kafka/pull/177) ([LionelCons](https://github.com/LionelCons))
+
+**Closed issues:**
+
+- There are parameter discrepancies amongst kafka::\*::service [\#192](https://github.com/voxpupuli/puppet-kafka/issues/192)
+- There are parameter discrepancies between kafka::init and kafka::\*::install [\#190](https://github.com/voxpupuli/puppet-kafka/issues/190)
+- The kafka::broker::topic defined type should rather be kafka::topic [\#188](https://github.com/voxpupuli/puppet-kafka/issues/188)
+- The consumer class does not call its config subclass [\#186](https://github.com/voxpupuli/puppet-kafka/issues/186)
+- The ZooKeeper service should not be required by default [\#183](https://github.com/voxpupuli/puppet-kafka/issues/183)
+- Java should not be installed by default [\#180](https://github.com/voxpupuli/puppet-kafka/issues/180)
+- include statements do not need quotes [\#178](https://github.com/voxpupuli/puppet-kafka/issues/178)
+- mirror/service.pp should not inherit from ::kafka::params [\#176](https://github.com/voxpupuli/puppet-kafka/issues/176)
+- Module user/group management should be optional [\#173](https://github.com/voxpupuli/puppet-kafka/issues/173)
+
+**Merged pull requests:**
+
+- fix mirror maker with new consumer [\#203](https://github.com/voxpupuli/puppet-kafka/pull/203) ([jacobmw](https://github.com/jacobmw))
+- Update README.md [\#201](https://github.com/voxpupuli/puppet-kafka/pull/201) ([confiq](https://github.com/confiq))
+- enable possibility of system users for kafka [\#197](https://github.com/voxpupuli/puppet-kafka/pull/197) ([Wayneoween](https://github.com/Wayneoween))
+- MirrorMaker service needed path to .properties files [\#196](https://github.com/voxpupuli/puppet-kafka/pull/196) ([jacobmw](https://github.com/jacobmw))
+- cleanup related to the service classes [\#193](https://github.com/voxpupuli/puppet-kafka/pull/193) ([LionelCons](https://github.com/LionelCons))
+- cleanup related to the install classes [\#191](https://github.com/voxpupuli/puppet-kafka/pull/191) ([LionelCons](https://github.com/LionelCons))
+- renamed kafka::broker::topic to kafka::topic and added a bin\_dir param [\#189](https://github.com/voxpupuli/puppet-kafka/pull/189) ([LionelCons](https://github.com/LionelCons))
+- The ZooKeeper service is not required by default anymore [\#184](https://github.com/voxpupuli/puppet-kafka/pull/184) ([LionelCons](https://github.com/LionelCons))
+- Java is not installed by default anymore [\#181](https://github.com/voxpupuli/puppet-kafka/pull/181) ([LionelCons](https://github.com/LionelCons))
+- include statements do not need quotes [\#179](https://github.com/voxpupuli/puppet-kafka/pull/179) ([LionelCons](https://github.com/LionelCons))
+
+## [v3.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.1.0) (2017-07-19)
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.0.0...v3.1.0)
 
 **Implemented enhancements:**
@@ -39,6 +78,7 @@ These should not impact the functionality of the module.
 
 **Merged pull requests:**
 
+- Release 3.1.0 [\#175](https://github.com/voxpupuli/puppet-kafka/pull/175) ([bastelfreak](https://github.com/bastelfreak))
 - added an $env parameter to control the environment passed to Kafka [\#170](https://github.com/voxpupuli/puppet-kafka/pull/170) ([LionelCons](https://github.com/LionelCons))
 - the init script now uses the service\_requires\_zookeeper parameter [\#169](https://github.com/voxpupuli/puppet-kafka/pull/169) ([LionelCons](https://github.com/LionelCons))
 - replace validate\_\* with datatypes [\#153](https://github.com/voxpupuli/puppet-kafka/pull/153) ([bastelfreak](https://github.com/bastelfreak))
