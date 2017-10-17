@@ -82,6 +82,12 @@
 # [*limit_nofile*]
 # Set the 'LimitNOFILE' option of the systemd service.
 #
+# [*timeout_stop*]
+# Set the 'TimeoutStopSec' option of the systemd service.
+#
+# [*exec_stop*]
+# Set the 'ExecStop' option of the systemd service to 'kafka-server-stop.sh'.
+#
 # [*env*]
 # A hash of the environment variables to set.
 #
@@ -120,6 +126,8 @@ class kafka::broker (
   Boolean $service_restart                   = $kafka::params::service_restart,
   Boolean $service_requires_zookeeper        = $kafka::params::service_requires_zookeeper,
   Integer $limit_nofile                      = $kafka::params::limit_nofile,
+  Optional[String] $timeout_stop             = $kafka::params::timeout_stop,
+  Boolean $exec_stop                         = $kafka::params::exec_stop,
   Hash $env                                  = {},
   Hash $config                               = {},
   Hash $config_defaults                      = $kafka::params::broker_config_defaults,

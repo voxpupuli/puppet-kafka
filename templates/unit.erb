@@ -22,6 +22,12 @@ Environment='<%= k %>=<%= v %>'
 <%- case @service_name
   when 'kafka' -%>
 ExecStart=<%= @bin_dir %>/kafka-server-start.sh <%= @config_dir %>/server.properties
+<%- if @exec_stop -%>
+ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
+<%- end -%>
+<%- if @timeout_stop -%>
+TimeoutStopSec=<%= @timeout_stop %>
+<%- end -%>
   <%- when 'kafka-consumer' -%>
 ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>
   <%- when 'kafka-mirror' -%>
