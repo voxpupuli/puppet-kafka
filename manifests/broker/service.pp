@@ -19,6 +19,7 @@ class kafka::broker::service(
   Boolean $service_requires_zookeeper        = $kafka::broker::service_requires_zookeeper,
   Integer $limit_nofile                      = $kafka::broker::limit_nofile,
   Optional[String] $timeout_stop             = $kafka::broker::timeout_stop,
+  Boolean $exec_stop                         = $kafka::broker::exec_stop,
   Hash $env                                  = $kafka::broker::env,
   $jmx_opts                                  = $kafka::broker::jmx_opts,
   $log4j_opts                                = $kafka::broker::log4j_opts,

@@ -40,6 +40,7 @@ class kafka::params {
   $service_restart = true
   $limit_nofile = 65536
   $timeout_stop = undef
+  $exec_stop = false
 
   $broker_jmx_opts = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9990'

@@ -22,6 +22,9 @@ Environment='<%= k %>=<%= v %>'
 <%- case @service_name
   when 'kafka' -%>
 ExecStart=<%= @bin_dir %>/kafka-server-start.sh <%= @config_dir %>/server.properties
+<%- if @exec_stop -%>
+ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
+<%- end -%>
 <%- if @timeout_stop -%>
 TimeoutStopSec=<%= @timeout_stop %>
 <%- end -%>
