@@ -18,6 +18,7 @@ class kafka::broker::service(
   Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   Boolean $service_requires_zookeeper        = $kafka::broker::service_requires_zookeeper,
   Integer $limit_nofile                      = $kafka::broker::limit_nofile,
+  Optional[String] $timeout_stop             = $kafka::broker::timeout_stop,
   Hash $env                                  = $kafka::broker::env,
   $jmx_opts                                  = $kafka::broker::jmx_opts,
   $log4j_opts                                = $kafka::broker::log4j_opts,
