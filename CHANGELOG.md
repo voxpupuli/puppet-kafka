@@ -4,8 +4,33 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v3.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.2.0) (2017-09-24)
+## [v4.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v4.0.0) (2017-10-17)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.2.0...v4.0.0)
+
+**Implemented enhancements:**
+
+- Adjust puppet version boundaries for puppet6 [\#209](https://github.com/voxpupuli/puppet-kafka/pull/209) ([bastelfreak](https://github.com/bastelfreak))
+- Add support for TimeoutStopSec and ExecStop in the systemd unit file [\#207](https://github.com/voxpupuli/puppet-kafka/pull/207) ([LionelCons](https://github.com/LionelCons))
+- Higher allowed version for module java and lower for zookeeper [\#205](https://github.com/voxpupuli/puppet-kafka/pull/205) ([hp197](https://github.com/hp197))
+
+**Closed issues:**
+
+- Kafka stopping should be configurable in the systemd unit file [\#206](https://github.com/voxpupuli/puppet-kafka/issues/206)
+
+**Merged pull requests:**
+
+- release 3.2.0 [\#204](https://github.com/voxpupuli/puppet-kafka/pull/204) ([bastelfreak](https://github.com/bastelfreak))
+
+## [v3.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.2.0) (2017-09-29)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.1.0...v3.2.0)
+
+**Breaking changes:**
+
+- renamed kafka::broker::topic to kafka::topic and added a bin\_dir param [\#189](https://github.com/voxpupuli/puppet-kafka/pull/189) ([LionelCons](https://github.com/LionelCons))
+- The ZooKeeper service is not required by default anymore [\#184](https://github.com/voxpupuli/puppet-kafka/pull/184) ([LionelCons](https://github.com/LionelCons))
+- Java is not installed by default anymore [\#181](https://github.com/voxpupuli/puppet-kafka/pull/181) ([LionelCons](https://github.com/LionelCons))
 
 **Implemented enhancements:**
 
@@ -38,12 +63,10 @@ These should not affect the functionality of the module.
 - MirrorMaker service needed path to .properties files [\#196](https://github.com/voxpupuli/puppet-kafka/pull/196) ([jacobmw](https://github.com/jacobmw))
 - cleanup related to the service classes [\#193](https://github.com/voxpupuli/puppet-kafka/pull/193) ([LionelCons](https://github.com/LionelCons))
 - cleanup related to the install classes [\#191](https://github.com/voxpupuli/puppet-kafka/pull/191) ([LionelCons](https://github.com/LionelCons))
-- renamed kafka::broker::topic to kafka::topic and added a bin\_dir param [\#189](https://github.com/voxpupuli/puppet-kafka/pull/189) ([LionelCons](https://github.com/LionelCons))
-- The ZooKeeper service is not required by default anymore [\#184](https://github.com/voxpupuli/puppet-kafka/pull/184) ([LionelCons](https://github.com/LionelCons))
-- Java is not installed by default anymore [\#181](https://github.com/voxpupuli/puppet-kafka/pull/181) ([LionelCons](https://github.com/LionelCons))
 - include statements do not need quotes [\#179](https://github.com/voxpupuli/puppet-kafka/pull/179) ([LionelCons](https://github.com/LionelCons))
 
 ## [v3.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.1.0) (2017-07-19)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.0.0...v3.1.0)
 
 **Implemented enhancements:**
@@ -84,8 +107,10 @@ These should not affect the functionality of the module.
 - replace validate\_\* with datatypes [\#153](https://github.com/voxpupuli/puppet-kafka/pull/153) ([bastelfreak](https://github.com/bastelfreak))
 - Add missing documentation [\#138](https://github.com/voxpupuli/puppet-kafka/pull/138) ([seanmalloy](https://github.com/seanmalloy))
 - Add params to allow customizing user, group, and log\_dir [\#137](https://github.com/voxpupuli/puppet-kafka/pull/137) ([seanmalloy](https://github.com/seanmalloy))
+- release 3.0.0 [\#134](https://github.com/voxpupuli/puppet-kafka/pull/134) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v3.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.0.0) (2017-02-13)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v2.3.0...v3.0.0)
 
 **Implemented enhancements:**
@@ -94,9 +119,10 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 3.0.0 [\#134](https://github.com/voxpupuli/puppet-kafka/pull/134) ([bastelfreak](https://github.com/bastelfreak))
+- release 2.3.0 [\#132](https://github.com/voxpupuli/puppet-kafka/pull/132) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v2.3.0](https://github.com/voxpupuli/puppet-kafka/tree/v2.3.0) (2017-02-11)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v2.2.0...v2.3.0)
 
 **Closed issues:**
@@ -105,12 +131,13 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 2.3.0 [\#132](https://github.com/voxpupuli/puppet-kafka/pull/132) ([bastelfreak](https://github.com/bastelfreak))
 - allow using any mirror\_url if it ends with tgz [\#126](https://github.com/voxpupuli/puppet-kafka/pull/126) ([petetodo](https://github.com/petetodo))
 - Bump dependencies [\#125](https://github.com/voxpupuli/puppet-kafka/pull/125) ([juniorsysadmin](https://github.com/juniorsysadmin))
+- release 2.2.0 [\#124](https://github.com/voxpupuli/puppet-kafka/pull/124) ([bastelfreak](https://github.com/bastelfreak))
 - Mirror url custom port [\#121](https://github.com/voxpupuli/puppet-kafka/pull/121) ([ellamdav](https://github.com/ellamdav))
 
 ## [v2.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v2.2.0) (2016-12-25)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v2.1.0...v2.2.0)
 
 **Closed issues:**
@@ -121,7 +148,6 @@ These should not affect the functionality of the module.
 
 **Merged pull requests:**
 
-- release 2.2.0 [\#124](https://github.com/voxpupuli/puppet-kafka/pull/124) ([bastelfreak](https://github.com/bastelfreak))
 - Fix bounding of puppet version in metadata [\#116](https://github.com/voxpupuli/puppet-kafka/pull/116) ([ghoneycutt](https://github.com/ghoneycutt))
 - Fix puppet 4 versioncmp need for string [\#115](https://github.com/voxpupuli/puppet-kafka/pull/115) ([mlambrichs](https://github.com/mlambrichs))
 - Update readme with the current Kafka & Scala versions [\#112](https://github.com/voxpupuli/puppet-kafka/pull/112) ([atrepca](https://github.com/atrepca))
@@ -130,6 +156,7 @@ These should not affect the functionality of the module.
 - Make the systemd manifest configurable [\#105](https://github.com/voxpupuli/puppet-kafka/pull/105) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
 
 ## [v2.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v2.1.0) (2016-08-31)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v2.0.0...v2.1.0)
 
 **Closed issues:**
@@ -158,6 +185,7 @@ These should not affect the functionality of the module.
 - Add support for optional default file with environment vars [\#35](https://github.com/voxpupuli/puppet-kafka/pull/35) ([knumor](https://github.com/knumor))
 
 ## [v2.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v2.0.0) (2016-05-26)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v1.0.3...v2.0.0)
 
 **Implemented enhancements:**
@@ -171,7 +199,9 @@ These should not affect the functionality of the module.
 - kafka::mirror is critically broken [\#39](https://github.com/voxpupuli/puppet-kafka/issues/39)
 - stop trying to make fetch happen [\#31](https://github.com/voxpupuli/puppet-kafka/issues/31)
 - producer init template is missing [\#13](https://github.com/voxpupuli/puppet-kafka/issues/13)
+- Both "version" and "scala\_version" are ignored within "kafka::broker" [\#9](https://github.com/voxpupuli/puppet-kafka/issues/9)
 - Readme states that "config" is available within the "kafka" class [\#8](https://github.com/voxpupuli/puppet-kafka/issues/8)
+- ability to set the service to disabled [\#3](https://github.com/voxpupuli/puppet-kafka/issues/3)
 
 **Merged pull requests:**
 
@@ -202,6 +232,7 @@ These should not affect the functionality of the module.
 - attempt to fix \#3 \(allow to configure service manually\) [\#12](https://github.com/voxpupuli/puppet-kafka/pull/12) ([feniix](https://github.com/feniix))
 
 ## [v1.0.3](https://github.com/voxpupuli/puppet-kafka/tree/v1.0.3) (2016-01-22)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v1.0.2...v1.0.3)
 
 **Closed issues:**
@@ -210,7 +241,6 @@ These should not affect the functionality of the module.
 - Puppetforge module outdated: The init script leaves pidfile if there's an error when starting [\#26](https://github.com/voxpupuli/puppet-kafka/issues/26)
 - Ubuntu 12.04/14.04 LTS Compatibility Broken [\#24](https://github.com/voxpupuli/puppet-kafka/issues/24)
 - kafka starting as a root user [\#17](https://github.com/voxpupuli/puppet-kafka/issues/17)
-- Both "version" and "scala\_version" are ignored within "kafka::broker" [\#9](https://github.com/voxpupuli/puppet-kafka/issues/9)
 - init script is incompatible with chkconfig [\#5](https://github.com/voxpupuli/puppet-kafka/issues/5)
 
 **Merged pull requests:**
@@ -218,6 +248,7 @@ These should not affect the functionality of the module.
 - Update module to version 1.0.3 [\#29](https://github.com/voxpupuli/puppet-kafka/pull/29) ([dhoppe](https://github.com/dhoppe))
 
 ## [v1.0.2](https://github.com/voxpupuli/puppet-kafka/tree/v1.0.2) (2015-12-11)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v1.0.1...v1.0.2)
 
 **Closed issues:**
@@ -234,26 +265,29 @@ These should not affect the functionality of the module.
 - Make beaker run on centos [\#7](https://github.com/voxpupuli/puppet-kafka/pull/7) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
 
 ## [v1.0.1](https://github.com/voxpupuli/puppet-kafka/tree/v1.0.1) (2015-03-24)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v1.0.0...v1.0.1)
-
-**Closed issues:**
-
-- ability to set the service to disabled [\#3](https://github.com/voxpupuli/puppet-kafka/issues/3)
 
 **Merged pull requests:**
 
 - Moar file descriptors! \(quoting https://github.com/stack72\) [\#1](https://github.com/voxpupuli/puppet-kafka/pull/1) ([pablete](https://github.com/pablete))
 
 ## [v1.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v1.0.0) (2014-10-10)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v0.2.1...v1.0.0)
 
 ## [v0.2.1](https://github.com/voxpupuli/puppet-kafka/tree/v0.2.1) (2014-06-02)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v0.2.0...v0.2.1)
 
 ## [v0.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v0.2.0) (2014-06-02)
+
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v0.1.0...v0.2.0)
 
 ## [v0.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v0.1.0) (2014-05-28)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/b417ba3ca7ab51cf77392b496005f4d8dcd89e4c...v0.1.0)
+
 
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
