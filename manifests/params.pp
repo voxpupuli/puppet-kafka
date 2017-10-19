@@ -325,8 +325,6 @@ class kafka::params {
 
   #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
   #https://kafka.apache.org/documentation.html#basic_ops_mirror_maker
-  $consumer_config = "${config_dir}/consumer-1.properties"
-  $producer_config = "${config_dir}/producer.properties"
   $num_streams = 2
   $num_producers = 1
   $abort_on_send_failure = true
@@ -373,5 +371,4 @@ class kafka::params {
     'value-serializer'           => 'kafka.serializer.DefaultEncoder',
   }
 
-  $mirror_url_regex = '^(https?:\/\/)([\da-z\.-]+)\.([a-z\.]{2,6})(:[\d]{2,5})?(\/[\w \.-]*)*\/?$'
 }
