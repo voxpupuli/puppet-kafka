@@ -130,7 +130,6 @@ class kafka::broker (
   Boolean $exec_stop                         = $kafka::params::exec_stop,
   Hash $env                                  = {},
   Hash $config                               = {},
-  Hash $config_defaults                      = $kafka::params::broker_config_defaults,
   $jmx_opts                                  = $kafka::params::broker_jmx_opts,
   $heap_opts                                 = $kafka::params::broker_heap_opts,
   $log4j_opts                                = $kafka::params::broker_log4j_opts,

@@ -13,10 +13,9 @@ class kafka::producer::config(
   Boolean $service_install         = $kafka::producer::service_install,
   Boolean $service_restart         = $kafka::producer::service_restart,
   Hash $config                     = $kafka::producer::config,
-  Hash $config_defaults            = $kafka::producer::config_defaults,
 ) {
 
-  $producer_config = deep_merge($config_defaults, $config)
+  $producer_config = $config
 
   if ($service_install and $service_restart) {
     $config_notify = Service[$service_name]

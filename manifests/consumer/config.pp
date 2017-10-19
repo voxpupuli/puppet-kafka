@@ -13,10 +13,9 @@ class kafka::consumer::config(
   Boolean $service_install         = $kafka::consumer::service_install,
   Boolean $service_restart         = $kafka::consumer::service_restart,
   Hash $config                     = $kafka::consumer::config,
-  Hash $config_defaults            = $kafka::consumer::config_defaults,
 ) {
 
-  $consumer_config = deep_merge($config_defaults, $config)
+  $consumer_config = $config
 
   if ($service_install and $service_restart) {
     $config_notify = Service[$service_name]
