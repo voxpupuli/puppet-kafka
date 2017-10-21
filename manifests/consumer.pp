@@ -121,7 +121,6 @@ class kafka::consumer (
   Integer $limit_nofile                      = $kafka::params::limit_nofile,
   Hash $env                                  = {},
   Hash $config                               = {},
-  Hash $config_defaults                      = $kafka::params::consumer_config_defaults,
   Hash $service_config                       = {},
   Hash $service_defaults                     = $kafka::params::consumer_service_defaults,
   $consumer_jmx_opts                         = $kafka::params::consumer_jmx_opts,

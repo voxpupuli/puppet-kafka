@@ -123,7 +123,6 @@ class kafka::producer (
   Integer $limit_nofile                      = $kafka::params::limit_nofile,
   Hash $env                                  = {},
   Hash $config                               = {},
-  Hash $config_defaults                      = $kafka::params::producer_config_defaults,
   Hash $service_config                       = {},
   Hash $service_defaults                     = $kafka::params::producer_service_defaults,
   $producer_jmx_opts                         = $kafka::params::producer_jmx_opts,

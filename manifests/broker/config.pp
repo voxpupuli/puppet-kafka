@@ -13,7 +13,6 @@ class kafka::broker::config(
   Boolean $service_install         = $kafka::broker::service_install,
   Boolean $service_restart         = $kafka::broker::service_restart,
   Hash $config                     = $kafka::broker::config,
-  Hash $config_defaults            = $kafka::broker::config_defaults,
 ) {
 
   if $caller_module_name != $module_name {
@@ -27,7 +26,7 @@ class kafka::broker::config(
     }
   }
 
-  $server_config = deep_merge($config_defaults, $config)
+  $server_config = $config
 
   if ($service_install and $service_restart) {
     $config_notify = Service[$service_name]
