@@ -54,14 +54,14 @@ describe 'kafka::mirror' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.9.0.1') do
+      describe file('/opt/kafka-2.11-0.11.0.1') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.9.0.1') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.1') }
       end
 
       describe file('/opt/kafka/config') do
@@ -147,7 +147,7 @@ describe 'kafka::mirror' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::mirror':
-            version         => '0.9.0.0',
+            version         => '0.11.0.1',
             consumer_config => {
               'group.id'          => 'kafka-mirror',
               'zookeeper.connect' => 'localhost:2181',
