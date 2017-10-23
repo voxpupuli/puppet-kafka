@@ -68,43 +68,4 @@ class kafka::params {
   $whitelist = '.*'
   $blacklist = ''
 
-  $consumer_service_defaults = {
-    'blacklist'               => '',
-    'csv-reporter-enabled'    => '',
-    'delete-consumer-offsets' => '',
-    'formatter'               => 'kafka.tools.DefaultMessageFormatter',
-    'from-beginning'          => '',
-    'max-messages'            => '',
-    'metrics-dir'             => '',
-    'property'                => '',
-    'skip-message-on-error'   => '',
-    'topic'                   => '',
-    'whitelist'               => '',
-    'zookeeper'               => '',
-  }
-
-  $producer_service_defaults = {
-    'batch-size'                 => '200',
-    'broker-list'                => '',
-    'compression-codec'          => '',
-    'key-serializer'             => 'kafka.serializer.DefaultEncoder',
-    'max-memory-bytes'           => '',
-    'max-partition-memory-bytes' => '',
-    'message-send-max-retries'   => '3',
-    'metadata-expiry-ms'         => '',
-    'metadata-fetch-timeout-ms'  => '',
-    'new-producer'               => '',
-    'property'                   => '',
-    'queue-enqueuetimeout-ms'    => '2147483647',
-    'queue-size'                 => '10000',
-    'request-required-acks'      => '0',
-    'request-timeout-ms'         => '1500',
-    'retry-backoff-ms'           => '100',
-    'socket-buffer-size'         => '102400',
-    'sync'                       => '',
-    'timeout'                    => '1000',
-    'topic'                      => '',
-    'value-serializer'           => 'kafka.serializer.DefaultEncoder',
-  }
-
 }

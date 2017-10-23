@@ -124,7 +124,6 @@ class kafka::producer (
   Hash $env                                  = {},
   Hash $config                               = {},
   Hash $service_config                       = {},
-  Hash $service_defaults                     = $kafka::params::producer_service_defaults,
   $producer_jmx_opts                         = $kafka::params::producer_jmx_opts,
   $producer_log4j_opts                       = $kafka::params::producer_log4j_opts,
 ) inherits kafka::params {

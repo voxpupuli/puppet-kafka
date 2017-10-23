@@ -23,7 +23,6 @@ class kafka::producer::service(
   $producer_jmx_opts                         = $kafka::producer::producer_jmx_opts,
   $producer_log4j_opts                       = $kafka::producer::producer_log4j_opts,
   $service_config                            = $kafka::producer::service_config,
-  $service_defaults                          = $kafka::producer::service_defaults,
 ) {
 
   if $caller_module_name != $module_name {
@@ -31,7 +30,7 @@ class kafka::producer::service(
   }
 
   if $service_install {
-    $producer_service_config = deep_merge($service_defaults, $service_config)
+    $producer_service_config = $service_config
 
     if $producer_service_config['broker-list'] == '' {
       fail('[Producer] You need to specify a value for broker-list')
