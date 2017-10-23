@@ -19,13 +19,6 @@ class kafka::broker::config(
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  $version = $kafka::version
-  if $version and versioncmp($version, '0.9.0.0') < 0 {
-    if $config['broker.id'] == '-1' {
-      fail('[Broker] You need to specify a value for broker.id')
-    }
-  }
-
   $server_config = $config
 
   if ($service_install and $service_restart) {

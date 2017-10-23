@@ -63,7 +63,6 @@ class kafka::params {
   #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
   #https://kafka.apache.org/documentation.html#basic_ops_mirror_maker
   $num_streams = 2
-  $num_producers = 1
   $abort_on_send_failure = true
   $mirror_max_heap = '256M'
   $whitelist = '.*'

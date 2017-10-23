@@ -22,7 +22,7 @@
 
 ## Overview
 
-The kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org)
+The Kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org)
 
 ## Module Description
 
@@ -319,6 +319,8 @@ Defined type that creates Kafka topics.
 * `kafka::topic` Create kafka topics
 
 ## Limitations
+
+This module only supports Kafka >= 0.9.0.0.
 
 This module is tested on the following platforms:
 

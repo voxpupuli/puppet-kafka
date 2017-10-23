@@ -24,7 +24,6 @@ class kafka::mirror::service(
   $consumer_config                           = $kafka::mirror::consumer_config,
   $producer_config                           = $kafka::mirror::producer_config,
   $num_streams                               = $kafka::mirror::num_streams,
-  $num_producers                             = $kafka::mirror::num_producers,
   $abort_on_send_failure                     = $kafka::mirror::abort_on_send_failure,
   $whitelist                                 = $kafka::mirror::whitelist,
   $blacklist                                 = $kafka::mirror::blacklist,
@@ -42,12 +41,6 @@ class kafka::mirror::service(
       'KAFKA_HEAP_OPTS'  => "-Xmx${max_heap}",
     }
     $environment = deep_merge($env_defaults, $env)
-
-    if versioncmp($kafka::mirror::version, '0.9.0') >= 0 {
-      $abort_on_send_failure_opt = "--abort.on.send.failure=${abort_on_send_failure}"
-    } else {
-      $abort_on_send_failure_opt = ''
-    }
 
     if $::service_provider == 'systemd' {
       include ::systemd

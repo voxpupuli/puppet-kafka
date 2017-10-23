@@ -94,9 +94,6 @@
 # [*num_streams*]
 # Number of stream (consumer) threads to start.
 #
-# [*num_producers*]
-# Number of producer threads to start.
-#
 # [*abort_on_send_failure*]
 # Abort immediately if MirrorMaker fails to send to receiving cluster
 #
@@ -139,7 +136,6 @@ class kafka::mirror (
   Hash $consumer_config                      = {},
   Hash $producer_config                      = {},
   Integer $num_streams                       = $kafka::params::num_streams,
-  Integer $num_producers                     = $kafka::params::num_producers,
   Boolean $abort_on_send_failure             = $kafka::params::abort_on_send_failure,
   $whitelist                                 = $kafka::params::whitelist,
   $blacklist                                 = $kafka::params::blacklist,
