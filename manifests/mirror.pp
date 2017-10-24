@@ -91,14 +91,8 @@
 # [*producer_config*]
 # A hash of the producer configuration options.
 #
-# [*num_streams*]
-# Number of stream (consumer) threads to start.
-#
-# [*abort_on_send_failure*]
-# Abort immediately if MirrorMaker fails to send to receiving cluster
-#
-# [*max_heap*]
-# Max heap size passed to java with -Xmx (<size>[g|G|m|M|k|K])
+# [*service_config*]
+# A hash of the mirror script options.
 #
 # === Examples
 #
@@ -135,12 +129,9 @@ class kafka::mirror (
   Hash $env                                  = {},
   Hash $consumer_config                      = {},
   Hash $producer_config                      = {},
-  Integer $num_streams                       = $kafka::params::num_streams,
-  Boolean $abort_on_send_failure             = $kafka::params::abort_on_send_failure,
-  $whitelist                                 = $kafka::params::whitelist,
-  $blacklist                                 = $kafka::params::blacklist,
-  Pattern[/\d+[g|G|m|M|k|K]/] $max_heap      = $kafka::params::mirror_max_heap,
+  Hash $service_config                       = {},
   $mirror_jmx_opts                           = $kafka::params::mirror_jmx_opts,
+  $mirror_heap_opts                          = $kafka::params::mirror_heap_opts,
   $mirror_log4j_opts                         = $kafka::params::mirror_log4j_opts,
 ) inherits kafka::params {
 
