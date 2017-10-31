@@ -20,9 +20,9 @@ class kafka::producer::service(
   Integer $limit_nofile                      = $kafka::producer::limit_nofile,
   Hash $env                                  = $kafka::producer::env,
   $input                                     = $kafka::producer::input,
-  $producer_jmx_opts                         = $kafka::producer::producer_jmx_opts,
-  $producer_log4j_opts                       = $kafka::producer::producer_log4j_opts,
-  $service_config                            = $kafka::producer::service_config,
+  String $jmx_opts                           = $kafka::producer::jmx_opts,
+  String $log4j_opts                         = $kafka::producer::log4j_opts,
+  Hash $service_config                       = $kafka::producer::service_config,
 ) {
 
   if $caller_module_name != $module_name {
@@ -30,18 +30,17 @@ class kafka::producer::service(
   }
 
   if $service_install {
-    $producer_service_config = $service_config
 
-    if $producer_service_config['broker-list'] == '' {
+    if $service_config['broker-list'] == '' {
       fail('[Producer] You need to specify a value for broker-list')
     }
-    if $producer_service_config['topic'] == '' {
+    if $service_config['topic'] == '' {
       fail('[Producer] You need to specify a value for topic')
     }
 
     $env_defaults = {
-      'KAFKA_JMX_OPTS'   => $producer_jmx_opts,
-      'KAFKA_LOG4J_OPTS' => $producer_log4j_opts,
+      'KAFKA_JMX_OPTS'   => $jmx_opts,
+      'KAFKA_LOG4J_OPTS' => $log4j_opts,
     }
     $environment = deep_merge($env_defaults, $env)
 

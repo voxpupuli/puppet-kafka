@@ -88,6 +88,9 @@
 # [*config*]
 # A hash of the consumer configuration options.
 #
+# [*service_config*]
+# A hash of the `kafka-console-consumer.sh` script options.
+#
 # === Examples
 #
 # Create the consumer service connecting to a local zookeeper
@@ -122,8 +125,8 @@ class kafka::consumer (
   Hash $env                                  = {},
   Hash $config                               = {},
   Hash $service_config                       = {},
-  $consumer_jmx_opts                         = $kafka::params::consumer_jmx_opts,
-  $consumer_log4j_opts                       = $kafka::params::consumer_log4j_opts,
+  String $jmx_opts                           = $kafka::params::consumer_jmx_opts,
+  String $log4j_opts                         = $kafka::params::consumer_log4j_opts,
 ) inherits kafka::params {
 
   class { '::kafka::consumer::install': }

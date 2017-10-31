@@ -37,7 +37,7 @@ DAEMON_OPTS="<%= @config_dir %>/server.properties"
 <%- when 'kafka-consumer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleConsumer
 DAEMON="<%= @bin_dir %>/kafka-console-consumer.sh"
-DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>"
+DAEMON_OPTS="<% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>"
 <%- when 'kafka-mirror' -%>
 PGREP_PATTERN=kafka.tools.MirrorMaker
 DAEMON="<%= @bin_dir %>/kafka-run-class.sh"
@@ -45,7 +45,7 @@ DAEMON_OPTS="kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consum
 <%- when 'kafka-producer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleProducer
 DAEMON="<%= @bin_dir %>/kafka-console-producer.sh"
-DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>"
+DAEMON_OPTS="<% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>"
 PRODUCER_INPUT="<%= @input %>"
 <%- end -%>
 
