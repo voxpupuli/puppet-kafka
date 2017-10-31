@@ -22,7 +22,7 @@ class kafka::producer::service(
   $input                                     = $kafka::producer::input,
   String $jmx_opts                           = $kafka::producer::jmx_opts,
   String $log4j_opts                         = $kafka::producer::log4j_opts,
-  $service_config                            = $kafka::producer::service_config,
+  Hash $service_config                       = $kafka::producer::service_config,
 ) {
 
   if $caller_module_name != $module_name {
@@ -30,12 +30,11 @@ class kafka::producer::service(
   }
 
   if $service_install {
-    $producer_service_config = $service_config
 
-    if $producer_service_config['broker-list'] == '' {
+    if $service_config['broker-list'] == '' {
       fail('[Producer] You need to specify a value for broker-list')
     }
-    if $producer_service_config['topic'] == '' {
+    if $service_config['topic'] == '' {
       fail('[Producer] You need to specify a value for topic')
     }
 

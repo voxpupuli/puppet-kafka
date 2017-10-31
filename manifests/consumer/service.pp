@@ -21,7 +21,7 @@ class kafka::consumer::service(
   Hash $env                                  = $kafka::consumer::env,
   String $jmx_opts                           = $kafka::consumer::jmx_opts,
   String $log4j_opts                         = $kafka::consumer::log4j_opts,
-  $service_config                            = $kafka::consumer::service_config,
+  Hash $service_config                       = $kafka::consumer::service_config,
 ) {
 
   if $caller_module_name != $module_name {
@@ -29,12 +29,11 @@ class kafka::consumer::service(
   }
 
   if $service_install {
-    $consumer_service_config = $service_config
 
-    if $consumer_service_config['topic'] == '' {
+    if $service_config['topic'] == '' {
       fail('[Consumer] You need to specify a value for topic')
     }
-    if $consumer_service_config['zookeeper'] == '' {
+    if $service_config['zookeeper'] == '' {
       fail('[Consumer] You need to specify a value for zookeeper')
     }
 

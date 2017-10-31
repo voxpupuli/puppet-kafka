@@ -88,6 +88,9 @@
 # [*config*]
 # A hash of the producer configuration options.
 #
+# [*service_config*]
+# A hash of the `kafka-console-producer.sh` script options.
+#
 # === Examples
 #
 # Create the producer service connecting to a local zookeeper

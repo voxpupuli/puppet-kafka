@@ -88,6 +88,9 @@
 # [*config*]
 # A hash of the consumer configuration options.
 #
+# [*service_config*]
+# A hash of the `kafka-console-consumer.sh` script options.
+#
 # === Examples
 #
 # Create the consumer service connecting to a local zookeeper
