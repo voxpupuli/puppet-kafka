@@ -42,15 +42,15 @@ class kafka::params {
   $timeout_stop = undef
   $exec_stop = false
 
-  $broker_jmx_opts = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
+  $broker_heap_opts  = '-Xmx1G -Xms1G'
+  $broker_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9990'
-  $broker_heap_opts = '-Xmx1G -Xms1G'
   $broker_log4j_opts = "-Dlog4j.configuration=file:${config_dir}/log4j.properties"
-  $broker_opts = ''
+  $broker_opts       = ''
 
+  $mirror_heap_opts  = '-Xmx256M'
   $mirror_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991'
-  $mirror_heap_opts = '-Xmx256M'
   $mirror_log4j_opts = $broker_log4j_opts
 
   $producer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \

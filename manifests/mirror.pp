@@ -131,7 +131,7 @@ class kafka::mirror (
   Hash $producer_config                      = {},
   Hash $service_config                       = {},
   String $heap_opts                          = $kafka::params::mirror_heap_opts,
-  $mirror_jmx_opts                           = $kafka::params::mirror_jmx_opts,
+  String $jmx_opts                           = $kafka::params::mirror_jmx_opts,
   $mirror_log4j_opts                         = $kafka::params::mirror_log4j_opts,
 ) inherits kafka::params {
 

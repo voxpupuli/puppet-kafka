@@ -20,7 +20,7 @@ class kafka::producer::service(
   Integer $limit_nofile                      = $kafka::producer::limit_nofile,
   Hash $env                                  = $kafka::producer::env,
   $input                                     = $kafka::producer::input,
-  $producer_jmx_opts                         = $kafka::producer::producer_jmx_opts,
+  String $jmx_opts                           = $kafka::producer::jmx_opts,
   $producer_log4j_opts                       = $kafka::producer::producer_log4j_opts,
   $service_config                            = $kafka::producer::service_config,
 ) {
@@ -40,7 +40,7 @@ class kafka::producer::service(
     }
 
     $env_defaults = {
-      'KAFKA_JMX_OPTS'   => $producer_jmx_opts,
+      'KAFKA_JMX_OPTS'   => $jmx_opts,
       'KAFKA_LOG4J_OPTS' => $producer_log4j_opts,
     }
     $environment = deep_merge($env_defaults, $env)
