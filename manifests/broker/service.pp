@@ -21,9 +21,9 @@ class kafka::broker::service(
   Optional[String] $timeout_stop             = $kafka::broker::timeout_stop,
   Boolean $exec_stop                         = $kafka::broker::exec_stop,
   Hash $env                                  = $kafka::broker::env,
+  String $heap_opts                          = $kafka::broker::heap_opts,
   $jmx_opts                                  = $kafka::broker::jmx_opts,
   $log4j_opts                                = $kafka::broker::log4j_opts,
-  $heap_opts                                 = $kafka::broker::heap_opts,
   $opts                                      = $kafka::broker::opts,
 ) {
 
@@ -34,8 +34,8 @@ class kafka::broker::service(
   if $service_install {
     $env_defaults = {
       'KAFKA_HEAP_OPTS'  => $heap_opts,
-      'KAFKA_LOG4J_OPTS' => $log4j_opts,
       'KAFKA_JMX_OPTS'   => $jmx_opts,
+      'KAFKA_LOG4J_OPTS' => $log4j_opts,
       'KAFKA_OPTS'       => $opts,
       'LOG_DIR'          => $log_dir,
     }
