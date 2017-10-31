@@ -125,7 +125,7 @@ class kafka::producer (
   Hash $config                               = {},
   Hash $service_config                       = {},
   String $jmx_opts                           = $kafka::params::producer_jmx_opts,
-  $producer_log4j_opts                       = $kafka::params::producer_log4j_opts,
+  String $log4j_opts                         = $kafka::params::producer_log4j_opts,
 ) inherits kafka::params {
 
   class { '::kafka::producer::install': }

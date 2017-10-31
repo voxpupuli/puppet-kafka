@@ -23,7 +23,7 @@ class kafka::broker::service(
   Hash $env                                  = $kafka::broker::env,
   String $heap_opts                          = $kafka::broker::heap_opts,
   String $jmx_opts                           = $kafka::broker::jmx_opts,
-  $log4j_opts                                = $kafka::broker::log4j_opts,
+  String $log4j_opts                         = $kafka::broker::log4j_opts,
   $opts                                      = $kafka::broker::opts,
 ) {
 

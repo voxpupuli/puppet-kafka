@@ -132,7 +132,7 @@ class kafka::mirror (
   Hash $service_config                       = {},
   String $heap_opts                          = $kafka::params::mirror_heap_opts,
   String $jmx_opts                           = $kafka::params::mirror_jmx_opts,
-  $mirror_log4j_opts                         = $kafka::params::mirror_log4j_opts,
+  String $log4j_opts                         = $kafka::params::mirror_log4j_opts,
 ) inherits kafka::params {
 
   class { '::kafka::mirror::install': }

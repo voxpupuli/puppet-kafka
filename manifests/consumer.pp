@@ -123,7 +123,7 @@ class kafka::consumer (
   Hash $config                               = {},
   Hash $service_config                       = {},
   String $jmx_opts                           = $kafka::params::consumer_jmx_opts,
-  $consumer_log4j_opts                       = $kafka::params::consumer_log4j_opts,
+  String $log4j_opts                         = $kafka::params::consumer_log4j_opts,
 ) inherits kafka::params {
 
   class { '::kafka::consumer::install': }

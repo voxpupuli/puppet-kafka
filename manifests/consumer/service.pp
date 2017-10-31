@@ -20,7 +20,7 @@ class kafka::consumer::service(
   Integer $limit_nofile                      = $kafka::consumer::limit_nofile,
   Hash $env                                  = $kafka::consumer::env,
   String $jmx_opts                           = $kafka::consumer::jmx_opts,
-  $consumer_log4j_opts                       = $kafka::consumer::consumer_log4j_opts,
+  String $log4j_opts                         = $kafka::consumer::log4j_opts,
   $service_config                            = $kafka::consumer::service_config,
 ) {
 
@@ -40,7 +40,7 @@ class kafka::consumer::service(
 
     $env_defaults = {
       'KAFKA_JMX_OPTS'   => $jmx_opts,
-      'KAFKA_LOG4J_OPTS' => $consumer_log4j_opts,
+      'KAFKA_LOG4J_OPTS' => $log4j_opts,
     }
     $environment = deep_merge($env_defaults, $env)
 

@@ -24,7 +24,7 @@ class kafka::mirror::service(
   Hash $service_config                       = $kafka::mirror::service_config,
   String $heap_opts                          = $kafka::mirror::heap_opts,
   String $jmx_opts                           = $kafka::mirror::jmx_opts,
-  $mirror_log4j_opts                         = $kafka::mirror::mirror_log4j_opts,
+  String $log4j_opts                         = $kafka::mirror::log4j_opts,
 ) {
 
   if $caller_module_name != $module_name {
@@ -35,7 +35,7 @@ class kafka::mirror::service(
     $env_defaults = {
       'KAFKA_HEAP_OPTS'  => $heap_opts,
       'KAFKA_JMX_OPTS'   => $jmx_opts,
-      'KAFKA_LOG4J_OPTS' => $mirror_log4j_opts,
+      'KAFKA_LOG4J_OPTS' => $log4j_opts,
     }
     $environment = deep_merge($env_defaults, $env)
 
