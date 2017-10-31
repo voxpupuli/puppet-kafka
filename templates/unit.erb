@@ -19,8 +19,7 @@ SyslogIdentifier=<%= @service_name %>
 Environment='<%= k %>=<%= v %>'
 <% end -%>
 <% end -%>
-<%- case @service_name
-  when 'kafka' -%>
+<%- case @service_name when 'kafka' -%>
 ExecStart=<%= @bin_dir %>/kafka-server-start.sh <%= @config_dir %>/server.properties
 <%- if @exec_stop -%>
 ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
@@ -28,12 +27,12 @@ ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
 <%- if @timeout_stop -%>
 TimeoutStopSec=<%= @timeout_stop %>
 <%- end -%>
-  <%- when 'kafka-consumer' -%>
-ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>
-  <%- when 'kafka-mirror' -%>
-ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --num.streams <%= @num_streams -%> --producer.config <%= @config_dir %>/producer.properties<%- if !@whitelist.eql?('') -%><%- if @consumer_config['bootstrap.servers'] -%> --whitelist '<%= @whitelist -%>'<%- else -%> --whitelist='<%= @whitelist -%>'<%- end -%><%- end -%><%- if !@blacklist.eql?('') -%><%- if @consumer_config['bootstrap.servers'] -%> --blacklist '<%= @blacklist -%>'<%- else -%> --blacklist='<%= @blacklist -%>'<%- end -%><%- end -%> --abort.on.send.failure=<%= @abort_on_send_failure %>
-  <%- when 'kafka-producer' -%>
-ExecStart=<%= @bin_dir %>/kafka-console-producer.sh <% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%> <%= @input %>
+<%- when 'kafka-consumer' -%>
+ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>
+<%- when 'kafka-mirror' -%>
+ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --producer.config <%= @config_dir %>/producer.properties <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>
+<%- when 'kafka-producer' -%>
+ExecStart=<%= @bin_dir %>/kafka-console-producer.sh <% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%> <%= @input %>
 <%- end %>
 LimitNOFILE=<%= @limit_nofile %>
 LimitCORE=infinity

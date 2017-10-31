@@ -19,15 +19,12 @@ class kafka::mirror::service(
   Boolean $service_requires_zookeeper        = $kafka::mirror::service_requires_zookeeper,
   Integer $limit_nofile                      = $kafka::mirror::limit_nofile,
   Hash $env                                  = $kafka::mirror::env,
+  Hash $consumer_config                      = $kafka::mirror::consumer_config,
+  Hash $producer_config                      = $kafka::mirror::producer_config,
+  Hash $service_config                       = $kafka::mirror::service_config,
   $mirror_jmx_opts                           = $kafka::mirror::mirror_jmx_opts,
   $mirror_log4j_opts                         = $kafka::mirror::mirror_log4j_opts,
-  $consumer_config                           = $kafka::mirror::consumer_config,
-  $producer_config                           = $kafka::mirror::producer_config,
-  $num_streams                               = $kafka::mirror::num_streams,
-  $abort_on_send_failure                     = $kafka::mirror::abort_on_send_failure,
-  $whitelist                                 = $kafka::mirror::whitelist,
-  $blacklist                                 = $kafka::mirror::blacklist,
-  $max_heap                                  = $kafka::mirror::max_heap,
+  $mirror_heap_opts                          = $kafka::mirror::mirror_heap_opts,
 ) {
 
   if $caller_module_name != $module_name {
@@ -38,7 +35,7 @@ class kafka::mirror::service(
     $env_defaults = {
       'KAFKA_JMX_OPTS'   => $mirror_jmx_opts,
       'KAFKA_LOG4J_OPTS' => $mirror_log4j_opts,
-      'KAFKA_HEAP_OPTS'  => "-Xmx${max_heap}",
+      'KAFKA_HEAP_OPTS'  => $mirror_heap_opts,
     }
     $environment = deep_merge($env_defaults, $env)
 

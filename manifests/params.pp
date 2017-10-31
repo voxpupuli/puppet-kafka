@@ -50,6 +50,7 @@ class kafka::params {
 
   $mirror_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991'
+  $mirror_heap_opts = '-Xmx256M'
   $mirror_log4j_opts = $broker_log4j_opts
 
   $producer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
@@ -59,13 +60,5 @@ class kafka::params {
   $consumer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
   $consumer_log4j_opts = $broker_log4j_opts
-
-  #https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=27846330
-  #https://kafka.apache.org/documentation.html#basic_ops_mirror_maker
-  $num_streams = 2
-  $abort_on_send_failure = true
-  $mirror_max_heap = '256M'
-  $whitelist = '.*'
-  $blacklist = ''
 
 }

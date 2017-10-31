@@ -30,28 +30,22 @@ export <%= k %>="<%= v %>"
 <% end -%>
 PID_FILE="/var/run/$NAME.pid"
 KAFKA_USER=<%= @user %>
-<%- case @service_name
-  when 'kafka' -%>
+<%- case @service_name when 'kafka' -%>
 PGREP_PATTERN=kafka.Kafka
-
 DAEMON="<%= @bin_dir %>/kafka-server-start.sh"
 DAEMON_OPTS="<%= @config_dir %>/server.properties"
 <%- when 'kafka-consumer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleConsumer
-
 DAEMON="<%= @bin_dir %>/kafka-console-consumer.sh"
-DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
+DAEMON_OPTS="<% @consumer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>"
 <%- when 'kafka-mirror' -%>
 PGREP_PATTERN=kafka.tools.MirrorMaker
-
 DAEMON="<%= @bin_dir %>/kafka-run-class.sh"
-DAEMON_OPTS="kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --num.streams <%= @num_streams -%> --producer.config <%= @config_dir %>/producer.properties
-<%- if !@whitelist.eql?('') -%> <%- if @consumer_config['bootstrap.servers'] -%> --whitelist '<%= @whitelist -%>'<%- else -%> --whitelist='<%= @whitelist -%>'<%- end -%> <%- end -%><%- if !@blacklist.eql?('') -%><%- if @consumer_config['bootstrap.servers'] -%> --blacklist '<%= @blacklist -%>'<%- else -%> --blacklist='<%= @blacklist -%>'<%- end -%><%- end -%> --abort.on.send.failure=<%= @abort_on_send_failure %>"
+DAEMON_OPTS="kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --producer.config <%= @config_dir %>/producer.properties <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>"
 <%- when 'kafka-producer' -%>
 PGREP_PATTERN=kafka.tools.ConsoleProducer
-
 DAEMON="<%= @bin_dir %>/kafka-console-producer.sh"
-DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%>=<%= v.is_a?(Array) ? v.join(',') : v %> <% end -%><% end -%>"
+DAEMON_OPTS="<% @producer_service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>"
 PRODUCER_INPUT="<%= @input %>"
 <%- end -%>
 
