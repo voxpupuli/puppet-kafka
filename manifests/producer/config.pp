@@ -15,20 +15,19 @@ class kafka::producer::config(
   Hash $config                     = $kafka::producer::config,
 ) {
 
-  $producer_config = $config
-
   if ($service_install and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
     $config_notify = undef
   }
 
+  $doctag = 'producerconfigs'
   file { "${config_dir}/producer.properties":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('kafka/producer.properties.erb'),
+    content => template('kafka/properties.erb'),
     notify  => $config_notify,
     require => File[$config_dir],
   }

@@ -15,20 +15,19 @@ class kafka::consumer::config(
   Hash $config                     = $kafka::consumer::config,
 ) {
 
-  $consumer_config = $config
-
   if ($service_install and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
     $config_notify = undef
   }
 
+  $doctag = 'consumerconfigs'
   file { "${config_dir}/consumer.properties":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('kafka/consumer.properties.erb'),
+    content => template('kafka/properties.erb'),
     notify  => $config_notify,
     require => File[$config_dir],
   }

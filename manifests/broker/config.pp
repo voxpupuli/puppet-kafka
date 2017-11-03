@@ -15,11 +15,9 @@ class kafka::broker::config(
   Hash $config                     = $kafka::broker::config,
 ) {
 
-  if $caller_module_name != $module_name {
+  if ($caller_module_name != $module_name) {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
-
-  $server_config = $config
 
   if ($service_install and $service_restart) {
     $config_notify = Service[$service_name]
@@ -27,12 +25,13 @@ class kafka::broker::config(
     $config_notify = undef
   }
 
+  $doctag = 'brokerconfigs'
   file { "${config_dir}/server.properties":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
     mode    => '0644',
-    content => template('kafka/server.properties.erb'),
+    content => template('kafka/properties.erb'),
     notify  => $config_notify,
     require => File[$config_dir],
   }
