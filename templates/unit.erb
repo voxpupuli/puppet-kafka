@@ -28,9 +28,9 @@ ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
 TimeoutStopSec=<%= @timeout_stop %>
 <%- end -%>
 <%- when 'kafka-consumer' -%>
-ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>
+ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end %>
 <%- when 'kafka-mirror' -%>
-ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --producer.config <%= @config_dir %>/producer.properties <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%>
+ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --producer.config <%= @config_dir %>/producer.properties <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end %>
 <%- when 'kafka-producer' -%>
 ExecStart=<%= @bin_dir %>/kafka-console-producer.sh <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%> <%= @input %>
 <%- end -%>
