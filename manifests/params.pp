@@ -39,6 +39,7 @@ class kafka::params {
   $service_requires_zookeeper = false
   $service_restart = true
   $limit_nofile = 65536
+  $limit_core = 'infinity'
   $timeout_stop = undef
   $exec_stop = false
 
