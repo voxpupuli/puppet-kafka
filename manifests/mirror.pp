@@ -82,6 +82,9 @@
 # [*limit_nofile*]
 # Set the 'LimitNOFILE' option of the systemd service.
 #
+# [*limit_core*]
+# Set the 'LimitCORE' option of the systemd service.
+#
 # [*env*]
 # A hash of the environment variables to set.
 #
@@ -125,7 +128,8 @@ class kafka::mirror (
   Enum['running', 'stopped'] $service_ensure = $kafka::params::service_ensure,
   Boolean $service_restart                   = $kafka::params::service_restart,
   Boolean $service_requires_zookeeper        = $kafka::params::service_requires_zookeeper,
-  Integer $limit_nofile                      = $kafka::params::limit_nofile,
+  Optional[Integer] $limit_nofile            = $kafka::params::limit_nofile,
+  Optional[String] $limit_core               = $kafka::params::limit_core,
   Hash $env                                  = {},
   Hash $consumer_config                      = {},
   Hash $producer_config                      = {},
