@@ -126,7 +126,7 @@ class kafka::producer (
   Enum['running', 'stopped'] $service_ensure = $kafka::params::service_ensure,
   Boolean $service_restart                   = $kafka::params::service_restart,
   Boolean $service_requires_zookeeper        = $kafka::params::service_requires_zookeeper,
-  Optional[Integer] $limit_nofile            = $kafka::params::limit_nofile,
+  Optional[String] $limit_nofile             = $kafka::params::limit_nofile,
   Optional[String] $limit_core               = $kafka::params::limit_core,
   Hash $env                                  = {},
   Hash $config                               = {},

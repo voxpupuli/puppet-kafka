@@ -17,7 +17,7 @@ class kafka::producer::service(
   Boolean $service_install                   = $kafka::producer::service_install,
   Enum['running', 'stopped'] $service_ensure = $kafka::producer::service_ensure,
   Boolean $service_requires_zookeeper        = $kafka::producer::service_requires_zookeeper,
-  Optional[Integer] $limit_nofile            = $kafka::producer::limit_nofile,
+  Optional[String] $limit_nofile             = $kafka::producer::limit_nofile,
   Optional[String] $limit_core               = $kafka::producer::limit_core,
   Hash $env                                  = $kafka::producer::env,
   $input                                     = $kafka::producer::input,

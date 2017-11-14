@@ -17,7 +17,7 @@ class kafka::broker::service(
   Boolean $service_install                   = $kafka::broker::service_install,
   Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   Boolean $service_requires_zookeeper        = $kafka::broker::service_requires_zookeeper,
-  Optional[Integer] $limit_nofile            = $kafka::broker::limit_nofile,
+  Optional[String] $limit_nofile             = $kafka::broker::limit_nofile,
   Optional[String] $limit_core               = $kafka::broker::limit_core,
   Optional[String] $timeout_stop             = $kafka::broker::timeout_stop,
   Boolean $exec_stop                         = $kafka::broker::exec_stop,
