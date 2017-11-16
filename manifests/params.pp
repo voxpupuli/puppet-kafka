@@ -38,8 +38,8 @@ class kafka::params {
   $service_ensure = 'running'
   $service_requires_zookeeper = false
   $service_restart = true
-  $limit_nofile = '65536'
-  $limit_core = 'infinity'
+  $limit_nofile = undef
+  $limit_core = undef
   $timeout_stop = undef
   $exec_stop = false
   $daemon_start = false
