@@ -10,7 +10,6 @@ After=network.target syslog.target
 <%- end -%>
 
 [Service]
-Type=simple
 User=<%= @user %>
 Group=<%= @group %>
 SyslogIdentifier=<%= @service_name %>
@@ -20,7 +19,8 @@ Environment='<%= k %>=<%= v %>'
 <% end -%>
 <% end -%>
 <%- case @service_name when 'kafka' -%>
-ExecStart=<%= @bin_dir %>/kafka-server-start.sh <%= @config_dir %>/server.properties
+Type=<%= @daemon_start ? 'forking' : 'simple' %>
+ExecStart=<%= @bin_dir %>/kafka-server-start.sh<%- if @daemon_start -%> -daemon<%- end -%> <%= @config_dir %>/server.properties
 <%- if @exec_stop -%>
 ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
 <%- end -%>
@@ -28,10 +28,13 @@ ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
 TimeoutStopSec=<%= @timeout_stop %>
 <%- end -%>
 <%- when 'kafka-consumer' -%>
+Type=simple
 ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end %>
 <%- when 'kafka-mirror' -%>
+Type=simple
 ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --producer.config <%= @config_dir %>/producer.properties <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end %>
 <%- when 'kafka-producer' -%>
+Type=simple
 ExecStart=<%= @bin_dir %>/kafka-console-producer.sh <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%> <%= @input %>
 <%- end -%>
 <%- if @limit_nofile -%>

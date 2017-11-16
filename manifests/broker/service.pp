@@ -21,6 +21,7 @@ class kafka::broker::service(
   Optional[String] $limit_core               = $kafka::broker::limit_core,
   Optional[String] $timeout_stop             = $kafka::broker::timeout_stop,
   Boolean $exec_stop                         = $kafka::broker::exec_stop,
+  Boolean $daemon_start                      = $kafka::broker::daemon_start,
   Hash $env                                  = $kafka::broker::env,
   String $heap_opts                          = $kafka::broker::heap_opts,
   String $jmx_opts                           = $kafka::broker::jmx_opts,
