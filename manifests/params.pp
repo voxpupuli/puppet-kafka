@@ -42,6 +42,7 @@ class kafka::params {
   $limit_core = 'infinity'
   $timeout_stop = undef
   $exec_stop = false
+  $daemon_start = false
 
   $broker_heap_opts  = '-Xmx1G -Xms1G'
   $broker_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \

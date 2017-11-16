@@ -91,6 +91,9 @@
 # [*exec_stop*]
 # Set the 'ExecStop' option of the systemd service to 'kafka-server-stop.sh'.
 #
+# [*daemon_start*]
+# Use the '-daemon' option when starting Kafka with 'kafka-server-start.sh'.
+#
 # [*env*]
 # A hash of the environment variables to set.
 #
@@ -132,6 +135,7 @@ class kafka::broker (
   Optional[String] $limit_core               = $kafka::params::limit_core,
   Optional[String] $timeout_stop             = $kafka::params::timeout_stop,
   Boolean $exec_stop                         = $kafka::params::exec_stop,
+  Boolean $daemon_start                      = $kafka::params::daemon_start,
   Hash $env                                  = {},
   Hash $config                               = {},
   String $heap_opts                          = $kafka::params::broker_heap_opts,
