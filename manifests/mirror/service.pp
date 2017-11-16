@@ -17,7 +17,7 @@ class kafka::mirror::service(
   Boolean $service_install                   = $kafka::mirror::service_install,
   Enum['running', 'stopped'] $service_ensure = $kafka::mirror::service_ensure,
   Boolean $service_requires_zookeeper        = $kafka::mirror::service_requires_zookeeper,
-  Optional[Integer] $limit_nofile            = $kafka::mirror::limit_nofile,
+  Optional[String] $limit_nofile             = $kafka::mirror::limit_nofile,
   Optional[String] $limit_core               = $kafka::mirror::limit_core,
   Hash $env                                  = $kafka::mirror::env,
   Hash $consumer_config                      = $kafka::mirror::consumer_config,
