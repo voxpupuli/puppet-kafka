@@ -3,7 +3,7 @@ Description=Apache Kafka server (<%= (@service_name.split(/-/)[1] and @service_n
 Documentation=http://kafka.apache.org/documentation.html
 <% if !@service_requires.empty? -%>
 After=<%= @service_requires.join(' ') %>
-Requires=<%= @service_requires.join(' ') %>
+Wants=<%= @service_requires.join(' ') %>
 <%- end -%>
 
 [Service]
