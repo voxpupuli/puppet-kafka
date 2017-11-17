@@ -100,6 +100,8 @@ describe 'kafka::broker', type: :class do
 
       context 'defaults' do
         it { is_expected.to contain_file('/etc/systemd/system/kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=network\.target syslog\.target$} }
         it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
         it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
 
@@ -134,24 +136,15 @@ describe 'kafka::broker', type: :class do
         it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
       end
 
-      context 'service_requires_zookeeper disabled' do
+      context 'service_requires set' do
         let :params do
           {
-            service_requires_zookeeper: false
+            service_requires: ['dummy.target']
           }
         end
 
-        it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=zookeeper.service$} }
-      end
-
-      context 'service_requires_zookeeper enabled' do
-        let :params do
-          {
-            service_requires_zookeeper: true
-          }
-        end
-
-        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=zookeeper.service$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=dummy\.target$} }
       end
     end
   end

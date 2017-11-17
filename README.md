@@ -37,8 +37,8 @@ Installs the Kafka package and creates a new service.
 
 ### Beginning with Kafka
 
-To successfully install Kafka using this module you need to have Apache Zookeeper
-already running at localhost:2181. You can specify another Zookeeper host:port
+To successfully install Kafka using this module you need to have Apache ZooKeeper
+already running at localhost:2181. You can specify another ZooKeeper host:port
 configuration using the config hash of the kafka:broker class.
 
 The default configuration installs Kafka 0.11.0.1 binaries with Scala 2.11
@@ -47,7 +47,7 @@ The default configuration installs Kafka 0.11.0.1 binaries with Scala 2.11
   class { 'kafka': }
 ```
 
-If you want a Kafka broker server that connects to zookeeper listening on port 2181:
+If you want a Kafka broker server that connects to ZooKeeper listening on port 2181:
 
 ```puppet
   class { 'kafka::broker':

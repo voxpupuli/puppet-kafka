@@ -16,7 +16,7 @@ class kafka::consumer::service(
   String $service_name                       = $kafka::consumer::service_name,
   Boolean $service_install                   = $kafka::consumer::service_install,
   Enum['running', 'stopped'] $service_ensure = $kafka::consumer::service_ensure,
-  Boolean $service_requires_zookeeper        = $kafka::consumer::service_requires_zookeeper,
+  Array[String] $service_requires            = $kafka::consumer::service_requires,
   Optional[String] $limit_nofile             = $kafka::consumer::limit_nofile,
   Optional[String] $limit_core               = $kafka::consumer::limit_core,
   Hash $env                                  = $kafka::consumer::env,
