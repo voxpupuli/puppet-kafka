@@ -81,7 +81,6 @@ describe 'kafka::consumer', type: :class do
 
         it { is_expected.to contain_service('kafka-consumer') }
       end
-
     end
   end
 

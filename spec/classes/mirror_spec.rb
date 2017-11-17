@@ -100,7 +100,6 @@ describe 'kafka::mirror', type: :class do
 
         it { is_expected.to contain_service('kafka-mirror') }
       end
-
     end
   end
 

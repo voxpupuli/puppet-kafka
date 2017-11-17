@@ -215,6 +215,5 @@ describe 'kafka::mirror' do
         it { is_expected.to be_enabled }
       end
     end
-
   end
 end
