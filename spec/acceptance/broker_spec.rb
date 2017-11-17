@@ -169,43 +169,6 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'Requires=zookeeper.service' }
-      end
-
-      describe service('kafka') do
-        it { is_expected.to be_running }
-        it { is_expected.to be_enabled }
-      end
-    end
-  end
-
-  describe 'kafka::broker::service' do
-    context 'with require zookeeper disabled' do
-      it 'works with no errors' do
-        pp = <<-EOS
-          class { 'zookeeper': } ->
-          class { 'kafka::broker':
-            service_requires_zookeeper => false,
-            config                      => {
-              'zookeeper.connect' => 'localhost:2181',
-            },
-          }
-        EOS
-
-        apply_manifest(pp, catch_failures: true)
-      end
-
-      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
-        it { is_expected.to be_file }
-        it { is_expected.to be_owned_by 'root' }
-        it { is_expected.to be_grouped_into 'root' }
-      end
-
-      describe file('/usr/lib/systemd/system/kafka.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
-        it { is_expected.to be_file }
-        it { is_expected.to be_owned_by 'root' }
-        it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.not_to contain 'Requires=zookeeper.service' }
       end
 
       describe service('kafka') do

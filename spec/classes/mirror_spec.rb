@@ -100,22 +100,6 @@ describe 'kafka::mirror', type: :class do
 
         it { is_expected.to contain_service('kafka-mirror') }
       end
-
-      context 'service_requires_zookeeper disabled' do
-        let :params do
-          common_params.merge(service_requires_zookeeper: false)
-        end
-
-        it { is_expected.not_to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
-      end
-
-      context 'service_requires_zookeeper enabled' do
-        let :params do
-          common_params.merge(service_requires_zookeeper: true)
-        end
-
-        it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{^Requires=zookeeper.service$} }
-      end
     end
   end
 

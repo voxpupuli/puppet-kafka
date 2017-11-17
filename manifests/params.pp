@@ -36,8 +36,11 @@ class kafka::params {
 
   $service_install = true
   $service_ensure = 'running'
-  $service_requires_zookeeper = false
   $service_restart = true
+  $service_requires = $facts['os']['family'] ? {
+    'RedHat' => ['network.target', 'syslog.target'],
+    default  => [],
+  }
   $limit_nofile = undef
   $limit_core = undef
   $timeout_stop = undef

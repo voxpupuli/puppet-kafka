@@ -208,47 +208,6 @@ describe 'kafka::mirror' do
         it { is_expected.to be_grouped_into 'root' }
         it { is_expected.to contain 'export KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
         it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
-        it { is_expected.to contain 'Requires=zookeeper.service' }
-      end
-
-      describe service('kafka-mirror') do
-        it { is_expected.to be_running }
-        it { is_expected.to be_enabled }
-      end
-    end
-
-    context 'with require zookeeper disabled' do
-      it 'works with no errors' do
-        pp = <<-EOS
-          class { 'zookeeper': } ->
-          class { 'kafka::mirror':
-            service_requires_zookeeper => false,
-            consumer_config => {
-              'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181',
-            },
-            producer_config => {
-              'bootstrap.servers' => 'localhost:9092',
-            },
-          }
-        EOS
-
-        apply_manifest(pp, catch_failures: true)
-      end
-
-      describe file('/etc/init.d/kafka-mirror'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
-        it { is_expected.to be_file }
-        it { is_expected.to be_owned_by 'root' }
-        it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'export KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
-        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
-      end
-
-      describe file('/usr/lib/systemd/system/kafka-mirror.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
-        it { is_expected.to be_file }
-        it { is_expected.to be_owned_by 'root' }
-        it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.not_to contain 'Requires=zookeeper.service' }
       end
 
       describe service('kafka-mirror') do

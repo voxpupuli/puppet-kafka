@@ -76,8 +76,8 @@
 # [*service_restart*]
 # Whether the configuration files should trigger a service restart.
 #
-# [*service_requires_zookeeper*]
-# Whether the service should require the ZooKeeper service.
+# [*service_requires*]
+# Set the list of services required to be running before Kafka.
 #
 # [*limit_nofile*]
 # Set the 'LimitNOFILE' option of the systemd service.
@@ -125,7 +125,7 @@ class kafka::producer (
   Boolean $service_install                   = $kafka::params::service_install,
   Enum['running', 'stopped'] $service_ensure = $kafka::params::service_ensure,
   Boolean $service_restart                   = $kafka::params::service_restart,
-  Boolean $service_requires_zookeeper        = $kafka::params::service_requires_zookeeper,
+  Array[String] $service_requires            = $kafka::params::service_requires,
   Optional[String] $limit_nofile             = $kafka::params::limit_nofile,
   Optional[String] $limit_core               = $kafka::params::limit_core,
   Hash $env                                  = {},
