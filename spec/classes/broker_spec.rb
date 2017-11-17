@@ -100,8 +100,8 @@ describe 'kafka::broker', type: :class do
 
       context 'defaults' do
         it { is_expected.to contain_file('/etc/systemd/system/kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
-
-        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
+        it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
+        it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
 
         it do
           is_expected.to contain_file('/etc/init.d/kafka').with(
@@ -112,6 +112,26 @@ describe 'kafka::broker', type: :class do
         it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka]') }
 
         it { is_expected.to contain_service('kafka') }
+      end
+
+      context 'limit_nofile set' do
+        let :params do
+          {
+            limit_nofile: '65536'
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
+      end
+
+      context 'limit_core set' do
+        let :params do
+          {
+            limit_core: 'infinity'
+          }
+        end
+
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
       end
 
       context 'service_requires_zookeeper disabled' do
