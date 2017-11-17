@@ -101,7 +101,7 @@ describe 'kafka::broker', type: :class do
       context 'defaults' do
         it { is_expected.to contain_file('/etc/systemd/system/kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
         it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
-        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=network\.target syslog\.target$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=network\.target syslog\.target$} }
         it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
         it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
 
@@ -144,7 +144,7 @@ describe 'kafka::broker', type: :class do
         end
 
         it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
-        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Requires=dummy\.target$} }
+        it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=dummy\.target$} }
       end
     end
   end
