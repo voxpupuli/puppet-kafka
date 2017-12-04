@@ -7,24 +7,28 @@
 # This private class is meant to be called from `kafka::consumer`.
 # It manages the consumer config files
 #
-define kafka::consumer::config(
-  $config = {},
-  $service_restart = $kafka::consumer::service_restart
+class kafka::consumer::config(
+  Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
+  String $service_name             = $kafka::consumer::service_name,
+  Boolean $service_install         = $kafka::consumer::service_install,
+  Boolean $service_restart         = $kafka::consumer::service_restart,
+  Hash $config                     = $kafka::consumer::config,
 ) {
 
-  $consumer_config = deep_merge($kafka::params::consumer_config_defaults, $config)
-
-  $config_notify = $service_restart ? {
-    true  => Service['kafka'],
-    false => undef
+  if ($service_install and $service_restart) {
+    $config_notify = Service[$service_name]
+  } else {
+    $config_notify = undef
   }
 
-  file { "/opt/kafka/config/${name}.properties":
+  $doctag = 'consumerconfigs'
+  file { "${config_dir}/consumer.properties":
     ensure  => present,
-    mode    => '0755',
-    content => template('kafka/consumer.properties.erb'),
-    require => File['/opt/kafka/config'],
-    notify  => $config_notify
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    content => template('kafka/properties.erb'),
+    notify  => $config_notify,
+    require => File[$config_dir],
   }
-
 }

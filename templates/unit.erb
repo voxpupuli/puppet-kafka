@@ -1,0 +1,45 @@
+[Unit]
+Description=Apache Kafka server (<%= (@service_name.split(/-/)[1] and @service_name.split(/-/)[1].capitalize) or 'broker' -%>)
+Documentation=http://kafka.apache.org/documentation.html
+<% if !@service_requires.empty? -%>
+After=<%= @service_requires.join(' ') %>
+Wants=<%= @service_requires.join(' ') %>
+<%- end -%>
+
+[Service]
+User=<%= @user %>
+Group=<%= @group %>
+SyslogIdentifier=<%= @service_name %>
+<% @environment.sort.map do |k,v| -%>
+<% unless v.to_s.strip.empty? -%>
+Environment='<%= k %>=<%= v %>'
+<% end -%>
+<% end -%>
+<%- case @service_name when 'kafka' -%>
+Type=<%= @daemon_start ? 'forking' : 'simple' %>
+ExecStart=<%= @bin_dir %>/kafka-server-start.sh<%- if @daemon_start -%> -daemon<%- end -%> <%= @config_dir %>/server.properties
+<%- if @exec_stop -%>
+ExecStop=<%= @bin_dir %>/kafka-server-stop.sh
+<%- end -%>
+<%- if @timeout_stop -%>
+TimeoutStopSec=<%= @timeout_stop %>
+<%- end -%>
+<%- when 'kafka-consumer' -%>
+Type=simple
+ExecStart=<%= @bin_dir %>/kafka-console-consumer.sh <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end %>
+<%- when 'kafka-mirror' -%>
+Type=simple
+ExecStart=<%= @bin_dir %>/kafka-run-class.sh kafka.tools.MirrorMaker --consumer.config <%= @config_dir %>/consumer.properties --producer.config <%= @config_dir %>/producer.properties <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end %>
+<%- when 'kafka-producer' -%>
+Type=simple
+ExecStart=<%= @bin_dir %>/kafka-console-producer.sh <% @service_config.sort.each do |k,v| -%><% unless v.to_s.strip.empty? -%>--<%= k -%> '<%= v.is_a?(Array) ? v.join(',') : v %>' <% end -%><% end -%> <%= @input %>
+<%- end -%>
+<%- if @limit_nofile -%>
+LimitNOFILE=<%= @limit_nofile %>
+<%- end -%>
+<%- if @limit_core -%>
+LimitCORE=<%= @limit_core %>
+<%- end -%>
+
+[Install]
+WantedBy=multi-user.target

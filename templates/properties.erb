@@ -1,0 +1,10 @@
+#
+# Note: This file is managed by Puppet.
+#
+# See: http://kafka.apache.org/documentation.html#<%= @doctag %> for more details
+#
+<% @config.sort.map do |k,v| -%>
+<% unless v.to_s.strip.empty? -%>
+<%= k %>=<%= v.is_a?(Array) ? v.join(',') : v %>
+<% end -%>
+<% end -%>

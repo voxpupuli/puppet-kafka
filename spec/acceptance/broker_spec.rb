@@ -1,79 +1,228 @@
 require 'spec_helper_acceptance'
 
-describe 'kafka::broker class' do
+describe 'kafka::broker' do
+  it 'works with no errors' do
+    pp = <<-EOS
+      class { 'zookeeper': } ->
+      class { 'kafka::broker':
+        config => {
+          'zookeeper.connect' => 'localhost:2181',
+        },
+      } ->
+      kafka::topic { 'demo':
+        ensure    => present,
+        zookeeper => 'localhost:2181',
+      }
+    EOS
 
-  context 'default parameters' do
-    # Using puppet_apply as a helper
-    it 'should work with no errors' do
-      if fact('osfamily') == 'RedHat'
+    apply_manifest(pp, catch_failures: true)
+    apply_manifest(pp, catch_changes: true)
+  end
+
+  describe 'kafka::broker::install' do
+    context 'with default parameters' do
+      it 'works with no errors' do
         pp = <<-EOS
-          class { 'java':
-            distribution => 'jre',
-          } ->
-
-          class {'zookeeper':
-            packages             => ['zookeeper', 'zookeeper-server'],
-            service_name         => 'zookeeper-server',
-            initialize_datastore => true,
-            repo                 => 'cloudera',
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
           }
         EOS
 
-        apply_manifest(pp, :catch_failures => true)
-      else
-        pp = <<-EOS
-          class { 'java':
-            distribution => 'jre',
-          } ->
-
-          class {'zookeeper':
-          }
-        EOS
-
-        apply_manifest(pp, :catch_failures => true)
+        apply_manifest(pp, catch_failures: true)
       end
 
-      pp = <<-EOS
-      class { 'kafka::broker':
-        config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-      }
-      EOS
+      describe group('kafka') do
+        it { is_expected.to exist }
+      end
 
-      # Run it twice and test for idempotency
-      apply_manifest(pp, :catch_failures => true)
-      apply_manifest(pp, :catch_changes => true)
+      describe user('kafka') do
+        it { is_expected.to exist }
+        it { is_expected.to belong_to_group 'kafka' }
+        it { is_expected.to have_login_shell '/bin/bash' }
+      end
+
+      describe file('/var/tmp/kafka') do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/opt/kafka-2.11-0.11.0.1') do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/opt/kafka') do
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.1') }
+      end
+
+      describe file('/opt/kafka/config') do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+
+      describe file('/var/log/kafka') do
+        it { is_expected.to be_directory }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
+    end
+  end
+
+  describe 'kafka::broker::config' do
+    context 'with default parameters' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+          }
+        EOS
+
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      describe file('/opt/kafka/config/server.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+        it { is_expected.to contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
+      end
     end
 
-    describe user('kafka') do
-      it { should exist }
+    context 'with custom config dir' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            config_dir => '/opt/kafka/custom_config'
+          }
+        EOS
+
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      describe file('/opt/kafka/custom_config/server.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+        it { is_expected.to contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
+      end
     end
 
-    describe group('kafka') do
-      it { should exist }
-    end
+    context 'with specific version' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            version => '0.8.2.2',
+            config  => {
+              'broker.id'         => '1',
+              'zookeeper.connect' => 'localhost:2181',
+            },
+          }
+        EOS
 
-    describe file('/opt/kafka') do
-      it { should be_linked_to('/opt/kafka-2.10-0.8.2.1') }
-    end
+        apply_manifest(pp, catch_failures: true)
+      end
 
-    describe file('/opt/kafka/bin/kafka-server-start.sh') do
-      it { should be_file }
+      describe file('/opt/kafka/config/server.properties') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
+      end
     end
+  end
 
-    describe file('/opt/kafka/config/server.properties') do
-      it { should be_file }
-      its(:content) { should match /broker\.id=0/ }
-      its(:content) { should match /log\.dirs=\/tmp\/kafka-logs/ }
-      its(:content) { should match /port=6667/ }
+  describe 'kafka::broker::service' do
+    context 'with default parameters' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+          }
+        EOS
+
+        apply_manifest(pp, catch_failures: true)
+      end
+
+      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+      end
+
+      describe file('/usr/lib/systemd/system/kafka.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+      end
+
+      describe service('kafka') do
+        it { is_expected.to be_running }
+        it { is_expected.to be_enabled }
+      end
     end
+  end
 
-    describe file('/etc/init.d/kafka') do
-      it { should be_file }
+  describe 'kafka::broker::service' do
+    context 'with log4j/jmx parameters' do
+      it 'works with no errors' do
+        pp = <<-EOS
+          class { 'zookeeper': } ->
+          class { 'kafka::broker':
+            config => {
+              'zookeeper.connect' => 'localhost:2181',
+            },
+            heap_opts  => '-Xmx512M -Xmx512M',
+            log4j_opts => '-Dlog4j.configuration=file:/tmp/log4j.properties',
+            jmx_opts   => '-Dcom.sun.management.jmxremote',
+            opts       => '-Djava.security.policy=/some/path/my.policy',
+            log_dir    => '/some/path/to/logs'
+          }
+        EOS
+
+        apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
+      end
+
+      describe file('/etc/init.d/kafka'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9999"' }
+        it { is_expected.to contain 'export KAFKA_HEAP_OPTS="-Xmx512M -Xmx512M"' }
+        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
+      end
+
+      describe file('/usr/lib/systemd/system/kafka.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+        it { is_expected.to contain "Environment='KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote'" }
+        it { is_expected.to contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xmx512M'" }
+        it { is_expected.to contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
+        it { is_expected.to contain "Environment='KAFKA_OPTS=-Djava.security.policy=/some/path/my.policy'" }
+        it { is_expected.to contain "Environment='LOG_DIR=/some/path/to/logs'" }
+      end
+
+      describe service('kafka') do
+        it { is_expected.to be_running }
+        it { is_expected.to be_enabled }
+      end
     end
-
-    describe service('kafka') do
-      it { should be_running }
-    end
-
   end
 end

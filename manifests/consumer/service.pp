@@ -8,26 +8,73 @@
 # It manages the kafka-consumer service
 #
 class kafka::consumer::service(
-  $config = $kafka::params::consumer_service_config
+  String $user                               = $kafka::consumer::user,
+  String $group                              = $kafka::consumer::group,
+  Stdlib::Absolutepath $config_dir           = $kafka::consumer::config_dir,
+  Stdlib::Absolutepath $log_dir              = $kafka::consumer::log_dir,
+  Stdlib::Absolutepath $bin_dir              = $kafka::consumer::bin_dir,
+  String $service_name                       = $kafka::consumer::service_name,
+  Boolean $service_install                   = $kafka::consumer::service_install,
+  Enum['running', 'stopped'] $service_ensure = $kafka::consumer::service_ensure,
+  Array[String] $service_requires            = $kafka::consumer::service_requires,
+  Optional[String] $limit_nofile             = $kafka::consumer::limit_nofile,
+  Optional[String] $limit_core               = $kafka::consumer::limit_core,
+  Hash $env                                  = $kafka::consumer::env,
+  String $jmx_opts                           = $kafka::consumer::jmx_opts,
+  String $log4j_opts                         = $kafka::consumer::log4j_opts,
+  Hash $service_config                       = $kafka::consumer::service_config,
 ) {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  $consumer_service_config = deep_merge($config, $kafka::params::consumer_service_config)
+  if $service_install {
 
-  file { '/etc/init.d/kafka-consumer':
-    ensure  => present,
-    mode    => '0755',
-    content => template('kafka/consumer.init.erb')
-  }
+    if $service_config['topic'] == '' {
+      fail('[Consumer] You need to specify a value for topic')
+    }
+    if $service_config['zookeeper'] == '' {
+      fail('[Consumer] You need to specify a value for zookeeper')
+    }
 
-  service { 'kafka-consumer':
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => File['/etc/init.d/kafka-consumer']
+    $env_defaults = {
+      'KAFKA_JMX_OPTS'   => $jmx_opts,
+      'KAFKA_LOG4J_OPTS' => $log4j_opts,
+    }
+    $environment = deep_merge($env_defaults, $env)
+
+    if $::service_provider == 'systemd' {
+      include ::systemd
+
+      file { "/etc/systemd/system/${service_name}.service":
+        ensure  => file,
+        mode    => '0644',
+        content => template('kafka/unit.erb'),
+      }
+
+      file { "/etc/init.d/${service_name}":
+        ensure => absent,
+      }
+
+      File["/etc/systemd/system/${service_name}.service"]
+      ~> Exec['systemctl-daemon-reload']
+      -> Service[$service_name]
+
+    } else {
+      file { "/etc/init.d/${service_name}":
+        ensure  => file,
+        mode    => '0755',
+        content => template('kafka/init.erb'),
+        before  => Service[$service_name],
+      }
+    }
+
+    service { $service_name:
+      ensure     => $service_ensure,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+    }
   }
 }
