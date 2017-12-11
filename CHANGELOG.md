@@ -4,6 +4,54 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v5.0.0) (2017-12-12)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v4.0.0...v5.0.0)
+
+**Breaking changes:**
+
+- Kafka's default version should be the latest stable version [\#216](https://github.com/voxpupuli/puppet-kafka/issues/216)
+- replaced service\_requires\_zookeeper by service\_requires [\#236](https://github.com/voxpupuli/puppet-kafka/pull/236) ([LionelCons](https://github.com/LionelCons))
+- changed limit\_nofile from Integer to String [\#229](https://github.com/voxpupuli/puppet-kafka/pull/229) ([LionelCons](https://github.com/LionelCons))
+- made variables consistent [\#223](https://github.com/voxpupuli/puppet-kafka/pull/223) ([LionelCons](https://github.com/LionelCons))
+- change the mirror class to get script options via a hash \(just like consumer and producer\) [\#221](https://github.com/voxpupuli/puppet-kafka/pull/221) ([LionelCons](https://github.com/LionelCons))
+- change the default Kafka version to 0.11.0.1 [\#217](https://github.com/voxpupuli/puppet-kafka/pull/217) ([LionelCons](https://github.com/LionelCons))
+- remove support for Kafka \< 0.9.0.0 [\#215](https://github.com/voxpupuli/puppet-kafka/pull/215) ([LionelCons](https://github.com/LionelCons))
+
+**Implemented enhancements:**
+
+- It should be possible to specify arbitrary service dependencies [\#234](https://github.com/voxpupuli/puppet-kafka/issues/234)
+- It should be possible to start a broker with the -daemon option [\#230](https://github.com/voxpupuli/puppet-kafka/issues/230)
+- Kafka default script values should not be used [\#218](https://github.com/voxpupuli/puppet-kafka/issues/218)
+- Kafka default values should not be used [\#208](https://github.com/voxpupuli/puppet-kafka/issues/208)
+- use Wants instead of Requires [\#238](https://github.com/voxpupuli/puppet-kafka/pull/238) ([LionelCons](https://github.com/LionelCons))
+- added a daemon\_start option to be able to start the broker with the -daemon option [\#231](https://github.com/voxpupuli/puppet-kafka/pull/231) ([LionelCons](https://github.com/LionelCons))
+- made LimitNOFILE and LimitCORE fully configurable [\#227](https://github.com/voxpupuli/puppet-kafka/pull/227) ([LionelCons](https://github.com/LionelCons))
+
+**Fixed bugs:**
+
+- LimitNOFILE cannot be set to 'infinity' [\#228](https://github.com/voxpupuli/puppet-kafka/issues/228)
+
+**Closed issues:**
+
+- The systemd script should use Wants instead of Requires [\#237](https://github.com/voxpupuli/puppet-kafka/issues/237)
+- LimitNOFILE and LimitCORE should be unset by default [\#232](https://github.com/voxpupuli/puppet-kafka/issues/232)
+- Systemd limits should be configurable [\#226](https://github.com/voxpupuli/puppet-kafka/issues/226)
+- The properties templates should be merged [\#224](https://github.com/voxpupuli/puppet-kafka/issues/224)
+- Variable names should be simple and consistent [\#222](https://github.com/voxpupuli/puppet-kafka/issues/222)
+- Mirror script options should be given as a hash [\#220](https://github.com/voxpupuli/puppet-kafka/issues/220)
+- Support for Kafka \< 0.9 should be removed [\#214](https://github.com/voxpupuli/puppet-kafka/issues/214)
+- params.pp contains unused parameters [\#211](https://github.com/voxpupuli/puppet-kafka/issues/211)
+
+**Merged pull requests:**
+
+- removed the \(undocumented\) hard-coded defaults for limit\_nofile and limit\_core [\#233](https://github.com/voxpupuli/puppet-kafka/pull/233) ([LionelCons](https://github.com/LionelCons))
+- merged all the properties templates [\#225](https://github.com/voxpupuli/puppet-kafka/pull/225) ([LionelCons](https://github.com/LionelCons))
+- remove the unneeded service default parameters [\#219](https://github.com/voxpupuli/puppet-kafka/pull/219) ([LionelCons](https://github.com/LionelCons))
+- remove the unneeded broker, consumer and producer default parameters [\#213](https://github.com/voxpupuli/puppet-kafka/pull/213) ([LionelCons](https://github.com/LionelCons))
+- remove unused parameters in params.pp [\#212](https://github.com/voxpupuli/puppet-kafka/pull/212) ([LionelCons](https://github.com/LionelCons))
+- release 4.0.0 [\#210](https://github.com/voxpupuli/puppet-kafka/pull/210) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v4.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v4.0.0) (2017-10-17)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v3.2.0...v4.0.0)
