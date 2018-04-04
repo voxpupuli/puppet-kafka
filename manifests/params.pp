@@ -33,6 +33,7 @@ class kafka::params {
   $system_group   = false
   $manage_user    = true
   $manage_group   = true
+  $config_mode    = '0644'
 
   $service_install = true
   $service_ensure = 'running'

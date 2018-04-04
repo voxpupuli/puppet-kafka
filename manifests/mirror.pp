@@ -120,6 +120,7 @@ class kafka::mirror (
   Optional[Integer] $group_id                = $kafka::params::group_id,
   Boolean $manage_user                       = $kafka::params::manage_user,
   Boolean $manage_group                      = $kafka::params::manage_group,
+  Stdlib::Filemode $config_mode              = $kafka::params::config_mode,
   Stdlib::Absolutepath $config_dir           = $kafka::params::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::params::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::params::bin_dir,

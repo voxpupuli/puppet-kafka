@@ -13,6 +13,8 @@ class kafka::broker::config(
   Boolean $service_install         = $kafka::broker::service_install,
   Boolean $service_restart         = $kafka::broker::service_restart,
   Hash $config                     = $kafka::broker::config,
+  Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
+  String $group                    = $kafka::broker::group,
 ) {
 
   if ($caller_module_name != $module_name) {
@@ -29,8 +31,8 @@ class kafka::broker::config(
   file { "${config_dir}/server.properties":
     ensure  => present,
     owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    group   => $group,
+    mode    => $config_mode,
     content => template('kafka/properties.erb'),
     notify  => $config_notify,
     require => File[$config_dir],
