@@ -55,6 +55,9 @@
 # [*manage_group*]
 # Create the kafka group if it's not already present.
 #
+# [*config_mode*]
+# The permissions for the config files.
+#
 # [*config_dir*]
 # The directory to create the kafka config files to.
 #
@@ -116,6 +119,7 @@ class kafka::consumer (
   Optional[Integer] $group_id                = $kafka::params::group_id,
   Boolean $manage_user                       = $kafka::params::manage_user,
   Boolean $manage_group                      = $kafka::params::manage_group,
+  Stdlib::Filemode $config_mode              = $kafka::params::config_mode,
   Stdlib::Absolutepath $config_dir           = $kafka::params::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::params::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::params::bin_dir,

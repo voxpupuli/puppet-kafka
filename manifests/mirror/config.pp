@@ -14,6 +14,8 @@ class kafka::mirror::config(
   Boolean $service_restart         = $kafka::mirror::service_restart,
   Hash $consumer_config            = $kafka::mirror::consumer_config,
   Hash $producer_config            = $kafka::mirror::producer_config,
+  Stdlib::Filemode $config_mode    = $kafka::mirror::config_mode,
+  String $group                    = $kafka::mirror::group,
 ) {
 
   if $caller_module_name != $module_name {
@@ -32,17 +34,21 @@ class kafka::mirror::config(
 
   class { '::kafka::consumer::config':
     config_dir      => $config_dir,
+    config_mode     => $config_mode,
     service_name    => $service_name,
     service_install => $service_install,
     service_restart => $service_restart,
     config          => $consumer_config,
+    group           => $group,
   }
 
   class { '::kafka::producer::config':
     config_dir      => $config_dir,
+    config_mode     => $config_mode,
     service_name    => $service_name,
     service_install => $service_install,
     service_restart => $service_restart,
     config          => $producer_config,
+    group           => $group,
   }
 }

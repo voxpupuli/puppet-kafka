@@ -13,6 +13,8 @@ class kafka::producer::config(
   Boolean $service_install         = $kafka::producer::service_install,
   Boolean $service_restart         = $kafka::producer::service_restart,
   Hash $config                     = $kafka::producer::config,
+  Stdlib::Filemode $config_mode    = $kafka::producer::config_mode,
+  String $group                    = $kafka::producer::group,
 ) {
 
   if ($service_install and $service_restart) {
@@ -25,8 +27,8 @@ class kafka::producer::config(
   file { "${config_dir}/producer.properties":
     ensure  => present,
     owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    group   => $group,
+    mode    => $config_mode,
     content => template('kafka/properties.erb'),
     notify  => $config_notify,
     require => File[$config_dir],

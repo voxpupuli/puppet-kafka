@@ -13,6 +13,8 @@ class kafka::consumer::config(
   Boolean $service_install         = $kafka::consumer::service_install,
   Boolean $service_restart         = $kafka::consumer::service_restart,
   Hash $config                     = $kafka::consumer::config,
+  Stdlib::Filemode $config_mode    = $kafka::consumer::config_mode,
+  String $group                    = $kafka::consumer::group,
 ) {
 
   if ($service_install and $service_restart) {
@@ -25,8 +27,8 @@ class kafka::consumer::config(
   file { "${config_dir}/consumer.properties":
     ensure  => present,
     owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    group   => $group,
+    mode    => $config_mode,
     content => template('kafka/properties.erb'),
     notify  => $config_notify,
     require => File[$config_dir],
