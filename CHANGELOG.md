@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v5.1.0) (2018-04-05)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v5.0.1...v5.1.0)
+
+**Implemented enhancements:**
+
+- Config files should not be world readable [\#249](https://github.com/voxpupuli/puppet-kafka/issues/249)
+- Add options for more sensible config permissions; puppet stdlib to 4.22.0 [\#250](https://github.com/voxpupuli/puppet-kafka/pull/250) ([langesven](https://github.com/langesven))
+
+**Merged pull requests:**
+
+- release 5.0.1 [\#248](https://github.com/voxpupuli/puppet-kafka/pull/248) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v5.0.1](https://github.com/voxpupuli/puppet-kafka/tree/v5.0.1) (2018-03-28)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v5.0.0...v5.0.1)
@@ -73,9 +86,6 @@ These should not affect the functionality of the module.
 **Closed issues:**
 
 - Kafka stopping should be configurable in the systemd unit file [\#206](https://github.com/voxpupuli/puppet-kafka/issues/206)
-
-**Merged pull requests:**
-
 
 ## [v3.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v3.2.0) (2017-09-29)
 
@@ -170,9 +180,6 @@ These should not affect the functionality of the module.
 **Implemented enhancements:**
 
 - Add custom config dir [\#130](https://github.com/voxpupuli/puppet-kafka/pull/130) ([antyale](https://github.com/antyale))
-
-**Merged pull requests:**
-
 
 ## [v2.3.0](https://github.com/voxpupuli/puppet-kafka/tree/v2.3.0) (2017-02-11)
 
