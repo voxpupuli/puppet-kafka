@@ -21,9 +21,14 @@ class kafka::params {
   $bin_dir        = '/opt/kafka/bin'
   $log_dir        = '/var/log/kafka'
   $mirror_url     = 'http://mirrors.ukfast.co.uk/sites/ftp.apache.org'
+  $mirror_subpath = "/kafka/${version}"
   $install_java   = false
   $package_dir    = '/var/tmp/kafka'
   $package_name   = undef
+  $proxy_server   = undef
+  $proxy_host     = undef
+  $proxy_port     = undef
+  $proxy_type     = undef
   $package_ensure = 'present'
   $user           = 'kafka'
   $group          = 'kafka'
@@ -34,6 +39,7 @@ class kafka::params {
   $manage_user    = true
   $manage_group   = true
   $config_mode    = '0644'
+  $install_mode   = '0755'
 
   $service_install = true
   $service_ensure = 'running'

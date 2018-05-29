@@ -105,6 +105,26 @@ The directory to install kafka to.
 
 The url where the kafka is downloaded from.
 
+##### `mirror_subpath`
+
+The url subpath where the kafka is downloaded from (default value: `/kafka/{version}`).
+
+##### `proxy_port`
+
+The proxy port where the kafka is downloaded from.
+
+##### `proxy_host`
+
+The proxy host where the kafka is downloaded from.
+
+##### `proxy_server`
+
+The proxy server where the kafka is downloaded from (to use instead of `proxy_port` and `proxy_host` if you need to set an url as proxy for example).
+
+##### `proxy_type`
+
+The proxy type where the kafka is downloaded from (`http` for example).
+
 ##### `install_java`
 
 Install java if it's not already installed.
