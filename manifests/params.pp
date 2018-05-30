@@ -76,7 +76,8 @@ class kafka::params {
   $consumer_config          = {}
   $producer_config          = {}
   $service_config           = {}
-  $mirror_default_name      = undef
+  $mirror_default_name      = 'default'
   $producer_properties_name = 'producer'
   $consumer_properties_name = 'consumer'
+  $systemd_files_path       = '/etc/systemd/system'
 }

@@ -29,6 +29,7 @@ class kafka::broker::service(
   $opts                                      = $kafka::broker::opts,
   String $producer_properties_name           = $kafka::params::producer_properties_name,
   String $consumer_properties_name           = $kafka::params::consumer_properties_name,
+  String $systemd_files_path                 = $kafka::params::systemd_files_path,
 ) {
 
   if $caller_module_name != $module_name {
@@ -48,7 +49,7 @@ class kafka::broker::service(
     if $::service_provider == 'systemd' {
       include ::systemd
 
-      file { "/etc/systemd/system/${service_name}.service":
+      file { "${systemd_files_path}/${service_name}.service":
         ensure  => file,
         mode    => '0644',
         content => template('kafka/unit.erb'),
@@ -58,7 +59,7 @@ class kafka::broker::service(
         ensure => absent,
       }
 
-      File["/etc/systemd/system/${service_name}.service"]
+      File["${systemd_files_path}/${service_name}.service"]
       ~> Exec['systemctl-daemon-reload']
       -> Service[$service_name]
 

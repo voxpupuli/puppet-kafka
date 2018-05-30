@@ -106,8 +106,7 @@
 #  consumer_config => { 'client.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
 # }
 #
-class kafka::mirror (
-  Optional[String] $mirror_name              = $kafka::params::mirror_default_name,
+define kafka::mirror (
   String $version                            = $kafka::params::version,
   String $scala_version                      = $kafka::params::scala_version,
   Stdlib::Absolutepath $install_dir          = $kafka::params::install_dir,
@@ -140,10 +139,10 @@ class kafka::mirror (
   String $heap_opts                          = $kafka::params::mirror_heap_opts,
   String $jmx_opts                           = $kafka::params::mirror_jmx_opts,
   String $log4j_opts                         = $kafka::params::mirror_log4j_opts,
-) inherits kafka::params {
-  class { '::kafka::mirror::install': }
-  -> class { '::kafka::mirror::config':
-    mirror_name     => $mirror_name,
+  String $systemd_files_path                 = $kafka::params::systemd_files_path,
+) {
+  ::kafka::mirror::install { $title: }
+  -> ::kafka::mirror::config { $title:
     config_dir      => $config_dir,
     service_name    => $service_name,
     service_install => $service_install,
@@ -153,27 +152,26 @@ class kafka::mirror (
     config_mode     => $config_mode,
     group           => $group,
   }
-  -> class { '::kafka::mirror::service':
-    mirror_name      => $mirror_name,
-    user             => $user,
-    group            => $group,
-    config_dir       => $config_dir,
-    log_dir          => $log_dir,
-    bin_dir          => $bin_dir,
-    service_name     => $service_name,
-    service_install  => $service_install,
-    service_ensure   => $service_ensure,
-    service_requires => $service_requires,
-    limit_nofile     => $limit_nofile,
-    limit_core       => $limit_core,
-    env              => $env,
-    consumer_config  => $consumer_config,
-    producer_config  => $producer_config,
-    service_config   => $service_config,
-    heap_opts        => $heap_opts,
-    jmx_opts         => $jmx_opts,
-    log4j_opts       => $log4j_opts,
+  -> ::kafka::mirror::service { $title:
+    user               => $user,
+    group              => $group,
+    config_dir         => $config_dir,
+    log_dir            => $log_dir,
+    bin_dir            => $bin_dir,
+    service_name       => $service_name,
+    service_install    => $service_install,
+    service_ensure     => $service_ensure,
+    service_requires   => $service_requires,
+    limit_nofile       => $limit_nofile,
+    limit_core         => $limit_core,
+    env                => $env,
+    consumer_config    => $consumer_config,
+    producer_config    => $producer_config,
+    service_config     => $service_config,
+    heap_opts          => $heap_opts,
+    jmx_opts           => $jmx_opts,
+    log4j_opts         => $log4j_opts,
+    systemd_files_path => $systemd_files_path,
   }
-  -> Class['kafka::mirror']
 
 }

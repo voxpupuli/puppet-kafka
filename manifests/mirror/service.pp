@@ -2,13 +2,12 @@
 # Copyright:: Copyright (c) 2013 OpenTable Inc
 # License::   MIT
 
-# == Class: kafka::mirror::service
+# == Resource: kafka::mirror::service
 #
-# This private class is meant to be called from `kafka::mirror`.
+# This private resource is meant to be called from `kafka::mirror`.
 # It manages the kafka-mirror service
 #
-class kafka::mirror::service(
-  Optional[String] $mirror_name              = $kafka::params::mirror_default_name,
+define kafka::mirror::service(
   String $user                               = $kafka::params::user,
   String $group                              = $kafka::params::group,
   Stdlib::Absolutepath $config_dir           = $kafka::params::config_dir,
@@ -29,8 +28,11 @@ class kafka::mirror::service(
   String $log4j_opts                         = $kafka::params::mirror_log4j_opts,
   String $d_producer_properties_name         = $kafka::params::producer_properties_name,
   String $d_consumer_properties_name         = $kafka::params::consumer_properties_name,
+  String $systemd_files_path                 = $kafka::params::systemd_files_path,
 ) {
-  if($mirror_name != undef) {
+  $mirror_name = $title
+
+  if($mirror_name != undef and $mirror_name != '' and $mirror_name != $kafka::params::mirror_default_name) {
     $final_service_name       = "${service_name}-${mirror_name}"
     $producer_properties_name = "${d_producer_properties_name}-${mirror_name}"
     $consumer_properties_name = "${d_consumer_properties_name}-${mirror_name}"
@@ -55,7 +57,7 @@ class kafka::mirror::service(
     if $::service_provider == 'systemd' {
       include ::systemd
 
-      file { "/etc/systemd/system/${final_service_name}.service":
+      file { "${systemd_files_path}/${final_service_name}.service":
         ensure  => file,
         mode    => '0644',
         content => template('kafka/unit.erb'),
@@ -66,7 +68,7 @@ class kafka::mirror::service(
         ensure => absent,
       }
 
-      File["/etc/systemd/system/${final_service_name}.service"]
+      File["${systemd_files_path}/${final_service_name}.service"]
       ~> Exec['systemctl-daemon-reload']
       -> Service[$final_service_name]
 
@@ -75,7 +77,6 @@ class kafka::mirror::service(
         ensure  => file,
         mode    => '0755',
         content => template('kafka/init.erb'),
-        before  => Service[$final_service_name],
       }
     }
 
