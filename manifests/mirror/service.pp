@@ -57,6 +57,12 @@ define kafka::mirror::service(
     if $::service_provider == 'systemd' {
       include ::systemd
 
+      if $systemd_files_path != $kafka::params::systemd_files_path {
+        file { "${kafka::params::systemd_files_path}/${final_service_name}.service":
+          ensure  => absent,
+        }
+      }
+
       file { "${systemd_files_path}/${final_service_name}.service":
         ensure  => file,
         mode    => '0644',
