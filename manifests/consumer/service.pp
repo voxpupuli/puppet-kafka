@@ -23,6 +23,8 @@ class kafka::consumer::service(
   String $jmx_opts                           = $kafka::consumer::jmx_opts,
   String $log4j_opts                         = $kafka::consumer::log4j_opts,
   Hash $service_config                       = $kafka::consumer::service_config,
+  String $producer_properties_name           = $kafka::params::producer_properties_name,
+  String $consumer_properties_name           = $kafka::params::consumer_properties_name,
 ) {
 
   if $caller_module_name != $module_name {

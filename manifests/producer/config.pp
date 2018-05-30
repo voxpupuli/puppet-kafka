@@ -8,6 +8,7 @@
 # It manages the producer config files
 #
 class kafka::producer::config(
+  String $producer_properties_name = $kafka::params::producer_properties_name,
   Stdlib::Absolutepath $config_dir = $kafka::producer::config_dir,
   String $service_name             = $kafka::producer::service_name,
   Boolean $service_install         = $kafka::producer::service_install,
@@ -24,7 +25,7 @@ class kafka::producer::config(
   }
 
   $doctag = 'producerconfigs'
-  file { "${config_dir}/producer.properties":
+  file { "${config_dir}/${producer_properties_name}.properties":
     ensure  => present,
     owner   => 'root',
     group   => $group,

@@ -226,6 +226,7 @@ The directory to install kafka.
 #### Class: `kafka::mirror`
 
 One of the primary classes of the kafka module. This class will install a kafka mirror.
+If you need to have multiple mirror services, you should use `kafka::mirror::rmirror` resources multiple time instead (with the same args definition).
 
 **Parameters within `kafka::mirror`:**
 

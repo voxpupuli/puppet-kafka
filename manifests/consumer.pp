@@ -130,9 +130,9 @@ class kafka::consumer (
   Array[String] $service_requires            = $kafka::params::service_requires,
   Optional[String] $limit_nofile             = $kafka::params::limit_nofile,
   Optional[String] $limit_core               = $kafka::params::limit_core,
-  Hash $env                                  = {},
-  Hash $config                               = {},
-  Hash $service_config                       = {},
+  Hash $env                                  = $kafka::params::env,
+  Hash $config                               = $kafka::params::consumer_config,
+  Hash $service_config                       = $kafka::params::service_config,
   String $jmx_opts                           = $kafka::params::consumer_jmx_opts,
   String $log4j_opts                         = $kafka::params::consumer_log4j_opts,
 ) inherits kafka::params {

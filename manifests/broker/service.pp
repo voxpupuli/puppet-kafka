@@ -27,6 +27,8 @@ class kafka::broker::service(
   String $jmx_opts                           = $kafka::broker::jmx_opts,
   String $log4j_opts                         = $kafka::broker::log4j_opts,
   $opts                                      = $kafka::broker::opts,
+  String $producer_properties_name           = $kafka::params::producer_properties_name,
+  String $consumer_properties_name           = $kafka::params::consumer_properties_name,
 ) {
 
   if $caller_module_name != $module_name {
