@@ -2,12 +2,12 @@
 # Copyright:: Copyright (c) 2013 OpenTable Inc
 # License::   MIT
 
-# == Class: kafka::mirror::install
+# == Resource: kafka::mirror::install
 #
-# This private class is meant to be called from `kafka::mirror`.
+# This private resource is meant to be called from `kafka::mirror`.
 # It downloads the package and installs it.
 #
-class kafka::mirror::install {
+define kafka::mirror::install {
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")

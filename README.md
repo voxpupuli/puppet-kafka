@@ -243,10 +243,9 @@ Install java if it's not already installed.
 
 The directory to install kafka.
 
-#### Class: `kafka::mirror`
+#### Resource: `kafka::mirror`
 
-One of the primary classes of the kafka module. This class will install a kafka mirror.
-If you need to have multiple mirror services, you should use `kafka::mirror::rmirror` resources multiple time instead (with the same args definition).
+One of the primary resources of the kafka module. This resource will install a kafka mirror and can be called multiple time.
 
 **Parameters within `kafka::mirror`:**
 
@@ -276,7 +275,7 @@ The directory to install kafka.
 
 #### Class: `kafka::producer`
 
-One of the primary classes of the kafka module. This class will install a kafka producer.
+One of the primary resources of the kafka module. This resource will install a kafka producer.
 
 **Parameters within `kafka::producer`:**
 
@@ -312,7 +311,7 @@ Defined type that creates Kafka topics.
 
 ### Classes
 
-#### Public Classes
+#### Public Classes and resources
 
 * `kafka`: Guides the basic installation of kafka binaries
 * `kafka::broker`: Guides the basic installation of a kafka broker
@@ -320,7 +319,7 @@ Defined type that creates Kafka topics.
 * `kafka::mirror`: Guides the basic installation of a kafka mirror
 * `kafka::producer`: Guides the basic installation of a kafka producer
 
-#### Private Classes
+#### Private Classes and resources
 
 * [`kafka::broker::config`]  Manages all the default configuration of the kafka broker application
 * [`kafka::broker::install`] Manages the installation of the kafka packages

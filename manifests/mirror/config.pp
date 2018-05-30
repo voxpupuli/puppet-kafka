@@ -4,11 +4,10 @@
 
 # == Class: kafka::mirror::config
 #
-# This private class is meant to be called from `kafka::mirror`.
+# This private resource is meant to be called from `kafka::mirror`.
 # It manages the mirror-maker config files
 #
-class kafka::mirror::config(
-  Optional[String] $mirror_name      = $kafka::params::mirror_default_name,
+define kafka::mirror::config(
   Stdlib::Absolutepath $config_dir   = $kafka::params::config_dir,
   String $service_name               = $kafka::params::mirror_service_name,
   Boolean $service_install           = $kafka::params::service_install,
@@ -20,6 +19,7 @@ class kafka::mirror::config(
   String $d_producer_properties_name = $kafka::params::producer_properties_name,
   String $d_consumer_properties_name = $kafka::params::consumer_properties_name,
 ) {
+  $mirror_name = $title
 
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
@@ -35,7 +35,7 @@ class kafka::mirror::config(
     fail('[Producer] You need to specify a value for bootstrap.servers')
   }
 
-  if($mirror_name != undef) {
+  if($mirror_name != undef and $mirror_name != '' and $mirror_name != $kafka::params::mirror_default_name) {
     $final_service_name       = "${service_name}-${mirror_name}"
     $consumer_properties_name = "${d_consumer_properties_name}-${mirror_name}"
     $producer_properties_name = "${d_producer_properties_name}-${mirror_name}"
@@ -45,7 +45,7 @@ class kafka::mirror::config(
     $producer_properties_name = $d_producer_properties_name
   }
 
-  class { '::kafka::consumer::config':
+  ::kafka::consumer::config { $title:
     consumer_properties_name => $consumer_properties_name,
     config_dir               => $config_dir,
     config_mode              => $config_mode,
@@ -56,7 +56,7 @@ class kafka::mirror::config(
     group                    => $group,
   }
 
-  class { '::kafka::producer::config':
+  ::kafka::producer::config { $title:
     producer_properties_name => $producer_properties_name,
     config_dir               => $config_dir,
     config_mode              => $config_mode,

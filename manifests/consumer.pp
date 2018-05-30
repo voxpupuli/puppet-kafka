@@ -2,9 +2,9 @@
 # Copyright:: Copyright (c) 2013 OpenTable Inc
 # License::   MIT
 
-# == Class: kafka::consumer
+# == Resource: kafka::consumer
 #
-# This class will install kafka with the consumer role.
+# This resource will install kafka with the consumer role.
 #
 # === Requirements/Dependencies
 #
@@ -104,7 +104,7 @@
 # class { 'kafka::consumer':
 #  config => { 'client.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
 # }
-class kafka::consumer (
+define kafka::consumer (
   String $version                            = $kafka::params::version,
   String $scala_version                      = $kafka::params::scala_version,
   Stdlib::Absolutepath $install_dir          = $kafka::params::install_dir,
@@ -135,10 +135,11 @@ class kafka::consumer (
   Hash $service_config                       = $kafka::params::service_config,
   String $jmx_opts                           = $kafka::params::consumer_jmx_opts,
   String $log4j_opts                         = $kafka::params::consumer_log4j_opts,
-) inherits kafka::params {
+  String $consumer_properties_name           = $kafka::params::consumer_properties_name,
+  String $systemd_files_path                 = $kafka::params::systemd_files_path,
+) {
 
-  class { '::kafka::consumer::install': }
-  -> class { '::kafka::consumer::config': }
-  -> class { '::kafka::consumer::service': }
-  -> Class['kafka::consumer']
+  ::kafka::consumer::install    { "${consumer_properties_name}-${title}": }
+  -> ::kafka::consumer::config  { "${consumer_properties_name}-${title}": }
+  -> ::kafka::consumer::service { "${consumer_properties_name}-${title}": }
 }
