@@ -26,6 +26,8 @@ define kafka::consumer::service(
   String $producer_properties_name           = $kafka::params::producer_properties_name,
   String $consumer_properties_name           = $kafka::params::consumer_properties_name,
   String $systemd_files_path                 = $kafka::params::systemd_files_path,
+  Optional[String] $limit_nofile             = $kafka::params::limit_nofile,
+  Optional[String] $limit_core               = $kafka::params::limit_core,
 ) {
 
   if $caller_module_name != $module_name {
