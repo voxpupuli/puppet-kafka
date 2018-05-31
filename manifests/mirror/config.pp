@@ -18,6 +18,8 @@ define kafka::mirror::config(
   String $group                      = $kafka::params::group,
   String $d_producer_properties_name = $kafka::params::producer_properties_name,
   String $d_consumer_properties_name = $kafka::params::consumer_properties_name,
+  Optional[String] $limit_nofile     = $kafka::params::limit_nofile,
+  Optional[String] $limit_core       = $kafka::params::limit_core,
 ) {
   $mirror_name = $title
 
@@ -35,7 +37,7 @@ define kafka::mirror::config(
     fail('[Producer] You need to specify a value for bootstrap.servers')
   }
 
-  if($mirror_name != undef and $mirror_name != '' and $mirror_name != $kafka::params::mirror_default_name) {
+  if $mirror_name != '' and $mirror_name != $kafka::params::mirror_default_name {
     $final_service_name       = "${service_name}-${mirror_name}"
     $consumer_properties_name = "${d_consumer_properties_name}-${mirror_name}"
     $producer_properties_name = "${d_producer_properties_name}-${mirror_name}"

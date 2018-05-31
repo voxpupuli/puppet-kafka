@@ -193,7 +193,15 @@ Whether the configuration files should trigger a service restart
 
 The directory to install kafka.
 
-#### Class: `kafka::consumer`
+#### `limit_nofile`
+
+The `LimitNOFILE` systemd paramater value
+
+#### `limit_core`
+
+The `LimitCORE` systemd parameter value
+
+#### Resource: `kafka::consumer`
 
 One of the primary classes of the kafka module. This class will install a kafka consumer.
 
@@ -222,6 +230,14 @@ Install java if it's not already installed.
 #### `package_dir`
 
 The directory to install kafka.
+
+#### `limit_nofile`
+
+The `LimitNOFILE` systemd paramater value
+
+#### `limit_core`
+
+The `LimitCORE` systemd parameter value
 
 #### Resource: `kafka::mirror`
 
@@ -253,7 +269,15 @@ Install java if it's not already installed.
 
 The directory to install kafka.
 
-#### Class: `kafka::producer`
+#### `limit_nofile`
+
+The `LimitNOFILE` systemd paramater value
+
+#### `limit_core`
+
+The `LimitCORE` systemd parameter value
+
+#### Resource: `kafka::producer`
 
 One of the primary resources of the kafka module. This resource will install a kafka producer.
 
@@ -326,6 +350,7 @@ This module is tested on the following platforms:
 
 * CentOS 5
 * CentOS 6
+* CentOS 7
 * Ubuntu 12.04
 * Ubuntu 14.04
 
