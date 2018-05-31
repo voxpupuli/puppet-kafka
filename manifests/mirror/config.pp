@@ -18,8 +18,6 @@ define kafka::mirror::config(
   String $group                      = $kafka::params::group,
   String $d_producer_properties_name = $kafka::params::producer_properties_name,
   String $d_consumer_properties_name = $kafka::params::consumer_properties_name,
-  Optional[String] $limit_nofile     = $kafka::params::limit_nofile,
-  Optional[String] $limit_core       = $kafka::params::limit_core,
 ) {
   $mirror_name = $title
 
