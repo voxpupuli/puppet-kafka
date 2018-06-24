@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v5.2.0) (2018-06-24)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v5.1.0...v5.2.0)
+
+**Implemented enhancements:**
+
+- Some updates to be able to use an internal http mirror with proxy to download the .tar.gz archive [\#257](https://github.com/voxpupuli/puppet-kafka/pull/257) ([idrissneumann](https://github.com/idrissneumann))
+
+**Fixed bugs:**
+
+- Ensure the process is killed before finishing stop [\#135](https://github.com/voxpupuli/puppet-kafka/pull/135) ([elmendalerenda](https://github.com/elmendalerenda))
+
+**Merged pull requests:**
+
+- Remove docker nodesets [\#255](https://github.com/voxpupuli/puppet-kafka/pull/255) ([bastelfreak](https://github.com/bastelfreak))
+- drop EOL OSs; fix puppet version range [\#253](https://github.com/voxpupuli/puppet-kafka/pull/253) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v5.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v5.1.0) (2018-04-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v5.0.1...v5.1.0)
@@ -12,10 +29,6 @@ These should not affect the functionality of the module.
 
 - Config files should not be world readable [\#249](https://github.com/voxpupuli/puppet-kafka/issues/249)
 - Add options for more sensible config permissions; puppet stdlib to 4.22.0 [\#250](https://github.com/voxpupuli/puppet-kafka/pull/250) ([langesven](https://github.com/langesven))
-
-**Merged pull requests:**
-
-- release 5.0.1 [\#248](https://github.com/voxpupuli/puppet-kafka/pull/248) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [v5.0.1](https://github.com/voxpupuli/puppet-kafka/tree/v5.0.1) (2018-03-28)
 
@@ -207,7 +220,7 @@ These should not affect the functionality of the module.
 **Merged pull requests:**
 
 - Fix bounding of puppet version in metadata [\#116](https://github.com/voxpupuli/puppet-kafka/pull/116) ([ghoneycutt](https://github.com/ghoneycutt))
-- Fix puppet 4 versioncmp need for string [\#115](https://github.com/voxpupuli/puppet-kafka/pull/115) ([mlambrichs](https://github.com/mlambrichs))
+- Fix puppet 4 versioncmp need for string [\#115](https://github.com/voxpupuli/puppet-kafka/pull/115) ([marclambrichs](https://github.com/marclambrichs))
 - Update readme with the current Kafka & Scala versions [\#112](https://github.com/voxpupuli/puppet-kafka/pull/112) ([atrepca](https://github.com/atrepca))
 - Add missing badges [\#111](https://github.com/voxpupuli/puppet-kafka/pull/111) ([dhoppe](https://github.com/dhoppe))
 - adding the port to the mirror URL [\#108](https://github.com/voxpupuli/puppet-kafka/pull/108) ([petetodo](https://github.com/petetodo))
@@ -229,7 +242,6 @@ These should not affect the functionality of the module.
 - Document missing parameters [\#100](https://github.com/voxpupuli/puppet-kafka/pull/100) ([igalic](https://github.com/igalic))
 - Fix incompatibility beetween $install\_dir and $version params [\#99](https://github.com/voxpupuli/puppet-kafka/pull/99) ([igalic](https://github.com/igalic))
 - Add support for MirrorMaker abort.on.send.failure [\#97](https://github.com/voxpupuli/puppet-kafka/pull/97) ([SegFaultAX](https://github.com/SegFaultAX))
-- fix init script to actually check status [\#96](https://github.com/voxpupuli/puppet-kafka/pull/96) ([fessyfoo](https://github.com/fessyfoo))
 - Init fix [\#94](https://github.com/voxpupuli/puppet-kafka/pull/94) ([igalic](https://github.com/igalic))
 - Remove URL validation [\#93](https://github.com/voxpupuli/puppet-kafka/pull/93) ([volkorny](https://github.com/volkorny))
 - \[skip-ci\]Small typo fix [\#88](https://github.com/voxpupuli/puppet-kafka/pull/88) ([skade](https://github.com/skade))
@@ -256,9 +268,7 @@ These should not affect the functionality of the module.
 - kafka::mirror is critically broken [\#39](https://github.com/voxpupuli/puppet-kafka/issues/39)
 - stop trying to make fetch happen [\#31](https://github.com/voxpupuli/puppet-kafka/issues/31)
 - producer init template is missing [\#13](https://github.com/voxpupuli/puppet-kafka/issues/13)
-- Both "version" and "scala\_version" are ignored within "kafka::broker" [\#9](https://github.com/voxpupuli/puppet-kafka/issues/9)
 - Readme states that "config" is available within the "kafka" class [\#8](https://github.com/voxpupuli/puppet-kafka/issues/8)
-- ability to set the service to disabled [\#3](https://github.com/voxpupuli/puppet-kafka/issues/3)
 
 **Merged pull requests:**
 
@@ -298,6 +308,7 @@ These should not affect the functionality of the module.
 - Puppetforge module outdated: The init script leaves pidfile if there's an error when starting [\#26](https://github.com/voxpupuli/puppet-kafka/issues/26)
 - Ubuntu 12.04/14.04 LTS Compatibility Broken [\#24](https://github.com/voxpupuli/puppet-kafka/issues/24)
 - kafka starting as a root user [\#17](https://github.com/voxpupuli/puppet-kafka/issues/17)
+- Both "version" and "scala\_version" are ignored within "kafka::broker" [\#9](https://github.com/voxpupuli/puppet-kafka/issues/9)
 - init script is incompatible with chkconfig [\#5](https://github.com/voxpupuli/puppet-kafka/issues/5)
 
 **Merged pull requests:**
@@ -324,6 +335,10 @@ These should not affect the functionality of the module.
 ## [v1.0.1](https://github.com/voxpupuli/puppet-kafka/tree/v1.0.1) (2015-03-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v1.0.0...v1.0.1)
+
+**Closed issues:**
+
+- ability to set the service to disabled [\#3](https://github.com/voxpupuli/puppet-kafka/issues/3)
 
 **Merged pull requests:**
 
