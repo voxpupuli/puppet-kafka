@@ -78,6 +78,11 @@ class kafka (
   Boolean $install_java             = $kafka::params::install_java,
   Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
   Optional[String] $package_name    = $kafka::params::package_name,
+  Optional[String] $mirror_subpath  = $kafka::params::mirror_subpath,
+  Optional[String] $proxy_server    = $kafka::params::proxy_server,
+  Optional[String] $proxy_port      = $kafka::params::proxy_port,
+  Optional[String] $proxy_host      = $kafka::params::proxy_host,
+  Optional[String] $proxy_type      = $kafka::params::proxy_type,
   String $package_ensure            = $kafka::params::package_ensure,
   String $user                      = $kafka::params::user,
   String $group                     = $kafka::params::group,
@@ -89,6 +94,7 @@ class kafka (
   Boolean $manage_group             = $kafka::params::manage_group,
   Stdlib::Absolutepath $config_dir  = $kafka::params::config_dir,
   Stdlib::Absolutepath $log_dir     = $kafka::params::log_dir,
+  Optional[String] $install_mode    = $kafka::params::install_mode,
 ) inherits kafka::params {
 
   if $install_java {
@@ -136,7 +142,7 @@ class kafka (
     include ::archive
 
     $basefilename = "kafka_${scala_version}-${version}.tgz"
-    $package_url = "${mirror_url}/kafka/${version}/${basefilename}"
+    $package_url = "${mirror_url}${mirror_subpath}/${basefilename}"
 
     $source = $mirror_url ?{
       /tgz$/ => $mirror_url,
@@ -165,6 +171,7 @@ class kafka (
       ensure  => directory,
       owner   => $user,
       group   => $group,
+      mode    => $install_mode,
       require => [
         Group[$group],
         User[$user],
@@ -177,6 +184,12 @@ class kafka (
       require => File[$install_directory],
     }
 
+    if $proxy_server == undef and $proxy_host != undef and $proxy_port != undef {
+      $final_proxy_server = "${proxy_host}:${proxy_port}"
+    } else {
+      $final_proxy_server = $proxy_server
+    }
+
     archive { "${package_dir}/${basefilename}":
       ensure          => present,
       extract         => true,
@@ -185,6 +198,8 @@ class kafka (
       source          => $source,
       creates         => "${install_directory}/config",
       cleanup         => true,
+      proxy_server    => $final_proxy_server,
+      proxy_type      => $proxy_type,
       user            => $user,
       group           => $group,
       require         => [
