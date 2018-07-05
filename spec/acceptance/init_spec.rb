@@ -63,7 +63,7 @@ describe 'kafka' do
       it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka':
-            version => '0.8.2.2',
+            version => '1.1.0',
           }
         EOS
 
@@ -86,14 +86,14 @@ describe 'kafka' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.8.2.2') do
+      describe file('/opt/kafka-2.11-1.1.0') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.8.2.2') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-1.1.0') }
       end
 
       describe file('/opt/kafka/config') do
@@ -158,6 +158,7 @@ describe 'kafka' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
     end
+
     context 'with specific config dir' do
       it 'works with no errors' do
         pp = <<-EOS
