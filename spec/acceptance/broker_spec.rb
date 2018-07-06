@@ -125,7 +125,7 @@ describe 'kafka::broker' do
         pp = <<-EOS
           class { 'zookeeper': } ->
           class { 'kafka::broker':
-            version => '0.8.2.2',
+            version => '1.1.0',
             config  => {
               'broker.id'         => '1',
               'zookeeper.connect' => 'localhost:2181',
