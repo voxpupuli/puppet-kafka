@@ -93,7 +93,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'kafka' }
-        it { is_expected.to contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
+        it { is_expected.to contain 'zookeeper.connect=localhost:2181' }
       end
     end
 
@@ -116,7 +116,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'kafka' }
-        it { is_expected.to contain 'ssl.enabled.protocols=TLSv1.2,TLSv1.1,TLSv1' }
+        it { is_expected.to contain 'zookeeper.connect=localhost:2181' }
       end
     end
 
@@ -182,6 +182,9 @@ describe 'kafka::broker' do
     context 'with log4j/jmx parameters' do
       it 'works with no errors' do
         pp = <<-EOS
+          exec { 'create log dir':
+            command => '/bin/mkdir -p /some/path/to/logs',
+          } ->
           class { 'zookeeper': } ->
           class { 'kafka::broker':
             config => {

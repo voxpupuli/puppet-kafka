@@ -66,8 +66,8 @@ describe 'kafka::mirror' do
 
       describe file('/opt/kafka/config') do
         it { is_expected.to be_directory }
-        it { is_expected.to be_owned_by 'kafka' }
-        it { is_expected.to be_grouped_into 'kafka' }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
       end
 
       describe file('/var/log/kafka') do
