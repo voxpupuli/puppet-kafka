@@ -36,14 +36,14 @@ describe 'kafka' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.11.0.1') do
+      describe file('/opt/kafka-2.11-0.11.0.3') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.1') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.3') }
       end
 
       describe file('/opt/kafka/config') do
@@ -136,14 +136,14 @@ describe 'kafka' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.11.0.1') do
+      describe file('/opt/kafka-2.11-0.11.0.3') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.1') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.3') }
       end
 
       describe file('/opt/kafka/config') do
@@ -186,14 +186,14 @@ describe 'kafka' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.11.0.1') do
+      describe file('/opt/kafka-2.11-0.11.0.3') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.1') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.3') }
       end
 
       describe file('/opt/kafka/custom_config') do

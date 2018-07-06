@@ -141,8 +141,16 @@ class kafka (
 
     include ::archive
 
+    $mirror_path = $mirror_subpath ? {
+      # if mirror_subpath was not changed,
+      # we adapt it for the version
+      $kafka::params::mirror_subpath => "kafka/${version}",
+      # else, we just take whatever was supplied:
+      default                     => $mirror_subpath,
+    }
+
     $basefilename = "kafka_${scala_version}-${version}.tgz"
-    $package_url = "${mirror_url}${mirror_subpath}/${basefilename}"
+    $package_url = "${mirror_url}${mirror_path}/${basefilename}"
 
     $source = $mirror_url ?{
       /tgz$/ => $mirror_url,
