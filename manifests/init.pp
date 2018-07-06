@@ -146,7 +146,7 @@ class kafka (
       # we adapt it for the version
       $kafka::params::mirror_subpath => "kafka/${version}",
       # else, we just take whatever was supplied:
-      default                     => $mirror_subpath,
+      default                        => $mirror_subpath,
     }
 
     $basefilename = "kafka_${scala_version}-${version}.tgz"
