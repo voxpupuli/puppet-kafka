@@ -4,6 +4,28 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v5.3.0](https://github.com/voxpupuli/puppet-kafka/tree/v5.3.0) (2018-07-07)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v5.2.0...v5.3.0)
+
+**Implemented enhancements:**
+
+- add debian 8/9 & ubuntu 16.04 support, drop 14.04 [\#267](https://github.com/voxpupuli/puppet-kafka/pull/267) ([bastelfreak](https://github.com/bastelfreak))
+- Use closest mirrors [\#261](https://github.com/voxpupuli/puppet-kafka/pull/261) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
+- add support for topic configurations at creation time [\#260](https://github.com/voxpupuli/puppet-kafka/pull/260) ([TheMeier](https://github.com/TheMeier))
+
+**Fixed bugs:**
+
+- Use correct mirror url  [\#263](https://github.com/voxpupuli/puppet-kafka/pull/263) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
+
+**Merged pull requests:**
+
+- Remove coveralls badge [\#268](https://github.com/voxpupuli/puppet-kafka/pull/268) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
+- Enable Acceptance tests [\#266](https://github.com/voxpupuli/puppet-kafka/pull/266) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
+- \[WIP\] enable acceptance tests [\#265](https://github.com/voxpupuli/puppet-kafka/pull/265) ([bastelfreak](https://github.com/bastelfreak))
+- cleanup spec\_helper\_acceptance.rb [\#264](https://github.com/voxpupuli/puppet-kafka/pull/264) ([bastelfreak](https://github.com/bastelfreak))
+- Add test for different kafka version [\#262](https://github.com/voxpupuli/puppet-kafka/pull/262) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
+
 ## [v5.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v5.2.0) (2018-06-24)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v5.1.0...v5.2.0)
