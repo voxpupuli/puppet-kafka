@@ -1,7 +1,6 @@
 # Kafka module for Puppet
 
 [![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
-[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-kafka/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-kafka)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)

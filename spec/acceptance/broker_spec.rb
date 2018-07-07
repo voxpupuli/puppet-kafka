@@ -2,29 +2,29 @@ require 'spec_helper_acceptance'
 
 describe 'kafka::broker' do
   zookeeper = <<-EOS
-      if $::osfamily == 'RedHat' {
-        class { 'java': }
+    if $::osfamily == 'RedHat' {
+      class { 'java': }
 
-        exec { 'create pid dir':
-          command => '/bin/mkdir -p /var/run/',
-          creates => '/var/run/',
-        }
-
-        file { '/var/run/zookeeper/':
-          ensure => directory,
-          owner  => 'zookeeper',
-          group  => 'zookeeper',
-        }
-
-        class { 'zookeeper':
-          repo                 => 'cloudera',
-          cdhver               => '5',
-          initialize_datastore => true,
-        }
-
-      } else {
-        class { 'zookeeper': }
+      exec { 'create pid dir':
+        command => '/bin/mkdir -p /var/run/',
+        creates => '/var/run/',
       }
+
+      file { '/var/run/zookeeper/':
+        ensure => directory,
+        owner  => 'zookeeper',
+        group  => 'zookeeper',
+      }
+
+      class { 'zookeeper':
+        repo                 => 'cloudera',
+        cdhver               => '5',
+        initialize_datastore => true,
+      }
+
+    } else {
+      class { 'zookeeper': }
+    }
   EOS
 
   it 'works with no errors' do
