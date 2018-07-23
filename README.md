@@ -335,7 +335,7 @@ Defined type that creates Kafka topics.
 
 #### Defined Types
 
-* `kafka::topic` Create kafka topics
+* `kafka::topic` Create, update or delete kafka topics
 
 ## Limitations
 
