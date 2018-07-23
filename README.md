@@ -1,7 +1,6 @@
 # Kafka module for Puppet
 
 [![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
-[![Code Coverage](https://coveralls.io/repos/github/voxpupuli/puppet-kafka/badge.svg?branch=master)](https://coveralls.io/github/voxpupuli/puppet-kafka)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
@@ -41,7 +40,7 @@ To successfully install Kafka using this module you need to have Apache ZooKeepe
 already running at localhost:2181. You can specify another ZooKeeper host:port
 configuration using the config hash of the kafka:broker class.
 
-The default configuration installs Kafka 0.11.0.1 binaries with Scala 2.11
+The default configuration installs Kafka 0.11.0.3 binaries with Scala 2.11
 
 ```puppet
   class { 'kafka': }
@@ -61,13 +60,13 @@ You can specify different Kafka binaries packages versions to install. Please
 take a look at the different Scala and Kafka versions combinations at the
 [Apache Kafka Website](http://kafka.apache.org/downloads.html)
 
-### Installing Kafka version 0.11.0.1 with scala 2.12
+### Installing Kafka version 1.1.0 with scala 2.12
 
 We first install the binary package with:
 
 ```puppet
   class { 'kafka':
-    version => '0.11.0.1',
+    version => '1.1.0',
     scala_version => '2.12'
   }
 ```

@@ -48,20 +48,20 @@ describe 'kafka::consumer' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.11.0.1') do
+      describe file('/opt/kafka-2.11-0.11.0.3') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.1') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.3') }
       end
 
       describe file('/opt/kafka/config') do
         it { is_expected.to be_directory }
-        it { is_expected.to be_owned_by 'kafka' }
-        it { is_expected.to be_grouped_into 'kafka' }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
       end
 
       describe file('/var/log/kafka') do
@@ -90,7 +90,7 @@ describe 'kafka::consumer' do
 
       describe file('/opt/kafka/config/consumer.properties') do
         it { is_expected.to be_file }
-        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
     end
@@ -115,7 +115,7 @@ describe 'kafka::consumer' do
 
       describe file('/opt/kafka/custom_config/consumer.properties') do
         it { is_expected.to be_file }
-        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
     end
@@ -145,12 +145,12 @@ describe 'kafka::consumer' do
         it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
       end
 
-      describe file('/usr/lib/systemd/system/kafka-consumer.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+      describe file('/etc/systemd/system/kafka-consumer.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'export KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
-        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
+        it { is_expected.to contain 'Environment=\'KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
+        it { is_expected.to contain 'Environment=\'KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties\'' }
       end
 
       describe service('kafka-consumer') do
