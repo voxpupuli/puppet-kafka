@@ -33,11 +33,20 @@ define kafka::topic(
     $_config = ''
   }
 
+  $_onlyif_topicsconf  = "test `kafka-topics.sh --describe --topic default_es_resources ${_zookeeper} | grep -oE \"([a-z.]+)=([0-9]+)\" | while read; do \"${_config}\" | grep $REPLY && echo ok || echo ko; done|grep ko|head -1|wc -l` -ne 0"
+  $_onlyif_topicsname  = "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}"
+
   if $ensure == 'present' {
     exec { "create topic ${name}":
       path    => "/usr/bin:/usr/sbin/:/bin:/sbin:${bin_dir}",
-      command => "kafka-topics.sh --create ${_zookeeper} ${_replication_factor} ${_partitions} --topic ${name} ${_config}",
-      unless  => "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}",
+      command => "kafka-topics.sh --create ${_zookeeper} ${_replication_factor} ${_partitions} --topic ${name}",
+      unless  => "${_onlyif_topicsname}",
+    }
+
+    exec { "update topic ${name}":
+      path    => "/usr/bin:/usr/sbin/:/bin:/sbin:${bin_dir}",
+      command => "kafka-topics.sh --alter ${_zookeeper} ${_partitions} --topic ${name} ${_config}",
+      onlyif  => "${_onlyif_topicsname} && ${_onlyif_topicsconf}",
     }
 
     exec { "update topic ${name}":
@@ -54,5 +63,4 @@ define kafka::topic(
       onlyif  => "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}",
     }
   }
-
 }
