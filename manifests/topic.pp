@@ -48,6 +48,12 @@ define kafka::topic(
       command => "kafka-topics.sh --alter ${_zookeeper} ${_partitions} --topic ${name} ${_config}",
       onlyif  => "${_onlyif_topicsname} && ${_onlyif_topicsconf}",
     }
+
+    exec { "update topic ${name}":
+      path    => "/usr/bin:/usr/sbin/:/bin:/sbin:${bin_dir}",
+      command => "kafka-topics.sh --alter ${_zookeeper} ${_partitions} --topic ${name} ${_config}",
+      onlyif  => "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}",
+    }
   }
 
   if $ensure == 'absent' {
@@ -57,5 +63,4 @@ define kafka::topic(
       onlyif  => "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}",
     }
   }
-
 }
