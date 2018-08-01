@@ -90,8 +90,22 @@ stop() {
     fi
   fi
 
-  kill `cat "$PID_FILE"`;
+  PID=`cat $PID_FILE`
+  kill $PID;
   rm -f -- "$PID_FILE";
+
+  # wait until the process is finished
+  RETRIES=0
+  MAX_RETRIES=10
+  while [ ! -z `pgrep -f "$PGREP_PATTERN"` ]; do
+    sleep 1
+    RETRIES=$((RETRIES+1))
+    if [ "$RETRIES" -ge "$MAX_RETRIES" ]; then
+      echo "$NAME service: stop tried $MAX_RETRIES times but process $PID is still running"
+      return 1
+    fi
+  done
+
   echo "$NAME stopped"
   return 0
 }
