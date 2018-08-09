@@ -33,7 +33,7 @@ define kafka::topic(
     $_config = ''
   }
 
-  $_onlyif_topicsconf  = "test `kafka-topics.sh --describe --topic ${name} ${_zookeeper} | grep -oE \"([a-z.]+)=([0-9]+)\" | while read; do echo \"${_config}\" | grep $REPLY && echo ok || echo ko; done|grep ko|head -1|wc -l` -ne 0"
+  $_onlyif_topicsconf  = "test `kafka-topics.sh --describe --topic ${name} ${_zookeeper} | grep -oE \"([a-z.]+)=([0-9]+)\" | while read; do echo \"${_config}\" | grep \$REPLY && echo ok || echo ko; done|grep ko|head -1|wc -l` -ne 0"
   $_onlyif_topicsname  = "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}"
 
   if $ensure == 'present' {
