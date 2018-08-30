@@ -71,30 +71,31 @@
 #
 #
 class kafka (
-  String $version                   = $kafka::params::version,
-  String $scala_version             = $kafka::params::scala_version,
-  Stdlib::Absolutepath $install_dir = $kafka::params::install_dir,
-  Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
-  Boolean $install_java             = $kafka::params::install_java,
-  Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
-  Optional[String] $package_name    = $kafka::params::package_name,
-  Optional[String] $mirror_subpath  = $kafka::params::mirror_subpath,
-  Optional[String] $proxy_server    = $kafka::params::proxy_server,
-  Optional[String] $proxy_port      = $kafka::params::proxy_port,
-  Optional[String] $proxy_host      = $kafka::params::proxy_host,
-  Optional[String] $proxy_type      = $kafka::params::proxy_type,
-  String $package_ensure            = $kafka::params::package_ensure,
-  String $user                      = $kafka::params::user,
-  String $group                     = $kafka::params::group,
-  Boolean $system_user              = $kafka::params::system_user,
-  Boolean $system_group             = $kafka::params::system_group,
-  Optional[Integer] $user_id        = $kafka::params::user_id,
-  Optional[Integer] $group_id       = $kafka::params::group_id,
-  Boolean $manage_user              = $kafka::params::manage_user,
-  Boolean $manage_group             = $kafka::params::manage_group,
-  Stdlib::Absolutepath $config_dir  = $kafka::params::config_dir,
-  Stdlib::Absolutepath $log_dir     = $kafka::params::log_dir,
-  Optional[String] $install_mode    = $kafka::params::install_mode,
+  String $version                               = $kafka::params::version,
+  String $scala_version                         = $kafka::params::scala_version,
+  Stdlib::Absolutepath $install_dir             = $kafka::params::install_dir,
+  Stdlib::HTTPUrl $mirror_url                   = $kafka::params::mirror_url,
+  Boolean $install_java                         = $kafka::params::install_java,
+  Stdlib::Absolutepath $package_dir             = $kafka::params::package_dir,
+  Optional[String] $package_name                = $kafka::params::package_name,
+  Optional[String] $mirror_subpath              = $kafka::params::mirror_subpath,
+  Optional[String] $proxy_server                = $kafka::params::proxy_server,
+  Optional[String] $proxy_port                  = $kafka::params::proxy_port,
+  Optional[String] $proxy_host                  = $kafka::params::proxy_host,
+  Optional[String] $proxy_type                  = $kafka::params::proxy_type,
+  String $package_ensure                        = $kafka::params::package_ensure,
+  String $user                                  = $kafka::params::user,
+  String $group                                 = $kafka::params::group,
+  Boolean $system_user                          = $kafka::params::system_user,
+  Boolean $system_group                         = $kafka::params::system_group,
+  Optional[Integer] $user_id                    = $kafka::params::user_id,
+  Optional[Integer] $group_id                   = $kafka::params::group_id,
+  Boolean $manage_user                          = $kafka::params::manage_user,
+  Boolean $manage_group                         = $kafka::params::manage_group,
+  Stdlib::Absolutepath $config_dir              = $kafka::params::config_dir,
+  Stdlib::Absolutepath $log_dir                 = $kafka::params::log_dir,
+  Optional[String] $install_mode                = $kafka::params::install_mode,
+  Optional[Stdlib::HTTPUrl] $offline_mirror_url = $kafka::params::offline_mirror_url,
 ) inherits kafka::params {
 
   if $install_java {
@@ -152,9 +153,13 @@ class kafka (
     $basefilename = "kafka_${scala_version}-${version}.tgz"
     $package_url = "${mirror_url}${mirror_path}/${basefilename}"
 
-    $source = $mirror_url ?{
-      /tgz$/ => $mirror_url,
-      default  => $package_url,
+    if $offline_mirror_url {
+      $source = $offline_mirror_url
+    } else {
+      $source = $mirror_url ? {
+        /tgz$/ => $mirror_url,
+        default  => $package_url,
+      }
     }
 
     $install_directory = $install_dir ? {
