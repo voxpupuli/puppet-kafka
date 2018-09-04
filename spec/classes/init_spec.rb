@@ -59,4 +59,20 @@ describe 'kafka', type: :class do
       end
     end
   end
+
+  context 'on Debian' do
+    describe 'kafka' do
+      context 'offline mirror' do
+        let :params do
+          {
+            offline_mirror_url: 'https://foobar.com/another/kafka'
+          }
+        end
+
+        it {
+          is_expected.to contain_archive('/var/tmp/kafka/kafka_2.11-0.11.0.3.tgz').with(source: 'https://foobar.com/another/kafka')
+        }
+      end
+    end
+  end
 end
