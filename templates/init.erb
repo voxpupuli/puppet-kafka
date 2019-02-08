@@ -50,9 +50,17 @@ if [ -f /etc/default/kafka ]; then
 fi
 
 start() {
-  ulimit -n 65536
+
+  <% if @limit_nofile -%>
+  ulimit -n <%= @limit_nofile %>
+  <% end -%>
+
+  <% if @limit_core -%>
+  ulimit -c <%= @limit_core %>
+  <% end -%>
+
   ulimit -s 10240
-  ulimit -c unlimited
+
   if [ -f "$PID_FILE" ]; then
     PID=`cat "$PID_FILE"`
     if [ `ps -p "$PID" -o pid= || echo 1` -eq `ps ax | grep -i "$PGREP_PATTERN" | grep -v grep | awk '{print $1}' || echo 2` ] ; then

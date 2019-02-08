@@ -56,6 +56,26 @@ describe 'kafka::broker', type: :class do
       context 'defaults' do
         it { is_expected.to contain_file('/etc/init.d/kafka') }
 
+        context 'limit_nofile set' do
+          let :params do
+            {
+              limit_nofile: '65536'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -n 65536$} }
+        end
+
+        context 'limit_core set' do
+          let :params do
+            {
+              limit_core: 'infinity'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -c infinity$} }
+        end
+
         it { is_expected.to contain_service('kafka') }
       end
     end
