@@ -40,7 +40,9 @@ class kafka::params {
   $manage_group   = true
   $config_mode    = '0644'
   $install_mode   = '0755'
-
+  $kafka_dir      = ''
+  $kafka_log_dir  = ''
+  $zookeeper_hosts = ''
   $service_install = true
   $service_ensure = 'running'
   $service_restart = true
