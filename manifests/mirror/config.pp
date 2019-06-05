@@ -32,7 +32,7 @@ class kafka::mirror::config(
     fail('[Producer] You need to specify a value for bootstrap.servers')
   }
 
-  class { '::kafka::consumer::config':
+  class { 'kafka::consumer::config':
     config_dir      => $config_dir,
     config_mode     => $config_mode,
     service_name    => $service_name,
@@ -42,7 +42,7 @@ class kafka::mirror::config(
     group           => $group,
   }
 
-  class { '::kafka::producer::config':
+  class { 'kafka::producer::config':
     config_dir      => $config_dir,
     config_mode     => $config_mode,
     service_name    => $service_name,
