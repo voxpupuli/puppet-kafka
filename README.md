@@ -40,7 +40,7 @@ To successfully install Kafka using this module you need to have Apache ZooKeepe
 already running at localhost:2181. You can specify another ZooKeeper host:port
 configuration using the config hash of the kafka:broker class.
 
-The default configuration installs Kafka 0.11.0.3 binaries with Scala 2.11
+The default configuration installs Kafka 2.1.1 binaries with Scala 2.11
 
 ```puppet
   class { 'kafka': }

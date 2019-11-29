@@ -14,7 +14,7 @@ class kafka::params {
   unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
     warning("${facts['os']['family']} is not supported")
   }
-  $version        = '0.11.0.3'
+  $version        = '2.1.1'
   $scala_version  = '2.11'
   $install_dir    = "/opt/kafka-${scala_version}-${version}"
   $config_dir     = '/opt/kafka/config'
