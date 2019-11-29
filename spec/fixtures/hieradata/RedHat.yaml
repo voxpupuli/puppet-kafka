@@ -1,0 +1,4 @@
+zookeeper::repo: 'cloudera'
+zookeeper::cdhver: 5
+zookeeper::initialize_datastore: true
+
