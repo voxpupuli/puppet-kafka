@@ -14,8 +14,8 @@ class kafka::params {
   unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
     warning("${facts['os']['family']} is not supported")
   }
-  $version        = '0.11.0.3'
-  $scala_version  = '2.11'
+  $version        = '2.4.1'
+  $scala_version  = '2.12'
   $install_dir    = "/opt/kafka-${scala_version}-${version}"
   $config_dir     = '/opt/kafka/config'
   $bin_dir        = '/opt/kafka/bin'
@@ -61,16 +61,13 @@ class kafka::params {
   $broker_opts       = ''
 
   $mirror_heap_opts  = '-Xmx256M'
-  $mirror_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
-  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991'
+  $mirror_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991'
   $mirror_log4j_opts = $broker_log4j_opts
 
-  $producer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
-  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9992'
+  $producer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9992'
   $producer_log4j_opts = $broker_log4j_opts
 
-  $consumer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
-  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
+  $consumer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
   $consumer_log4j_opts = $broker_log4j_opts
 
 }

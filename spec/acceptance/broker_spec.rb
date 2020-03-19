@@ -1,35 +1,7 @@
 require 'spec_helper_acceptance'
 
 describe 'kafka::broker' do
-  zookeeper = <<-EOS
-    if $::osfamily == 'RedHat' {
-      class { 'java': }
-
-      exec { 'create pid dir':
-        command => '/bin/mkdir -p /var/run/',
-        creates => '/var/run/',
-      }
-
-      file { '/var/run/zookeeper/':
-        ensure => directory,
-        owner  => 'zookeeper',
-        group  => 'zookeeper',
-      }
-
-      class { 'zookeeper':
-        repo                 => 'cloudera',
-        cdhver               => '5',
-        initialize_datastore => true,
-      }
-
-    } else {
-      class { 'zookeeper': }
-    }
-  EOS
-
   it 'works with no errors' do
-    apply_manifest(zookeeper, catch_failures: true)
-
     pp = <<-EOS
       class { 'kafka::broker':
         config => {
@@ -49,8 +21,6 @@ describe 'kafka::broker' do
   describe 'kafka::broker::install' do
     context 'with default parameters' do
       it 'works with no errors' do
-        apply_manifest(zookeeper, catch_failures: true)
-
         pp = <<-EOS
           class { 'kafka::broker':
             config => {
@@ -78,14 +48,14 @@ describe 'kafka::broker' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.11.0.3') do
+      describe file('/opt/kafka-2.12-2.4.1') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.3') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.12-2.4.1') }
       end
 
       describe file('/opt/kafka/config') do
@@ -105,8 +75,6 @@ describe 'kafka::broker' do
   describe 'kafka::broker::config' do
     context 'with default parameters' do
       it 'works with no errors' do
-        apply_manifest(zookeeper, catch_failures: true)
-
         pp = <<-EOS
           class { 'kafka::broker':
             config => {
@@ -128,8 +96,6 @@ describe 'kafka::broker' do
 
     context 'with custom config dir' do
       it 'works with no errors' do
-        apply_manifest(zookeeper, catch_failures: true)
-
         pp = <<-EOS
           class { 'kafka::broker':
             config => {
@@ -152,11 +118,9 @@ describe 'kafka::broker' do
 
     context 'with specific version' do
       it 'works with no errors' do
-        apply_manifest(zookeeper, catch_failures: true)
-
         pp = <<-EOS
           class { 'kafka::broker':
-            version => '1.1.0',
+            version => '2.4.0',
             config  => {
               'zookeeper.connect' => 'localhost:2181',
             },
@@ -177,8 +141,6 @@ describe 'kafka::broker' do
   describe 'kafka::broker::service' do
     context 'with default parameters' do
       it 'works with no errors' do
-        apply_manifest(zookeeper, catch_failures: true)
-
         pp = <<-EOS
           class { 'kafka::broker':
             config => {
@@ -212,8 +174,6 @@ describe 'kafka::broker' do
   describe 'kafka::broker::service' do
     context 'with log4j/jmx parameters' do
       it 'works with no errors' do
-        apply_manifest(zookeeper, catch_failures: true)
-
         pp = <<-EOS
           exec { 'create log dir':
             command => '/bin/mkdir -p /some/path/to/logs',
@@ -239,9 +199,9 @@ describe 'kafka::broker' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9999"' }
+        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote"' }
         it { is_expected.to contain 'export KAFKA_HEAP_OPTS="-Xmx512M -Xmx512M"' }
-        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
+        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/tmp/log4j.properties"' }
       end
 
       describe file('/etc/systemd/system/kafka.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do

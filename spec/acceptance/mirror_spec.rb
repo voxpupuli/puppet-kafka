@@ -3,34 +3,38 @@ require 'spec_helper_acceptance'
 describe 'kafka::mirror' do
   it 'works with no errors' do
     pp = <<-EOS
-      class { 'zookeeper': } ->
       class { 'kafka::mirror':
         consumer_config => {
           'group.id'          => 'kafka-mirror',
-          'zookeeper.connect' => 'localhost:2181',
+          'bootstrap.servers' => 'localhost:9092',
         },
         producer_config => {
           'bootstrap.servers' => 'localhost:9092',
+        },
+        service_config => {
+          'whitelist' => '.*',
         },
       }
     EOS
 
     apply_manifest(pp, catch_failures: true)
-    # apply_manifest(pp, catch_changes: true) TODO currently not working properly
+    apply_manifest(pp, catch_changes: true)
   end
 
   describe 'kafka::mirror::install' do
     context 'with default parameters' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::mirror':
             consumer_config => {
               'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181',
+              'bootstrap.servers' => 'localhost:9092',
             },
             producer_config => {
               'bootstrap.servers' => 'localhost:9092',
+            },
+            service_config => {
+              'whitelist' => '.*',
             },
           }
         EOS
@@ -54,14 +58,14 @@ describe 'kafka::mirror' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.11.0.3') do
+      describe file('/opt/kafka-2.12-2.4.1') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.3') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.12-2.4.1') }
       end
 
       describe file('/opt/kafka/config') do
@@ -82,19 +86,22 @@ describe 'kafka::mirror' do
     context 'with default parameters' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::mirror':
             consumer_config => {
               'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181',
+              'bootstrap.servers' => 'localhost:9092',
             },
             producer_config => {
               'bootstrap.servers' => 'localhost:9092',
+            },
+            service_config => {
+              'whitelist' => '.*',
             },
           }
         EOS
 
         apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
       describe file('/opt/kafka/config/consumer.properties') do
@@ -113,20 +120,23 @@ describe 'kafka::mirror' do
     context 'with custom config_dir' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::mirror':
             consumer_config => {
               'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181',
+              'bootstrap.servers' => 'localhost:9092',
             },
             producer_config => {
               'bootstrap.servers' => 'localhost:9092',
             },
-            config_dir => '/opt/kafka/custom_config'
+            service_config => {
+              'whitelist' => '.*',
+            },
+            config_dir => '/opt/kafka/custom_config',
           }
         EOS
 
         apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
       describe file('/opt/kafka/custom_config/consumer.properties') do
@@ -145,20 +155,23 @@ describe 'kafka::mirror' do
     context 'with specific version' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::mirror':
-            version         => '0.11.0.3',
+            version         => '2.4.0',
             consumer_config => {
               'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181',
+              'bootstrap.servers' => 'localhost:9092',
             },
             producer_config => {
               'bootstrap.servers' => 'localhost:9092',
+            },
+            service_config => {
+              'whitelist' => '.*',
             },
           }
         EOS
 
         apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
       describe file('/opt/kafka/config/consumer.properties') do
@@ -179,34 +192,37 @@ describe 'kafka::mirror' do
     context 'with default parameters' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::mirror':
             consumer_config => {
               'group.id'          => 'kafka-mirror',
-              'zookeeper.connect' => 'localhost:2181',
+              'bootstrap.servers' => 'localhost:9092',
             },
             producer_config => {
               'bootstrap.servers' => 'localhost:9092',
+            },
+            service_config => {
+              'whitelist' => '.*',
             },
           }
         EOS
 
         apply_manifest(pp, catch_failures: true)
+        apply_manifest(pp, catch_changes: true)
       end
 
       describe file('/etc/init.d/kafka-mirror'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'export KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
-        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
+        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991"' }
+        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties"' }
       end
 
       describe file('/etc/systemd/system/kafka-mirror.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'Environment=\'KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
+        it { is_expected.to contain 'Environment=\'KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991\'' }
         it { is_expected.to contain 'Environment=\'KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties\'' }
       end
 
