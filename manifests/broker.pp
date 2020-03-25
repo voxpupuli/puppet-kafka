@@ -148,8 +148,8 @@ class kafka::broker (
   $opts                                      = $kafka::params::broker_opts,
 ) inherits kafka::params {
 
-  class { '::kafka::broker::install': }
-  -> class { '::kafka::broker::config': }
-  -> class { '::kafka::broker::service': }
+  class { 'kafka::broker::install': }
+  -> class { 'kafka::broker::config': }
+  -> class { 'kafka::broker::service': }
   -> Class['kafka::broker']
 }

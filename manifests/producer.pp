@@ -139,8 +139,8 @@ class kafka::producer (
   String $log4j_opts                         = $kafka::params::producer_log4j_opts,
 ) inherits kafka::params {
 
-  class { '::kafka::producer::install': }
-  -> class { '::kafka::producer::config': }
-  -> class { '::kafka::producer::service': }
+  class { 'kafka::producer::install': }
+  -> class { 'kafka::producer::config': }
+  -> class { 'kafka::producer::service': }
   -> Class['kafka::producer']
 }

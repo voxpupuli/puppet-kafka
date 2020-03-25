@@ -13,8 +13,8 @@ class kafka::producer::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  if !defined(Class['::kafka']) {
-    class { '::kafka':
+  if !defined(Class['kafka']) {
+    class { 'kafka':
       version        => $kafka::producer::version,
       scala_version  => $kafka::producer::scala_version,
       install_dir    => $kafka::producer::install_dir,

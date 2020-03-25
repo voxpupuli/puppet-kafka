@@ -13,8 +13,8 @@ class kafka::broker::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  if !defined(Class['::kafka']) {
-    class { '::kafka':
+  if !defined(Class['kafka']) {
+    class { 'kafka':
       version        => $kafka::broker::version,
       scala_version  => $kafka::broker::scala_version,
       install_dir    => $kafka::broker::install_dir,
