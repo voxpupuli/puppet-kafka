@@ -343,12 +343,13 @@ This module only supports Kafka >= 0.9.0.0.
 
 This module is tested on the following platforms:
 
-* CentOS 5
 * CentOS 6
-* Ubuntu 12.04
-* Ubuntu 14.04
+* CentOS 7
+* Ubuntu 16.04
+* Debian 8
+* Debian 9
 
-It is tested with the OSS version of Puppet (>= 4.7.0) only.
+It is tested with the OSS version of Puppet (>= 5.5) only.
 
 ## Development
 

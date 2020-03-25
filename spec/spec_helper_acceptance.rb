@@ -16,9 +16,11 @@ RSpec.configure do |c|
       if host[:platform] =~ %r{el-7-x86_64} && host[:hypervisor] =~ %r{docker}
         on(host, "sed -i '/nodocs/d' /etc/yum.conf")
       end
-
-      write_hiera_config_on(host, ['%<::osfamily>s'])
-      copy_hiera_data_to(host, './spec/acceptance/hieradata/')
+      next unless fact('os.name') == 'Debian' && fact('os.release.major') == '8'
+      on host, 'echo "deb http://archive.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/backports.list'
+      on host, 'echo \'Acquire::Check-Valid-Until "false";\' > /etc/apt/apt.conf.d/check-valid'
+      on host, 'DEBIAN_FRONTEND=noninteractive apt-get -y update'
+      on host, 'DEBIAN_FRONTEND=noninteractive apt-get install -y -t jessie-backports openjdk-8-jdk'
     end
   end
 end

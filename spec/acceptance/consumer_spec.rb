@@ -3,11 +3,10 @@ require 'spec_helper_acceptance'
 describe 'kafka::consumer' do
   it 'works with no errors' do
     pp = <<-EOS
-      class { 'zookeeper': } ->
       class { 'kafka::consumer':
         service_config => {
-          topic     => 'demo',
-          zookeeper => 'localhost:2181',
+          topic            => 'demo',
+          bootstrap-server => 'localhost:9092',
         },
       }
     EOS
@@ -20,11 +19,10 @@ describe 'kafka::consumer' do
     context 'with default parameters' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::consumer':
             service_config => {
-              topic     => 'demo',
-              zookeeper => 'localhost:2181',
+              topic            => 'demo',
+              bootstrap-server => 'localhost:9092',
             },
           }
         EOS
@@ -48,14 +46,14 @@ describe 'kafka::consumer' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
-      describe file('/opt/kafka-2.11-0.11.0.3') do
+      describe file('/opt/kafka-2.12-2.4.1') do
         it { is_expected.to be_directory }
         it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/opt/kafka') do
-        it { is_expected.to be_linked_to('/opt/kafka-2.11-0.11.0.3') }
+        it { is_expected.to be_linked_to('/opt/kafka-2.12-2.4.1') }
       end
 
       describe file('/opt/kafka/config') do
@@ -76,11 +74,10 @@ describe 'kafka::consumer' do
     context 'with default parameters' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::consumer':
             service_config => {
-              topic     => 'demo',
-              zookeeper => 'localhost:2181',
+              topic            => 'demo',
+              bootstrap-server => 'localhost:9092',
             },
           }
         EOS
@@ -100,11 +97,10 @@ describe 'kafka::consumer' do
     context 'with custom config_dir' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::consumer':
             service_config => {
-              topic     => 'demo',
-              zookeeper => 'localhost:2181',
+              topic            => 'demo',
+              bootstrap-server => 'localhost:9092',
             },
             config_dir => '/opt/kafka/custom_config',
           }
@@ -125,11 +121,10 @@ describe 'kafka::consumer' do
     context 'with default parameters' do
       it 'works with no errors' do
         pp = <<-EOS
-          class { 'zookeeper': } ->
           class { 'kafka::consumer':
             service_config => {
-              topic     => 'demo',
-              zookeeper => 'localhost:2181',
+              topic            => 'demo',
+              bootstrap-server => 'localhost:9092',
             },
           }
         EOS
@@ -141,15 +136,15 @@ describe 'kafka::consumer' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'export KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
-        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:$base_dir/../config/log4j.properties"' }
+        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993"' }
+        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties"' }
       end
 
       describe file('/etc/systemd/system/kafka-consumer.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
-        it { is_expected.to contain 'Environment=\'KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false' }
+        it { is_expected.to contain 'Environment=\'KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993\'' }
         it { is_expected.to contain 'Environment=\'KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties\'' }
       end
 
