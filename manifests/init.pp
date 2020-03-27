@@ -98,7 +98,7 @@ class kafka (
 ) inherits kafka::params {
 
   if $install_java {
-    class { '::java':
+    class { 'java':
       distribution => 'jdk',
     }
   }
@@ -139,7 +139,7 @@ class kafka (
 
   if $package_name == undef {
 
-    include ::archive
+    include archive
 
     $mirror_path = $mirror_subpath ? {
       # if mirror_subpath was not changed,

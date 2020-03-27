@@ -140,8 +140,8 @@ class kafka::mirror (
   String $log4j_opts                         = $kafka::params::mirror_log4j_opts,
 ) inherits kafka::params {
 
-  class { '::kafka::mirror::install': }
-  -> class { '::kafka::mirror::config': }
-  -> class { '::kafka::mirror::service': }
+  class { 'kafka::mirror::install': }
+  -> class { 'kafka::mirror::config': }
+  -> class { 'kafka::mirror::service': }
   -> Class['kafka::mirror']
 }
