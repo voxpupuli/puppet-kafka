@@ -25,7 +25,6 @@ group :test do
   gem 'puppet-lint-legacy_facts-check',                             :require => false
   gem 'puppet-lint-anchor-check',                                   :require => false
   gem 'metadata-json-lint',                                         :require => false
-  gem 'redcarpet',                                                  :require => false
   gem 'rubocop', '~> 0.49.1',                                       :require => false
   gem 'rubocop-rspec', '~> 1.15.0',                                 :require => false
   gem 'mocha', '~> 1.4.0',                                          :require => false
