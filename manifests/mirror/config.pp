@@ -15,6 +15,7 @@ class kafka::mirror::config(
   Hash $consumer_config            = $kafka::mirror::consumer_config,
   Hash $producer_config            = $kafka::mirror::producer_config,
   Stdlib::Filemode $config_mode    = $kafka::mirror::config_mode,
+  String $user                     = $kafka::mirror::user,
   String $group                    = $kafka::mirror::group,
 ) {
 
@@ -39,6 +40,7 @@ class kafka::mirror::config(
     service_install => $service_install,
     service_restart => $service_restart,
     config          => $consumer_config,
+    user            => $user,
     group           => $group,
   }
 
@@ -49,6 +51,7 @@ class kafka::mirror::config(
     service_install => $service_install,
     service_restart => $service_restart,
     config          => $producer_config,
+    user            => $user,
     group           => $group,
   }
 }

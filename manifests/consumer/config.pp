@@ -14,6 +14,7 @@ class kafka::consumer::config(
   Boolean $service_restart         = $kafka::consumer::service_restart,
   Hash $config                     = $kafka::consumer::config,
   Stdlib::Filemode $config_mode    = $kafka::consumer::config_mode,
+  String $user                     = $kafka::consumer::user,
   String $group                    = $kafka::consumer::group,
 ) {
 
@@ -26,7 +27,7 @@ class kafka::consumer::config(
   $doctag = 'consumerconfigs'
   file { "${config_dir}/consumer.properties":
     ensure  => present,
-    owner   => 'root',
+    owner   => $user,
     group   => $group,
     mode    => $config_mode,
     content => template('kafka/properties.erb'),

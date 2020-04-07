@@ -71,8 +71,8 @@ describe 'kafka::producer', if: (fact('operatingsystemmajrelease') == '6' && fac
 
       describe file('/opt/kafka/config') do
         it { is_expected.to be_directory }
-        it { is_expected.to be_owned_by 'root' }
-        it { is_expected.to be_grouped_into 'root' }
+        it { is_expected.to be_owned_by 'kafka' }
+        it { is_expected.to be_grouped_into 'kafka' }
       end
 
       describe file('/var/log/kafka') do
@@ -107,7 +107,7 @@ describe 'kafka::producer', if: (fact('operatingsystemmajrelease') == '6' && fac
 
       describe file('/opt/kafka/config/producer.properties') do
         it { is_expected.to be_file }
-        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_owned_by 'kafka' }
         it { is_expected.to be_grouped_into 'kafka' }
       end
     end

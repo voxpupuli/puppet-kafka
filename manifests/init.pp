@@ -123,8 +123,8 @@ class kafka (
 
   file { $config_dir:
     ensure => directory,
-    owner  => 'root',
-    group  => 'root',
+    owner  => $user,
+    group  => $group,
   }
 
   file { $log_dir:
