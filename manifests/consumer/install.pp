@@ -9,9 +9,7 @@
 #
 class kafka::consumer::install {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
 
   if !defined(Class['kafka']) {
     class { 'kafka':

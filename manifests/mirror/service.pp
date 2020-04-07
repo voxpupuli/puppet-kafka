@@ -28,9 +28,7 @@ class kafka::mirror::service(
   String $log4j_opts                         = $kafka::mirror::log4j_opts,
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
 
   if $service_install {
     $env_defaults = {

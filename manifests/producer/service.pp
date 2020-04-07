@@ -26,9 +26,7 @@ class kafka::producer::service(
   Hash $service_config                       = $kafka::producer::service_config,
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
 
   if $service_install {
 

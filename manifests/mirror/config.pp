@@ -18,9 +18,7 @@ class kafka::mirror::config(
   String $group                    = $kafka::mirror::group,
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
 
   if $consumer_config['group.id'] == '' {
     fail('[Consumer] You need to specify a value for group.id')
