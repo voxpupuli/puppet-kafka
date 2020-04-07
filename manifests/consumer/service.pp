@@ -25,9 +25,7 @@ class kafka::consumer::service(
   Hash $service_config                       = $kafka::consumer::service_config,
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
 
   if $service_install {
 

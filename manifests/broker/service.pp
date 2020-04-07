@@ -29,9 +29,7 @@ class kafka::broker::service(
   $opts                                      = $kafka::broker::opts,
 ) {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
 
   if $service_install {
     $env_defaults = {

@@ -17,9 +17,7 @@ class kafka::broker::config(
   String $group                    = $kafka::broker::group,
 ) {
 
-  if ($caller_module_name != $module_name) {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  assert_private()
 
   if ($service_install and $service_restart) {
     $config_notify = Service[$service_name]
