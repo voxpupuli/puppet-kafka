@@ -14,6 +14,7 @@ class kafka::broker::config(
   Boolean $service_restart         = $kafka::broker::service_restart,
   Hash $config                     = $kafka::broker::config,
   Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
+  String $user                     = $kafka::broker::user,
   String $group                    = $kafka::broker::group,
 ) {
 
@@ -28,7 +29,7 @@ class kafka::broker::config(
   $doctag = 'brokerconfigs'
   file { "${config_dir}/server.properties":
     ensure  => present,
-    owner   => 'root',
+    owner   => $user,
     group   => $group,
     mode    => $config_mode,
     content => template('kafka/properties.erb'),
