@@ -1,11 +1,7 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::producer::service
+# @summary
+#   This class handles the Kafka (producer) service.
 #
-# This private class is meant to be called from `kafka::producer`.
-# It manages the kafka-producer service
+# @api private
 #
 class kafka::producer::service(
   String $user                               = $kafka::producer::user,
@@ -29,7 +25,6 @@ class kafka::producer::service(
   assert_private()
 
   if $service_install {
-
     if $service_config['broker-list'] == '' {
       fail('[Producer] You need to specify a value for broker-list')
     }

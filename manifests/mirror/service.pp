@@ -1,11 +1,7 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::mirror::service
+# @summary
+#   This class handles the Kafka (mirror) service.
 #
-# This private class is meant to be called from `kafka::mirror`.
-# It manages the kafka-mirror service
+# @api private
 #
 class kafka::mirror::service(
   String $user                               = $kafka::mirror::user,
@@ -54,7 +50,6 @@ class kafka::mirror::service(
       File["/etc/systemd/system/${service_name}.service"]
       ~> Exec['systemctl-daemon-reload']
       -> Service[$service_name]
-
     } else {
       file { "/etc/init.d/${service_name}":
         ensure  => file,

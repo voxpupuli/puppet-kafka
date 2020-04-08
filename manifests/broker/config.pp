@@ -1,11 +1,7 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::broker::config
+# @summary
+#   This class handles the Kafka (broker) config.
 #
-# This private class is meant to be called from `kafka::broker`.
-# It manages the broker config files
+# @api private
 #
 class kafka::broker::config(
   Stdlib::Absolutepath $config_dir = $kafka::broker::config_dir,

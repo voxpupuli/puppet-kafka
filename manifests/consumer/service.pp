@@ -1,11 +1,7 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::consumer::service
+# @summary
+#   This class handles the Kafka (consumer) service.
 #
-# This private class is meant to be called from `kafka::consumer`.
-# It manages the kafka-consumer service
+# @api private
 #
 class kafka::consumer::service(
   String $user                               = $kafka::consumer::user,
@@ -28,7 +24,6 @@ class kafka::consumer::service(
   assert_private()
 
   if $service_install {
-
     if $service_config['topic'] == '' {
       fail('[Consumer] You need to specify a value for topic')
     }
@@ -58,7 +53,6 @@ class kafka::consumer::service(
       File["/etc/systemd/system/${service_name}.service"]
       ~> Exec['systemctl-daemon-reload']
       -> Service[$service_name]
-
     } else {
       file { "/etc/init.d/${service_name}":
         ensure  => file,

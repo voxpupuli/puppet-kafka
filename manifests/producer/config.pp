@@ -1,11 +1,5 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::producer::config
-#
-# This private class is meant to be called from `kafka::producer`.
-# It manages the producer config files
+# @summary
+#   This class handles the Kafka (producer) config.
 #
 class kafka::producer::config(
   Stdlib::Absolutepath $config_dir = $kafka::producer::config_dir,

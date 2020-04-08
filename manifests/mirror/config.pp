@@ -1,11 +1,7 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::mirror::config
+# @summary
+#   This class handles the Kafka (mirror) config.
 #
-# This private class is meant to be called from `kafka::mirror`.
-# It manages the mirror-maker config files
+# @api private
 #
 class kafka::mirror::config(
   Stdlib::Absolutepath $config_dir = $kafka::mirror::config_dir,

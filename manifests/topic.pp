@@ -1,10 +1,35 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Define: kafka::topic
+# @summary
+#   This defined type handles the creation of Kafka topics.
 #
-# This defined type is used to manage the creation of kafka topics.
+# @example Basic usage
+#   kafka::topic { 'test':
+#     ensure             => present,
+#     zookeeper          => 'localhost:2181',
+#     replication_factor => 1,
+#     partitions         => 1,
+#   }
+#
+# @param ensure
+#   Should the topic be created.
+#
+# @param zookeeper
+#   The connection string for the ZooKeeper connection in the form host:port.
+#   Multiple hosts can be given to allow fail-over.
+#
+# @param replication_factor
+#   The replication factor for each partition in the topic being created. If
+#   not supplied, defaults to the cluster default.
+#
+# @param partitions
+#   The number of partitions for the topic being created or altered. If not
+#   supplied for create, defaults to the cluster default.
+#
+# @param bin_dir
+#   The directory where the file kafka-topics.sh is located.
+#
+# @param config
+#   A topic configuration override for the topic being created or altered.
+#   See the Kafka documentation for full details on the topic configs.
 #
 define kafka::topic(
   String                        $ensure             = '',

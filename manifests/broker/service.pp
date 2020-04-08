@@ -1,11 +1,7 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::broker::service
+# @summary
+#   This class handles the Kafka (broker) service.
 #
-# This private class is meant to be called from `kafka::broker`.
-# It manages the kafka service
+# @api private
 #
 class kafka::broker::service(
   String $user                               = $kafka::broker::user,
@@ -57,7 +53,6 @@ class kafka::broker::service(
       File["/etc/systemd/system/${service_name}.service"]
       ~> Exec['systemctl-daemon-reload']
       -> Service[$service_name]
-
     } else {
       file { "/etc/init.d/${service_name}":
         ensure  => file,

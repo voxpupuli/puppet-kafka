@@ -1,11 +1,5 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::consumer::config
-#
-# This private class is meant to be called from `kafka::consumer`.
-# It manages the consumer config files
+# @summary
+#   This class handles the Kafka (consumer) config.
 #
 class kafka::consumer::config(
   Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
