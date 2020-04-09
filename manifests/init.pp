@@ -13,7 +13,7 @@
 #
 # === Parameters
 #
-# [*version*]
+# [*kafka_version*]
 # The version of kafka that should be installed.
 #
 # [*scala_version*]
@@ -71,7 +71,7 @@
 #
 #
 class kafka (
-  String $version                   = $kafka::params::version,
+  String $kafka_version             = $kafka::params::kafka_version,
   String $scala_version             = $kafka::params::scala_version,
   Stdlib::Absolutepath $install_dir = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
@@ -144,12 +144,12 @@ class kafka (
     $mirror_path = $mirror_subpath ? {
       # if mirror_subpath was not changed,
       # we adapt it for the version
-      $kafka::params::mirror_subpath => "kafka/${version}",
+      $kafka::params::mirror_subpath => "kafka/${kafka_version}",
       # else, we just take whatever was supplied:
       default                        => $mirror_subpath,
     }
 
-    $basefilename = "kafka_${scala_version}-${version}.tgz"
+    $basefilename = "kafka_${scala_version}-${kafka_version}.tgz"
     $package_url = "${mirror_url}${mirror_path}/${basefilename}"
 
     $source = $mirror_url ?{
@@ -160,7 +160,7 @@ class kafka (
     $install_directory = $install_dir ? {
       # if install_dir was not changed,
       # we adapt it for the scala_version and the version
-      $kafka::params::install_dir => "/opt/kafka-${scala_version}-${version}",
+      $kafka::params::install_dir => "/opt/kafka-${scala_version}-${kafka_version}",
       # else, we just take whatever was supplied:
       default                     => $install_dir,
     }

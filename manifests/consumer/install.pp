@@ -13,7 +13,7 @@ class kafka::consumer::install {
 
   if !defined(Class['kafka']) {
     class { 'kafka':
-      version        => $kafka::consumer::version,
+      kafka_version  => $kafka::consumer::kafka_version,
       scala_version  => $kafka::consumer::scala_version,
       install_dir    => $kafka::consumer::install_dir,
       mirror_url     => $kafka::consumer::mirror_url,

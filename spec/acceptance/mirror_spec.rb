@@ -156,7 +156,7 @@ describe 'kafka::mirror' do
       it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka::mirror':
-            version         => '2.4.0',
+            kafka_version   => '2.4.0',
             consumer_config => {
               'group.id'          => 'kafka-mirror',
               'bootstrap.servers' => 'localhost:9092',

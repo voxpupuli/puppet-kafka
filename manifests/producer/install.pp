@@ -13,7 +13,7 @@ class kafka::producer::install {
 
   if !defined(Class['kafka']) {
     class { 'kafka':
-      version        => $kafka::producer::version,
+      kafka_version  => $kafka::producer::kafka_version,
       scala_version  => $kafka::producer::scala_version,
       install_dir    => $kafka::producer::install_dir,
       mirror_url     => $kafka::producer::mirror_url,

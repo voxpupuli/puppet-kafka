@@ -13,7 +13,7 @@ class kafka::broker::install {
 
   if !defined(Class['kafka']) {
     class { 'kafka':
-      version        => $kafka::broker::version,
+      kafka_version  => $kafka::broker::kafka_version,
       scala_version  => $kafka::broker::scala_version,
       install_dir    => $kafka::broker::install_dir,
       mirror_url     => $kafka::broker::mirror_url,

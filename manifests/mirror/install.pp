@@ -13,7 +13,7 @@ class kafka::mirror::install {
 
   if !defined(Class['kafka']) {
     class { 'kafka':
-      version        => $kafka::mirror::version,
+      kafka_version  => $kafka::mirror::kafka_version,
       scala_version  => $kafka::mirror::scala_version,
       install_dir    => $kafka::mirror::install_dir,
       mirror_url     => $kafka::mirror::mirror_url,

@@ -13,7 +13,7 @@
 #
 # === Parameters
 #
-# [*version*]
+# [*kafka_version*]
 # The version of kafka that should be installed.
 #
 # [*scala_version*]
@@ -107,7 +107,7 @@
 #
 class kafka::producer (
   $input,
-  String $version                            = $kafka::params::version,
+  String $kafka_version                      = $kafka::params::kafka_version,
   String $scala_version                      = $kafka::params::scala_version,
   Stdlib::Absolutepath $install_dir          = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url                = $kafka::params::mirror_url,

@@ -35,7 +35,7 @@ describe 'kafka', type: :class do
       context 'all (compatible) parameters' do
         let :params do
           {
-            version: '0.10.0.1',
+            kafka_version: '0.10.0.1',
             scala_version: '2.13',
             install_dir: '/usr/local/kafka',
             user_id: 9092,
