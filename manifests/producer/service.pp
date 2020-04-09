@@ -9,7 +9,7 @@
 #
 class kafka::producer::service(
   String $user_name                          = $kafka::producer::user_name,
-  String $group                              = $kafka::producer::group,
+  String $group_name                         = $kafka::producer::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::producer::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::producer::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::producer::bin_dir,

@@ -16,7 +16,7 @@ class kafka::mirror::config(
   Hash $producer_config            = $kafka::mirror::producer_config,
   Stdlib::Filemode $config_mode    = $kafka::mirror::config_mode,
   String $user_name                = $kafka::mirror::user_name,
-  String $group                    = $kafka::mirror::group,
+  String $group_name               = $kafka::mirror::group_name,
 ) {
 
   assert_private()
@@ -39,7 +39,7 @@ class kafka::mirror::config(
     service_restart => $service_restart,
     config          => $consumer_config,
     user_name       => $user_name,
-    group           => $group,
+    group_name      => $group_name,
   }
 
   class { 'kafka::producer::config':
@@ -50,6 +50,6 @@ class kafka::mirror::config(
     service_restart => $service_restart,
     config          => $producer_config,
     user_name       => $user_name,
-    group           => $group,
+    group_name      => $group_name,
   }
 }

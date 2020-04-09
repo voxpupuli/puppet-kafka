@@ -9,7 +9,7 @@
 #
 class kafka::mirror::service(
   String $user_name                          = $kafka::mirror::user_name,
-  String $group                              = $kafka::mirror::group,
+  String $group_name                         = $kafka::mirror::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::mirror::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::mirror::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::mirror::bin_dir,

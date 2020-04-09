@@ -40,7 +40,7 @@
 # [*user_name*]
 # User to run kafka as.
 #
-# [*group*]
+# [*group_name*]
 # Group to run kafka as.
 #
 # [*user_id*]
@@ -85,7 +85,7 @@ class kafka (
   Optional[String] $proxy_type      = $kafka::params::proxy_type,
   String $package_ensure            = $kafka::params::package_ensure,
   String $user_name                 = $kafka::params::user_name,
-  String $group                     = $kafka::params::group,
+  String $group_name                = $kafka::params::group_name,
   Boolean $system_user              = $kafka::params::system_user,
   Boolean $system_group             = $kafka::params::system_group,
   Optional[Integer] $user_id        = $kafka::params::user_id,
@@ -104,7 +104,7 @@ class kafka (
   }
 
   if $manage_group {
-    group { $group:
+    group { $group_name:
       ensure => present,
       gid    => $group_id,
       system => $system_group,
@@ -115,7 +115,7 @@ class kafka (
     user { $user_name:
       ensure  => present,
       shell   => '/bin/bash',
-      require => Group[$group],
+      require => Group[$group_name],
       uid     => $user_id,
       system  => $system_user,
     }
@@ -124,15 +124,15 @@ class kafka (
   file { $config_dir:
     ensure => directory,
     owner  => $user_name,
-    group  => $group,
+    group  => $group_name,
   }
 
   file { $log_dir:
     ensure  => directory,
     owner   => $user_name,
-    group   => $group,
+    group   => $group_name,
     require => [
-      Group[$group],
+      Group[$group_name],
       User[$user_name],
     ],
   }
@@ -168,9 +168,9 @@ class kafka (
     file { $package_dir:
       ensure  => directory,
       owner   => $user_name,
-      group   => $group,
+      group   => $group_name,
       require => [
-        Group[$group],
+        Group[$group_name],
         User[$user_name],
       ],
     }
@@ -178,10 +178,10 @@ class kafka (
     file { $install_directory:
       ensure  => directory,
       owner   => $user_name,
-      group   => $group,
+      group   => $group_name,
       mode    => $install_mode,
       require => [
-        Group[$group],
+        Group[$group_name],
         User[$user_name],
       ],
     }
@@ -209,11 +209,11 @@ class kafka (
       proxy_server    => $final_proxy_server,
       proxy_type      => $proxy_type,
       user            => $user_name,
-      group           => $group,
+      group           => $group_name,
       require         => [
         File[$package_dir],
         File[$install_directory],
-        Group[$group],
+        Group[$group_name],
         User[$user_name],
       ],
       before          => File[$config_dir],

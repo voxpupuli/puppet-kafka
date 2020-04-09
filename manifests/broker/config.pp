@@ -15,7 +15,7 @@ class kafka::broker::config(
   Hash $config                     = $kafka::broker::config,
   Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
   String $user_name                = $kafka::broker::user_name,
-  String $group                    = $kafka::broker::group,
+  String $group_name               = $kafka::broker::group_name,
 ) {
 
   assert_private()
@@ -30,7 +30,7 @@ class kafka::broker::config(
   file { "${config_dir}/server.properties":
     ensure  => present,
     owner   => $user_name,
-    group   => $group,
+    group   => $group_name,
     mode    => $config_mode,
     content => template('kafka/properties.erb'),
     notify  => $config_notify,

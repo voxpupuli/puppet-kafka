@@ -40,7 +40,7 @@
 # [*user_name*]
 # User to run kafka as.
 #
-# [*group*]
+# [*group_name*]
 # Group to run kafka as.
 #
 # [*user_id*]
@@ -116,7 +116,7 @@ class kafka::producer (
   Optional[String] $package_name             = $kafka::params::package_name,
   String $package_ensure                     = $kafka::params::package_ensure,
   String $user_name                          = $kafka::params::user_name,
-  String $group                              = $kafka::params::group,
+  String $group_name                         = $kafka::params::group_name,
   Optional[Integer] $user_id                 = $kafka::params::user_id,
   Optional[Integer] $group_id                = $kafka::params::group_id,
   Boolean $manage_user                       = $kafka::params::manage_user,

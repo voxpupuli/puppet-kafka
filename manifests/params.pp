@@ -31,7 +31,7 @@ class kafka::params {
   $proxy_type     = undef
   $package_ensure = 'present'
   $user_name      = 'kafka'
-  $group          = 'kafka'
+  $group_name     = 'kafka'
   $user_id        = undef
   $group_id       = undef
   $system_user    = false

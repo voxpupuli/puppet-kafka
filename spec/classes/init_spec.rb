@@ -41,7 +41,7 @@ describe 'kafka', type: :class do
             user_id: 9092,
             group_id: 9092,
             user_name: 'mykafka',
-            group: 'mykafka',
+            group_name: 'mykafka',
             install_java: false,
             config_dir: '/opt/kafka/custom_config',
             log_dir: '/var/log/custom_kafka'

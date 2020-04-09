@@ -9,7 +9,7 @@
 #
 class kafka::broker::service(
   String $user_name                          = $kafka::broker::user_name,
-  String $group                              = $kafka::broker::group,
+  String $group_name                         = $kafka::broker::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::broker::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::broker::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::broker::bin_dir,

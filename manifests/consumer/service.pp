@@ -9,7 +9,7 @@
 #
 class kafka::consumer::service(
   String $user_name                          = $kafka::consumer::user_name,
-  String $group                              = $kafka::consumer::group,
+  String $group_name                         = $kafka::consumer::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::consumer::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::consumer::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::consumer::bin_dir,

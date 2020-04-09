@@ -22,7 +22,7 @@ class kafka::consumer::install {
       package_name   => $kafka::consumer::package_name,
       package_ensure => $kafka::consumer::package_ensure,
       user_name      => $kafka::consumer::user_name,
-      group          => $kafka::consumer::group,
+      group_name     => $kafka::consumer::group_name,
       user_id        => $kafka::consumer::user_id,
       group_id       => $kafka::consumer::group_id,
       manage_user    => $kafka::consumer::manage_user,
