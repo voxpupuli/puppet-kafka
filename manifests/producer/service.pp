@@ -14,7 +14,7 @@ class kafka::producer::service(
   Stdlib::Absolutepath $log_dir              = $kafka::producer::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::producer::bin_dir,
   String $service_name                       = $kafka::producer::service_name,
-  Boolean $service_install                   = $kafka::producer::service_install,
+  Boolean $manage_service                    = $kafka::producer::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::producer::service_ensure,
   Array[String] $service_requires            = $kafka::producer::service_requires,
   Optional[String] $limit_nofile             = $kafka::producer::limit_nofile,
@@ -28,7 +28,7 @@ class kafka::producer::service(
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
 
     if $service_config['broker-list'] == '' {
       fail('[Producer] You need to specify a value for broker-list')

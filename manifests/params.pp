@@ -41,7 +41,7 @@ class kafka::params {
   $config_mode    = '0644'
   $install_mode   = '0755'
 
-  $service_install = true
+  $manage_service = true
   $service_ensure = 'running'
   $service_restart = true
   $service_requires = $facts['os']['family'] ? {

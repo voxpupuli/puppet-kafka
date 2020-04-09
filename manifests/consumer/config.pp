@@ -10,7 +10,7 @@
 class kafka::consumer::config(
   Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
   String $service_name             = $kafka::consumer::service_name,
-  Boolean $service_install         = $kafka::consumer::service_install,
+  Boolean $manage_service          = $kafka::consumer::manage_service,
   Boolean $service_restart         = $kafka::consumer::service_restart,
   Hash $config                     = $kafka::consumer::config,
   Stdlib::Filemode $config_mode    = $kafka::consumer::config_mode,
@@ -18,7 +18,7 @@ class kafka::consumer::config(
   String $group_name               = $kafka::consumer::group_name,
 ) {
 
-  if ($service_install and $service_restart) {
+  if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
     $config_notify = undef

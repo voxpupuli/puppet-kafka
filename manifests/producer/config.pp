@@ -10,7 +10,7 @@
 class kafka::producer::config(
   Stdlib::Absolutepath $config_dir = $kafka::producer::config_dir,
   String $service_name             = $kafka::producer::service_name,
-  Boolean $service_install         = $kafka::producer::service_install,
+  Boolean $manage_service          = $kafka::producer::manage_service,
   Boolean $service_restart         = $kafka::producer::service_restart,
   Hash $config                     = $kafka::producer::config,
   Stdlib::Filemode $config_mode    = $kafka::producer::config_mode,
@@ -18,7 +18,7 @@ class kafka::producer::config(
   String $group_name               = $kafka::producer::group_name,
 ) {
 
-  if ($service_install and $service_restart) {
+  if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
     $config_notify = undef

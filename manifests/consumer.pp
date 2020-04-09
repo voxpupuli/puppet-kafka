@@ -70,7 +70,7 @@
 # [*service_name*]
 # Set the name of the service.
 #
-# [*service_install*]
+# [*manage_service*]
 # Install the init.d or systemd service.
 #
 # [*service_ensure*]
@@ -124,7 +124,7 @@ class kafka::consumer (
   Stdlib::Absolutepath $log_dir              = $kafka::params::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::params::bin_dir,
   String $service_name                       = 'kafka-consumer',
-  Boolean $service_install                   = $kafka::params::service_install,
+  Boolean $manage_service                    = $kafka::params::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::params::service_ensure,
   Boolean $service_restart                   = $kafka::params::service_restart,
   Array[String] $service_requires            = $kafka::params::service_requires,

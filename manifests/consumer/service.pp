@@ -14,7 +14,7 @@ class kafka::consumer::service(
   Stdlib::Absolutepath $log_dir              = $kafka::consumer::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::consumer::bin_dir,
   String $service_name                       = $kafka::consumer::service_name,
-  Boolean $service_install                   = $kafka::consumer::service_install,
+  Boolean $manage_service                    = $kafka::consumer::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::consumer::service_ensure,
   Array[String] $service_requires            = $kafka::consumer::service_requires,
   Optional[String] $limit_nofile             = $kafka::consumer::limit_nofile,
@@ -27,7 +27,7 @@ class kafka::consumer::service(
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
 
     if $service_config['topic'] == '' {
       fail('[Consumer] You need to specify a value for topic')

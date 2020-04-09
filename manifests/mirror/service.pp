@@ -14,7 +14,7 @@ class kafka::mirror::service(
   Stdlib::Absolutepath $log_dir              = $kafka::mirror::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::mirror::bin_dir,
   String $service_name                       = $kafka::mirror::service_name,
-  Boolean $service_install                   = $kafka::mirror::service_install,
+  Boolean $manage_service                    = $kafka::mirror::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::mirror::service_ensure,
   Array[String] $service_requires            = $kafka::mirror::service_requires,
   Optional[String] $limit_nofile             = $kafka::mirror::limit_nofile,
@@ -30,7 +30,7 @@ class kafka::mirror::service(
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
     $env_defaults = {
       'KAFKA_HEAP_OPTS'  => $heap_opts,
       'KAFKA_JMX_OPTS'   => $jmx_opts,

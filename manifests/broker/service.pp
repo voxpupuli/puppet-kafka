@@ -14,7 +14,7 @@ class kafka::broker::service(
   Stdlib::Absolutepath $log_dir              = $kafka::broker::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::broker::bin_dir,
   String $service_name                       = $kafka::broker::service_name,
-  Boolean $service_install                   = $kafka::broker::service_install,
+  Boolean $manage_service                    = $kafka::broker::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   Array[String] $service_requires            = $kafka::broker::service_requires,
   Optional[String] $limit_nofile             = $kafka::broker::limit_nofile,
@@ -31,7 +31,7 @@ class kafka::broker::service(
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
     $env_defaults = {
       'KAFKA_HEAP_OPTS'  => $heap_opts,
       'KAFKA_JMX_OPTS'   => $jmx_opts,

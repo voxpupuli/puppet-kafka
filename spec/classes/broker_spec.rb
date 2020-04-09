@@ -44,9 +44,9 @@ describe 'kafka::broker', type: :class do
     end
 
     describe 'kafka::broker::service' do
-      context 'service_install false' do
+      context 'manage_service false' do
         let :params do
-          common_params.merge(service_install: false)
+          common_params.merge(manage_service: false)
         end
 
         it { is_expected.not_to contain_file('/etc/init.d/kafka') }
@@ -88,9 +88,9 @@ describe 'kafka::broker', type: :class do
     end
 
     describe 'kafka::broker::service' do
-      context 'service_install false' do
+      context 'manage_service false' do
         let :params do
-          common_params.merge(service_install: false)
+          common_params.merge(manage_service: false)
         end
 
         it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service') }
