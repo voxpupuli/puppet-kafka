@@ -22,7 +22,7 @@ class kafka::params {
   $log_dir        = '/var/log/kafka'
   $mirror_url     = 'https://www.apache.org/dyn/closer.lua?action=download&filename='
   $mirror_subpath = "kafka/${kafka_version}"
-  $install_java   = false
+  $manage_java    = false
   $package_dir    = '/var/tmp/kafka'
   $package_name   = undef
   $proxy_server   = undef

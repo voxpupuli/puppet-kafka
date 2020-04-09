@@ -17,7 +17,7 @@ class kafka::mirror::install {
       scala_version  => $kafka::mirror::scala_version,
       install_dir    => $kafka::mirror::install_dir,
       mirror_url     => $kafka::mirror::mirror_url,
-      install_java   => $kafka::mirror::install_java,
+      manage_java    => $kafka::mirror::manage_java,
       package_dir    => $kafka::mirror::package_dir,
       package_name   => $kafka::mirror::package_name,
       package_ensure => $kafka::mirror::package_ensure,

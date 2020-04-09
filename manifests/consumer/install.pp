@@ -17,7 +17,7 @@ class kafka::consumer::install {
       scala_version  => $kafka::consumer::scala_version,
       install_dir    => $kafka::consumer::install_dir,
       mirror_url     => $kafka::consumer::mirror_url,
-      install_java   => $kafka::consumer::install_java,
+      manage_java    => $kafka::consumer::manage_java,
       package_dir    => $kafka::consumer::package_dir,
       package_name   => $kafka::consumer::package_name,
       package_ensure => $kafka::consumer::package_ensure,

@@ -17,7 +17,7 @@ class kafka::producer::install {
       scala_version  => $kafka::producer::scala_version,
       install_dir    => $kafka::producer::install_dir,
       mirror_url     => $kafka::producer::mirror_url,
-      install_java   => $kafka::producer::install_java,
+      manage_java    => $kafka::producer::manage_java,
       package_dir    => $kafka::producer::package_dir,
       package_name   => $kafka::producer::package_name,
       package_ensure => $kafka::producer::package_ensure,

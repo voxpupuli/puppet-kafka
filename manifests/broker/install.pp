@@ -17,7 +17,7 @@ class kafka::broker::install {
       scala_version  => $kafka::broker::scala_version,
       install_dir    => $kafka::broker::install_dir,
       mirror_url     => $kafka::broker::mirror_url,
-      install_java   => $kafka::broker::install_java,
+      manage_java    => $kafka::broker::manage_java,
       package_dir    => $kafka::broker::package_dir,
       package_name   => $kafka::broker::package_name,
       package_ensure => $kafka::broker::package_ensure,

@@ -25,7 +25,7 @@
 # [*mirror_url*]
 # The url where the kafka is downloaded from.
 #
-# [*install_java*]
+# [*manage_java*]
 # Install java if it's not already installed.
 #
 # [*package_dir*]
@@ -111,7 +111,7 @@ class kafka::producer (
   String $scala_version                      = $kafka::params::scala_version,
   Stdlib::Absolutepath $install_dir          = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url                = $kafka::params::mirror_url,
-  Boolean $install_java                      = $kafka::params::install_java,
+  Boolean $manage_java                       = $kafka::params::manage_java,
   Stdlib::Absolutepath $package_dir          = $kafka::params::package_dir,
   Optional[String] $package_name             = $kafka::params::package_name,
   String $package_ensure                     = $kafka::params::package_ensure,
