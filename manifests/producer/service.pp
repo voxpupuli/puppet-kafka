@@ -43,7 +43,7 @@ class kafka::producer::service(
     }
     $environment = deep_merge($env_defaults, $env)
 
-    if $::service_provider == 'systemd' {
+    if $facts['service_provider'] == 'systemd' {
       fail('Console Producer is not supported on systemd, because the stdin of the process cannot be redirected')
     } else {
       file { "/etc/init.d/${service_name}":

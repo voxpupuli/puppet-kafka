@@ -41,7 +41,7 @@ class kafka::broker::service(
     }
     $environment = deep_merge($env_defaults, $env)
 
-    if $::service_provider == 'systemd' {
+    if $facts['service_provider'] == 'systemd' {
       include systemd
 
       file { "/etc/systemd/system/${service_name}.service":
