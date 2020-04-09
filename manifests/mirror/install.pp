@@ -21,7 +21,7 @@ class kafka::mirror::install {
       package_dir    => $kafka::mirror::package_dir,
       package_name   => $kafka::mirror::package_name,
       package_ensure => $kafka::mirror::package_ensure,
-      user           => $kafka::mirror::user,
+      user_name      => $kafka::mirror::user_name,
       group          => $kafka::mirror::group,
       user_id        => $kafka::mirror::user_id,
       group_id       => $kafka::mirror::group_id,

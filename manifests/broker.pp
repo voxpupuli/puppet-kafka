@@ -37,7 +37,7 @@
 # [*package_ensure*]
 # Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
 #
-# [*user*]
+# [*user_name*]
 # User to run kafka as.
 #
 # [*group*]
@@ -120,7 +120,7 @@ class kafka::broker (
   Stdlib::Absolutepath $package_dir          = $kafka::params::package_dir,
   Optional[String] $package_name             = $kafka::params::package_name,
   String $package_ensure                     = $kafka::params::package_ensure,
-  String $user                               = $kafka::params::user,
+  String $user_name                          = $kafka::params::user_name,
   String $group                              = $kafka::params::group,
   Optional[Integer] $user_id                 = $kafka::params::user_id,
   Optional[Integer] $group_id                = $kafka::params::group_id,

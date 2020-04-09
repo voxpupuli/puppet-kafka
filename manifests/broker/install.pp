@@ -21,7 +21,7 @@ class kafka::broker::install {
       package_dir    => $kafka::broker::package_dir,
       package_name   => $kafka::broker::package_name,
       package_ensure => $kafka::broker::package_ensure,
-      user           => $kafka::broker::user,
+      user_name      => $kafka::broker::user_name,
       group          => $kafka::broker::group,
       user_id        => $kafka::broker::user_id,
       group_id       => $kafka::broker::group_id,

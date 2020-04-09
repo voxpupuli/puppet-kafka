@@ -8,7 +8,7 @@
 # It manages the kafka-mirror service
 #
 class kafka::mirror::service(
-  String $user                               = $kafka::mirror::user,
+  String $user_name                          = $kafka::mirror::user_name,
   String $group                              = $kafka::mirror::group,
   Stdlib::Absolutepath $config_dir           = $kafka::mirror::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::mirror::log_dir,

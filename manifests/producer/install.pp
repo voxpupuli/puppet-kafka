@@ -21,7 +21,7 @@ class kafka::producer::install {
       package_dir    => $kafka::producer::package_dir,
       package_name   => $kafka::producer::package_name,
       package_ensure => $kafka::producer::package_ensure,
-      user           => $kafka::producer::user,
+      user_name      => $kafka::producer::user_name,
       group          => $kafka::producer::group,
       user_id        => $kafka::producer::user_id,
       group_id       => $kafka::producer::group_id,

@@ -8,7 +8,7 @@
 # It manages the kafka service
 #
 class kafka::broker::service(
-  String $user                               = $kafka::broker::user,
+  String $user_name                          = $kafka::broker::user_name,
   String $group                              = $kafka::broker::group,
   Stdlib::Absolutepath $config_dir           = $kafka::broker::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::broker::log_dir,

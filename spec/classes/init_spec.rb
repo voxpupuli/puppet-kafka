@@ -40,7 +40,7 @@ describe 'kafka', type: :class do
             install_dir: '/usr/local/kafka',
             user_id: 9092,
             group_id: 9092,
-            user: 'mykafka',
+            user_name: 'mykafka',
             group: 'mykafka',
             install_java: false,
             config_dir: '/opt/kafka/custom_config',

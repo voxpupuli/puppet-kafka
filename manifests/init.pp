@@ -37,7 +37,7 @@
 # [*package_ensure*]
 # Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
 #
-# [*user*]
+# [*user_name*]
 # User to run kafka as.
 #
 # [*group*]
@@ -84,7 +84,7 @@ class kafka (
   Optional[String] $proxy_host      = $kafka::params::proxy_host,
   Optional[String] $proxy_type      = $kafka::params::proxy_type,
   String $package_ensure            = $kafka::params::package_ensure,
-  String $user                      = $kafka::params::user,
+  String $user_name                 = $kafka::params::user_name,
   String $group                     = $kafka::params::group,
   Boolean $system_user              = $kafka::params::system_user,
   Boolean $system_group             = $kafka::params::system_group,
@@ -112,7 +112,7 @@ class kafka (
   }
 
   if $manage_user {
-    user { $user:
+    user { $user_name:
       ensure  => present,
       shell   => '/bin/bash',
       require => Group[$group],
@@ -123,17 +123,17 @@ class kafka (
 
   file { $config_dir:
     ensure => directory,
-    owner  => $user,
+    owner  => $user_name,
     group  => $group,
   }
 
   file { $log_dir:
     ensure  => directory,
-    owner   => $user,
+    owner   => $user_name,
     group   => $group,
     require => [
       Group[$group],
-      User[$user],
+      User[$user_name],
     ],
   }
 
@@ -167,22 +167,22 @@ class kafka (
 
     file { $package_dir:
       ensure  => directory,
-      owner   => $user,
+      owner   => $user_name,
       group   => $group,
       require => [
         Group[$group],
-        User[$user],
+        User[$user_name],
       ],
     }
 
     file { $install_directory:
       ensure  => directory,
-      owner   => $user,
+      owner   => $user_name,
       group   => $group,
       mode    => $install_mode,
       require => [
         Group[$group],
-        User[$user],
+        User[$user_name],
       ],
     }
 
@@ -208,13 +208,13 @@ class kafka (
       cleanup         => true,
       proxy_server    => $final_proxy_server,
       proxy_type      => $proxy_type,
-      user            => $user,
+      user            => $user_name,
       group           => $group,
       require         => [
         File[$package_dir],
         File[$install_directory],
         Group[$group],
-        User[$user],
+        User[$user_name],
       ],
       before          => File[$config_dir],
     }

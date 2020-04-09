@@ -7,7 +7,7 @@ Wants=<%= @service_requires.join(' ') %>
 <%- end -%>
 
 [Service]
-User=<%= @user %>
+User=<%= @user_name %>
 Group=<%= @group %>
 SyslogIdentifier=<%= @service_name %>
 <% @environment.sort.map do |k,v| -%>

@@ -8,7 +8,7 @@
 # It manages the kafka-consumer service
 #
 class kafka::consumer::service(
-  String $user                               = $kafka::consumer::user,
+  String $user_name                          = $kafka::consumer::user_name,
   String $group                              = $kafka::consumer::group,
   Stdlib::Absolutepath $config_dir           = $kafka::consumer::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::consumer::log_dir,

@@ -8,7 +8,7 @@
 # It manages the kafka-producer service
 #
 class kafka::producer::service(
-  String $user                               = $kafka::producer::user,
+  String $user_name                          = $kafka::producer::user_name,
   String $group                              = $kafka::producer::group,
   Stdlib::Absolutepath $config_dir           = $kafka::producer::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::producer::log_dir,
