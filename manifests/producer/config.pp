@@ -8,14 +8,14 @@
 # It manages the producer config files
 #
 class kafka::producer::config(
-  Stdlib::Absolutepath $config_dir = $kafka::producer::config_dir,
-  String $service_name             = $kafka::producer::service_name,
   Boolean $manage_service          = $kafka::producer::manage_service,
+  String $service_name             = $kafka::producer::service_name,
   Boolean $service_restart         = $kafka::producer::service_restart,
   Hash $config                     = $kafka::producer::config,
-  Stdlib::Filemode $config_mode    = $kafka::producer::config_mode,
+  Stdlib::Absolutepath $config_dir = $kafka::producer::config_dir,
   String $user_name                = $kafka::producer::user_name,
   String $group_name               = $kafka::producer::group_name,
+  Stdlib::Filemode $config_mode    = $kafka::producer::config_mode,
 ) {
 
   if ($manage_service and $service_restart) {

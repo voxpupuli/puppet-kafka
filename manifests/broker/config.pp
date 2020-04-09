@@ -8,14 +8,14 @@
 # It manages the broker config files
 #
 class kafka::broker::config(
-  Stdlib::Absolutepath $config_dir = $kafka::broker::config_dir,
-  String $service_name             = $kafka::broker::service_name,
   Boolean $manage_service          = $kafka::broker::manage_service,
+  String $service_name             = $kafka::broker::service_name,
   Boolean $service_restart         = $kafka::broker::service_restart,
   Hash $config                     = $kafka::broker::config,
-  Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
+  Stdlib::Absolutepath $config_dir = $kafka::broker::config_dir,
   String $user_name                = $kafka::broker::user_name,
   String $group_name               = $kafka::broker::group_name,
+  Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
 ) {
 
   assert_private()

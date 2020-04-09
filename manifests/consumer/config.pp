@@ -8,14 +8,14 @@
 # It manages the consumer config files
 #
 class kafka::consumer::config(
-  Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
-  String $service_name             = $kafka::consumer::service_name,
   Boolean $manage_service          = $kafka::consumer::manage_service,
+  String $service_name             = $kafka::consumer::service_name,
   Boolean $service_restart         = $kafka::consumer::service_restart,
   Hash $config                     = $kafka::consumer::config,
-  Stdlib::Filemode $config_mode    = $kafka::consumer::config_mode,
+  Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
   String $user_name                = $kafka::consumer::user_name,
   String $group_name               = $kafka::consumer::group_name,
+  Stdlib::Filemode $config_mode    = $kafka::consumer::config_mode,
 ) {
 
   if ($manage_service and $service_restart) {

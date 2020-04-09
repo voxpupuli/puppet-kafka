@@ -8,14 +8,14 @@
 # It manages the kafka service
 #
 class kafka::broker::service(
+  Boolean $manage_service                    = $kafka::broker::manage_service,
+  Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
+  String $service_name                       = $kafka::broker::service_name,
   String $user_name                          = $kafka::broker::user_name,
   String $group_name                         = $kafka::broker::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::broker::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::broker::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::broker::bin_dir,
-  String $service_name                       = $kafka::broker::service_name,
-  Boolean $manage_service                    = $kafka::broker::manage_service,
-  Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   Array[String] $service_requires            = $kafka::broker::service_requires,
   Optional[String] $limit_nofile             = $kafka::broker::limit_nofile,
   Optional[String] $limit_core               = $kafka::broker::limit_core,
