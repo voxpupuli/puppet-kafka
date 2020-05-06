@@ -4,7 +4,7 @@
 #
 <%- if @osfamily == 'Debian' -%>
 ### BEGIN INIT INFO
-# Provides:          <%- @service_name -%>
+# Provides:          <%= @service_name %>
 # Required-Start:    <%= @service_requires.join(' ') %>
 # Required-Stop:
 # Default-Start:     2 3 4 5
