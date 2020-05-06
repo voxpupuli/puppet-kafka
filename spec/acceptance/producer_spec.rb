@@ -138,6 +138,10 @@ describe 'kafka::producer', if: (fact('operatingsystemmajrelease') == '6' && fac
         it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties"' }
       end
 
+      describe file('/etc/init.d/kafka-producer'), if: (fact('service_provider') == 'upstart' && fact('osfamily') == 'Debian') do
+        it { is_expected.to contain %r{^# Provides:\s+kafka-producer$} }
+      end
+
       describe service('kafka-producer') do
         it { is_expected.to be_running }
         it { is_expected.to be_enabled }
