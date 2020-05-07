@@ -22,7 +22,7 @@
     },
     {
       "name": "deric/zookeeper",
-      "version_requirement": ">= 0.5.1 < 1.0.0"
+      "version_requirement": ">= 0.5.1 < 2.0.0"
     },
     {
       "name": "camptocamp/systemd",
