@@ -25,7 +25,7 @@ describe 'zookeeper prereq' do
 
       class { 'zookeeper':
         install_method      => 'archive',
-        archive_version     => '3.6.0',
+        archive_version     => '3.6.1',
         service_provider    => $zookeeper_service_provider,
         manage_service_file => true,
       }

@@ -140,6 +140,15 @@ describe 'kafka::consumer' do
         it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties"' }
       end
 
+      describe file('/etc/init.d/kafka-consumer'), if: (fact('service_provider') == 'upstart' && fact('osfamily') == 'Debian') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+        it { is_expected.to contain %r{^# Provides:\s+kafka-consumer$} }
+        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993"' }
+        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties"' }
+      end
+
       describe file('/etc/systemd/system/kafka-consumer.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
