@@ -33,4 +33,3 @@ branches:
     enforce_admins: null
     restrictions: null
     required_signatures: true
-
