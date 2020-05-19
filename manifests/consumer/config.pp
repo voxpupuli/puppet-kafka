@@ -8,17 +8,17 @@
 # It manages the consumer config files
 #
 class kafka::consumer::config(
-  Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
+  Boolean $manage_service          = $kafka::consumer::manage_service,
   String $service_name             = $kafka::consumer::service_name,
-  Boolean $service_install         = $kafka::consumer::service_install,
   Boolean $service_restart         = $kafka::consumer::service_restart,
   Hash $config                     = $kafka::consumer::config,
+  Stdlib::Absolutepath $config_dir = $kafka::consumer::config_dir,
+  String $user_name                = $kafka::consumer::user_name,
+  String $group_name               = $kafka::consumer::group_name,
   Stdlib::Filemode $config_mode    = $kafka::consumer::config_mode,
-  String $user                     = $kafka::consumer::user,
-  String $group                    = $kafka::consumer::group,
 ) {
 
-  if ($service_install and $service_restart) {
+  if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
     $config_notify = undef
@@ -27,8 +27,8 @@ class kafka::consumer::config(
   $doctag = 'consumerconfigs'
   file { "${config_dir}/consumer.properties":
     ensure  => present,
-    owner   => $user,
-    group   => $group,
+    owner   => $user_name,
+    group   => $group_name,
     mode    => $config_mode,
     content => template('kafka/properties.erb'),
     notify  => $config_notify,

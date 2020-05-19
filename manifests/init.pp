@@ -13,7 +13,7 @@
 #
 # === Parameters
 #
-# [*version*]
+# [*kafka_version*]
 # The version of kafka that should be installed.
 #
 # [*scala_version*]
@@ -25,7 +25,7 @@
 # [*mirror_url*]
 # The url where the kafka is downloaded from.
 #
-# [*install_java*]
+# [*manage_java*]
 # Install java if it's not already installed.
 #
 # [*package_dir*]
@@ -37,10 +37,10 @@
 # [*package_ensure*]
 # Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
 #
-# [*user*]
+# [*user_name*]
 # User to run kafka as.
 #
-# [*group*]
+# [*group_name*]
 # Group to run kafka as.
 #
 # [*user_id*]
@@ -71,11 +71,11 @@
 #
 #
 class kafka (
-  String $version                   = $kafka::params::version,
+  String $kafka_version             = $kafka::params::kafka_version,
   String $scala_version             = $kafka::params::scala_version,
   Stdlib::Absolutepath $install_dir = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url       = $kafka::params::mirror_url,
-  Boolean $install_java             = $kafka::params::install_java,
+  Boolean $manage_java             = $kafka::params::manage_java,
   Stdlib::Absolutepath $package_dir = $kafka::params::package_dir,
   Optional[String] $package_name    = $kafka::params::package_name,
   Optional[String] $mirror_subpath  = $kafka::params::mirror_subpath,
@@ -84,8 +84,8 @@ class kafka (
   Optional[String] $proxy_host      = $kafka::params::proxy_host,
   Optional[String] $proxy_type      = $kafka::params::proxy_type,
   String $package_ensure            = $kafka::params::package_ensure,
-  String $user                      = $kafka::params::user,
-  String $group                     = $kafka::params::group,
+  String $user_name                 = $kafka::params::user_name,
+  String $group_name                = $kafka::params::group_name,
   Boolean $system_user              = $kafka::params::system_user,
   Boolean $system_group             = $kafka::params::system_group,
   Optional[Integer] $user_id        = $kafka::params::user_id,
@@ -97,14 +97,14 @@ class kafka (
   Optional[String] $install_mode    = $kafka::params::install_mode,
 ) inherits kafka::params {
 
-  if $install_java {
+  if $manage_java {
     class { 'java':
       distribution => 'jdk',
     }
   }
 
   if $manage_group {
-    group { $group:
+    group { $group_name:
       ensure => present,
       gid    => $group_id,
       system => $system_group,
@@ -112,10 +112,10 @@ class kafka (
   }
 
   if $manage_user {
-    user { $user:
+    user { $user_name:
       ensure  => present,
       shell   => '/bin/bash',
-      require => Group[$group],
+      require => Group[$group_name],
       uid     => $user_id,
       system  => $system_user,
     }
@@ -123,17 +123,17 @@ class kafka (
 
   file { $config_dir:
     ensure => directory,
-    owner  => $user,
-    group  => $group,
+    owner  => $user_name,
+    group  => $group_name,
   }
 
   file { $log_dir:
     ensure  => directory,
-    owner   => $user,
-    group   => $group,
+    owner   => $user_name,
+    group   => $group_name,
     require => [
-      Group[$group],
-      User[$user],
+      Group[$group_name],
+      User[$user_name],
     ],
   }
 
@@ -144,12 +144,12 @@ class kafka (
     $mirror_path = $mirror_subpath ? {
       # if mirror_subpath was not changed,
       # we adapt it for the version
-      $kafka::params::mirror_subpath => "kafka/${version}",
+      $kafka::params::mirror_subpath => "kafka/${kafka_version}",
       # else, we just take whatever was supplied:
       default                        => $mirror_subpath,
     }
 
-    $basefilename = "kafka_${scala_version}-${version}.tgz"
+    $basefilename = "kafka_${scala_version}-${kafka_version}.tgz"
     $package_url = "${mirror_url}${mirror_path}/${basefilename}"
 
     $source = $mirror_url ?{
@@ -160,29 +160,29 @@ class kafka (
     $install_directory = $install_dir ? {
       # if install_dir was not changed,
       # we adapt it for the scala_version and the version
-      $kafka::params::install_dir => "/opt/kafka-${scala_version}-${version}",
+      $kafka::params::install_dir => "/opt/kafka-${scala_version}-${kafka_version}",
       # else, we just take whatever was supplied:
       default                     => $install_dir,
     }
 
     file { $package_dir:
       ensure  => directory,
-      owner   => $user,
-      group   => $group,
+      owner   => $user_name,
+      group   => $group_name,
       require => [
-        Group[$group],
-        User[$user],
+        Group[$group_name],
+        User[$user_name],
       ],
     }
 
     file { $install_directory:
       ensure  => directory,
-      owner   => $user,
-      group   => $group,
+      owner   => $user_name,
+      group   => $group_name,
       mode    => $install_mode,
       require => [
-        Group[$group],
-        User[$user],
+        Group[$group_name],
+        User[$user_name],
       ],
     }
 
@@ -208,13 +208,13 @@ class kafka (
       cleanup         => true,
       proxy_server    => $final_proxy_server,
       proxy_type      => $proxy_type,
-      user            => $user,
-      group           => $group,
+      user            => $user_name,
+      group           => $group_name,
       require         => [
         File[$package_dir],
         File[$install_directory],
-        Group[$group],
-        User[$user],
+        Group[$group_name],
+        User[$user_name],
       ],
       before          => File[$config_dir],
     }

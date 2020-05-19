@@ -8,14 +8,14 @@
 # It manages the kafka-producer service
 #
 class kafka::producer::service(
-  String $user                               = $kafka::producer::user,
-  String $group                              = $kafka::producer::group,
+  Boolean $manage_service                    = $kafka::producer::manage_service,
+  Enum['running', 'stopped'] $service_ensure = $kafka::producer::service_ensure,
+  String $service_name                       = $kafka::producer::service_name,
+  String $user_name                          = $kafka::producer::user_name,
+  String $group_name                         = $kafka::producer::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::producer::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::producer::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::producer::bin_dir,
-  String $service_name                       = $kafka::producer::service_name,
-  Boolean $service_install                   = $kafka::producer::service_install,
-  Enum['running', 'stopped'] $service_ensure = $kafka::producer::service_ensure,
   Array[String] $service_requires            = $kafka::producer::service_requires,
   Optional[String] $limit_nofile             = $kafka::producer::limit_nofile,
   Optional[String] $limit_core               = $kafka::producer::limit_core,
@@ -28,7 +28,7 @@ class kafka::producer::service(
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
 
     if $service_config['broker-list'] == '' {
       fail('[Producer] You need to specify a value for broker-list')
@@ -43,7 +43,7 @@ class kafka::producer::service(
     }
     $environment = deep_merge($env_defaults, $env)
 
-    if $::service_provider == 'systemd' {
+    if $facts['service_provider'] == 'systemd' {
       fail('Console Producer is not supported on systemd, because the stdin of the process cannot be redirected')
     } else {
       file { "/etc/init.d/${service_name}":

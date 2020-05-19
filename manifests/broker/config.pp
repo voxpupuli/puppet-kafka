@@ -8,19 +8,19 @@
 # It manages the broker config files
 #
 class kafka::broker::config(
-  Stdlib::Absolutepath $config_dir = $kafka::broker::config_dir,
+  Boolean $manage_service          = $kafka::broker::manage_service,
   String $service_name             = $kafka::broker::service_name,
-  Boolean $service_install         = $kafka::broker::service_install,
   Boolean $service_restart         = $kafka::broker::service_restart,
   Hash $config                     = $kafka::broker::config,
+  Stdlib::Absolutepath $config_dir = $kafka::broker::config_dir,
+  String $user_name                = $kafka::broker::user_name,
+  String $group_name               = $kafka::broker::group_name,
   Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
-  String $user                     = $kafka::broker::user,
-  String $group                    = $kafka::broker::group,
 ) {
 
   assert_private()
 
-  if ($service_install and $service_restart) {
+  if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
     $config_notify = undef
@@ -29,8 +29,8 @@ class kafka::broker::config(
   $doctag = 'brokerconfigs'
   file { "${config_dir}/server.properties":
     ensure  => present,
-    owner   => $user,
-    group   => $group,
+    owner   => $user_name,
+    group   => $group_name,
     mode    => $config_mode,
     content => template('kafka/properties.erb'),
     notify  => $config_notify,

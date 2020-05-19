@@ -35,14 +35,14 @@ describe 'kafka', type: :class do
       context 'all (compatible) parameters' do
         let :params do
           {
-            version: '0.10.0.1',
+            kafka_version: '0.10.0.1',
             scala_version: '2.13',
             install_dir: '/usr/local/kafka',
             user_id: 9092,
             group_id: 9092,
-            user: 'mykafka',
-            group: 'mykafka',
-            install_java: false,
+            user_name: 'mykafka',
+            group_name: 'mykafka',
+            manage_java: false,
             config_dir: '/opt/kafka/custom_config',
             log_dir: '/var/log/custom_kafka'
           }

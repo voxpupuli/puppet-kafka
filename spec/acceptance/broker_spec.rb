@@ -120,8 +120,8 @@ describe 'kafka::broker' do
       it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka::broker':
-            version => '2.4.0',
-            config  => {
+            kafka_version => '2.4.0',
+            config        => {
               'zookeeper.connect' => 'localhost:2181',
             },
           }

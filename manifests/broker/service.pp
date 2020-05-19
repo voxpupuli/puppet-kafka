@@ -8,14 +8,14 @@
 # It manages the kafka service
 #
 class kafka::broker::service(
-  String $user                               = $kafka::broker::user,
-  String $group                              = $kafka::broker::group,
+  Boolean $manage_service                    = $kafka::broker::manage_service,
+  Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
+  String $service_name                       = $kafka::broker::service_name,
+  String $user_name                          = $kafka::broker::user_name,
+  String $group_name                         = $kafka::broker::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::broker::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::broker::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::broker::bin_dir,
-  String $service_name                       = $kafka::broker::service_name,
-  Boolean $service_install                   = $kafka::broker::service_install,
-  Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   Array[String] $service_requires            = $kafka::broker::service_requires,
   Optional[String] $limit_nofile             = $kafka::broker::limit_nofile,
   Optional[String] $limit_core               = $kafka::broker::limit_core,
@@ -31,7 +31,7 @@ class kafka::broker::service(
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
     $env_defaults = {
       'KAFKA_HEAP_OPTS'  => $heap_opts,
       'KAFKA_JMX_OPTS'   => $jmx_opts,
@@ -41,7 +41,7 @@ class kafka::broker::service(
     }
     $environment = deep_merge($env_defaults, $env)
 
-    if $::service_provider == 'systemd' {
+    if $facts['service_provider'] == 'systemd' {
       include systemd
 
       file { "/etc/systemd/system/${service_name}.service":

@@ -63,7 +63,7 @@ describe 'kafka' do
       it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka':
-            version => '2.4.0',
+            kafka_version => '2.4.0',
           }
         EOS
 

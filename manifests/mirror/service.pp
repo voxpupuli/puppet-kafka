@@ -8,14 +8,14 @@
 # It manages the kafka-mirror service
 #
 class kafka::mirror::service(
-  String $user                               = $kafka::mirror::user,
-  String $group                              = $kafka::mirror::group,
+  Boolean $manage_service                    = $kafka::mirror::manage_service,
+  Enum['running', 'stopped'] $service_ensure = $kafka::mirror::service_ensure,
+  String $service_name                       = $kafka::mirror::service_name,
+  String $user_name                          = $kafka::mirror::user_name,
+  String $group_name                         = $kafka::mirror::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::mirror::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::mirror::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::mirror::bin_dir,
-  String $service_name                       = $kafka::mirror::service_name,
-  Boolean $service_install                   = $kafka::mirror::service_install,
-  Enum['running', 'stopped'] $service_ensure = $kafka::mirror::service_ensure,
   Array[String] $service_requires            = $kafka::mirror::service_requires,
   Optional[String] $limit_nofile             = $kafka::mirror::limit_nofile,
   Optional[String] $limit_core               = $kafka::mirror::limit_core,
@@ -30,7 +30,7 @@ class kafka::mirror::service(
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
     $env_defaults = {
       'KAFKA_HEAP_OPTS'  => $heap_opts,
       'KAFKA_JMX_OPTS'   => $jmx_opts,
