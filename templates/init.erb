@@ -4,7 +4,7 @@
 #
 <%- if @osfamily == 'Debian' -%>
 ### BEGIN INIT INFO
-# Provides:          <%- @service_name -%>
+# Provides:          <%= @service_name %>
 # Required-Start:    <%= @service_requires.join(' ') %>
 # Required-Stop:
 # Default-Start:     2 3 4 5
@@ -25,7 +25,7 @@ export <%= k %>="<%= v %>"
 <% end -%>
 <% end -%>
 PID_FILE="/var/run/$NAME.pid"
-KAFKA_USER=<%= @user %>
+KAFKA_USER=<%= @user_name %>
 <%- case @service_name when 'kafka' -%>
 PGREP_PATTERN=kafka.Kafka
 DAEMON="<%= @bin_dir %>/kafka-server-start.sh"
@@ -50,9 +50,17 @@ if [ -f /etc/default/kafka ]; then
 fi
 
 start() {
-  ulimit -n 65536
+
+  <% if @limit_nofile -%>
+  ulimit -n <%= @limit_nofile %>
+  <% end -%>
+
+  <% if @limit_core -%>
+  ulimit -c <%= @limit_core %>
+  <% end -%>
+
   ulimit -s 10240
-  ulimit -c unlimited
+
   if [ -f "$PID_FILE" ]; then
     PID=`cat "$PID_FILE"`
     if [ `ps -p "$PID" -o pid= || echo 1` -eq `ps ax | grep -i "$PGREP_PATTERN" | grep -v grep | awk '{print $1}' || echo 2` ] ; then

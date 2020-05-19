@@ -14,15 +14,15 @@ class kafka::params {
   unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
     warning("${facts['os']['family']} is not supported")
   }
-  $version        = '2.4.1'
+  $kafka_version  = '2.4.1'
   $scala_version  = '2.12'
-  $install_dir    = "/opt/kafka-${scala_version}-${version}"
+  $install_dir    = "/opt/kafka-${scala_version}-${kafka_version}"
   $config_dir     = '/opt/kafka/config'
   $bin_dir        = '/opt/kafka/bin'
   $log_dir        = '/var/log/kafka'
   $mirror_url     = 'https://www.apache.org/dyn/closer.lua?action=download&filename='
-  $mirror_subpath = "kafka/${version}"
-  $install_java   = false
+  $mirror_subpath = "kafka/${kafka_version}"
+  $manage_java    = false
   $package_dir    = '/var/tmp/kafka'
   $package_name   = undef
   $proxy_server   = undef
@@ -30,8 +30,8 @@ class kafka::params {
   $proxy_port     = undef
   $proxy_type     = undef
   $package_ensure = 'present'
-  $user           = 'kafka'
-  $group          = 'kafka'
+  $user_name      = 'kafka'
+  $group_name     = 'kafka'
   $user_id        = undef
   $group_id       = undef
   $system_user    = false
@@ -41,7 +41,7 @@ class kafka::params {
   $config_mode    = '0644'
   $install_mode   = '0755'
 
-  $service_install = true
+  $manage_service = true
   $service_ensure = 'running'
   $service_restart = true
   $service_requires = $facts['os']['family'] ? {

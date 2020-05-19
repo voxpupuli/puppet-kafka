@@ -13,7 +13,7 @@
 #
 # === Parameters
 #
-# [*version*]
+# [*kafka_version*]
 # The version of kafka that should be installed.
 #
 # [*scala_version*]
@@ -25,7 +25,7 @@
 # [*mirror_url*]
 # The url where the kafka is downloaded from.
 #
-# [*install_java*]
+# [*manage_java*]
 # Install java if it's not already installed.
 #
 # [*package_dir*]
@@ -37,10 +37,10 @@
 # [*package_ensure*]
 # Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
 #
-# [*user*]
+# [*user_name*]
 # User to run kafka as.
 #
-# [*group*]
+# [*group_name*]
 # Group to run kafka as.
 #
 # [*user_id*]
@@ -70,7 +70,7 @@
 # [*service_name*]
 # Set the name of the service.
 #
-# [*service_install*]
+# [*manage_service*]
 # Install the init.d or systemd service.
 #
 # [*service_ensure*]
@@ -112,16 +112,16 @@
 # }
 #
 class kafka::broker (
-  String $version                            = $kafka::params::version,
-  String $scala_version                      = $kafka::params::scala_version,
+  String[1] $kafka_version                   = $kafka::params::kafka_version,
+  String[1] $scala_version                   = $kafka::params::scala_version,
   Stdlib::Absolutepath $install_dir          = $kafka::params::install_dir,
   Stdlib::HTTPUrl $mirror_url                = $kafka::params::mirror_url,
-  Boolean $install_java                      = $kafka::params::install_java,
+  Boolean $manage_java                       = $kafka::params::manage_java,
   Stdlib::Absolutepath $package_dir          = $kafka::params::package_dir,
-  Optional[String] $package_name             = $kafka::params::package_name,
-  String $package_ensure                     = $kafka::params::package_ensure,
-  String $user                               = $kafka::params::user,
-  String $group                              = $kafka::params::group,
+  Optional[String[1]] $package_name          = $kafka::params::package_name,
+  String[1] $package_ensure                  = $kafka::params::package_ensure,
+  String[1] $user_name                       = $kafka::params::user_name,
+  String[1] $group_name                      = $kafka::params::group_name,
   Optional[Integer] $user_id                 = $kafka::params::user_id,
   Optional[Integer] $group_id                = $kafka::params::group_id,
   Boolean $manage_user                       = $kafka::params::manage_user,
@@ -130,22 +130,22 @@ class kafka::broker (
   Stdlib::Absolutepath $config_dir           = $kafka::params::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::params::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::params::bin_dir,
-  String $service_name                       = 'kafka',
-  Boolean $service_install                   = $kafka::params::service_install,
+  String[1] $service_name                    = 'kafka',
+  Boolean $manage_service                    = $kafka::params::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::params::service_ensure,
   Boolean $service_restart                   = $kafka::params::service_restart,
-  Array[String] $service_requires            = $kafka::params::service_requires,
-  Optional[String] $limit_nofile             = $kafka::params::limit_nofile,
-  Optional[String] $limit_core               = $kafka::params::limit_core,
-  Optional[String] $timeout_stop             = $kafka::params::timeout_stop,
+  Array[String[1]] $service_requires         = $kafka::params::service_requires,
+  Optional[String[1]] $limit_nofile          = $kafka::params::limit_nofile,
+  Optional[String[1]] $limit_core            = $kafka::params::limit_core,
+  Optional[String[1]] $timeout_stop          = $kafka::params::timeout_stop,
   Boolean $exec_stop                         = $kafka::params::exec_stop,
   Boolean $daemon_start                      = $kafka::params::daemon_start,
   Hash $env                                  = {},
-  Hash $config                               = {},
-  String $heap_opts                          = $kafka::params::broker_heap_opts,
-  String $jmx_opts                           = $kafka::params::broker_jmx_opts,
-  String $log4j_opts                         = $kafka::params::broker_log4j_opts,
-  $opts                                      = $kafka::params::broker_opts,
+  Hash[String[1], Any] $config               = {},
+  String[1] $heap_opts                       = $kafka::params::broker_heap_opts,
+  String[1] $jmx_opts                        = $kafka::params::broker_jmx_opts,
+  String[1] $log4j_opts                      = $kafka::params::broker_log4j_opts,
+  String[0] $opts                            = $kafka::params::broker_opts,
 ) inherits kafka::params {
 
   class { 'kafka::broker::install': }

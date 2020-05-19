@@ -156,7 +156,7 @@ describe 'kafka::mirror' do
       it 'works with no errors' do
         pp = <<-EOS
           class { 'kafka::mirror':
-            version         => '2.4.0',
+            kafka_version   => '2.4.0',
             consumer_config => {
               'group.id'          => 'kafka-mirror',
               'bootstrap.servers' => 'localhost:9092',
@@ -214,6 +214,15 @@ describe 'kafka::mirror' do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
+        it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991"' }
+        it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties"' }
+      end
+
+      describe file('/etc/init.d/kafka-mirror'), if: (fact('service_provider') == 'upstart' && fact('osfamily') == 'Debian') do
+        it { is_expected.to be_file }
+        it { is_expected.to be_owned_by 'root' }
+        it { is_expected.to be_grouped_into 'root' }
+        it { is_expected.to contain %r{^# Provides:\s+kafka-mirror$} }
         it { is_expected.to contain 'export KAFKA_JMX_OPTS="-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9991"' }
         it { is_expected.to contain 'export KAFKA_LOG4J_OPTS="-Dlog4j.configuration=file:/opt/kafka/config/log4j.properties"' }
       end

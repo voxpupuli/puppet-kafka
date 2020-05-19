@@ -4,30 +4,30 @@
 # @api private
 #
 class kafka::broker::service(
-  String $user                               = $kafka::broker::user,
-  String $group                              = $kafka::broker::group,
+  Boolean $manage_service                    = $kafka::broker::manage_service,
+  Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
+  String[1] $service_name                    = $kafka::broker::service_name,
+  String[1] $user_name                       = $kafka::broker::user_name,
+  String[1] $group_name                      = $kafka::broker::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::broker::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::broker::log_dir,
   Stdlib::Absolutepath $bin_dir              = $kafka::broker::bin_dir,
-  String $service_name                       = $kafka::broker::service_name,
-  Boolean $service_install                   = $kafka::broker::service_install,
-  Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
-  Array[String] $service_requires            = $kafka::broker::service_requires,
-  Optional[String] $limit_nofile             = $kafka::broker::limit_nofile,
-  Optional[String] $limit_core               = $kafka::broker::limit_core,
-  Optional[String] $timeout_stop             = $kafka::broker::timeout_stop,
+  Array[String[1]] $service_requires         = $kafka::broker::service_requires,
+  Optional[String[1]] $limit_nofile          = $kafka::broker::limit_nofile,
+  Optional[String[1]] $limit_core            = $kafka::broker::limit_core,
+  Optional[String[1]] $timeout_stop          = $kafka::broker::timeout_stop,
   Boolean $exec_stop                         = $kafka::broker::exec_stop,
   Boolean $daemon_start                      = $kafka::broker::daemon_start,
   Hash $env                                  = $kafka::broker::env,
-  String $heap_opts                          = $kafka::broker::heap_opts,
-  String $jmx_opts                           = $kafka::broker::jmx_opts,
-  String $log4j_opts                         = $kafka::broker::log4j_opts,
-  $opts                                      = $kafka::broker::opts,
+  String[1] $heap_opts                       = $kafka::broker::heap_opts,
+  String[1] $jmx_opts                        = $kafka::broker::jmx_opts,
+  String[1] $log4j_opts                      = $kafka::broker::log4j_opts,
+  String[0] $opts                            = $kafka::broker::opts,
 ) {
 
   assert_private()
 
-  if $service_install {
+  if $manage_service {
     $env_defaults = {
       'KAFKA_HEAP_OPTS'  => $heap_opts,
       'KAFKA_JMX_OPTS'   => $jmx_opts,
@@ -37,7 +37,7 @@ class kafka::broker::service(
     }
     $environment = deep_merge($env_defaults, $env)
 
-    if $::service_provider == 'systemd' {
+    if $facts['service_provider'] == 'systemd' {
       include systemd
 
       file { "/etc/systemd/system/${service_name}.service":

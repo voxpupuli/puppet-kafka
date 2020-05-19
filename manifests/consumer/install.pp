@@ -9,22 +9,22 @@ class kafka::consumer::install {
 
   if !defined(Class['kafka']) {
     class { 'kafka':
-      version        => $kafka::consumer::version,
-      scala_version  => $kafka::consumer::scala_version,
-      install_dir    => $kafka::consumer::install_dir,
-      mirror_url     => $kafka::consumer::mirror_url,
-      install_java   => $kafka::consumer::install_java,
-      package_dir    => $kafka::consumer::package_dir,
-      package_name   => $kafka::consumer::package_name,
-      package_ensure => $kafka::consumer::package_ensure,
-      user           => $kafka::consumer::user,
-      group          => $kafka::consumer::group,
-      user_id        => $kafka::consumer::user_id,
-      group_id       => $kafka::consumer::group_id,
-      manage_user    => $kafka::consumer::manage_user,
+      manage_java    => $kafka::consumer::manage_java,
       manage_group   => $kafka::consumer::manage_group,
+      group_id       => $kafka::consumer::group_id,
+      group_name     => $kafka::consumer::group_name,
+      manage_user    => $kafka::consumer::manage_user,
+      user_id        => $kafka::consumer::user_id,
+      user_name      => $kafka::consumer::user_name,
       config_dir     => $kafka::consumer::config_dir,
       log_dir        => $kafka::consumer::log_dir,
+      mirror_url     => $kafka::consumer::mirror_url,
+      kafka_version  => $kafka::consumer::kafka_version,
+      scala_version  => $kafka::consumer::scala_version,
+      install_dir    => $kafka::consumer::install_dir,
+      package_dir    => $kafka::consumer::package_dir,
+      package_ensure => $kafka::consumer::package_ensure,
+      package_name   => $kafka::consumer::package_name,
     }
   }
 }

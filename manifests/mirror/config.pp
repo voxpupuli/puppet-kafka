@@ -4,15 +4,15 @@
 # @api private
 #
 class kafka::mirror::config(
-  Stdlib::Absolutepath $config_dir = $kafka::mirror::config_dir,
-  String $service_name             = $kafka::mirror::service_name,
-  Boolean $service_install         = $kafka::mirror::service_install,
-  Boolean $service_restart         = $kafka::mirror::service_restart,
-  Hash $consumer_config            = $kafka::mirror::consumer_config,
-  Hash $producer_config            = $kafka::mirror::producer_config,
-  Stdlib::Filemode $config_mode    = $kafka::mirror::config_mode,
-  String $user                     = $kafka::mirror::user,
-  String $group                    = $kafka::mirror::group,
+  Boolean $manage_service                    = $kafka::mirror::manage_service,
+  String[1] $service_name                    = $kafka::mirror::service_name,
+  Boolean $service_restart                   = $kafka::mirror::service_restart,
+  Hash[String[1],String[1]] $consumer_config = $kafka::mirror::consumer_config,
+  Hash[String[1],String[1]] $producer_config = $kafka::mirror::producer_config,
+  Stdlib::Absolutepath $config_dir           = $kafka::mirror::config_dir,
+  String[1] $user_name                       = $kafka::mirror::user_name,
+  String[1] $group_name                      = $kafka::mirror::group_name,
+  Stdlib::Filemode $config_mode              = $kafka::mirror::config_mode,
 ) {
 
   assert_private()
@@ -28,24 +28,24 @@ class kafka::mirror::config(
   }
 
   class { 'kafka::consumer::config':
-    config_dir      => $config_dir,
-    config_mode     => $config_mode,
+    manage_service  => $manage_service,
     service_name    => $service_name,
-    service_install => $service_install,
     service_restart => $service_restart,
     config          => $consumer_config,
-    user            => $user,
-    group           => $group,
+    config_dir      => $config_dir,
+    user_name       => $user_name,
+    group_name      => $group_name,
+    config_mode     => $config_mode,
   }
 
   class { 'kafka::producer::config':
-    config_dir      => $config_dir,
-    config_mode     => $config_mode,
+    manage_service  => $manage_service,
     service_name    => $service_name,
-    service_install => $service_install,
     service_restart => $service_restart,
     config          => $producer_config,
-    user            => $user,
-    group           => $group,
+    config_dir      => $config_dir,
+    user_name       => $user_name,
+    group_name      => $group_name,
+    config_mode     => $config_mode,
   }
 }

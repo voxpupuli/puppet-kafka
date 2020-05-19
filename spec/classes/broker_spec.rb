@@ -44,9 +44,9 @@ describe 'kafka::broker', type: :class do
     end
 
     describe 'kafka::broker::service' do
-      context 'service_install false' do
+      context 'manage_service false' do
         let :params do
-          common_params.merge(service_install: false)
+          common_params.merge(manage_service: false)
         end
 
         it { is_expected.not_to contain_file('/etc/init.d/kafka') }
@@ -55,6 +55,26 @@ describe 'kafka::broker', type: :class do
       end
       context 'defaults' do
         it { is_expected.to contain_file('/etc/init.d/kafka') }
+
+        context 'limit_nofile set' do
+          let :params do
+            {
+              limit_nofile: '65536'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -n 65536$} }
+        end
+
+        context 'limit_core set' do
+          let :params do
+            {
+              limit_core: 'infinity'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -c infinity$} }
+        end
 
         it { is_expected.to contain_service('kafka') }
       end
@@ -88,9 +108,9 @@ describe 'kafka::broker', type: :class do
     end
 
     describe 'kafka::broker::service' do
-      context 'service_install false' do
+      context 'manage_service false' do
         let :params do
-          common_params.merge(service_install: false)
+          common_params.merge(manage_service: false)
         end
 
         it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service') }
