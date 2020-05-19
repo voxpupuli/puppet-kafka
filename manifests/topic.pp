@@ -16,10 +16,10 @@ define kafka::topic(
 ) {
 
   if is_string($replication_factor) {
-    deprication('kafka::topic', 'Please use Integer type, not String, for paramter replication_factor')
+    deprecation('kafka::topic', 'Please use Integer type, not String, for paramter replication_factor')
   }
   if is_string($partitions) {
-    deprication('kafka::topic', 'Please use Integer type, not String, for paramter partitions')
+    deprecation('kafka::topic', 'Please use Integer type, not String, for paramter partitions')
   }
 
   $_zookeeper          = "--zookeeper ${zookeeper}"
