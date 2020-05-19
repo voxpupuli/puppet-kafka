@@ -7,12 +7,12 @@
 # This defined type is used to manage the creation of kafka topics.
 #
 define kafka::topic(
-  String                        $ensure             = '',
-  String                        $zookeeper          = '',
-  Variant[Integer,String]       $replication_factor = 1,
-  Variant[Integer,String]       $partitions         = 1,
-  String                        $bin_dir            = '/opt/kafka/bin',
-  Optional[Hash[String,String]] $config             = undef,
+  String[1] $ensure                              = '',
+  String[1] $zookeeper                           = '',
+  Variant[Integer,String[1]] $replication_factor = 1,
+  Variant[Integer,String[1]] $partitions         = 1,
+  String[1] $bin_dir                             = '/opt/kafka/bin',
+  Optional[Hash[String[1],String[1]]] $config    = undef,
 ) {
 
   if is_string($replication_factor) {
