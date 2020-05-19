@@ -9,12 +9,12 @@
 #
 class kafka::broker::config(
   Boolean $manage_service          = $kafka::broker::manage_service,
-  String $service_name             = $kafka::broker::service_name,
+  String[1] $service_name          = $kafka::broker::service_name,
   Boolean $service_restart         = $kafka::broker::service_restart,
-  Hash $config                     = $kafka::broker::config,
+  Hash[String[1], Any] $config     = $kafka::broker::config,
   Stdlib::Absolutepath $config_dir = $kafka::broker::config_dir,
-  String $user_name                = $kafka::broker::user_name,
-  String $group_name               = $kafka::broker::group_name,
+  String[1] $user_name             = $kafka::broker::user_name,
+  String[1] $group_name            = $kafka::broker::group_name,
   Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
 ) {
 

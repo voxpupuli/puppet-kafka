@@ -8,15 +8,15 @@
 # It manages the mirror-maker config files
 #
 class kafka::mirror::config(
-  Boolean $manage_service          = $kafka::mirror::manage_service,
-  String $service_name             = $kafka::mirror::service_name,
-  Boolean $service_restart         = $kafka::mirror::service_restart,
-  Hash $consumer_config            = $kafka::mirror::consumer_config,
-  Hash $producer_config            = $kafka::mirror::producer_config,
-  Stdlib::Absolutepath $config_dir = $kafka::mirror::config_dir,
-  String $user_name                = $kafka::mirror::user_name,
-  String $group_name               = $kafka::mirror::group_name,
-  Stdlib::Filemode $config_mode    = $kafka::mirror::config_mode,
+  Boolean $manage_service                    = $kafka::mirror::manage_service,
+  String[1] $service_name                    = $kafka::mirror::service_name,
+  Boolean $service_restart                   = $kafka::mirror::service_restart,
+  Hash[String[1],String[1]] $consumer_config = $kafka::mirror::consumer_config,
+  Hash[String[1],String[1]] $producer_config = $kafka::mirror::producer_config,
+  Stdlib::Absolutepath $config_dir           = $kafka::mirror::config_dir,
+  String[1] $user_name                       = $kafka::mirror::user_name,
+  String[1] $group_name                      = $kafka::mirror::group_name,
+  Stdlib::Filemode $config_mode              = $kafka::mirror::config_mode,
 ) {
 
   assert_private()
