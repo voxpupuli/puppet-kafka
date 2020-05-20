@@ -24,6 +24,7 @@ group :development do
 end
 
 group :system_tests do
+  gem 'beaker', '4.22.1',      :require => true
   gem 'voxpupuli-acceptance',  :require => false
 end
 
