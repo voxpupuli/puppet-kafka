@@ -6,22 +6,22 @@
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 
-#### Table of Contents
+## Table of Contents
 
 1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
-3. [Setup - The basics of getting started with kafka](#setup)
-    * [What kafka affects](#what-kafka-affects)
+1. [Module Description - What the module does and why it is useful](#module-description)
+1. [Setup - The basics of getting started with Kafka](#setup)
+    * [What Kafka affects](#what-kafka-affects)
     * [Setup requirements](#setup-requirements)
-    * [Beginning with kafka](#beginning-with-kafka)
-4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
+    * [Beginning with Kafka](#beginning-with-kafka)
+1. [Usage - Configuration options and additional functionality](#usage)
+1. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
+1. [Limitations - OS compatibility, etc.](#limitations)
+1. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
-The Kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org)
+The Kafka module for managing the installation and configuration of [Apache Kafka](http://kafka.apache.org).
 
 ## Module Description
 
@@ -30,17 +30,27 @@ it's brokers, producers and consumers.
 
 ## Setup
 
-### What kafka affects
+### What Kafka affects
 
 Installs the Kafka package and creates a new service.
+
+### Setup requirements
+
+This module has the following dependencies:
+
+* [deric/zookeeper](https://github.com/deric/puppet-zookeeper)
+* [camptocamp/systemd](https://github.com/camptocamp/puppet-systemd)
+* [puppet/archive](https://github.com/voxpupuli/puppet-archive)
+* [puppetlabs/java](https://github.com/puppetlabs/puppetlabs-java)
+* [puppetlabs/stdlib](https://github.com/puppetlabs/puppetlabs-stdlib)
 
 ### Beginning with Kafka
 
 To successfully install Kafka using this module you need to have Apache ZooKeeper
 already running at localhost:2181. You can specify another ZooKeeper host:port
-configuration using the config hash of the kafka:broker class.
+configuration using the config hash of the kafka::broker class.
 
-The default configuration installs Kafka 0.11.0.3 binaries with Scala 2.11
+The default configuration installs Kafka 0.11.0.3 binaries with Scala 2.11:
 
 ```puppet
   class { 'kafka': }
@@ -50,7 +60,10 @@ If you want a Kafka broker server that connects to ZooKeeper listening on port 2
 
 ```puppet
   class { 'kafka::broker':
-    config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
+    config => {
+      'broker.id'         => '0',
+      'zookeeper.connect' => 'localhost:2181'
+    }
   }
 ```
 
@@ -75,267 +88,16 @@ Then we set a minimal Kafka broker configuration with:
 
 ```puppet
   class { 'kafka::broker':
-    config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
+    config => {
+      'broker.id'         => '0',
+      'zookeeper.connect' => 'localhost:2181'
+    }
   }
 ```
 
-### Classes and Defined Types
-
-#### Class: `kafka`
-
-One of the primary classes of the kafka module. This class will install the
-kafka binaries
-
-**Parameters within `kafka`:**
-
-##### `version`
-
-The version of kafka that should be installed.
-
-##### `scala_version`
-
-The scala version what kafka was built with.
-
-##### `install_dir`
-
-The directory to install kafka to.
-
-##### `mirror_url`
-
-The url where the kafka is downloaded from.
-
-##### `mirror_subpath`
-
-The url subpath where the kafka is downloaded from (default value: `/kafka/{version}`).
-
-##### `proxy_port`
-
-The proxy port where the kafka is downloaded from.
-
-##### `proxy_host`
-
-The proxy host where the kafka is downloaded from.
-
-##### `proxy_server`
-
-The proxy server where the kafka is downloaded from (to use instead of `proxy_port` and `proxy_host` if you need to set an url as proxy for example).
-
-##### `proxy_type`
-
-The proxy type where the kafka is downloaded from (`http` for example).
-
-##### `install_java`
-
-Install java if it's not already installed.
-
-##### `package_dir`
-
-The directory to install kafka.
-
-#### `package_name`
-
-Package name, when installing kafka from a package.
-
-#### `package_ensure`
-
-Package version (or 'present', 'absent', 'latest'), when installing kafka from
-a package.
-
-#### `group_id`
-
-Create kafka group with this ID
-
-#### `user_id`
-
-Create kafka user with this ID
-
-#### `user`
-
-User to install kafka as. Defaults to the kafka user.
-
-#### `group`
-
-Group to install kafka as. Defaults to the kafka group.
-
-#### `config_dir`
-
-Directory for kafka config files. Defaults to /opt/kafka/config.
-
-#### `log_dir`
-
-Directory for kafka log files. Defaults to /var/log/kafka.
-
-#### Class: `kafka::broker`
-
-One of the primary classes of the kafka module. This class will install a kafka broker.
-
-**Parameters within `kafka::broker`:**
-
-##### `version`
-
-The version of kafka that should be installed.
-
-##### `scala_version`
-
-The scala version what kafka was built with.
-
-##### `install_dir`
-
-The directory to install kafka to.
-
-##### `mirror_url`
-
-The url where the kafka is downloaded from.
-
-##### `config`
-
-A hash of the configuration options. All values are used in the
-`server.properties` file directly.
-
-##### `install_java`
-
-Install java if it's not already installed.
-
-##### `service_ensure`
-
-Sets the ensure state of the broker service to stopped or running.
-
-##### `service_install`
-
-Install the init.d service.
-
-##### `service_restart`
-
-Whether the configuration files should trigger a service restart
-
-##### `package_dir`
-
-The directory to install kafka.
-
-#### Class: `kafka::consumer`
-
-One of the primary classes of the kafka module. This class will install a kafka consumer.
-
-**Parameters within `kafka::consumer`:**
-
-#### `version`
-
-The version of kafka that should be installed.
-
-#### `scala_version`
-
-The scala version that kafka was built with.
-
-#### `install_dir`
-
-The directory to install kafka to.
-
-#### `mirror_url`
-
-The url where the kafka is downloaded from.
-
-#### `install_java`
-
-Install java if it's not already installed.
-
-#### `package_dir`
-
-The directory to install kafka.
-
-#### Class: `kafka::mirror`
-
-One of the primary classes of the kafka module. This class will install a kafka mirror.
-
-**Parameters within `kafka::mirror`:**
-
-#### `version`
-
-The version of kafka that should be installed.
-
-#### `scala_version`
-
-The scala version that kafka was built with.
-
-#### `install_dir`
-
-The directory to install kafka to.
-
-#### `mirror_url`
-
-The url where the kafka is downloaded from.
-
-#### `install_java`
-
-Install java if it's not already installed.
-
-#### `package_dir`
-
-The directory to install kafka.
-
-#### Class: `kafka::producer`
-
-One of the primary classes of the kafka module. This class will install a kafka producer.
-
-**Parameters within `kafka::producer`:**
-
-#### `version`
-
-The version of kafka that should be installed.
-
-#### `scala_version`
-
-The scala version that kafka was built with.
-
-#### `install_dir`
-
-The directory to install kafka to.
-
-#### `mirror_url`
-
-The url where the kafka is downloaded from.
-
-#### `install_java`
-
-Install java if it's not already installed.
-
-#### `package_dir`
-
-The directory to install kafka.
-
-#### Define: `kafka::topic`
-
-Defined type that creates Kafka topics.
-
 ## Reference
 
-### Classes
-
-#### Public Classes
-
-* `kafka`: Guides the basic installation of kafka binaries
-* `kafka::broker`: Guides the basic installation of a kafka broker
-* `kafka::consumer`: Guides the basic installation of a kafka consumer
-* `kafka::mirror`: Guides the basic installation of a kafka mirror
-* `kafka::producer`: Guides the basic installation of a kafka producer
-
-#### Private Classes
-
-* [`kafka::broker::config`]  Manages all the default configuration of the kafka broker application
-* [`kafka::broker::install`] Manages the installation of the kafka packages
-* [`kafka::broker::service`] Manages the kafka server service
-* [`kafka::consumer::config`]  Manages all the default configuration of the kafka consumer application
-* [`kafka::consumer::install`] Manages the installation of the kafka packages
-* [`kafka::consumer::service`] Manages the kafka server service
-* [`kafka::mirror::config`]  Manages all the default configuration of the kafka mirror application
-* [`kafka::mirror::install`] Manages the installation of the kafka packages
-* [`kafka::mirror::service`] Manages the kafka server service
-* [`kafka::producer::config`]  Manages all the default configuration of the kafka producer application
-* [`kafka::producer::install`] Manages the installation of the kafka packages
-* [`kafka::producer::service`] Manages the kafka server service
-
-#### Defined Types
-
-* `kafka::topic` Create kafka topics
+The [reference][1] documentation of this module is generated using [puppetlabs/puppetlabs-strings][2].
 
 ## Limitations
 
@@ -355,6 +117,17 @@ It is tested with the OSS version of Puppet (>= 5.5) only.
 
 ## Development
 
-### Contributing
+This module has grown over time based on a range of contributions from people
+using it. If you follow these [contributing][3] guidelines your patch will
+likely make it into a release a little more quickly.
 
-Please read CONTRIBUTING.md for full details on contributing to this project.
+## Author
+
+This module is maintained by [Vox Pupuli][4]. It was originally written and
+maintained by [Liam Bennett][5].
+
+[1]: https://github.com/voxpupuli/puppet-kafka/blob/master/REFERENCE.md
+[2]: https://github.com/puppetlabs/puppetlabs-strings
+[3]: https://github.com/voxpupuli/puppet-kafka/blob/master/.github/CONTRIBUTING.md
+[4]: https://voxpupuli.org
+[5]: https://www.opentable.com

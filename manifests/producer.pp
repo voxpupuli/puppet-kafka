@@ -1,109 +1,106 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::producer
+# @summary
+#   This class handles the Kafka (producer).
 #
-# This class will install kafka with the producer role.
+# @example Basic usage
+#   class { 'kafka::producer':
+#     config => {
+#       'client.id'         => '0',
+#       'zookeeper.connect' => 'localhost:2181'
+#     }
+#   }
 #
-# === Requirements/Dependencies
+# @param input
+#   Set named pipe as input.
 #
-# Currently requires the puppetlabs/stdlib module on the Puppet Forge in
-# order to validate much of the the provided configuration.
+# @param kafka_version
+#   The version of Kafka that should be installed.
 #
-# === Parameters
+# @param scala_version
+#   The scala version what Kafka was built with.
 #
-# [*kafka_version*]
-# The version of kafka that should be installed.
+# @param install_dir
+#   The directory to install Kafka to.
 #
-# [*scala_version*]
-# The scala version what kafka was built with.
+# @param mirror_url
+#   The url where the Kafka is downloaded from.
 #
-# [*install_dir*]
-# The directory to install kafka to.
+# @param manage_java
+#   Install java if it's not already installed.
 #
-# [*mirror_url*]
-# The url where the kafka is downloaded from.
+# @param package_dir
+#   The directory to install Kafka.
 #
-# [*manage_java*]
-# Install java if it's not already installed.
+# @param package_name
+#   Package name, when installing Kafka from a package.
 #
-# [*package_dir*]
-# The directory to install kafka.
+# @param package_ensure
+#   Package version or ensure state, when installing Kafka from a package.
 #
-# [*package_name*]
-# Package name, when installing kafka from a package.
+# @param user_name
+#   User to run Kafka as.
 #
-# [*package_ensure*]
-# Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
+# @param group_name
+#   Group to run Kafka as.
 #
-# [*user_name*]
-# User to run kafka as.
+# @param user_id
+#   Create the Kafka user with this ID.
 #
-# [*group_name*]
-# Group to run kafka as.
+# @param group_id
+#   Create the Kafka group with this ID.
 #
-# [*user_id*]
-# Create the kafka user with this ID.
+# @param manage_user
+#   Create the Kafka user if it's not already present.
 #
-# [*group_id*]
-# Create the kafka group with this ID.
+# @param manage_group
+#   Create the Kafka group if it's not already present.
 #
-# [*manage_user*]
-# Create the kafka user if it's not already present.
+# @param config_mode
+#   The permissions for the config files.
 #
-# [*manage_group*]
-# Create the kafka group if it's not already present.
+# @param config_dir
+#   The directory to create the Kafka config files to.
 #
-# [*config_mode*]
-# The permissions for the config files.
+# @param log_dir
+#   The directory for Kafka log files.
 #
-# [*config_dir*]
-# The directory to create the kafka config files to.
+# @param bin_dir
+#   The directory where the Kafka scripts are.
 #
-# [*log_dir*]
-# The directory for kafka log files.
+# @param service_name
+#   Set the name of the service.
 #
-# [*bin_dir*]
-# The directory where the kafka scripts are.
+# @param manage_service
+#   Install the init.d or systemd service.
 #
-# [*service_name*]
-# Set the name of the service.
+# @param service_ensure
+#   Set the ensure state of the service.
 #
-# [*manage_service*]
-# Install the init.d or systemd service.
+# @param service_restart
+#   Whether the configuration files should trigger a service restart.
 #
-# [*service_ensure*]
-# Set the ensure state of the service to 'stopped' or 'running'.
+# @param service_requires
+#   Set the list of services required to be running before Kafka.
 #
-# [*service_restart*]
-# Whether the configuration files should trigger a service restart.
+# @param limit_nofile
+#   Set the 'LimitNOFILE' option of the systemd service.
 #
-# [*service_requires*]
-# Set the list of services required to be running before Kafka.
+# @param limit_core
+#   Set the 'LimitCORE' option of the systemd service.
 #
-# [*limit_nofile*]
-# Set the 'LimitNOFILE' option of the systemd service.
+# @param env
+#   A hash of the environment variables to set.
 #
-# [*limit_core*]
-# Set the 'LimitCORE' option of the systemd service.
+# @param config
+#   A hash of the producer configuration options.
 #
-# [*env*]
-# A hash of the environment variables to set.
+# @param service_config
+#   A hash of the `kafka-console-producer.sh` script options.
 #
-# [*config*]
-# A hash of the producer configuration options.
+# @param jmx_opts
+#   Set the JMX options.
 #
-# [*service_config*]
-# A hash of the `kafka-console-producer.sh` script options.
-#
-# === Examples
-#
-# Create the producer service connecting to a local zookeeper
-#
-# class { 'kafka::producer':
-#  config => { 'client.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-# }
+# @param log4j_opts
+#   Set the Log4j options.
 #
 class kafka::producer (
   Optional[String[1]] $input,

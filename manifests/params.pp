@@ -1,19 +1,11 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class kafka::params
-#
-# This class is meant to be called from kafka::broker
-# It sets variables according to platform
+# @summary
+#   This class provides default parameters.
 #
 class kafka::params {
-
-  # this is all only tested on Debian and RedHat
-  # params gets included everywhere so we can do the validation here
   unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
     warning("${facts['os']['family']} is not supported")
   }
+
   $kafka_version  = '2.4.1'
   $scala_version  = '2.12'
   $install_dir    = "/opt/kafka-${scala_version}-${kafka_version}"
@@ -69,5 +61,4 @@ class kafka::params {
 
   $consumer_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9993'
   $consumer_log4j_opts = $broker_log4j_opts
-
 }

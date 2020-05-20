@@ -1,74 +1,80 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka
+# @summary
+#   This class handles the Kafka requirements.
 #
-# This class will install kafka binaries
+# @example Basic usage
+#   class { 'kafka': }
 #
-# === Requirements/Dependencies
+# @param kafka_version
+#   The version of Kafka that should be installed.
 #
-# Currently requires the puppetlabs/stdlib module on the Puppet Forge in
-# order to validate much of the the provided configuration.
+# @param scala_version
+#   The scala version what Kafka was built with.
 #
-# === Parameters
+# @param install_dir
+#   The directory to install Kafka to.
 #
-# [*kafka_version*]
-# The version of kafka that should be installed.
+# @param mirror_url
+#   The url where the Kafka is downloaded from.
 #
-# [*scala_version*]
-# The scala version what kafka was built with.
+# @param manage_java
+#   Install java if it's not already installed.
 #
-# [*install_dir*]
-# The directory to install kafka to.
+# @param package_dir
+#   The directory to install Kafka.
 #
-# [*mirror_url*]
-# The url where the kafka is downloaded from.
+# @param package_name
+#   Package name, when installing Kafka from a package.
 #
-# [*manage_java*]
-# Install java if it's not already installed.
+# @param mirror_subpath
+#   The sub directory where the source is downloaded from.
 #
-# [*package_dir*]
-# The directory to install kafka.
+# @param proxy_server
+#   Set proxy server, when installing Kafka from source.
 #
-# [*package_name*]
-# Package name, when installing kafka from a package.
+# @param proxy_port
+#   Set proxy port, when installing Kafka from source.
 #
-# [*package_ensure*]
-# Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
+# @param proxy_host
+#   Set proxy host, when installing Kafka from source.
 #
-# [*user_name*]
-# User to run kafka as.
+# @param proxy_type
+#   Set proxy type, when installing Kafka from source.
 #
-# [*group_name*]
-# Group to run kafka as.
+# @param package_ensure
+#   Package version or ensure state, when installing Kafka from a package.
 #
-# [*user_id*]
-# Create the kafka user with this ID.
+# @param user_name
+#   User to run Kafka as.
 #
-# [*system_user*]
-# Whether the kafka user is a system user or not.
+# @param group_name
+#   Group to run Kafka as.
 #
-# [*group_id*]
-# Create the kafka group with this ID.
+# @param system_user
+#   Whether the Kafka user is a system user or not.
 #
-# [*system_group*]
-# Whether the kafka group is a system group or not.
+# @param system_group
+#   Whether the Kafka group is a system group or not.
 #
-# [*manage_user*]
-# Create the kafka user if it's not already present.
+# @param user_id
+#   Create the Kafka user with this ID.
 #
-# [*manage_group*]
-# Create the kafka group if it's not already present.
+# @param group_id
+#   Create the Kafka group with this ID.
 #
-# [*config_dir*]
-# The directory to create the kafka config files to.
+# @param manage_user
+#   Create the Kafka user if it's not already present.
 #
-# [*log_dir*]
-# The directory for kafka log files.
+# @param manage_group
+#   Create the Kafka group if it's not already present.
 #
-# === Examples
+# @param config_dir
+#   The directory to create the Kafka config files to.
 #
+# @param log_dir
+#   The directory for Kafka log files.
+#
+# @param install_mode
+#   The permissions for the install directory.
 #
 class kafka (
   String[1] $kafka_version            = $kafka::params::kafka_version,
@@ -94,7 +100,7 @@ class kafka (
   Boolean $manage_group               = $kafka::params::manage_group,
   Stdlib::Absolutepath $config_dir    = $kafka::params::config_dir,
   Stdlib::Absolutepath $log_dir       = $kafka::params::log_dir,
-  Optional[String[1]] $install_mode   = $kafka::params::install_mode,
+  Stdlib::Filemode $install_mode      = $kafka::params::install_mode,
 ) inherits kafka::params {
 
   if $manage_java {
@@ -138,7 +144,6 @@ class kafka (
   }
 
   if $package_name == undef {
-
     include archive
 
     $mirror_path = $mirror_subpath ? {
@@ -218,13 +223,10 @@ class kafka (
       ],
       before          => File[$config_dir],
     }
-
   } else {
-
     package { $package_name:
       ensure => $package_ensure,
       before => File[$config_dir],
     }
-
   }
 }

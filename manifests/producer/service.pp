@@ -1,17 +1,13 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::producer::service
+# @summary
+#   This class handles the Kafka (producer) service.
 #
-# This private class is meant to be called from `kafka::producer`.
-# It manages the kafka-producer service
+# @api private
 #
 class kafka::producer::service(
   Boolean $manage_service                    = $kafka::producer::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::producer::service_ensure,
   String[1] $service_name                    = $kafka::producer::service_name,
-  String[1]$user_name                        = $kafka::producer::user_name,
+  String[1] $user_name                       = $kafka::producer::user_name,
   String[1] $group_name                      = $kafka::producer::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::producer::config_dir,
   Stdlib::Absolutepath $log_dir              = $kafka::producer::log_dir,

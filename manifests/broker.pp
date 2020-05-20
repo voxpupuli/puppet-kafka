@@ -1,115 +1,115 @@
-# Author::    Liam Bennett  (mailto:lbennett@opentable.com)
-# Copyright:: Copyright (c) 2013 OpenTable Inc
-# License::   MIT
-
-# == Class: kafka::broker
+# @summary
+#   This class handles the Kafka (broker).
 #
-# This class will install kafka with the broker role.
+# @example Basic usage
+#   class { 'kafka::broker':
+#     config => {
+#       'broker.id'         => '0',
+#       'zookeeper.connect' => 'localhost:2181'
+#     }
+#   }
 #
-# === Requirements/Dependencies
+# @param kafka_version
+#   The version of Kafka that should be installed.
 #
-# Currently requires the puppetlabs/stdlib module on the Puppet Forge in
-# order to validate much of the the provided configuration.
+# @param scala_version
+#   The scala version what Kafka was built with.
 #
-# === Parameters
+# @param install_dir
+#   The directory to install Kafka to.
 #
-# [*kafka_version*]
-# The version of kafka that should be installed.
+# @param mirror_url
+#   The url where the Kafka is downloaded from.
 #
-# [*scala_version*]
-# The scala version what kafka was built with.
+# @param manage_java
+#   Install java if it's not already installed.
 #
-# [*install_dir*]
-# The directory to install kafka to.
+# @param package_dir
+#   The directory to install Kafka.
 #
-# [*mirror_url*]
-# The url where the kafka is downloaded from.
+# @param package_name
+#   Package name, when installing Kafka from a package.
 #
-# [*manage_java*]
-# Install java if it's not already installed.
+# @param package_ensure
+#   Package version or ensure state, when installing Kafka from a package.
 #
-# [*package_dir*]
-# The directory to install kafka.
+# @param user_name
+#   User to run Kafka as.
 #
-# [*package_name*]
-# Package name, when installing kafka from a package.
+# @param group_name
+#   Group to run Kafka as.
 #
-# [*package_ensure*]
-# Package version (or 'present', 'absent', 'latest'), when installing kafka from a package.
+# @param user_id
+#   Create the Kafka user with this ID.
 #
-# [*user_name*]
-# User to run kafka as.
+# @param group_id
+#   Create the Kafka group with this ID.
 #
-# [*group_name*]
-# Group to run kafka as.
+# @param manage_user
+#   Create the Kafka user if it's not already present.
 #
-# [*user_id*]
-# Create the kafka user with this ID.
+# @param manage_group
+#   Create the Kafka group if it's not already present.
 #
-# [*group_id*]
-# Create the kafka group with this ID.
+# @param config_mode
+#   The permissions for the config files.
 #
-# [*manage_user*]
-# Create the kafka user if it's not already present.
+# @param config_dir
+#   The directory to create the Kafka config files to.
 #
-# [*manage_group*]
-# Create the kafka group if it's not already present.
+# @param log_dir
+#   The directory for Kafka log files.
 #
-# [*config_mode*]
-# The permissions for the config files.
+# @param bin_dir
+#   The directory where the Kafka scripts are.
 #
-# [*config_dir*]
-# The directory to create the kafka config files to.
+# @param service_name
+#   Set the name of the service.
 #
-# [*log_dir*]
-# The directory for kafka log files.
+# @param manage_service
+#   Install the init.d or systemd service.
 #
-# [*bin_dir*]
-# The directory where the kafka scripts are.
+# @param service_ensure
+#   Set the ensure state of the service.
 #
-# [*service_name*]
-# Set the name of the service.
+# @param service_restart
+#   Whether the configuration files should trigger a service restart.
 #
-# [*manage_service*]
-# Install the init.d or systemd service.
+# @param service_requires
+#   Set the list of services required to be running before Kafka.
 #
-# [*service_ensure*]
-# Set the ensure state of the service to 'stopped' or 'running'.
+# @param limit_nofile
+#   Set the 'LimitNOFILE' option of the systemd service.
 #
-# [*service_restart*]
-# Whether the configuration files should trigger a service restart.
+# @param limit_core
+#   Set the 'LimitCORE' option of the systemd service.
 #
-# [*service_requires*]
-# Set the list of services required to be running before Kafka.
+# @param timeout_stop
+#   Set the 'TimeoutStopSec' option of the systemd service.
 #
-# [*limit_nofile*]
-# Set the 'LimitNOFILE' option of the systemd service.
+# @param exec_stop
+#   Set the 'ExecStop' option of the systemd service to 'kafka-server-stop.sh'.
 #
-# [*limit_core*]
-# Set the 'LimitCORE' option of the systemd service.
+# @param daemon_start
+#   Use the '-daemon' option when starting Kafka with 'kafka-server-start.sh'.
 #
-# [*timeout_stop*]
-# Set the 'TimeoutStopSec' option of the systemd service.
+# @param env
+#   A hash of the environment variables to set.
 #
-# [*exec_stop*]
-# Set the 'ExecStop' option of the systemd service to 'kafka-server-stop.sh'.
+# @param config
+#   A hash of the broker configuration options.
 #
-# [*daemon_start*]
-# Use the '-daemon' option when starting Kafka with 'kafka-server-start.sh'.
+# @param heap_opts
+#   Set the Java heap size.
 #
-# [*env*]
-# A hash of the environment variables to set.
+# @param jmx_opts
+#   Set the JMX options.
 #
-# [*config*]
-# A hash of the configuration options.
+# @param log4j_opts
+#   Set the Log4j options.
 #
-# === Examples
-#
-# Create a single broker instance which talks to a local zookeeper instance.
-#
-# class { 'kafka::broker':
-#  config => { 'broker.id' => '0', 'zookeeper.connect' => 'localhost:2181' }
-# }
+# @param opts
+#   Set the Kafka options.
 #
 class kafka::broker (
   String[1] $kafka_version                   = $kafka::params::kafka_version,
