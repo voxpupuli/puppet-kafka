@@ -2,88 +2,68 @@ require 'spec_helper'
 require 'shared_examples_param_validation'
 
 describe 'kafka::consumer', type: :class do
-  let :facts do
-    {
-      osfamily: 'Debian',
-      os: { family: 'Debian' },
-      operatingsystem: 'Ubuntu',
-      operatingsystemrelease: '14.04',
-      lsbdistcodename: 'trusty',
-      architecture: 'amd64',
-      service_provider: 'upstart'
-    }
-  end
-
-  let :common_params do
-    {
-      service_config: {
-        'topic'     => 'demo',
-        'zookeeper' => 'localhost:2181'
-      }
-    }
-  end
-
-  let :params do
-    common_params
-  end
-
-  it { is_expected.to contain_class('kafka::consumer::install').that_comes_before('Class[kafka::consumer::service]') }
-  it { is_expected.to contain_class('kafka::consumer::service').that_comes_before('Class[kafka::consumer]') }
-  it { is_expected.to contain_class('kafka::consumer') }
-
-  context 'on Debian' do
-    describe 'kafka::consumer::install' do
-      context 'defaults' do
-        it { is_expected.to contain_class('kafka') }
+  on_supported_os.each do |os, facts|
+    context "on #{os}" do
+      let(:facts) do
+        facts
       end
-    end
 
-    describe 'kafka::consumer::service' do
-      context 'defaults' do
-        it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
-
-        it { is_expected.to contain_service('kafka-consumer') }
+      let :common_params do
+        {
+          service_config: {
+            'topic'     => 'demo',
+            'zookeeper' => 'localhost:2181'
+          }
+        }
       end
-    end
-  end
 
-  context 'on CentOS' do
-    let :facts do
-      {
-        osfamily: 'RedHat',
-        os: { family: 'RedHat' },
-        operatingsystem: 'CentOS',
-        operatingsystemrelease: '7',
-        operatingsystemmajrelease: '7',
-        architecture: 'amd64',
-        path: '/usr/local/sbin',
-        service_provider: 'systemd'
-      }
-    end
-
-    describe 'kafka::consumer::install' do
-      context 'defaults' do
-        it { is_expected.to contain_class('kafka') }
+      let :params do
+        common_params
       end
-    end
 
-    describe 'kafka::consumer::service' do
-      context 'defaults' do
-        it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').that_notifies('Exec[systemctl-daemon-reload]') }
+      it { is_expected.to contain_class('kafka::consumer::install').that_comes_before('Class[kafka::consumer::config]') }
+      it { is_expected.to contain_class('kafka::consumer::config').that_comes_before('Class[kafka::consumer::service]') }
+      it { is_expected.to contain_class('kafka::consumer::service').that_comes_before('Class[kafka::consumer]') }
+      it { is_expected.to contain_class('kafka::consumer') }
 
-        it do
-          is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
-            ensure: 'absent'
-          )
+      describe 'kafka::consumer::install' do
+        context 'defaults' do
+          it { is_expected.to contain_class('kafka') }
         end
-
-        it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-consumer]') }
-
-        it { is_expected.to contain_service('kafka-consumer') }
       end
+
+      describe 'kafka::consumer::config' do
+        context 'defaults' do
+          it { is_expected.to contain_file('/opt/kafka/config/consumer.properties') }
+        end
+      end
+
+      case facts[:service_provider]
+      when 'systemd'
+        describe 'kafka::consumer::service' do
+          context 'defaults' do
+            it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').that_notifies('Exec[systemctl-daemon-reload]') }
+
+            it do
+              is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
+                ensure: 'absent'
+              )
+            end
+
+            it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-consumer]') }
+            it { is_expected.to contain_service('kafka-consumer') }
+          end
+        end
+      else
+        describe 'kafka::consumer::service' do
+          context 'defaults' do
+            it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
+            it { is_expected.to contain_service('kafka-consumer') }
+          end
+        end
+      end
+
+      it_validates_parameter 'mirror_url'
     end
   end
-
-  it { is_expected.to contain_file('/opt/kafka/config/consumer.properties') }
-  it_validates_parameter 'mirror_url'
 end
