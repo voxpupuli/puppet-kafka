@@ -2,10 +2,10 @@ require 'spec_helper'
 require 'shared_examples_param_validation'
 
 describe 'kafka::consumer', type: :class do
-  on_supported_os.each do |os, facts|
+  on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) do
-        facts
+        os_facts
       end
 
       let :common_params do
@@ -38,7 +38,7 @@ describe 'kafka::consumer', type: :class do
         end
       end
 
-      case facts[:service_provider]
+      case os_facts[:service_provider]
       when 'systemd'
         describe 'kafka::consumer::service' do
           context 'defaults' do
