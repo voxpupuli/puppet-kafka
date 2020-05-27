@@ -38,28 +38,25 @@ describe 'kafka::consumer', type: :class do
         end
       end
 
-      case os_facts[:service_provider]
-      when 'systemd'
-        describe 'kafka::consumer::service' do
-          context 'defaults' do
-            it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').that_notifies('Exec[systemctl-daemon-reload]') }
+      describe 'kafka::consumer::service', if: os_facts[:service_provider] == 'systemd' do
+        context 'defaults' do
+          it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').that_notifies('Exec[systemctl-daemon-relad]') }
 
-            it do
-              is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
-                ensure: 'absent'
-              )
-            end
-
-            it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-consumer]') }
-            it { is_expected.to contain_service('kafka-consumer') }
+          it do
+            is_expected.to contain_file('/etc/init.d/kafka-consumer').with(
+              ensure: 'absent'
+            )
           end
+
+          it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-consumer]') }
+          it { is_expected.to contain_service('kafka-consumer') }
         end
-      else
-        describe 'kafka::consumer::service' do
-          context 'defaults' do
-            it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
-            it { is_expected.to contain_service('kafka-consumer') }
-          end
+      end
+
+      describe 'kafka::consumer::service', unless: os_facts[:service_provider] == 'systemd' do
+        context 'defaults' do
+          it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
+          it { is_expected.to contain_service('kafka-consumer') }
         end
       end
 

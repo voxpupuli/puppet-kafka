@@ -39,19 +39,16 @@ describe 'kafka::producer', type: :class do
         end
       end
 
-      case os_facts[:service_provider]
-      when 'systemd'
-        describe 'kafka::producer::service' do
-          context 'defaults' do
-            it { is_expected.to raise_error(Puppet::Error, %r{Console Producer is not supported on systemd, because the stdin of the process cannot be redirected}) }
-          end
+      describe 'kafka::producer::service', if: os_facts[:service_provider] == 'systemd' do
+        context 'defaults' do
+          it { is_expected.to raise_error(Puppet::Error, %r{Console Producer is not supported on systemd, because the stdin of the process cannot be redirected}) }
         end
-      else
-        describe 'kafka::producer::service' do
-          context 'defaults' do
-            it { is_expected.to contain_file('/etc/init.d/kafka-producer') }
-            it { is_expected.to contain_service('kafka-producer') }
-          end
+      end
+
+      describe 'kafka::producer::service', unless: os_facts[:service_provider] == 'systemd' do
+        context 'defaults' do
+          it { is_expected.to contain_file('/etc/init.d/kafka-producer') }
+          it { is_expected.to contain_service('kafka-producer') }
         end
       end
 

@@ -37,101 +37,98 @@ describe 'kafka::broker', type: :class do
         end
       end
 
-      case os_facts[:service_provider]
-      when 'systemd'
-        describe 'kafka::broker::service' do
-          context 'manage_service false' do
-            let :params do
-              common_params.merge(manage_service: false)
-            end
-
-            it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service') }
-            it { is_expected.not_to contain_service('kafka') }
+      describe 'kafka::broker::service', if: os_facts[:service_provider] == 'systemd' do
+        context 'manage_service false' do
+          let :params do
+            common_params.merge(manage_service: false)
           end
 
-          context 'defaults' do
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=network\.target syslog\.target$} }
-            it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
-            it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
-
-            it do
-              is_expected.to contain_file('/etc/init.d/kafka').with(
-                ensure: 'absent'
-              )
-            end
-
-            it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka]') }
-            it { is_expected.to contain_service('kafka') }
-          end
-
-          context 'limit_nofile set' do
-            let :params do
-              {
-                limit_nofile: '65536'
-              }
-            end
-
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
-          end
-
-          context 'limit_core set' do
-            let :params do
-              {
-                limit_core: 'infinity'
-              }
-            end
-
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
-          end
-
-          context 'service_requires set' do
-            let :params do
-              {
-                service_requires: ['dummy.target']
-              }
-            end
-
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=dummy\.target$} }
-          end
+          it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service') }
+          it { is_expected.not_to contain_service('kafka') }
         end
-      else
-        describe 'kafka::broker::service' do
-          context 'manage_service false' do
-            let :params do
-              common_params.merge(manage_service: false)
-            end
 
-            it { is_expected.not_to contain_file('/etc/init.d/kafka') }
-            it { is_expected.not_to contain_service('kafka') }
+        context 'defaults' do
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').that_notifies('Exec[systemctl-daemon-reload]') }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=network\.target syslog\.target$} }
+          it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
+          it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
+
+          it do
+            is_expected.to contain_file('/etc/init.d/kafka').with(
+              ensure: 'absent'
+            )
           end
 
-          context 'defaults' do
-            it { is_expected.to contain_file('/etc/init.d/kafka') }
-            it { is_expected.to contain_service('kafka') }
+          it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka]') }
+          it { is_expected.to contain_service('kafka') }
+        end
 
-            context 'limit_nofile set' do
-              let :params do
-                {
-                  limit_nofile: '65536'
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -n 65536$} }
-            end
-
-            context 'limit_core set' do
-              let :params do
-                {
-                  limit_core: 'infinity'
-                }
-              end
-
-              it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -c infinity$} }
-            end
+        context 'limit_nofile set' do
+          let :params do
+            {
+              limit_nofile: '65536'
+            }
           end
+
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
+        end
+
+        context 'limit_core set' do
+          let :params do
+            {
+              limit_core: 'infinity'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
+        end
+
+        context 'service_requires set' do
+          let :params do
+            {
+              service_requires: ['dummy.target']
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=dummy\.target$} }
+        end
+      end
+
+      describe 'kafka::broker::service', unless: os_facts[:service_provider] == 'systemd' do
+        context 'manage_service false' do
+          let :params do
+            common_params.merge(manage_service: false)
+          end
+
+          it { is_expected.not_to contain_file('/etc/init.d/kafka') }
+          it { is_expected.not_to contain_service('kafka') }
+        end
+
+        context 'defaults' do
+          it { is_expected.to contain_file('/etc/init.d/kafka') }
+          it { is_expected.to contain_service('kafka') }
+        end
+
+        context 'limit_nofile set' do
+          let :params do
+            {
+              limit_nofile: '65536'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -n 65536$} }
+        end
+
+        context 'limit_core set' do
+          let :params do
+            {
+              limit_core: 'infinity'
+            }
+          end
+
+          it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -c infinity$} }
         end
       end
 
