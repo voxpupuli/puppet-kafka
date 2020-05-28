@@ -46,9 +46,7 @@ shared_examples 'mirror_url' do
                 context "with port <#{port}>" do
                   mirror_url = "#{prefix}#{domain_name}#{port}#{path}"
                   context "URL => <#{mirror_url}>" do
-                    let :params do
-                      common_params.merge(mirror_url: mirror_url)
-                    end
+                    let(:params) { super().merge(mirror_url: mirror_url) }
 
                     it { is_expected.to compile } if valid_domain && valid_prefix && valid_path && valid_port
                   end
