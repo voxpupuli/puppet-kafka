@@ -8,7 +8,7 @@ describe 'kafka::producer', type: :class do
         os_facts
       end
 
-      let :common_params do
+      let :params do
         {
           service_config: {
             'broker-list' => 'localhost:9092',
@@ -16,10 +16,6 @@ describe 'kafka::producer', type: :class do
           },
           input: '/tmp/kafka-producer'
         }
-      end
-
-      let :params do
-        common_params
       end
 
       it { is_expected.to contain_class('kafka::producer::install').that_comes_before('Class[kafka::producer::config]') }

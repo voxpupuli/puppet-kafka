@@ -8,7 +8,7 @@ describe 'kafka::mirror', type: :class do
         os_facts
       end
 
-      let :common_params do
+      let :params do
         {
           consumer_config: {
             'group.id'          => 'kafka-mirror',
@@ -18,10 +18,6 @@ describe 'kafka::mirror', type: :class do
             'bootstrap.servers' => 'localhost:9092'
           }
         }
-      end
-
-      let :params do
-        common_params
       end
 
       it { is_expected.to contain_class('kafka::mirror::install').that_comes_before('Class[kafka::mirror::config]') }

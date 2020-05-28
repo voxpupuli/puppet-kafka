@@ -8,17 +8,13 @@ describe 'kafka::consumer', type: :class do
         os_facts
       end
 
-      let :common_params do
+      let :params do
         {
           service_config: {
             'topic'     => 'demo',
             'zookeeper' => 'localhost:2181'
           }
         }
-      end
-
-      let :params do
-        common_params
       end
 
       it { is_expected.to contain_class('kafka::consumer::install').that_comes_before('Class[kafka::consumer::config]') }
