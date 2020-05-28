@@ -42,26 +42,18 @@ describe 'kafka::mirror', type: :class do
         end
       end
 
-      describe 'kafka::mirror::service', if: os_facts[:service_provider] == 'systemd' do
+      describe 'kafka::mirror::service' do
         context 'defaults' do
-          it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
-          it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).propertie} }
-
-          it do
-            is_expected.to contain_file('/etc/init.d/kafka-mirror').with(
-              ensure: 'absent'
-            )
+          if os_facts[:service_provider] == 'systemd'
+            it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_ensure('absent') }
+            it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
+            it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).propertie} }
+            it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-mirror]') }
+          else
+            it { is_expected.to contain_file('/etc/init.d/kafka-mirror') }
+            it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).properties} }
           end
 
-          it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-mirror]') }
-          it { is_expected.to contain_service('kafka-mirror') }
-        end
-      end
-
-      describe 'kafka::mirror::service', unless: os_facts[:service_provider] == 'systemd' do
-        context 'defaults' do
-          it { is_expected.to contain_file('/etc/init.d/kafka-mirror') }
-          it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).properties} }
           it { is_expected.to contain_service('kafka-mirror') }
         end
       end
