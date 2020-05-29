@@ -2,7 +2,7 @@
 #   This class provides default parameters.
 #
 class kafka::params {
-  unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
+  unless $facts['os']['family'] =~ /(RedHat|Debian|Suse)/ {
     warning("${facts['os']['family']} is not supported")
   }
 
@@ -23,6 +23,14 @@ class kafka::params {
   $proxy_type     = undef
   $package_ensure = 'present'
   $user_name      = 'kafka'
+  if $facts['service_provider'] == 'systemd' {
+    $user_shell     = $facts['os']['family'] ? {
+      /RedHat|Suse/ => '/sbin/nologin',
+      'Debian'      => '/usr/sbin/nologin',
+    }
+  } else {
+    $user_shell = '/bin/bash'
+  }
   $group_name     = 'kafka'
   $user_id        = undef
   $group_id       = undef
@@ -37,8 +45,8 @@ class kafka::params {
   $service_ensure = 'running'
   $service_restart = true
   $service_requires = $facts['os']['family'] ? {
-    'RedHat' => ['network.target', 'syslog.target'],
-    default  => [],
+    /RedHat|Suse/ => ['network.target', 'syslog.target'],
+    default       => [],
   }
   $limit_nofile = undef
   $limit_core = undef

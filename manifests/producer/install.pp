@@ -16,6 +16,7 @@ class kafka::producer::install {
       manage_user    => $kafka::producer::manage_user,
       user_id        => $kafka::producer::user_id,
       user_name      => $kafka::producer::user_name,
+      user_shell     => $kafka::producer::user_shell,
       config_dir     => $kafka::producer::config_dir,
       log_dir        => $kafka::producer::log_dir,
       mirror_url     => $kafka::producer::mirror_url,

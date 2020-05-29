@@ -1,5 +1,16 @@
 require 'spec_helper_acceptance'
 
+if fact('operatingsystemmajrelease') == '6' && fact('osfamily') == 'RedHat'
+  user_shell = '/bin/bash'
+else
+  case fact('osfamily')
+  when 'RedHat', 'Suse'
+    user_shell = '/sbin/nologin'
+  when 'Debian'
+    user_shell = '/usr/sbin/nologin'
+  end
+end
+
 describe 'kafka::consumer' do
   it 'works with no errors' do
     pp = <<-EOS
@@ -37,7 +48,7 @@ describe 'kafka::consumer' do
       describe user('kafka') do
         it { is_expected.to exist }
         it { is_expected.to belong_to_group 'kafka' }
-        it { is_expected.to have_login_shell '/bin/bash' }
+        it { is_expected.to have_login_shell user_shell }
       end
 
       describe file('/var/tmp/kafka') do
@@ -132,7 +143,7 @@ describe 'kafka::consumer' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe file('/etc/init.d/kafka-consumer'), if: (fact('operatingsystemmajrelease') =~ %r{(5|6)} && fact('osfamily') == 'RedHat') do
+      describe file('/etc/init.d/kafka-consumer'), if: (fact('operatingsystemmajrelease') == '6' && fact('osfamily') == 'RedHat') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
