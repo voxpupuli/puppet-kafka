@@ -4,6 +4,44 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v7.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v7.0.0) (2020-06-03)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v6.0.0...v7.0.0)
+
+**Breaking changes:**
+
+- Add parameter user\_shell [\#315](https://github.com/voxpupuli/puppet-kafka/pull/315) ([dhoppe](https://github.com/dhoppe))
+- Rename parameters [\#303](https://github.com/voxpupuli/puppet-kafka/pull/303) ([dhoppe](https://github.com/dhoppe))
+- Make owner of files/directories configurable [\#299](https://github.com/voxpupuli/puppet-kafka/pull/299) ([dhoppe](https://github.com/dhoppe))
+
+**Implemented enhancements:**
+
+- Add support for Hiera [\#316](https://github.com/voxpupuli/puppet-kafka/pull/316) ([dhoppe](https://github.com/dhoppe))
+- Add support for SLES 11/12/15 [\#314](https://github.com/voxpupuli/puppet-kafka/pull/314) ([dhoppe](https://github.com/dhoppe))
+- Add support for Puppet Strings [\#304](https://github.com/voxpupuli/puppet-kafka/pull/304) ([dhoppe](https://github.com/dhoppe))
+- Add function assert\_private\(\) [\#301](https://github.com/voxpupuli/puppet-kafka/pull/301) ([dhoppe](https://github.com/dhoppe))
+- Add support for Debian 10, Ubuntu 18.04 [\#297](https://github.com/voxpupuli/puppet-kafka/pull/297) ([dhoppe](https://github.com/dhoppe))
+
+**Fixed bugs:**
+
+- Fix init script parameter bug [\#307](https://github.com/voxpupuli/puppet-kafka/pull/307) ([pmbuko](https://github.com/pmbuko))
+- Match params of init script with the ones of systemd unit [\#281](https://github.com/voxpupuli/puppet-kafka/pull/281) ([tooooots](https://github.com/tooooots))
+
+**Closed issues:**
+
+- Incorrect tag style in init.erb template causes minor bug in generated file [\#306](https://github.com/voxpupuli/puppet-kafka/issues/306)
+- config\_dir permissions not set, owned by root, kafka user can't read - kafka 2.5.0 [\#305](https://github.com/voxpupuli/puppet-kafka/issues/305)
+- Add support for SLES / OpenSuSE [\#300](https://github.com/voxpupuli/puppet-kafka/issues/300)
+- Support for Kafka 2.0.0? [\#280](https://github.com/voxpupuli/puppet-kafka/issues/280)
+
+**Merged pull requests:**
+
+- Refactor unit tests [\#313](https://github.com/voxpupuli/puppet-kafka/pull/313) ([dhoppe](https://github.com/dhoppe))
+- Specify data types as deeply as possible [\#312](https://github.com/voxpupuli/puppet-kafka/pull/312) ([dhoppe](https://github.com/dhoppe))
+- Use latest available version of ZooKeeper in acceptance tests [\#309](https://github.com/voxpupuli/puppet-kafka/pull/309) ([dhoppe](https://github.com/dhoppe))
+- Allow deric/zookeeper 1.x [\#308](https://github.com/voxpupuli/puppet-kafka/pull/308) ([dhoppe](https://github.com/dhoppe))
+- Use voxpupuli-acceptance [\#296](https://github.com/voxpupuli/puppet-kafka/pull/296) ([ekohl](https://github.com/ekohl))
+
 ## [v6.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v6.0.0) (2020-04-07)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v5.3.0...v6.0.0)
@@ -22,6 +60,9 @@ These should not affect the functionality of the module.
 - Is this module abandoned?  [\#290](https://github.com/voxpupuli/puppet-kafka/issues/290)
 - New version/tag [\#289](https://github.com/voxpupuli/puppet-kafka/issues/289)
 - Proxy Server Support [\#285](https://github.com/voxpupuli/puppet-kafka/issues/285)
+- Root owns config directory \(but not files in it\), ignoring $user [\#273](https://github.com/voxpupuli/puppet-kafka/issues/273)
+- check debian support [\#254](https://github.com/voxpupuli/puppet-kafka/issues/254)
+- Documentation: OS Compability [\#244](https://github.com/voxpupuli/puppet-kafka/issues/244)
 
 **Merged pull requests:**
 
