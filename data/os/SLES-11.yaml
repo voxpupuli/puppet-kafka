@@ -1,0 +1,14 @@
+---
+kafka::user_shell: '/bin/bash'
+
+kafka::broker::user_shell: '/bin/bash'
+kafka::broker::service_requires: []
+
+kafka::consumer::user_shell: '/bin/bash'
+kafka::consumer::service_requires: []
+
+kafka::mirror::user_shell: '/bin/bash'
+kafka::mirror::service_requires: []
+
+kafka::producer::user_shell: '/bin/bash'
+kafka::producer::service_requires: []
