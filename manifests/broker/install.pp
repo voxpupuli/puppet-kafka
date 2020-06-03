@@ -16,6 +16,7 @@ class kafka::broker::install {
       manage_user    => $kafka::broker::manage_user,
       user_id        => $kafka::broker::user_id,
       user_name      => $kafka::broker::user_name,
+      user_shell     => $kafka::broker::user_shell,
       config_dir     => $kafka::broker::config_dir,
       log_dir        => $kafka::broker::log_dir,
       mirror_url     => $kafka::broker::mirror_url,

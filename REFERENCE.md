@@ -163,6 +163,14 @@ User to run Kafka as.
 
 Default value: $kafka::params::user_name
 
+##### `user_shell`
+
+Data type: `Stdlib::Absolutepath`
+
+Login shell of the Kafka user.
+
+Default value: $kafka::params::user_shell
+
 ##### `group_name`
 
 Data type: `String[1]`
@@ -335,6 +343,14 @@ Data type: `String[1]`
 User to run Kafka as.
 
 Default value: $kafka::params::user_name
+
+##### `user_shell`
+
+Data type: `Stdlib::Absolutepath`
+
+Login shell of the Kafka user.
+
+Default value: $kafka::params::user_shell
 
 ##### `group_name`
 
@@ -628,6 +644,14 @@ Data type: `String[1]`
 User to run Kafka as.
 
 Default value: $kafka::params::user_name
+
+##### `user_shell`
+
+Data type: `Stdlib::Absolutepath`
+
+Login shell of the Kafka user.
+
+Default value: $kafka::params::user_shell
 
 ##### `group_name`
 
@@ -968,6 +992,14 @@ User to run Kafka as.
 
 Default value: $kafka::params::user_name
 
+##### `user_shell`
+
+Data type: `Stdlib::Absolutepath`
+
+Login shell of the Kafka user.
+
+Default value: $kafka::params::user_shell
+
 ##### `group_name`
 
 Data type: `String[1]`
@@ -1254,6 +1286,14 @@ Data type: `String[1]`
 User to run Kafka as.
 
 Default value: $kafka::params::user_name
+
+##### `user_shell`
+
+Data type: `Stdlib::Absolutepath`
+
+Login shell of the Kafka user.
+
+Default value: $kafka::params::user_shell
 
 ##### `group_name`
 

@@ -16,6 +16,7 @@ class kafka::consumer::install {
       manage_user    => $kafka::consumer::manage_user,
       user_id        => $kafka::consumer::user_id,
       user_name      => $kafka::consumer::user_name,
+      user_shell     => $kafka::consumer::user_shell,
       config_dir     => $kafka::consumer::config_dir,
       log_dir        => $kafka::consumer::log_dir,
       mirror_url     => $kafka::consumer::mirror_url,

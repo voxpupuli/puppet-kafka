@@ -23,6 +23,14 @@ class kafka::params {
   $proxy_type     = undef
   $package_ensure = 'present'
   $user_name      = 'kafka'
+  if $facts['service_provider'] == 'systemd' {
+    $user_shell     = $facts['os']['family'] ? {
+      /RedHat|Suse/ => '/sbin/nologin',
+      'Debian'      => '/usr/sbin/nologin',
+    }
+  } else {
+    $user_shell = '/bin/bash'
+  }
   $group_name     = 'kafka'
   $user_id        = undef
   $group_id       = undef

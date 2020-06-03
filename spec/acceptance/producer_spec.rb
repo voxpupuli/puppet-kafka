@@ -1,5 +1,16 @@
 require 'spec_helper_acceptance'
 
+if fact('operatingsystemmajrelease') == '6' && fact('osfamily') == 'RedHat'
+  user_shell = '/bin/bash'
+else
+  case fact('osfamily')
+  when 'RedHat', 'Suse'
+    user_shell = '/sbin/nologin'
+  when 'Debian'
+    user_shell = '/usr/sbin/nologin'
+  end
+end
+
 describe 'kafka::producer', if: (fact('operatingsystemmajrelease') == '6' && fact('osfamily') == 'RedHat') do # systemd systems not supported by kafka::producer::service
   it 'works with no errors' do
     pp = <<-EOS
@@ -50,7 +61,7 @@ describe 'kafka::producer', if: (fact('operatingsystemmajrelease') == '6' && fac
       describe user('kafka') do
         it { is_expected.to exist }
         it { is_expected.to belong_to_group 'kafka' }
-        it { is_expected.to have_login_shell '/bin/bash' }
+        it { is_expected.to have_login_shell user_shell }
       end
 
       describe file('/var/tmp/kafka') do

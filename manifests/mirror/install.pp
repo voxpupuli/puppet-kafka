@@ -16,6 +16,7 @@ class kafka::mirror::install {
       manage_user    => $kafka::mirror::manage_user,
       user_id        => $kafka::mirror::user_id,
       user_name      => $kafka::mirror::user_name,
+      user_shell     => $kafka::mirror::user_shell,
       config_dir     => $kafka::mirror::config_dir,
       log_dir        => $kafka::mirror::log_dir,
       mirror_url     => $kafka::mirror::mirror_url,
