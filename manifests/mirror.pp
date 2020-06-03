@@ -124,7 +124,7 @@ class kafka::mirror (
   Optional[String[1]] $package_name          = $kafka::params::package_name,
   String[1] $package_ensure                  = $kafka::params::package_ensure,
   String[1] $user_name                       = $kafka::params::user_name,
-  String[1] $user_shell                      = $kafka::params::user_shell,
+  Stdlib::Absolutepath $user_shell           = $kafka::params::user_shell,
   String[1] $group_name                      = $kafka::params::group_name,
   Optional[Integer] $user_id                 = $kafka::params::user_id,
   Optional[Integer] $group_id                = $kafka::params::group_id,

@@ -94,7 +94,7 @@ class kafka (
   Optional[String[1]] $proxy_type     = $kafka::params::proxy_type,
   String[1] $package_ensure           = $kafka::params::package_ensure,
   String[1] $user_name                = $kafka::params::user_name,
-  String[1] $user_shell               = $kafka::params::user_shell,
+  Stdlib::Absolutepath $user_shell    = $kafka::params::user_shell,
   String[1] $group_name               = $kafka::params::group_name,
   Boolean $system_user                = $kafka::params::system_user,
   Boolean $system_group               = $kafka::params::system_group,
