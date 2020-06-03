@@ -23,14 +23,7 @@ class kafka::params {
   $proxy_type     = undef
   $package_ensure = 'present'
   $user_name      = 'kafka'
-  if $facts['service_provider'] == 'systemd' {
-    $user_shell     = $facts['os']['family'] ? {
-      /RedHat|Suse/ => '/sbin/nologin',
-      'Debian'      => '/usr/sbin/nologin',
-    }
-  } else {
-    $user_shell = '/bin/bash'
-  }
+  $user_shell     = '/sbin/nologin'
   $group_name     = 'kafka'
   $user_id        = undef
   $group_id       = undef
@@ -41,22 +34,18 @@ class kafka::params {
   $config_mode    = '0644'
   $install_mode   = '0755'
 
-  $manage_service = true
-  $service_ensure = 'running'
-  $service_restart = true
-  $service_requires = $facts['os']['family'] ? {
-    /RedHat|Suse/ => ['network.target', 'syslog.target'],
-    default       => [],
-  }
-  $limit_nofile = undef
-  $limit_core = undef
-  $timeout_stop = undef
-  $exec_stop = false
-  $daemon_start = false
+  $manage_service   = true
+  $service_ensure   = 'running'
+  $service_restart  = true
+  $service_requires = ['network.target', 'syslog.target']
+  $limit_nofile     = undef
+  $limit_core       = undef
+  $timeout_stop     = undef
+  $exec_stop        = false
+  $daemon_start     = false
 
   $broker_heap_opts  = '-Xmx1G -Xms1G'
-  $broker_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false \
-  -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9990'
+  $broker_jmx_opts   = '-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.port=9990'
   $broker_log4j_opts = "-Dlog4j.configuration=file:${config_dir}/log4j.properties"
   $broker_opts       = ''
 

@@ -1,0 +1,14 @@
+---
+kafka::user_shell: '/usr/sbin/nologin' 
+
+kafka::broker::user_shell: '/usr/sbin/nologin'
+kafka::broker::service_requires: []
+
+kafka::consumer::user_shell: '/usr/sbin/nologin'
+kafka::consumer::service_requires: []
+
+kafka::mirror::user_shell: '/usr/sbin/nologin'
+kafka::mirror::service_requires: []
+
+kafka::producer::user_shell: '/usr/sbin/nologin'
+kafka::producer::service_requires: []
