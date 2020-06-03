@@ -2,7 +2,7 @@
 #   This class provides default parameters.
 #
 class kafka::params {
-  unless $facts['os']['family'] =~ /(RedHat|Debian)/ {
+  unless $facts['os']['family'] =~ /(RedHat|Debian|Suse)/ {
     warning("${facts['os']['family']} is not supported")
   }
 
@@ -37,8 +37,8 @@ class kafka::params {
   $service_ensure = 'running'
   $service_restart = true
   $service_requires = $facts['os']['family'] ? {
-    'RedHat' => ['network.target', 'syslog.target'],
-    default  => [],
+    /RedHat|Suse/ => ['network.target', 'syslog.target'],
+    default       => [],
   }
   $limit_nofile = undef
   $limit_core = undef
