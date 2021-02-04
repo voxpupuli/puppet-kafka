@@ -13,8 +13,8 @@ describe 'kafka::topic', type: :define do
           {
             'ensure'             => 'present',
             'zookeeper'          => 'localhost:2181',
-            'replication_factor' => '1',
-            'partitions'         => '1'
+            'replication_factor' => 1,
+            'partitions'         => 1
           }
         end
 
