@@ -3,7 +3,7 @@
 #
 # @api private
 #
-class kafka::broker::service(
+class kafka::broker::service (
   Boolean $manage_service                    = $kafka::broker::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   String[1] $service_name                    = $kafka::broker::service_name,
@@ -24,7 +24,6 @@ class kafka::broker::service(
   String[1] $log4j_opts                      = $kafka::broker::log4j_opts,
   String[0] $opts                            = $kafka::broker::opts,
 ) {
-
   assert_private()
 
   if $manage_service {

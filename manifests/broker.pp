@@ -151,7 +151,6 @@ class kafka::broker (
   String[1] $log4j_opts                      = $kafka::params::broker_log4j_opts,
   String[0] $opts                            = $kafka::params::broker_opts,
 ) inherits kafka::params {
-
   class { 'kafka::broker::install': }
   -> class { 'kafka::broker::config': }
   -> class { 'kafka::broker::service': }

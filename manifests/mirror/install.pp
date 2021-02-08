@@ -4,7 +4,6 @@
 # @api private
 #
 class kafka::mirror::install {
-
   assert_private()
 
   if !defined(Class['kafka']) {

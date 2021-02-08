@@ -1,7 +1,7 @@
 # @summary
 #   This class handles the Kafka (consumer) config.
 #
-class kafka::consumer::config(
+class kafka::consumer::config (
   Boolean $manage_service          = $kafka::consumer::manage_service,
   String[1] $service_name          = $kafka::consumer::service_name,
   Boolean $service_restart         = $kafka::consumer::service_restart,
@@ -11,7 +11,6 @@ class kafka::consumer::config(
   String[1] $group_name            = $kafka::consumer::group_name,
   Stdlib::Filemode $config_mode    = $kafka::consumer::config_mode,
 ) {
-
   if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
@@ -20,7 +19,7 @@ class kafka::consumer::config(
 
   $doctag = 'consumerconfigs'
   file { "${config_dir}/consumer.properties":
-    ensure  => present,
+    ensure  => file,
     owner   => $user_name,
     group   => $group_name,
     mode    => $config_mode,

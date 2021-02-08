@@ -1,7 +1,7 @@
 # @summary
 #   This class handles the Kafka (producer) config.
 #
-class kafka::producer::config(
+class kafka::producer::config (
   Boolean $manage_service          = $kafka::producer::manage_service,
   String[1] $service_name          = $kafka::producer::service_name,
   Boolean $service_restart         = $kafka::producer::service_restart,
@@ -11,7 +11,6 @@ class kafka::producer::config(
   String[1] $group_name            = $kafka::producer::group_name,
   Stdlib::Filemode $config_mode    = $kafka::producer::config_mode,
 ) {
-
   if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
@@ -20,7 +19,7 @@ class kafka::producer::config(
 
   $doctag = 'producerconfigs'
   file { "${config_dir}/producer.properties":
-    ensure  => present,
+    ensure  => file,
     owner   => $user_name,
     group   => $group_name,
     mode    => $config_mode,

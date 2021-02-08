@@ -106,7 +106,6 @@ class kafka (
   Stdlib::Absolutepath $log_dir       = $kafka::params::log_dir,
   Stdlib::Filemode $install_mode      = $kafka::params::install_mode,
 ) inherits kafka::params {
-
   if $manage_java {
     class { 'java':
       distribution => 'jdk',
@@ -161,7 +160,7 @@ class kafka (
     $basefilename = "kafka_${scala_version}-${kafka_version}.tgz"
     $package_url = "${mirror_url}${mirror_path}/${basefilename}"
 
-    $source = $mirror_url ?{
+    $source = $mirror_url ? {
       /tgz$/ => $mirror_url,
       default  => $package_url,
     }
