@@ -267,7 +267,6 @@ The following strings are known to work:
 * debian8
 * debian9
 * debian10
-* centos6
 * centos7
 * centos8
 
