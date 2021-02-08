@@ -28,6 +28,7 @@ describe 'zookeeper prereq' do
         archive_version     => '3.6.1',
         service_provider    => $zookeeper_service_provider,
         manage_service_file => true,
+        archive_dl_site     => 'https://archive.apache.org/dist/zookeeper',
       }
     } else {
       include zookeeper
