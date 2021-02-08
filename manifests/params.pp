@@ -12,7 +12,7 @@ class kafka::params {
   $config_dir     = '/opt/kafka/config'
   $bin_dir        = '/opt/kafka/bin'
   $log_dir        = '/var/log/kafka'
-  $mirror_url     = 'https://www.apache.org/dyn/closer.lua?action=download&filename='
+  $mirror_url     = 'https://archive.apache.org/dist/'
   $mirror_subpath = "kafka/${kafka_version}"
   $manage_java    = false
   $package_dir    = '/var/tmp/kafka'
