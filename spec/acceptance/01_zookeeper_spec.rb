@@ -18,15 +18,9 @@ describe 'zookeeper prereq' do
         group  => 'zookeeper',
       }
 
-      $zookeeper_service_provider = $facts['os']['release']['major'] ? {
-        '6' => 'redhat',
-        '7' => 'systemd',
-      }
-
       class { 'zookeeper':
         install_method      => 'archive',
         archive_version     => '3.6.1',
-        service_provider    => $zookeeper_service_provider,
         manage_service_file => true,
         archive_dl_site     => 'https://archive.apache.org/dist/zookeeper',
       }
