@@ -3,7 +3,7 @@
 #
 # @api private
 #
-class kafka::mirror::config(
+class kafka::mirror::config (
   Boolean $manage_service                    = $kafka::mirror::manage_service,
   String[1] $service_name                    = $kafka::mirror::service_name,
   Boolean $service_restart                   = $kafka::mirror::service_restart,
@@ -14,7 +14,6 @@ class kafka::mirror::config(
   String[1] $group_name                      = $kafka::mirror::group_name,
   Stdlib::Filemode $config_mode              = $kafka::mirror::config_mode,
 ) {
-
   assert_private()
 
   if $consumer_config['group.id'] == '' {

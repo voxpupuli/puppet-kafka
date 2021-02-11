@@ -149,7 +149,6 @@ class kafka::mirror (
   String[1] $jmx_opts                        = $kafka::params::mirror_jmx_opts,
   String[1] $log4j_opts                      = $kafka::params::mirror_log4j_opts,
 ) inherits kafka::params {
-
   class { 'kafka::mirror::install': }
   -> class { 'kafka::mirror::config': }
   -> class { 'kafka::mirror::service': }

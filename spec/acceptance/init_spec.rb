@@ -1,14 +1,10 @@
 require 'spec_helper_acceptance'
 
-if fact('operatingsystemmajrelease') == '6' && fact('osfamily') == 'RedHat'
-  user_shell = '/bin/bash'
-else
-  case fact('osfamily')
-  when 'RedHat', 'Suse'
-    user_shell = '/sbin/nologin'
-  when 'Debian'
-    user_shell = '/usr/sbin/nologin'
-  end
+case fact('osfamily')
+when 'RedHat', 'Suse'
+  user_shell = '/sbin/nologin'
+when 'Debian'
+  user_shell = '/usr/sbin/nologin'
 end
 
 describe 'kafka' do

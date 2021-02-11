@@ -3,7 +3,7 @@
 #
 # @api private
 #
-class kafka::consumer::service(
+class kafka::consumer::service (
   Boolean $manage_service                    = $kafka::consumer::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::consumer::service_ensure,
   String[1] $service_name                    = $kafka::consumer::service_name,
@@ -20,11 +20,9 @@ class kafka::consumer::service(
   String[1] $log4j_opts                      = $kafka::consumer::log4j_opts,
   Hash[String[1],String[1]] $service_config  = $kafka::consumer::service_config,
 ) {
-
   assert_private()
 
   if $manage_service {
-
     if $service_config['topic'] == '' {
       fail('[Consumer] You need to specify a value for topic')
     }

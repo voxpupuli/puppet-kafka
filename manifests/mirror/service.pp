@@ -3,7 +3,7 @@
 #
 # @api private
 #
-class kafka::mirror::service(
+class kafka::mirror::service (
   Boolean $manage_service                    = $kafka::mirror::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::mirror::service_ensure,
   String[1] $service_name                    = $kafka::mirror::service_name,
@@ -23,7 +23,6 @@ class kafka::mirror::service(
   String[1] $jmx_opts                        = $kafka::mirror::jmx_opts,
   String[1] $log4j_opts                      = $kafka::mirror::log4j_opts,
 ) {
-
   assert_private()
 
   if $manage_service {

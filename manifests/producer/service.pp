@@ -3,7 +3,7 @@
 #
 # @api private
 #
-class kafka::producer::service(
+class kafka::producer::service (
   Boolean $manage_service                    = $kafka::producer::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::producer::service_ensure,
   String[1] $service_name                    = $kafka::producer::service_name,
@@ -21,11 +21,9 @@ class kafka::producer::service(
   String[1] $log4j_opts                      = $kafka::producer::log4j_opts,
   Hash[String[1],String[1]] $service_config  = $kafka::producer::service_config,
 ) {
-
   assert_private()
 
   if $manage_service {
-
     if $service_config['broker-list'] == '' {
       fail('[Producer] You need to specify a value for broker-list')
     }

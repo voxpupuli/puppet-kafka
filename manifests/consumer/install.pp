@@ -4,7 +4,6 @@
 # @api private
 #
 class kafka::consumer::install {
-
   assert_private()
 
   if !defined(Class['kafka']) {

@@ -110,7 +110,6 @@ This module is tested on the following platforms:
 * Debian 10
 * Ubuntu 16.04
 * Ubuntu 18.04
-* CentOS 6
 * CentOS 7
 
 It is tested with the OSS version of Puppet (>= 5.5) only.

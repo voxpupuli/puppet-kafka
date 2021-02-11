@@ -3,7 +3,7 @@
 #
 # @api private
 #
-class kafka::broker::config(
+class kafka::broker::config (
   Boolean $manage_service          = $kafka::broker::manage_service,
   String[1] $service_name          = $kafka::broker::service_name,
   Boolean $service_restart         = $kafka::broker::service_restart,
@@ -13,7 +13,6 @@ class kafka::broker::config(
   String[1] $group_name            = $kafka::broker::group_name,
   Stdlib::Filemode $config_mode    = $kafka::broker::config_mode,
 ) {
-
   assert_private()
 
   if ($manage_service and $service_restart) {
@@ -24,7 +23,7 @@ class kafka::broker::config(
 
   $doctag = 'brokerconfigs'
   file { "${config_dir}/server.properties":
-    ensure  => present,
+    ensure  => file,
     owner   => $user_name,
     group   => $group_name,
     mode    => $config_mode,
