@@ -32,20 +32,13 @@
 #   See the Kafka documentation for full details on the topic configs.
 #
 define kafka::topic (
-  String[1] $ensure                              = '',
-  String[1] $zookeeper                           = '',
-  Variant[Integer,String[1]] $replication_factor = 1,
-  Variant[Integer,String[1]] $partitions         = 1,
-  String[1] $bin_dir                             = '/opt/kafka/bin',
-  Optional[Hash[String[1],String[1]]] $config    = undef,
+  String[1] $ensure                           = '',
+  String[1] $zookeeper                        = '',
+  Integer   $replication_factor               = 1,
+  Integer   $partitions                       = 1,
+  String[1] $bin_dir                          = '/opt/kafka/bin',
+  Optional[Hash[String[1],String[1]]] $config = undef,
 ) {
-  if is_string($replication_factor) {
-    deprecation('kafka::topic', 'Please use Integer type, not String, for paramter replication_factor')
-  }
-  if is_string($partitions) {
-    deprecation('kafka::topic', 'Please use Integer type, not String, for paramter partitions')
-  }
-
   $_zookeeper          = "--zookeeper ${zookeeper}"
   $_replication_factor = "--replication-factor ${replication_factor}"
   $_partitions         = "--partitions ${partitions}"
