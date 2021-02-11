@@ -1577,7 +1577,7 @@ Default value: ''
 
 ##### `replication_factor`
 
-Data type: `Variant[Integer,String[1]]`
+Data type: `Integer`
 
 The replication factor for each partition in the topic being created. If
 not supplied, defaults to the cluster default.
@@ -1586,7 +1586,7 @@ Default value: 1
 
 ##### `partitions`
 
-Data type: `Variant[Integer,String[1]]`
+Data type: `Integer`
 
 The number of partitions for the topic being created or altered. If not
 supplied for create, defaults to the cluster default.
