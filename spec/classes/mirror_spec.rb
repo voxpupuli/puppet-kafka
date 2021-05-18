@@ -42,9 +42,7 @@ describe 'kafka::mirror', type: :class do
         context 'defaults' do
           if os_facts[:service_provider] == 'systemd'
             it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_ensure('absent') }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').that_notifies('Exec[systemctl-daemon-reload]') }
             it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).propertie} }
-            it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-mirror]') }
           else
             it { is_expected.to contain_file('/etc/init.d/kafka-mirror') }
             it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).properties} }
