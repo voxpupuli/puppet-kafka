@@ -38,8 +38,6 @@ describe 'kafka::consumer', type: :class do
         context 'defaults' do
           if os_facts[:service_provider] == 'systemd'
             it { is_expected.to contain_file('/etc/init.d/kafka-consumer').with_abent('absent') }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service').that_notifies('Exec[systemctl-daemon-relad]') }
-            it { is_expected.to contain_exec('systemctl-daemon-reload').that_comes_before('Service[kafka-consumer]') }
           else
             it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
           end
