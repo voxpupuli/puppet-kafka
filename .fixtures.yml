@@ -4,6 +4,6 @@ fixtures:
     java: 'https://github.com/puppetlabs/puppetlabs-java.git'
     stdlib: 'https://github.com/puppetlabs/puppetlabs-stdlib.git'
     zookeeper: 'https://github.com/deric/puppet-zookeeper.git'
-    systemd: 'https://github.com/camptocamp/puppet-systemd.git'
+    systemd: 'https://github.com/voxpupuli/puppet-systemd.git'
   symlinks:
     kafka: "#{source_dir}"
