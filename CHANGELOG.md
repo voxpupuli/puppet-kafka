@@ -4,6 +4,34 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v8.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v8.0.0) (2021-08-02)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v7.0.0...v8.0.0)
+
+**Breaking changes:**
+
+- Remove centos 6 [\#322](https://github.com/voxpupuli/puppet-kafka/pull/322) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
+- No longer accept deprecated String params [\#321](https://github.com/voxpupuli/puppet-kafka/pull/321) ([der-eismann](https://github.com/der-eismann))
+
+**Implemented enhancements:**
+
+- Enable customized log4j.properties files [\#200](https://github.com/voxpupuli/puppet-kafka/issues/200)
+- Allow to manage Log4j configuration [\#328](https://github.com/voxpupuli/puppet-kafka/pull/328) ([evgenkisel](https://github.com/evgenkisel))
+
+**Fixed bugs:**
+
+- kafka::producer class does not work with systemd [\#324](https://github.com/voxpupuli/puppet-kafka/issues/324)
+
+**Closed issues:**
+
+- Old versions cannot be installed from apache download area [\#323](https://github.com/voxpupuli/puppet-kafka/issues/323)
+- systemv init created log files are not being rotated [\#85](https://github.com/voxpupuli/puppet-kafka/issues/85)
+
+**Merged pull requests:**
+
+- switch from camptocamp/systemd to voxpupuli/systemd [\#329](https://github.com/voxpupuli/puppet-kafka/pull/329) ([bastelfreak](https://github.com/bastelfreak))
+- Removing SystemD reloading step [\#327](https://github.com/voxpupuli/puppet-kafka/pull/327) ([evgenkisel](https://github.com/evgenkisel))
+
 ## [v7.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v7.0.0) (2020-06-03)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v6.0.0...v7.0.0)
