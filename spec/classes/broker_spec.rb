@@ -21,6 +21,11 @@ describe 'kafka::broker', type: :class do
       it { is_expected.to contain_class('kafka::broker::service').that_comes_before('Class[kafka::broker]') }
       it { is_expected.to contain_class('kafka::broker') }
 
+      context 'with manage_log4j => true' do
+        let(:params) { {'manage_log4j' => true} }
+        it { is_expected.to contain_class('kafka::broker::config').with('log_file_size' => '50MB', 'log_file_count' => 7) }
+      end
+
       describe 'kafka::broker::install' do
         context 'defaults' do
           it { is_expected.to contain_class('kafka') }
@@ -30,6 +35,11 @@ describe 'kafka::broker', type: :class do
       describe 'kafka::broker::config' do
         context 'defaults' do
           it { is_expected.to contain_file('/opt/kafka/config/server.properties') }
+        end
+        context 'with  manage_log4j => true' do
+          let(:params) { {'manage_log4j' => true} }
+          it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^log4j.appender.kafkaAppender.MaxFileSize=50MB$}) }
+          it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^log4j.appender.kafkaAppender.MaxBackupIndex=7$}) }
         end
       end
 

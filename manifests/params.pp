@@ -33,6 +33,9 @@ class kafka::params {
   $manage_group   = true
   $config_mode    = '0644'
   $install_mode   = '0755'
+  $manage_log4j   = true
+  $log_file_size  = '50MB'
+  $log_file_count = 7
 
   $manage_service   = true
   $service_ensure   = 'running'

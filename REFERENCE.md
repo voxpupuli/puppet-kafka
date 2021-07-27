@@ -552,6 +552,30 @@ Set the Kafka options.
 
 Default value: $kafka::params::broker_opts
 
+##### `manage_log4j`
+
+Data type: `Boolean`
+
+Enable management of `log4j.properties` file.
+
+Default value: $kafka::params::manage_log4j
+
+##### `log_file_size`
+
+Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
+
+Maximum allowed log file size before rolling over. Suffixes "KB", "MB" and "GB" are allowed
+
+Default value: $kafka::params::log_file_size
+
+##### `log_file_count`
+
+Data type: `Integer[1, 50]`
+
+Set a count of rotated files which will be stored in `log_dir`
+
+Default value: $kafka::params::log_file_count
+
 ### kafka::consumer
 
 This class handles the Kafka (consumer).
@@ -821,6 +845,30 @@ Set the Log4j options.
 
 Default value: $kafka::params::consumer_log4j_opts
 
+##### `manage_log4j`
+
+Data type: `Boolean`
+
+Enable management of `log4j.properties` file.
+
+Default value: $kafka::params::manage_log4j
+
+##### `log_file_size`
+
+Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
+
+Maximum allowed log file size before rolling over. Suffixes "KB", "MB" and "GB" are allowed
+
+Default value: $kafka::params::log_file_size
+
+##### `log_file_count`
+
+Data type: `Integer[1, 50]`
+
+Set a count of rotated files which will be stored in `log_dir`
+
+Default value: $kafka::params::log_file_count
+
 ### kafka::consumer::config
 
 This class handles the Kafka (consumer) config.
@@ -833,15 +881,11 @@ The following parameters are available in the `kafka::consumer::config` class.
 
 Data type: `Boolean`
 
-
-
 Default value: $kafka::consumer::manage_service
 
 ##### `service_name`
 
 Data type: `String[1]`
-
-
 
 Default value: $kafka::consumer::service_name
 
@@ -849,15 +893,11 @@ Default value: $kafka::consumer::service_name
 
 Data type: `Boolean`
 
-
-
 Default value: $kafka::consumer::service_restart
 
 ##### `config`
 
 Data type: `Hash[String[1], Any]`
-
-
 
 Default value: $kafka::consumer::config
 
@@ -865,15 +905,11 @@ Default value: $kafka::consumer::config
 
 Data type: `Stdlib::Absolutepath`
 
-
-
 Default value: $kafka::consumer::config_dir
 
 ##### `user_name`
 
 Data type: `String[1]`
-
-
 
 Default value: $kafka::consumer::user_name
 
@@ -881,17 +917,37 @@ Default value: $kafka::consumer::user_name
 
 Data type: `String[1]`
 
-
-
 Default value: $kafka::consumer::group_name
 
 ##### `config_mode`
 
 Data type: `Stdlib::Filemode`
 
-
-
 Default value: $kafka::consumer::config_mode
+
+##### `manage_log4j`
+
+Data type: `Boolean`
+
+Enable management of `log4j.properties` file.
+
+Default value: $kafka::consumer::manage_log4j
+
+##### `log_file_size`
+
+Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
+
+Maximum allowed log file size before rolling over. Suffixes "KB", "MB" and "GB" are allowed
+
+Default value: $kafka::consumer::log_file_size
+
+##### `log_file_count`
+
+Data type: `Integer[1, 50]`
+
+Set a count of rotated files which will be stored in `log_dir`
+
+Default value: $kafka::consumer::log_file_count
 
 ### kafka::mirror
 
@@ -1184,6 +1240,30 @@ Set the Log4j options.
 
 Default value: $kafka::params::mirror_log4j_opts
 
+##### `manage_log4j`
+
+Data type: `Boolean`
+
+Enable management of `log4j.properties` file.
+
+Default value: $kafka::params::manage_log4j
+
+##### `log_file_size`
+
+Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
+
+Maximum allowed log file size before rolling over. Suffixes "KB", "MB" and "GB" are allowed
+
+Default value: $kafka::params::log_file_size
+
+##### `log_file_count`
+
+Data type: `Integer[1, 50]`
+
+Set a count of rotated files which will be stored in `log_dir`
+
+Default value: $kafka::params::log_file_count
+
 ### kafka::params
 
 This class provides default parameters.
@@ -1475,15 +1555,11 @@ The following parameters are available in the `kafka::producer::config` class.
 
 Data type: `Boolean`
 
-
-
 Default value: $kafka::producer::manage_service
 
 ##### `service_name`
 
 Data type: `String[1]`
-
-
 
 Default value: $kafka::producer::service_name
 
@@ -1491,15 +1567,11 @@ Default value: $kafka::producer::service_name
 
 Data type: `Boolean`
 
-
-
 Default value: $kafka::producer::service_restart
 
 ##### `config`
 
 Data type: `Hash[String[1], Any]`
-
-
 
 Default value: $kafka::producer::config
 
@@ -1507,15 +1579,11 @@ Default value: $kafka::producer::config
 
 Data type: `Stdlib::Absolutepath`
 
-
-
 Default value: $kafka::producer::config_dir
 
 ##### `user_name`
 
 Data type: `String[1]`
-
-
 
 Default value: $kafka::producer::user_name
 
@@ -1523,15 +1591,11 @@ Default value: $kafka::producer::user_name
 
 Data type: `String[1]`
 
-
-
 Default value: $kafka::producer::group_name
 
 ##### `config_mode`
 
 Data type: `Stdlib::Filemode`
-
-
 
 Default value: $kafka::producer::config_mode
 
