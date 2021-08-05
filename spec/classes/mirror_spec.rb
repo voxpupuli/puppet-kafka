@@ -26,7 +26,8 @@ describe 'kafka::mirror', type: :class do
       it { is_expected.to contain_class('kafka::mirror') }
 
       context 'with manage_log4j => true' do
-        let(:params) { {'manage_log4j' => true} }
+        let(:params) { { 'manage_log4j' => true } }
+
         it { is_expected.to contain_class('kafka::mirror::config').with('log_file_size' => '50MB', 'log_file_count' => 7) }
       end
 
