@@ -1,10 +1,14 @@
 # Kafka module for Puppet
 
-[![Build Status](https://travis-ci.org/voxpupuli/puppet-kafka.png?branch=master)](https://travis-ci.org/voxpupuli/puppet-kafka)
+[![Build Status](https://github.com/voxpupuli/puppet-kafka/workflows/CI/badge.svg)](https://github.com/voxpupuli/puppet-kafka/actions?query=workflow%3ACI)
+[![Release](https://github.com/voxpupuli/puppet-kafka/actions/workflows/release.yml/badge.svg)](https://github.com/voxpupuli/puppet-kafka/actions/workflows/release.yml)
 [![Puppet Forge](https://img.shields.io/puppetforge/v/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - endorsement](https://img.shields.io/puppetforge/e/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
 [![Puppet Forge - scores](https://img.shields.io/puppetforge/f/puppet/kafka.svg)](https://forge.puppetlabs.com/puppet/kafka)
+[![puppetmodule.info docs](http://www.puppetmodule.info/images/badge.png)](http://www.puppetmodule.info/m/puppet-kafka)
+[![MIT License](https://img.shields.io/github/license/voxpupuli/puppet-kafka.svg)](LICENSE)
+[![Donated by Liam Bennett](https://img.shields.io/badge/donated%20by-Liam%20Bennett-fb7047.svg)](#Author)
 
 ## Table of Contents
 
