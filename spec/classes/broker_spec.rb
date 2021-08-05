@@ -55,37 +55,24 @@ describe 'kafka::broker', type: :class do
         end
 
         context 'defaults' do
-          if os_facts[:service_provider] == 'systemd'
-            it { is_expected.to contain_file('/etc/init.d/kafka').with_ensure('absent') }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=network\.target syslog\.target$} }
-            it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
-            it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
-          else
-            it { is_expected.to contain_file('/etc/init.d/kafka') }
-          end
-
+          it { is_expected.to contain_file('/etc/init.d/kafka').with_ensure('absent') }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=network\.target syslog\.target$} }
+          it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
+          it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
           it { is_expected.to contain_service('kafka') }
         end
 
         context 'limit_nofile set' do
           let(:params) { super().merge(limit_nofile: '65536') }
 
-          if os_facts[:service_provider] == 'systemd'
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
-          else
-            it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -n 65536$} }
-          end
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
         end
 
         context 'limit_core set' do
           let(:params) { super().merge(limit_core: 'infinity') }
 
-          if os_facts[:service_provider] == 'systemd'
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
-          else
-            it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -c infinity$} }
-          end
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
         end
 
         context 'service_requires set', if: os_facts[:service_provider] == 'systemd' do
