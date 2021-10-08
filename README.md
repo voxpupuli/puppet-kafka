@@ -109,7 +109,6 @@ This module only supports Kafka >= 0.9.0.0.
 
 This module is tested on the following platforms:
 
-* Debian 9
 * Debian 10
 * Ubuntu 18.04
 * CentOS 7
