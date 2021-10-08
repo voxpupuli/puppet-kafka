@@ -49,15 +49,11 @@ describe 'kafka::broker', type: :class do
         context 'manage_service false' do
           let(:params) { super().merge(manage_service: false) }
 
-          it { is_expected.not_to contain_file('/etc/init.d/kafka') }
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service') }
           it { is_expected.not_to contain_service('kafka') }
         end
 
         context 'defaults' do
-          it { is_expected.to contain_file('/etc/init.d/kafka').with_ensure('absent') }
-          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
-          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=network\.target syslog\.target$} }
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
           it { is_expected.to contain_service('kafka') }

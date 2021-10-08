@@ -48,7 +48,6 @@ describe 'kafka::consumer', type: :class do
 
       describe 'kafka::consumer::service' do
         context 'defaults' do
-          it { is_expected.to contain_file('/etc/init.d/kafka-consumer').with_abent('absent') }
           it { is_expected.to contain_service('kafka-consumer') }
         end
       end

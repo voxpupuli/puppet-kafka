@@ -46,7 +46,6 @@ describe 'kafka::mirror', type: :class do
 
       describe 'kafka::mirror::service' do
         context 'defaults' do
-          it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_ensure('absent') }
           it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).propertie} }
           it { is_expected.to contain_service('kafka-mirror') }
         end
