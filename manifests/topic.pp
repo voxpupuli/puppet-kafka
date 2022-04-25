@@ -14,7 +14,10 @@
 #
 # @param zookeeper
 #   The connection string for the ZooKeeper connection in the form host:port.
-#   Multiple hosts can be given to allow fail-over.
+#   Multiple hosts can be given to allow fail-over. Kafka < 3.0.0 only!
+#
+# @param bootstrap_server
+#   The Kafka server to connect to in the form host:port. Kafka >= 2.2.0 only!
 #
 # @param replication_factor
 #   The replication factor for each partition in the topic being created. If
@@ -32,16 +35,28 @@
 #   See the Kafka documentation for full details on the topic configs.
 #
 define kafka::topic (
-  String[1] $ensure                           = '',
-  String[1] $zookeeper                        = '',
+  Optional[String[1]] $ensure                 = undef,
+  Optional[String[1]] $zookeeper              = undef,
+  Optional[String[1]] $bootstrap_server       = undef,
   Integer   $replication_factor               = 1,
   Integer   $partitions                       = 1,
   String[1] $bin_dir                          = '/opt/kafka/bin',
   Optional[Hash[String[1],String[1]]] $config = undef,
 ) {
   $_zookeeper          = "--zookeeper ${zookeeper}"
+  $_bootstrap_server   = "--bootstrap-server ${bootstrap_server}"
   $_replication_factor = "--replication-factor ${replication_factor}"
   $_partitions         = "--partitions ${partitions}"
+
+  if !$zookeeper and !$bootstrap_server {
+    fail('Either zookeeper or bootstrap_server parameter must be defined!')
+  }
+
+  if $zookeeper {
+    $_connection = $_zookeeper
+  } else {
+    $_connection = $_bootstrap_server
+  }
 
   if $config {
     $_config_array = $config.map |$key, $value| { "--config ${key}=${value}" }
@@ -53,8 +68,8 @@ define kafka::topic (
   if $ensure == 'present' {
     exec { "create topic ${name}":
       path    => "/usr/bin:/usr/sbin/:/bin:/sbin:${bin_dir}",
-      command => "kafka-topics.sh --create ${_zookeeper} ${_replication_factor} ${_partitions} --topic ${name} ${_config}",
-      unless  => "kafka-topics.sh --list ${_zookeeper} | grep -x ${name}",
+      command => "kafka-topics.sh --create ${_connection} ${_replication_factor} ${_partitions} --topic ${name} ${_config}",
+      unless  => "kafka-topics.sh --list ${_connection} | grep -x ${name}",
     }
   }
 }
