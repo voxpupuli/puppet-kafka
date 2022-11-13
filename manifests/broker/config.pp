@@ -42,7 +42,7 @@ class kafka::broker::config (
       owner   => $user_name,
       group   => $group_name,
       mode    => $config_mode,
-      content => epp('kafka/log4j.properties.epp', { 'log_file_size' => $log_file_size, 'log_file_count' => $log_file_count }),
+      content => epp('kafka/log4j.properties.epp', { 'log_file_size' => $log_file_size, 'log_file_count' => $log_file_count, 'log_dir' => $log_dir }),
       notify  => $config_notify,
       require => File[$config_dir],
     }
