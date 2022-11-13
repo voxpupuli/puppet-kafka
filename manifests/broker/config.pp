@@ -15,6 +15,7 @@ class kafka::broker::config (
   Boolean $manage_log4j                         = $kafka::broker::manage_log4j,
   Pattern[/[1-9][0-9]*[KMG]B/] $log_file_size   = $kafka::broker::log_file_size,
   Integer[1, 50] $log_file_count                = $kafka::broker::log_file_count,
+  Stdlib::Absolutepath $log_dir                 = $kafka::broker::log_dir,
 ) {
   assert_private()
 
