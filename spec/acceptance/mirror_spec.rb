@@ -9,6 +9,7 @@ when 'Debian'
   user_shell = '/usr/sbin/nologin'
 end
 
+# rubocop:disable RSpec/RepeatedExampleGroupBody
 describe 'kafka::mirror' do
   it 'works with no errors' do
     pp = <<-EOS
@@ -243,3 +244,4 @@ describe 'kafka::mirror' do
     end
   end
 end
+# rubocop:enable RSpec/RepeatedExampleGroupBody
