@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'shared_examples_param_validation'
 
@@ -37,7 +39,8 @@ describe 'kafka::broker', type: :class do
         context 'defaults' do
           it { is_expected.to contain_file('/opt/kafka/config/server.properties') }
         end
-        context 'with  manage_log4j => true' do
+
+        context 'with manage_log4j => true' do
           let(:params) { { 'manage_log4j' => true } }
 
           it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^log4j.appender.kafkaAppender.MaxFileSize=50MB$}) }
