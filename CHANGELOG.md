@@ -237,7 +237,7 @@ These should not affect the functionality of the module.
 - Typo in init.erb [\#198](https://github.com/voxpupuli/puppet-kafka/issues/198)
 - Fixed typo in init.erb [\#199](https://github.com/voxpupuli/puppet-kafka/pull/199) ([LionelCons](https://github.com/LionelCons))
 - kafka::consumer now calls kafka::consumer::config [\#187](https://github.com/voxpupuli/puppet-kafka/pull/187) ([LionelCons](https://github.com/LionelCons))
-- kafka::mirror::service does not inherit from ::kafka::params anymore [\#177](https://github.com/voxpupuli/puppet-kafka/pull/177) ([LionelCons](https://github.com/LionelCons))
+- kafka::mirror::service does not inherit from kafka::params anymore [\#177](https://github.com/voxpupuli/puppet-kafka/pull/177) ([LionelCons](https://github.com/LionelCons))
 
 **Closed issues:**
 
@@ -248,7 +248,7 @@ These should not affect the functionality of the module.
 - The ZooKeeper service should not be required by default [\#183](https://github.com/voxpupuli/puppet-kafka/issues/183)
 - Java should not be installed by default [\#180](https://github.com/voxpupuli/puppet-kafka/issues/180)
 - include statements do not need quotes [\#178](https://github.com/voxpupuli/puppet-kafka/issues/178)
-- mirror/service.pp should not inherit from ::kafka::params [\#176](https://github.com/voxpupuli/puppet-kafka/issues/176)
+- mirror/service.pp should not inherit from kafka::params [\#176](https://github.com/voxpupuli/puppet-kafka/issues/176)
 - Module user/group management should be optional [\#173](https://github.com/voxpupuli/puppet-kafka/issues/173)
 
 **Merged pull requests:**
