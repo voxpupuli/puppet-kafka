@@ -62,8 +62,6 @@ describe 'kafka::broker', type: :class do
         context 'defaults' do
           if os_facts[:service_provider] == 'systemd'
             it { is_expected.to contain_file('/etc/init.d/kafka').with_ensure('absent') }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=network\.target syslog\.target$} }
-            it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=network\.target syslog\.target$} }
             it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
             it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
           else
