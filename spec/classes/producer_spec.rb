@@ -23,7 +23,7 @@ describe 'kafka::producer', type: :class do
       end
 
       if os_facts[:service_provider] == 'systemd'
-        it { is_expected.to raise_error(Puppet::Error, %r{Console Producer is not supported on systemd, because the stdin of the process cannot be redirected}) }
+        it { is_expected.to compile.and_raise_error(%r{Console Producer is not supported on systemd, because the stdin of the process cannot be redirected}) }
       else
         it { is_expected.to contain_class('kafka::producer::install').that_comes_before('Class[kafka::producer::config]') }
         it { is_expected.to contain_class('kafka::producer::config').that_comes_before('Class[kafka::producer::service]') }
