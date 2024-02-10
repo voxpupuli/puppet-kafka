@@ -6,6 +6,9 @@ require 'shared_examples_param_validation'
 describe 'kafka::mirror', type: :class do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
+      
+      os_facts = os_facts.merge({service_provider: 'systemd'})
+
       let(:facts) do
         os_facts
       end
