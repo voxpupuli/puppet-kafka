@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 case fact('osfamily')
@@ -7,6 +9,7 @@ when 'Debian'
   user_shell = '/usr/sbin/nologin'
 end
 
+# rubocop:disable RSpec/RepeatedExampleGroupBody
 describe 'kafka::consumer' do
   it 'works with no errors' do
     pp = <<-EOS
@@ -98,9 +101,7 @@ describe 'kafka::consumer' do
         it { is_expected.to be_grouped_into 'kafka' }
       end
     end
-  end
 
-  describe 'kafka::consumer::config' do
     context 'with custom config_dir' do
       it 'works with no errors' do
         pp = <<-EOS
@@ -163,3 +164,4 @@ describe 'kafka::consumer' do
     end
   end
 end
+# rubocop:enable RSpec/RepeatedExampleGroupBody

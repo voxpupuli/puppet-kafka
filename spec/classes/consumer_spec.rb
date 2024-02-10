@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'shared_examples_param_validation'
 
 describe 'kafka::consumer', type: :class do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
+      os_facts = os_facts.merge({ service_provider: 'systemd' })
+
       let(:facts) do
         os_facts
       end
@@ -38,7 +42,8 @@ describe 'kafka::consumer', type: :class do
         context 'defaults' do
           it { is_expected.to contain_file('/opt/kafka/config/consumer.properties') }
         end
-        context 'with  manage_log4j => true' do
+
+        context 'with manage_log4j => true' do
           let(:params) { { 'manage_log4j' => true } }
 
           it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^log4j.appender.kafkaAppender.MaxFileSize=50MB$}) }
@@ -49,7 +54,7 @@ describe 'kafka::consumer', type: :class do
       describe 'kafka::consumer::service' do
         context 'defaults' do
           if os_facts[:service_provider] == 'systemd'
-            it { is_expected.to contain_file('/etc/init.d/kafka-consumer').with_abent('absent') }
+            it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service') }
           else
             it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
           end
