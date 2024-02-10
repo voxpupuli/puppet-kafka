@@ -4,7 +4,7 @@ require 'spec_helper_acceptance'
 
 describe 'zookeeper prereq' do
   zookeeper = <<-EOS
-    if $::osfamily == 'RedHat' {
+    if $facts['os']['family'] == 'RedHat' {
       class { 'java' :
         package => 'java-1.8.0-openjdk-devel',
       }
