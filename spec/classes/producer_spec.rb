@@ -6,8 +6,6 @@ require 'shared_examples_param_validation'
 describe 'kafka::producer', type: :class do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      os_facts = os_facts.merge({ service_provider: 'systemd' })
-
       let(:facts) do
         os_facts
       end
@@ -22,8 +20,8 @@ describe 'kafka::producer', type: :class do
         }
       end
 
-      if os_facts[:service_provider] == 'systemd'
-        it { is_expected.to raise_error(Puppet::Error, %r{Console Producer is not supported on systemd, because the stdin of the process cannot be redirected}) }
+      if os_facts['service_provider'] == 'systemd'
+        it { is_expected.to compile.and_raise_error(%r{Console Producer is not supported on systemd, because the stdin of the process cannot be redirected}) }
       else
         it { is_expected.to contain_class('kafka::producer::install').that_comes_before('Class[kafka::producer::config]') }
         it { is_expected.to contain_class('kafka::producer::config').that_comes_before('Class[kafka::producer::service]') }

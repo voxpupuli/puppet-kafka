@@ -6,8 +6,6 @@ require 'shared_examples_param_validation'
 describe 'kafka::mirror', type: :class do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      os_facts = os_facts.merge({ service_provider: 'systemd' })
-
       let(:facts) do
         os_facts
       end
@@ -50,7 +48,7 @@ describe 'kafka::mirror', type: :class do
 
       describe 'kafka::mirror::service' do
         context 'defaults' do
-          if os_facts[:service_provider] == 'systemd'
+          if os_facts['service_provider'] == 'systemd'
             it { is_expected.to contain_file('/etc/init.d/kafka-mirror').with_ensure('absent') }
             it { is_expected.to contain_file('/etc/systemd/system/kafka-mirror.service').with_content %r{/opt/kafka/config/(?=.*consumer)|(?=.*producer).propertie} }
           else

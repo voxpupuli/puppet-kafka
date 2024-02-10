@@ -6,8 +6,6 @@ require 'shared_examples_param_validation'
 describe 'kafka::broker', type: :class do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      os_facts = os_facts.merge({ service_provider: 'systemd' })
-
       let(:facts) do
         os_facts
       end
@@ -60,7 +58,7 @@ describe 'kafka::broker', type: :class do
         end
 
         context 'defaults' do
-          if os_facts[:service_provider] == 'systemd'
+          if os_facts['service_provider'] == 'systemd'
             it { is_expected.to contain_file('/etc/init.d/kafka').with_ensure('absent') }
             it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
             it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
@@ -74,7 +72,7 @@ describe 'kafka::broker', type: :class do
         context 'limit_nofile set' do
           let(:params) { super().merge(limit_nofile: '65536') }
 
-          if os_facts[:service_provider] == 'systemd'
+          if os_facts['service_provider'] == 'systemd'
             it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=65536$} }
           else
             it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -n 65536$} }
@@ -84,14 +82,14 @@ describe 'kafka::broker', type: :class do
         context 'limit_core set' do
           let(:params) { super().merge(limit_core: 'infinity') }
 
-          if os_facts[:service_provider] == 'systemd'
+          if os_facts['service_provider'] == 'systemd'
             it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
           else
             it { is_expected.to contain_file('/etc/init.d/kafka').with_content %r{ulimit -c infinity$} }
           end
         end
 
-        context 'service_requires set', if: os_facts[:service_provider] == 'systemd' do
+        context 'service_requires set', if: os_facts['service_provider'] == 'systemd' do
           let(:params) { super().merge(service_requires: ['dummy.target']) }
 
           it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
