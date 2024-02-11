@@ -73,7 +73,7 @@
 #   Set the name of the service.
 #
 # @param manage_service
-#   Install the init.d or systemd service.
+#   Install systemd service.
 #
 # @param service_ensure
 #   Set the ensure state of the service.

@@ -33,31 +33,14 @@ class kafka::mirror::service (
     }
     $environment = deep_merge($env_defaults, $env)
 
-    if $facts['service_provider'] == 'systemd' {
-      include systemd
+    include systemd
 
-      file { "/etc/systemd/system/${service_name}.service":
-        ensure  => file,
-        mode    => '0644',
-        content => template('kafka/unit.erb'),
-      }
-
-      file { "/etc/init.d/${service_name}":
-        ensure => absent,
-      }
-
-      File["/etc/systemd/system/${service_name}.service"]
-      ~> Service[$service_name]
-    } else {
-      file { "/etc/init.d/${service_name}":
-        ensure  => file,
-        mode    => '0755',
-        content => template('kafka/init.erb'),
-        before  => Service[$service_name],
-      }
+    file { "/etc/systemd/system/${service_name}.service":
+      ensure  => file,
+      mode    => '0644',
+      content => template('kafka/unit.erb'),
     }
-
-    service { $service_name:
+    ~> service { $service_name:
       ensure     => $service_ensure,
       enable     => true,
       hasstatus  => true,
