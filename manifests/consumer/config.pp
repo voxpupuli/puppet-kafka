@@ -20,6 +20,7 @@ class kafka::consumer::config (
     $config_notify = undef
   }
 
+  $doctag = 'consumerconfigs'
   file { "${config_dir}/consumer.properties":
     ensure  => file,
     owner   => $user_name,

@@ -17,6 +17,7 @@ class kafka::producer::config (
     $config_notify = undef
   }
 
+  $doctag = 'producerconfigs'
   file { "${config_dir}/producer.properties":
     ensure  => file,
     owner   => $user_name,
