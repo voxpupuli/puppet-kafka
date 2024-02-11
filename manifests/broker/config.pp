@@ -24,7 +24,6 @@ class kafka::broker::config (
     $config_notify = undef
   }
 
-  $doctag = 'brokerconfigs'
   file { "${config_dir}/server.properties":
     ensure  => file,
     owner   => $user_name,
