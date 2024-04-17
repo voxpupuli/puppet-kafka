@@ -13,6 +13,7 @@ class kafka::broker::config (
   String[1] $group_name                         = $kafka::broker::group_name,
   Stdlib::Filemode $config_mode                 = $kafka::broker::config_mode,
   Boolean $manage_log4j                         = $kafka::broker::manage_log4j,
+  Optional[String[1]] $log4j_content            = $kafka::broker::log4j_content,
   Pattern[/[1-9][0-9]*[KMG]B/] $log_file_size   = $kafka::broker::log_file_size,
   Integer[1, 50] $log_file_count                = $kafka::broker::log_file_count,
 ) {
@@ -36,12 +37,16 @@ class kafka::broker::config (
   }
 
   if $manage_log4j {
+    $_log4j_content = pick_default(
+      $log4j_content,
+      epp('kafka/log4j.properties.epp', { 'log_file_size' => $log_file_size, 'log_file_count' => $log_file_count })
+    )
     file { "${config_dir}/log4j.properties":
       ensure  => file,
       owner   => $user_name,
       group   => $group_name,
       mode    => $config_mode,
-      content => epp('kafka/log4j.properties.epp', { 'log_file_size' => $log_file_size, 'log_file_count' => $log_file_count }),
+      content => $_log4j_content,
       notify  => $config_notify,
       require => File[$config_dir],
     }

@@ -333,10 +333,11 @@ The following parameters are available in the `kafka::broker` class:
 * [`heap_opts`](#-kafka--broker--heap_opts)
 * [`jmx_opts`](#-kafka--broker--jmx_opts)
 * [`log4j_opts`](#-kafka--broker--log4j_opts)
-* [`opts`](#-kafka--broker--opts)
 * [`manage_log4j`](#-kafka--broker--manage_log4j)
+* [`log4j_content`](#-kafka--broker--log4j_content)
 * [`log_file_size`](#-kafka--broker--log_file_size)
 * [`log_file_count`](#-kafka--broker--log_file_count)
+* [`opts`](#-kafka--broker--opts)
 
 ##### <a name="-kafka--broker--kafka_version"></a>`kafka_version`
 
@@ -610,27 +611,28 @@ Set the Log4j options.
 
 Default value: `$kafka::params::broker_log4j_opts`
 
-##### <a name="-kafka--broker--opts"></a>`opts`
-
-Data type: `String[0]`
-
-Set the Kafka options.
-
-Default value: `$kafka::params::broker_opts`
-
 ##### <a name="-kafka--broker--manage_log4j"></a>`manage_log4j`
 
 Data type: `Boolean`
 
-
+Enable or disable the management of the log4j configuration file.
 
 Default value: `$kafka::params::manage_log4j`
+
+##### <a name="-kafka--broker--log4j_content"></a>`log4j_content`
+
+Data type: `Optional[String[1]]`
+
+Provide custom content for the log4j configuration file if manage_log4j is enabled,
+instead of using the content provided in this module.
+
+Default value: `undef`
 
 ##### <a name="-kafka--broker--log_file_size"></a>`log_file_size`
 
 Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
 
-
+Set the max size of the Kafka log files before they are rolled.
 
 Default value: `$kafka::params::log_file_size`
 
@@ -638,9 +640,17 @@ Default value: `$kafka::params::log_file_size`
 
 Data type: `Integer[1, 50]`
 
-
+Set the number of Kafka log files to keep.
 
 Default value: `$kafka::params::log_file_count`
+
+##### <a name="-kafka--broker--opts"></a>`opts`
+
+Data type: `String[0]`
+
+Set the Kafka options.
+
+Default value: `$kafka::params::broker_opts`
 
 ### <a name="kafka--consumer"></a>`kafka::consumer`
 
