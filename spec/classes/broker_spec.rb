@@ -46,6 +46,12 @@ describe 'kafka::broker', type: :class do
           it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^log4j.appender.kafkaAppender.MaxFileSize=50MB$}) }
           it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^log4j.appender.kafkaAppender.MaxBackupIndex=7$}) }
         end
+
+        context 'with manage_log4j => true and log4j_content' do
+          let(:params) { { 'manage_log4j' => true, 'log4j_content' => 'TEST' } }
+
+          it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^TEST$}) }
+        end
       end
 
       describe 'kafka::broker::service' do
