@@ -1,6 +1,6 @@
 # @summary
 #   This class handles the Kafka (producer) config.
-#
+# @api private
 class kafka::producer::config (
   Boolean $manage_service                   = $kafka::producer::manage_service,
   String[1] $service_name                   = $kafka::producer::service_name,
@@ -11,6 +11,8 @@ class kafka::producer::config (
   String[1] $group_name                     = $kafka::producer::group_name,
   Stdlib::Filemode $config_mode             = $kafka::producer::config_mode,
 ) {
+  assert_private()
+
   if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {

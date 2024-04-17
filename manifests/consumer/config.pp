@@ -1,6 +1,6 @@
 # @summary
 #   This class handles the Kafka (consumer) config.
-#
+# @api private
 class kafka::consumer::config (
   Boolean $manage_service                       = $kafka::consumer::manage_service,
   String[1] $service_name                       = $kafka::consumer::service_name,
@@ -14,6 +14,8 @@ class kafka::consumer::config (
   Pattern[/[1-9][0-9]*[KMG]B/] $log_file_size   = $kafka::consumer::log_file_size,
   Integer[1, 50] $log_file_count                = $kafka::consumer::log_file_count,
 ) {
+  assert_private()
+
   if ($manage_service and $service_restart) {
     $config_notify = Service[$service_name]
   } else {
