@@ -11,22 +11,22 @@
 * [`kafka`](#kafka): This class handles the Kafka requirements.
 * [`kafka::broker`](#kafka--broker): This class handles the Kafka (broker).
 * [`kafka::consumer`](#kafka--consumer): This class handles the Kafka (consumer).
-* [`kafka::consumer::config`](#kafka--consumer--config): This class handles the Kafka (consumer) config.
 * [`kafka::mirror`](#kafka--mirror): This class handles the Kafka (mirror).
 * [`kafka::params`](#kafka--params): This class provides default parameters.
 * [`kafka::producer`](#kafka--producer): This class handles the Kafka (producer).
-* [`kafka::producer::config`](#kafka--producer--config): This class handles the Kafka (producer) config.
 
 #### Private Classes
 
 * `kafka::broker::config`: This class handles the Kafka (broker) config.
 * `kafka::broker::install`: This class handles the Kafka (broker) package.
 * `kafka::broker::service`: This class handles the Kafka (broker) service.
+* `kafka::consumer::config`: This class handles the Kafka (consumer) config.
 * `kafka::consumer::install`: This class handles the Kafka (consumer) package.
 * `kafka::consumer::service`: This class handles the Kafka (consumer) service.
 * `kafka::mirror::config`: This class handles the Kafka (mirror) config.
 * `kafka::mirror::install`: This class handles the Kafka (mirror) package.
 * `kafka::mirror::service`: This class handles the Kafka (mirror) service.
+* `kafka::producer::config`: This class handles the Kafka (producer) config.
 * `kafka::producer::install`: This class handles the Kafka (producer) package.
 * `kafka::producer::service`: This class handles the Kafka (producer) service.
 
@@ -960,7 +960,7 @@ Default value: `$kafka::params::consumer_log4j_opts`
 
 Data type: `Boolean`
 
-
+Enable or disable the management of the log4j configuration file.
 
 Default value: `$kafka::params::manage_log4j`
 
@@ -968,7 +968,7 @@ Default value: `$kafka::params::manage_log4j`
 
 Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
 
-
+Set the max size of the Kafka log files before they are rolled.
 
 Default value: `$kafka::params::log_file_size`
 
@@ -976,117 +976,9 @@ Default value: `$kafka::params::log_file_size`
 
 Data type: `Integer[1, 50]`
 
-
+Set the number of Kafka log files to keep.
 
 Default value: `$kafka::params::log_file_count`
-
-### <a name="kafka--consumer--config"></a>`kafka::consumer::config`
-
-This class handles the Kafka (consumer) config.
-
-#### Parameters
-
-The following parameters are available in the `kafka::consumer::config` class:
-
-* [`manage_service`](#-kafka--consumer--config--manage_service)
-* [`service_name`](#-kafka--consumer--config--service_name)
-* [`service_restart`](#-kafka--consumer--config--service_restart)
-* [`config`](#-kafka--consumer--config--config)
-* [`config_dir`](#-kafka--consumer--config--config_dir)
-* [`user_name`](#-kafka--consumer--config--user_name)
-* [`group_name`](#-kafka--consumer--config--group_name)
-* [`config_mode`](#-kafka--consumer--config--config_mode)
-* [`manage_log4j`](#-kafka--consumer--config--manage_log4j)
-* [`log_file_size`](#-kafka--consumer--config--log_file_size)
-* [`log_file_count`](#-kafka--consumer--config--log_file_count)
-
-##### <a name="-kafka--consumer--config--manage_service"></a>`manage_service`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::consumer::manage_service`
-
-##### <a name="-kafka--consumer--config--service_name"></a>`service_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::consumer::service_name`
-
-##### <a name="-kafka--consumer--config--service_restart"></a>`service_restart`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::consumer::service_restart`
-
-##### <a name="-kafka--consumer--config--config"></a>`config`
-
-Data type: `Hash[String[1], Any]`
-
-
-
-Default value: `$kafka::consumer::config`
-
-##### <a name="-kafka--consumer--config--config_dir"></a>`config_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-Default value: `$kafka::consumer::config_dir`
-
-##### <a name="-kafka--consumer--config--user_name"></a>`user_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::consumer::user_name`
-
-##### <a name="-kafka--consumer--config--group_name"></a>`group_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::consumer::group_name`
-
-##### <a name="-kafka--consumer--config--config_mode"></a>`config_mode`
-
-Data type: `Stdlib::Filemode`
-
-
-
-Default value: `$kafka::consumer::config_mode`
-
-##### <a name="-kafka--consumer--config--manage_log4j"></a>`manage_log4j`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::consumer::manage_log4j`
-
-##### <a name="-kafka--consumer--config--log_file_size"></a>`log_file_size`
-
-Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
-
-
-
-Default value: `$kafka::consumer::log_file_size`
-
-##### <a name="-kafka--consumer--config--log_file_count"></a>`log_file_count`
-
-Data type: `Integer[1, 50]`
-
-
-
-Default value: `$kafka::consumer::log_file_count`
 
 ### <a name="kafka--mirror"></a>`kafka::mirror`
 
@@ -1420,7 +1312,7 @@ Default value: `$kafka::params::mirror_log4j_opts`
 
 Data type: `Boolean`
 
-
+Enable or disable the management of the log4j configuration file.
 
 Default value: `$kafka::params::manage_log4j`
 
@@ -1428,7 +1320,7 @@ Default value: `$kafka::params::manage_log4j`
 
 Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
 
-
+Set the max size of the Kafka log files before they are rolled.
 
 Default value: `$kafka::params::log_file_size`
 
@@ -1436,7 +1328,7 @@ Default value: `$kafka::params::log_file_size`
 
 Data type: `Integer[1, 50]`
 
-
+Set the number of Kafka log files to keep.
 
 Default value: `$kafka::params::log_file_count`
 
@@ -1751,87 +1643,6 @@ Data type: `String[1]`
 Set the Log4j options.
 
 Default value: `$kafka::params::producer_log4j_opts`
-
-### <a name="kafka--producer--config"></a>`kafka::producer::config`
-
-This class handles the Kafka (producer) config.
-
-#### Parameters
-
-The following parameters are available in the `kafka::producer::config` class:
-
-* [`manage_service`](#-kafka--producer--config--manage_service)
-* [`service_name`](#-kafka--producer--config--service_name)
-* [`service_restart`](#-kafka--producer--config--service_restart)
-* [`config`](#-kafka--producer--config--config)
-* [`config_dir`](#-kafka--producer--config--config_dir)
-* [`user_name`](#-kafka--producer--config--user_name)
-* [`group_name`](#-kafka--producer--config--group_name)
-* [`config_mode`](#-kafka--producer--config--config_mode)
-
-##### <a name="-kafka--producer--config--manage_service"></a>`manage_service`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::producer::manage_service`
-
-##### <a name="-kafka--producer--config--service_name"></a>`service_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::producer::service_name`
-
-##### <a name="-kafka--producer--config--service_restart"></a>`service_restart`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::producer::service_restart`
-
-##### <a name="-kafka--producer--config--config"></a>`config`
-
-Data type: `Hash[String[1], Any]`
-
-
-
-Default value: `$kafka::producer::config`
-
-##### <a name="-kafka--producer--config--config_dir"></a>`config_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-Default value: `$kafka::producer::config_dir`
-
-##### <a name="-kafka--producer--config--user_name"></a>`user_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::producer::user_name`
-
-##### <a name="-kafka--producer--config--group_name"></a>`group_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::producer::group_name`
-
-##### <a name="-kafka--producer--config--config_mode"></a>`config_mode`
-
-Data type: `Stdlib::Filemode`
-
-
-
-Default value: `$kafka::producer::config_mode`
 
 ## Defined types
 

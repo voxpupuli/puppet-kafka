@@ -102,6 +102,15 @@
 # @param log4j_opts
 #   Set the Log4j options.
 #
+# @param manage_log4j
+#   Enable or disable the management of the log4j configuration file.
+#
+# @param log_file_size
+#   Set the max size of the Kafka log files before they are rolled.
+#
+# @param log_file_count
+#   Set the number of Kafka log files to keep.
+#
 class kafka::consumer (
   String[1] $kafka_version                      = $kafka::params::kafka_version,
   String[1] $scala_version                      = $kafka::params::scala_version,

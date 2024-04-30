@@ -117,6 +117,7 @@
 # @param log4j_content
 #   Provide custom content for the log4j configuration file if manage_log4j is enabled,
 #   instead of using the content provided in this module.
+#
 # @param log_file_size
 #   Set the max size of the Kafka log files before they are rolled.
 #
