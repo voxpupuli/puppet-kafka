@@ -220,7 +220,7 @@ describe 'kafka::mirror' do
         apply_manifest(pp, catch_changes: true)
       end
 
-      describe file('/etc/systemd/system/kafka-mirror.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+      describe file('/etc/systemd/system/kafka-mirror.service') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }

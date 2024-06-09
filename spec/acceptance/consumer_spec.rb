@@ -140,7 +140,7 @@ describe 'kafka::consumer' do
         apply_manifest(pp, catch_failures: true)
       end
 
-      describe file('/etc/systemd/system/kafka-consumer.service'), if: (fact('operatingsystemmajrelease') == '7' && fact('osfamily') == 'RedHat') do
+      describe file('/etc/systemd/system/kafka-consumer.service') do
         it { is_expected.to be_file }
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
