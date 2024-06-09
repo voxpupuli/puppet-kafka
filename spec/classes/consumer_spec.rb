@@ -51,12 +51,7 @@ describe 'kafka::consumer', type: :class do
 
       describe 'kafka::consumer::service' do
         context 'defaults' do
-          if os_facts['service_provider'] == 'systemd'
-            it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service') }
-          else
-            it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
-          end
-
+          it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service') }
           it { is_expected.to contain_service('kafka-consumer') }
         end
       end

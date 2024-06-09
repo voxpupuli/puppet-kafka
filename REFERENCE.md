@@ -503,7 +503,7 @@ Default value: `'kafka'`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install the systemd service.
 
 Default value: `$kafka::params::manage_service`
 
@@ -872,7 +872,7 @@ Default value: `'kafka-consumer'`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install the systemd service.
 
 Default value: `$kafka::params::manage_service`
 
@@ -1208,7 +1208,7 @@ Default value: `'kafka-mirror'`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install the systemd service.
 
 Default value: `$kafka::params::manage_service`
 
@@ -1560,7 +1560,7 @@ Default value: `'kafka-producer'`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install systemd service.
 
 Default value: `$kafka::params::manage_service`
 
