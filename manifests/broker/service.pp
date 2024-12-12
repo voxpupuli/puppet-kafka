@@ -7,6 +7,7 @@ class kafka::broker::service (
   Boolean $manage_service                    = $kafka::broker::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   String[1] $service_name                    = $kafka::broker::service_name,
+  Boolean $service_restart                   = $kafka::broker::service_restart,
   String[1] $user_name                       = $kafka::broker::user_name,
   String[1] $group_name                      = $kafka::broker::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::broker::config_dir,
@@ -38,12 +39,19 @@ class kafka::broker::service (
 
     include systemd
 
+    if ($service_restart) {
+      $config_notify = Service[$service_name]
+    } else {
+      $config_notify = undef
+    }
+
     file { "/etc/systemd/system/${service_name}.service":
       ensure  => file,
       mode    => '0644',
       content => template('kafka/unit.erb'),
+      notify  => $config_notify,
     }
-    ~> service { $service_name:
+    service { $service_name:
       ensure     => $service_ensure,
       enable     => true,
       hasstatus  => true,

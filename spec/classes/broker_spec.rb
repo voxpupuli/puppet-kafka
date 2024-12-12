@@ -63,6 +63,7 @@ describe 'kafka::broker', type: :class do
         end
 
         context 'defaults' do
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_notify('Service[kafka]') }
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
           it { is_expected.to contain_service('kafka') }
@@ -85,6 +86,13 @@ describe 'kafka::broker', type: :class do
 
           it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
           it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=dummy\.target$} }
+        end
+
+        context 'service_restart false' do
+          let(:params) { super().merge(service_restart: false) }
+
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service') }
+          it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_notify('Service[kafka]') }
         end
       end
 
