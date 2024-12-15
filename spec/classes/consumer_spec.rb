@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'shared_examples_param_validation'
 
 describe 'kafka::consumer', type: :class do
   on_supported_os.each do |os, os_facts|
@@ -19,10 +18,17 @@ describe 'kafka::consumer', type: :class do
         }
       end
 
+      it { is_expected.to compile }
       it { is_expected.to contain_class('kafka::consumer::install').that_comes_before('Class[kafka::consumer::config]') }
       it { is_expected.to contain_class('kafka::consumer::config').that_comes_before('Class[kafka::consumer::service]') }
       it { is_expected.to contain_class('kafka::consumer::service').that_comes_before('Class[kafka::consumer]') }
       it { is_expected.to contain_class('kafka::consumer') }
+
+      context 'with invalid mirror_url' do
+        let(:params) { { 'mirror_url' => 'invalid' } }
+
+        it { is_expected.not_to compile }
+      end
 
       context 'with manage_log4j => true' do
         let(:params) { { 'manage_log4j' => true } }
@@ -55,8 +61,6 @@ describe 'kafka::consumer', type: :class do
           it { is_expected.to contain_service('kafka-consumer') }
         end
       end
-
-      it_validates_parameter 'mirror_url'
     end
   end
 end
