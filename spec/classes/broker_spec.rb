@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'shared_examples_param_validation'
 
 describe 'kafka::broker', type: :class do
   on_supported_os.each do |os, os_facts|
@@ -18,10 +17,17 @@ describe 'kafka::broker', type: :class do
         }
       end
 
+      it { is_expected.to compile }
       it { is_expected.to contain_class('kafka::broker::install').that_comes_before('Class[kafka::broker::config]') }
       it { is_expected.to contain_class('kafka::broker::config').that_comes_before('Class[kafka::broker::service]') }
       it { is_expected.to contain_class('kafka::broker::service').that_comes_before('Class[kafka::broker]') }
       it { is_expected.to contain_class('kafka::broker') }
+
+      context 'with invalid mirror_url' do
+        let(:params) { { 'mirror_url' => 'invalid' } }
+
+        it { is_expected.not_to compile }
+      end
 
       context 'with manage_log4j => true' do
         let(:params) { { 'manage_log4j' => true } }
@@ -95,8 +101,6 @@ describe 'kafka::broker', type: :class do
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_notify('Service[kafka]') }
         end
       end
-
-      it_validates_parameter 'mirror_url'
     end
   end
 end

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'shared_examples_param_validation'
 
 describe 'kafka::producer', type: :class do
   on_supported_os.each do |os, os_facts|

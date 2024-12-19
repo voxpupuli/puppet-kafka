@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'shared_examples_param_validation'
 
 describe 'kafka::mirror', type: :class do
   on_supported_os.each do |os, os_facts|
@@ -22,10 +21,17 @@ describe 'kafka::mirror', type: :class do
         }
       end
 
+      it { is_expected.to compile }
       it { is_expected.to contain_class('kafka::mirror::install').that_comes_before('Class[kafka::mirror::config]') }
       it { is_expected.to contain_class('kafka::mirror::config').that_comes_before('Class[kafka::mirror::service]') }
       it { is_expected.to contain_class('kafka::mirror::service').that_comes_before('Class[kafka::mirror]') }
       it { is_expected.to contain_class('kafka::mirror') }
+
+      context 'with invalid mirror_url' do
+        let(:params) { { 'mirror_url' => 'invalid' } }
+
+        it { is_expected.not_to compile }
+      end
 
       context 'with manage_log4j => true' do
         let(:params) { { 'manage_log4j' => true } }
@@ -52,8 +58,6 @@ describe 'kafka::mirror', type: :class do
           it { is_expected.to contain_service('kafka-mirror') }
         end
       end
-
-      it_validates_parameter 'mirror_url'
     end
   end
 end
