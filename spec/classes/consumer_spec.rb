@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
-require 'shared_examples_param_validation'
 
 describe 'kafka::consumer', type: :class do
   on_supported_os.each do |os, os_facts|
@@ -17,10 +18,17 @@ describe 'kafka::consumer', type: :class do
         }
       end
 
+      it { is_expected.to compile }
       it { is_expected.to contain_class('kafka::consumer::install').that_comes_before('Class[kafka::consumer::config]') }
       it { is_expected.to contain_class('kafka::consumer::config').that_comes_before('Class[kafka::consumer::service]') }
       it { is_expected.to contain_class('kafka::consumer::service').that_comes_before('Class[kafka::consumer]') }
       it { is_expected.to contain_class('kafka::consumer') }
+
+      context 'with invalid mirror_url' do
+        let(:params) { { 'mirror_url' => 'invalid' } }
+
+        it { is_expected.not_to compile }
+      end
 
       context 'with manage_log4j => true' do
         let(:params) { { 'manage_log4j' => true } }
@@ -38,7 +46,8 @@ describe 'kafka::consumer', type: :class do
         context 'defaults' do
           it { is_expected.to contain_file('/opt/kafka/config/consumer.properties') }
         end
-        context 'with  manage_log4j => true' do
+
+        context 'with manage_log4j => true' do
           let(:params) { { 'manage_log4j' => true } }
 
           it { is_expected.to contain_file('/opt/kafka/config/log4j.properties').with_content(%r{^log4j.appender.kafkaAppender.MaxFileSize=50MB$}) }
@@ -48,17 +57,10 @@ describe 'kafka::consumer', type: :class do
 
       describe 'kafka::consumer::service' do
         context 'defaults' do
-          if os_facts[:service_provider] == 'systemd'
-            it { is_expected.to contain_file('/etc/init.d/kafka-consumer').with_abent('absent') }
-          else
-            it { is_expected.to contain_file('/etc/init.d/kafka-consumer') }
-          end
-
+          it { is_expected.to contain_file('/etc/systemd/system/kafka-consumer.service') }
           it { is_expected.to contain_service('kafka-consumer') }
         end
       end
-
-      it_validates_parameter 'mirror_url'
     end
   end
 end

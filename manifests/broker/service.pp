@@ -7,6 +7,7 @@ class kafka::broker::service (
   Boolean $manage_service                    = $kafka::broker::manage_service,
   Enum['running', 'stopped'] $service_ensure = $kafka::broker::service_ensure,
   String[1] $service_name                    = $kafka::broker::service_name,
+  Boolean $service_restart                   = $kafka::broker::service_restart,
   String[1] $user_name                       = $kafka::broker::user_name,
   String[1] $group_name                      = $kafka::broker::group_name,
   Stdlib::Absolutepath $config_dir           = $kafka::broker::config_dir,
@@ -36,30 +37,20 @@ class kafka::broker::service (
     }
     $environment = deep_merge($env_defaults, $env)
 
-    if $facts['service_provider'] == 'systemd' {
-      include systemd
+    include systemd
 
-      file { "/etc/systemd/system/${service_name}.service":
-        ensure  => file,
-        mode    => '0644',
-        content => template('kafka/unit.erb'),
-      }
-
-      file { "/etc/init.d/${service_name}":
-        ensure => absent,
-      }
-
-      File["/etc/systemd/system/${service_name}.service"]
-      ~> Service[$service_name]
+    if ($service_restart) {
+      $config_notify = Service[$service_name]
     } else {
-      file { "/etc/init.d/${service_name}":
-        ensure  => file,
-        mode    => '0755',
-        content => template('kafka/init.erb'),
-        before  => Service[$service_name],
-      }
+      $config_notify = undef
     }
 
+    file { "/etc/systemd/system/${service_name}.service":
+      ensure  => file,
+      mode    => '0644',
+      content => template('kafka/unit.erb'),
+      notify  => $config_notify,
+    }
     service { $service_name:
       ensure     => $service_ensure,
       enable     => true,

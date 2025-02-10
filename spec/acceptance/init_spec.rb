@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper_acceptance'
 
 case fact('osfamily')
@@ -7,6 +9,7 @@ when 'Debian'
   user_shell = '/usr/sbin/nologin'
 end
 
+# rubocop:disable RSpec/RepeatedExampleGroupBody
 describe 'kafka' do
   it 'works with no errors' do
     pp = <<-EOS
@@ -217,3 +220,4 @@ describe 'kafka' do
     end
   end
 end
+# rubocop:enable RSpec/RepeatedExampleGroupBody

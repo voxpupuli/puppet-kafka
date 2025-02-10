@@ -4,12 +4,49 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
-## [v8.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v8.0.0) (2021-08-02)
+## [v9.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v9.0.0) (2024-12-13)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v8.0.0...v9.0.0)
+
+**Breaking changes:**
+
+- Drop Ubuntu 18.04 support [\#371](https://github.com/voxpupuli/puppet-kafka/pull/371) ([zilchms](https://github.com/zilchms))
+- Drop Debian 10 support [\#370](https://github.com/voxpupuli/puppet-kafka/pull/370) ([zilchms](https://github.com/zilchms))
+- Drop RedHat, CentOs 7 and 8  and Rocky 8 support [\#368](https://github.com/voxpupuli/puppet-kafka/pull/368) ([zilchms](https://github.com/zilchms))
+- Drop support for non systemd OS [\#357](https://github.com/voxpupuli/puppet-kafka/pull/357) ([zilchms](https://github.com/zilchms))
+- Drop Puppet 6 support [\#346](https://github.com/voxpupuli/puppet-kafka/pull/346) ([bastelfreak](https://github.com/bastelfreak))
+- drop support for debian 9 \(EOL\) [\#345](https://github.com/voxpupuli/puppet-kafka/pull/345) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for SLES 11 \(EOL\) [\#344](https://github.com/voxpupuli/puppet-kafka/pull/344) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for ubuntu 16.04 \(EOL\) [\#343](https://github.com/voxpupuli/puppet-kafka/pull/343) ([jhoblitt](https://github.com/jhoblitt))
+- drop support for debian 8 \(EOL\) [\#342](https://github.com/voxpupuli/puppet-kafka/pull/342) ([jhoblitt](https://github.com/jhoblitt))
+
+**Implemented enhancements:**
+
+- fix: honor service\_restart in kafka::broker::service [\#378](https://github.com/voxpupuli/puppet-kafka/pull/378) ([schustersv](https://github.com/schustersv))
+- update puppet-systemd upper bound to 8.0.0 [\#366](https://github.com/voxpupuli/puppet-kafka/pull/366) ([TheMeier](https://github.com/TheMeier))
+- feat: add option to allow for custom log4j configuration [\#363](https://github.com/voxpupuli/puppet-kafka/pull/363) ([TheMeier](https://github.com/TheMeier))
+- puppet/systemd: Allow 6.x [\#361](https://github.com/voxpupuli/puppet-kafka/pull/361) ([zilchms](https://github.com/zilchms))
+- puppetlabs/java: Allow 10.x [\#360](https://github.com/voxpupuli/puppet-kafka/pull/360) ([zilchms](https://github.com/zilchms))
+- puppet/archive: Allow 7.x [\#359](https://github.com/voxpupuli/puppet-kafka/pull/359) ([zilchms](https://github.com/zilchms))
+- Add Debian 11 and 12 support [\#356](https://github.com/voxpupuli/puppet-kafka/pull/356) ([zilchms](https://github.com/zilchms))
+- Add Rocky, EL 8 and 9 support [\#354](https://github.com/voxpupuli/puppet-kafka/pull/354) ([zilchms](https://github.com/zilchms))
+- Add ubuntu 20.04 and 22.04 support [\#353](https://github.com/voxpupuli/puppet-kafka/pull/353) ([zilchms](https://github.com/zilchms))
+- Add Puppet 8 support [\#348](https://github.com/voxpupuli/puppet-kafka/pull/348) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Allow 9.x [\#347](https://github.com/voxpupuli/puppet-kafka/pull/347) ([bastelfreak](https://github.com/bastelfreak))
+- bump puppet/systemd to \< 5.0.0 [\#341](https://github.com/voxpupuli/puppet-kafka/pull/341) ([jhoblitt](https://github.com/jhoblitt))
+- Support kafka 3.0 topics [\#337](https://github.com/voxpupuli/puppet-kafka/pull/337) ([der-eismann](https://github.com/der-eismann))
+
+**Merged pull requests:**
+
+- Rely on voxpupuli-test to mock the service\_provider fact [\#351](https://github.com/voxpupuli/puppet-kafka/pull/351) ([ekohl](https://github.com/ekohl))
+
+## [v8.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v8.0.0) (2021-08-05)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v7.0.0...v8.0.0)
 
 **Breaking changes:**
 
+- Drop EoL Puppet 5; Add Puppet 7 support [\#333](https://github.com/voxpupuli/puppet-kafka/pull/333) ([bastelfreak](https://github.com/bastelfreak))
 - Remove centos 6 [\#322](https://github.com/voxpupuli/puppet-kafka/pull/322) ([bjoernhaeuser](https://github.com/bjoernhaeuser))
 - No longer accept deprecated String params [\#321](https://github.com/voxpupuli/puppet-kafka/pull/321) ([der-eismann](https://github.com/der-eismann))
 
@@ -17,6 +54,7 @@ These should not affect the functionality of the module.
 
 - Enable customized log4j.properties files [\#200](https://github.com/voxpupuli/puppet-kafka/issues/200)
 - Allow to manage Log4j configuration [\#328](https://github.com/voxpupuli/puppet-kafka/pull/328) ([evgenkisel](https://github.com/evgenkisel))
+- allow latest dependencies [\#326](https://github.com/voxpupuli/puppet-kafka/pull/326) ([bastelfreak](https://github.com/bastelfreak))
 
 **Fixed bugs:**
 
@@ -24,6 +62,7 @@ These should not affect the functionality of the module.
 
 **Closed issues:**
 
+- New release [\#330](https://github.com/voxpupuli/puppet-kafka/issues/330)
 - Old versions cannot be installed from apache download area [\#323](https://github.com/voxpupuli/puppet-kafka/issues/323)
 - systemv init created log files are not being rotated [\#85](https://github.com/voxpupuli/puppet-kafka/issues/85)
 
@@ -237,7 +276,7 @@ These should not affect the functionality of the module.
 - Typo in init.erb [\#198](https://github.com/voxpupuli/puppet-kafka/issues/198)
 - Fixed typo in init.erb [\#199](https://github.com/voxpupuli/puppet-kafka/pull/199) ([LionelCons](https://github.com/LionelCons))
 - kafka::consumer now calls kafka::consumer::config [\#187](https://github.com/voxpupuli/puppet-kafka/pull/187) ([LionelCons](https://github.com/LionelCons))
-- kafka::mirror::service does not inherit from ::kafka::params anymore [\#177](https://github.com/voxpupuli/puppet-kafka/pull/177) ([LionelCons](https://github.com/LionelCons))
+- kafka::mirror::service does not inherit from kafka::params anymore [\#177](https://github.com/voxpupuli/puppet-kafka/pull/177) ([LionelCons](https://github.com/LionelCons))
 
 **Closed issues:**
 
@@ -248,7 +287,7 @@ These should not affect the functionality of the module.
 - The ZooKeeper service should not be required by default [\#183](https://github.com/voxpupuli/puppet-kafka/issues/183)
 - Java should not be installed by default [\#180](https://github.com/voxpupuli/puppet-kafka/issues/180)
 - include statements do not need quotes [\#178](https://github.com/voxpupuli/puppet-kafka/issues/178)
-- mirror/service.pp should not inherit from ::kafka::params [\#176](https://github.com/voxpupuli/puppet-kafka/issues/176)
+- mirror/service.pp should not inherit from kafka::params [\#176](https://github.com/voxpupuli/puppet-kafka/issues/176)
 - Module user/group management should be optional [\#173](https://github.com/voxpupuli/puppet-kafka/issues/173)
 
 **Merged pull requests:**
@@ -367,8 +406,8 @@ These should not affect the functionality of the module.
 - init clean-up [\#82](https://github.com/voxpupuli/puppet-kafka/pull/82) ([igalic](https://github.com/igalic))
 - Sync metadata.json license to be same as LICENSE \(MIT\) [\#78](https://github.com/voxpupuli/puppet-kafka/pull/78) ([juniorsysadmin](https://github.com/juniorsysadmin))
 - parameterized group-id and user-id for kafka [\#77](https://github.com/voxpupuli/puppet-kafka/pull/77) ([MaltePaulsen](https://github.com/MaltePaulsen))
-- Removed dependency which is not valid with package installation [\#76](https://github.com/voxpupuli/puppet-kafka/pull/76) ([Mike-Petersen](https://github.com/Mike-Petersen))
-- Allowing installation via package [\#74](https://github.com/voxpupuli/puppet-kafka/pull/74) ([Mike-Petersen](https://github.com/Mike-Petersen))
+- Removed dependency which is not valid with package installation [\#76](https://github.com/voxpupuli/puppet-kafka/pull/76) ([mike-petersen](https://github.com/mike-petersen))
+- Allowing installation via package [\#74](https://github.com/voxpupuli/puppet-kafka/pull/74) ([mike-petersen](https://github.com/mike-petersen))
 - Add support for optional default file with environment vars [\#35](https://github.com/voxpupuli/puppet-kafka/pull/35) ([knumor](https://github.com/knumor))
 
 ## [v2.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v2.0.0) (2016-05-26)

@@ -70,7 +70,7 @@
 #   Set the name of the service.
 #
 # @param manage_service
-#   Install the init.d or systemd service.
+#   Install the systemd service.
 #
 # @param service_ensure
 #   Set the ensure state of the service.
@@ -110,6 +110,19 @@
 #
 # @param log4j_opts
 #   Set the Log4j options.
+#
+# @param manage_log4j
+#   Enable or disable the management of the log4j configuration file.
+#
+# @param log4j_content
+#   Provide custom content for the log4j configuration file if manage_log4j is enabled,
+#   instead of using the content provided in this module.
+#
+# @param log_file_size
+#   Set the max size of the Kafka log files before they are rolled.
+#
+# @param log_file_count
+#   Set the number of Kafka log files to keep.
 #
 # @param opts
 #   Set the Kafka options.
@@ -151,6 +164,7 @@ class kafka::broker (
   String[1] $log4j_opts                         = $kafka::params::broker_log4j_opts,
   String[0] $opts                               = $kafka::params::broker_opts,
   Boolean $manage_log4j                         = $kafka::params::manage_log4j,
+  Optional[String[1]] $log4j_content            = undef,
   Pattern[/[1-9][0-9]*[KMG]B/] $log_file_size   = $kafka::params::log_file_size,
   Integer[1, 50] $log_file_count                = $kafka::params::log_file_count
 ) inherits kafka::params {

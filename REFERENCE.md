@@ -9,30 +9,30 @@
 #### Public Classes
 
 * [`kafka`](#kafka): This class handles the Kafka requirements.
-* [`kafka::broker`](#kafkabroker): This class handles the Kafka (broker).
-* [`kafka::consumer`](#kafkaconsumer): This class handles the Kafka (consumer).
-* [`kafka::consumer::config`](#kafkaconsumerconfig): This class handles the Kafka (consumer) config.
-* [`kafka::mirror`](#kafkamirror): This class handles the Kafka (mirror).
-* [`kafka::params`](#kafkaparams): This class provides default parameters.
-* [`kafka::producer`](#kafkaproducer): This class handles the Kafka (producer).
-* [`kafka::producer::config`](#kafkaproducerconfig): This class handles the Kafka (producer) config.
+* [`kafka::broker`](#kafka--broker): This class handles the Kafka (broker).
+* [`kafka::consumer`](#kafka--consumer): This class handles the Kafka (consumer).
+* [`kafka::mirror`](#kafka--mirror): This class handles the Kafka (mirror).
+* [`kafka::params`](#kafka--params): This class provides default parameters.
+* [`kafka::producer`](#kafka--producer): This class handles the Kafka (producer).
 
 #### Private Classes
 
 * `kafka::broker::config`: This class handles the Kafka (broker) config.
 * `kafka::broker::install`: This class handles the Kafka (broker) package.
 * `kafka::broker::service`: This class handles the Kafka (broker) service.
+* `kafka::consumer::config`: This class handles the Kafka (consumer) config.
 * `kafka::consumer::install`: This class handles the Kafka (consumer) package.
 * `kafka::consumer::service`: This class handles the Kafka (consumer) service.
 * `kafka::mirror::config`: This class handles the Kafka (mirror) config.
 * `kafka::mirror::install`: This class handles the Kafka (mirror) package.
 * `kafka::mirror::service`: This class handles the Kafka (mirror) service.
+* `kafka::producer::config`: This class handles the Kafka (producer) config.
 * `kafka::producer::install`: This class handles the Kafka (producer) package.
 * `kafka::producer::service`: This class handles the Kafka (producer) service.
 
 ### Defined types
 
-* [`kafka::topic`](#kafkatopic): This defined type handles the creation of Kafka topics.
+* [`kafka::topic`](#kafka--topic): This defined type handles the creation of Kafka topics.
 
 ## Classes
 
@@ -52,33 +52,33 @@ class { 'kafka': }
 
 The following parameters are available in the `kafka` class:
 
-* [`kafka_version`](#kafka_version)
-* [`scala_version`](#scala_version)
-* [`install_dir`](#install_dir)
-* [`mirror_url`](#mirror_url)
-* [`manage_java`](#manage_java)
-* [`package_dir`](#package_dir)
-* [`package_name`](#package_name)
-* [`mirror_subpath`](#mirror_subpath)
-* [`proxy_server`](#proxy_server)
-* [`proxy_port`](#proxy_port)
-* [`proxy_host`](#proxy_host)
-* [`proxy_type`](#proxy_type)
-* [`package_ensure`](#package_ensure)
-* [`user_name`](#user_name)
-* [`user_shell`](#user_shell)
-* [`group_name`](#group_name)
-* [`system_user`](#system_user)
-* [`system_group`](#system_group)
-* [`user_id`](#user_id)
-* [`group_id`](#group_id)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`config_dir`](#config_dir)
-* [`log_dir`](#log_dir)
-* [`install_mode`](#install_mode)
+* [`kafka_version`](#-kafka--kafka_version)
+* [`scala_version`](#-kafka--scala_version)
+* [`install_dir`](#-kafka--install_dir)
+* [`mirror_url`](#-kafka--mirror_url)
+* [`manage_java`](#-kafka--manage_java)
+* [`package_dir`](#-kafka--package_dir)
+* [`package_name`](#-kafka--package_name)
+* [`mirror_subpath`](#-kafka--mirror_subpath)
+* [`proxy_server`](#-kafka--proxy_server)
+* [`proxy_port`](#-kafka--proxy_port)
+* [`proxy_host`](#-kafka--proxy_host)
+* [`proxy_type`](#-kafka--proxy_type)
+* [`package_ensure`](#-kafka--package_ensure)
+* [`user_name`](#-kafka--user_name)
+* [`user_shell`](#-kafka--user_shell)
+* [`group_name`](#-kafka--group_name)
+* [`system_user`](#-kafka--system_user)
+* [`system_group`](#-kafka--system_group)
+* [`user_id`](#-kafka--user_id)
+* [`group_id`](#-kafka--group_id)
+* [`manage_user`](#-kafka--manage_user)
+* [`manage_group`](#-kafka--manage_group)
+* [`config_dir`](#-kafka--config_dir)
+* [`log_dir`](#-kafka--log_dir)
+* [`install_mode`](#-kafka--install_mode)
 
-##### <a name="kafka_version"></a>`kafka_version`
+##### <a name="-kafka--kafka_version"></a>`kafka_version`
 
 Data type: `String[1]`
 
@@ -86,7 +86,7 @@ The version of Kafka that should be installed.
 
 Default value: `$kafka::params::kafka_version`
 
-##### <a name="scala_version"></a>`scala_version`
+##### <a name="-kafka--scala_version"></a>`scala_version`
 
 Data type: `String[1]`
 
@@ -94,7 +94,7 @@ The scala version what Kafka was built with.
 
 Default value: `$kafka::params::scala_version`
 
-##### <a name="install_dir"></a>`install_dir`
+##### <a name="-kafka--install_dir"></a>`install_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -102,7 +102,7 @@ The directory to install Kafka to.
 
 Default value: `$kafka::params::install_dir`
 
-##### <a name="mirror_url"></a>`mirror_url`
+##### <a name="-kafka--mirror_url"></a>`mirror_url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -110,7 +110,7 @@ The url where the Kafka is downloaded from.
 
 Default value: `$kafka::params::mirror_url`
 
-##### <a name="manage_java"></a>`manage_java`
+##### <a name="-kafka--manage_java"></a>`manage_java`
 
 Data type: `Boolean`
 
@@ -118,7 +118,7 @@ Install java if it's not already installed.
 
 Default value: `$kafka::params::manage_java`
 
-##### <a name="package_dir"></a>`package_dir`
+##### <a name="-kafka--package_dir"></a>`package_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -126,7 +126,7 @@ The directory to install Kafka.
 
 Default value: `$kafka::params::package_dir`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-kafka--package_name"></a>`package_name`
 
 Data type: `Optional[String[1]]`
 
@@ -134,7 +134,7 @@ Package name, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_name`
 
-##### <a name="mirror_subpath"></a>`mirror_subpath`
+##### <a name="-kafka--mirror_subpath"></a>`mirror_subpath`
 
 Data type: `Optional[String[1]]`
 
@@ -142,7 +142,7 @@ The sub directory where the source is downloaded from.
 
 Default value: `$kafka::params::mirror_subpath`
 
-##### <a name="proxy_server"></a>`proxy_server`
+##### <a name="-kafka--proxy_server"></a>`proxy_server`
 
 Data type: `Optional[String[1]]`
 
@@ -150,7 +150,7 @@ Set proxy server, when installing Kafka from source.
 
 Default value: `$kafka::params::proxy_server`
 
-##### <a name="proxy_port"></a>`proxy_port`
+##### <a name="-kafka--proxy_port"></a>`proxy_port`
 
 Data type: `Optional[String[1]]`
 
@@ -158,7 +158,7 @@ Set proxy port, when installing Kafka from source.
 
 Default value: `$kafka::params::proxy_port`
 
-##### <a name="proxy_host"></a>`proxy_host`
+##### <a name="-kafka--proxy_host"></a>`proxy_host`
 
 Data type: `Optional[String[1]]`
 
@@ -166,7 +166,7 @@ Set proxy host, when installing Kafka from source.
 
 Default value: `$kafka::params::proxy_host`
 
-##### <a name="proxy_type"></a>`proxy_type`
+##### <a name="-kafka--proxy_type"></a>`proxy_type`
 
 Data type: `Optional[String[1]]`
 
@@ -174,7 +174,7 @@ Set proxy type, when installing Kafka from source.
 
 Default value: `$kafka::params::proxy_type`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-kafka--package_ensure"></a>`package_ensure`
 
 Data type: `String[1]`
 
@@ -182,7 +182,7 @@ Package version or ensure state, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_ensure`
 
-##### <a name="user_name"></a>`user_name`
+##### <a name="-kafka--user_name"></a>`user_name`
 
 Data type: `String[1]`
 
@@ -190,7 +190,7 @@ User to run Kafka as.
 
 Default value: `$kafka::params::user_name`
 
-##### <a name="user_shell"></a>`user_shell`
+##### <a name="-kafka--user_shell"></a>`user_shell`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -198,7 +198,7 @@ Login shell of the Kafka user.
 
 Default value: `$kafka::params::user_shell`
 
-##### <a name="group_name"></a>`group_name`
+##### <a name="-kafka--group_name"></a>`group_name`
 
 Data type: `String[1]`
 
@@ -206,7 +206,7 @@ Group to run Kafka as.
 
 Default value: `$kafka::params::group_name`
 
-##### <a name="system_user"></a>`system_user`
+##### <a name="-kafka--system_user"></a>`system_user`
 
 Data type: `Boolean`
 
@@ -214,7 +214,7 @@ Whether the Kafka user is a system user or not.
 
 Default value: `$kafka::params::system_user`
 
-##### <a name="system_group"></a>`system_group`
+##### <a name="-kafka--system_group"></a>`system_group`
 
 Data type: `Boolean`
 
@@ -222,7 +222,7 @@ Whether the Kafka group is a system group or not.
 
 Default value: `$kafka::params::system_group`
 
-##### <a name="user_id"></a>`user_id`
+##### <a name="-kafka--user_id"></a>`user_id`
 
 Data type: `Optional[Integer]`
 
@@ -230,7 +230,7 @@ Create the Kafka user with this ID.
 
 Default value: `$kafka::params::user_id`
 
-##### <a name="group_id"></a>`group_id`
+##### <a name="-kafka--group_id"></a>`group_id`
 
 Data type: `Optional[Integer]`
 
@@ -238,7 +238,7 @@ Create the Kafka group with this ID.
 
 Default value: `$kafka::params::group_id`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-kafka--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -246,7 +246,7 @@ Create the Kafka user if it's not already present.
 
 Default value: `$kafka::params::manage_user`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-kafka--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -254,7 +254,7 @@ Create the Kafka group if it's not already present.
 
 Default value: `$kafka::params::manage_group`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-kafka--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -262,7 +262,7 @@ The directory to create the Kafka config files to.
 
 Default value: `$kafka::params::config_dir`
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-kafka--log_dir"></a>`log_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -270,7 +270,7 @@ The directory for Kafka log files.
 
 Default value: `$kafka::params::log_dir`
 
-##### <a name="install_mode"></a>`install_mode`
+##### <a name="-kafka--install_mode"></a>`install_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -278,7 +278,7 @@ The permissions for the install directory.
 
 Default value: `$kafka::params::install_mode`
 
-### <a name="kafkabroker"></a>`kafka::broker`
+### <a name="kafka--broker"></a>`kafka::broker`
 
 This class handles the Kafka (broker).
 
@@ -299,46 +299,47 @@ class { 'kafka::broker':
 
 The following parameters are available in the `kafka::broker` class:
 
-* [`kafka_version`](#kafka_version)
-* [`scala_version`](#scala_version)
-* [`install_dir`](#install_dir)
-* [`mirror_url`](#mirror_url)
-* [`manage_java`](#manage_java)
-* [`package_dir`](#package_dir)
-* [`package_name`](#package_name)
-* [`package_ensure`](#package_ensure)
-* [`user_name`](#user_name)
-* [`user_shell`](#user_shell)
-* [`group_name`](#group_name)
-* [`user_id`](#user_id)
-* [`group_id`](#group_id)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`config_mode`](#config_mode)
-* [`config_dir`](#config_dir)
-* [`log_dir`](#log_dir)
-* [`bin_dir`](#bin_dir)
-* [`service_name`](#service_name)
-* [`manage_service`](#manage_service)
-* [`service_ensure`](#service_ensure)
-* [`service_restart`](#service_restart)
-* [`service_requires`](#service_requires)
-* [`limit_nofile`](#limit_nofile)
-* [`limit_core`](#limit_core)
-* [`timeout_stop`](#timeout_stop)
-* [`exec_stop`](#exec_stop)
-* [`daemon_start`](#daemon_start)
-* [`env`](#env)
-* [`config`](#config)
-* [`heap_opts`](#heap_opts)
-* [`jmx_opts`](#jmx_opts)
-* [`log4j_opts`](#log4j_opts)
-* [`opts`](#opts)
-* [`manage_log4j`](#manage_log4j)
-* [`log_file_size`](#log_file_size)
-* [`log_file_count`](#log_file_count)
+* [`kafka_version`](#-kafka--broker--kafka_version)
+* [`scala_version`](#-kafka--broker--scala_version)
+* [`install_dir`](#-kafka--broker--install_dir)
+* [`mirror_url`](#-kafka--broker--mirror_url)
+* [`manage_java`](#-kafka--broker--manage_java)
+* [`package_dir`](#-kafka--broker--package_dir)
+* [`package_name`](#-kafka--broker--package_name)
+* [`package_ensure`](#-kafka--broker--package_ensure)
+* [`user_name`](#-kafka--broker--user_name)
+* [`user_shell`](#-kafka--broker--user_shell)
+* [`group_name`](#-kafka--broker--group_name)
+* [`user_id`](#-kafka--broker--user_id)
+* [`group_id`](#-kafka--broker--group_id)
+* [`manage_user`](#-kafka--broker--manage_user)
+* [`manage_group`](#-kafka--broker--manage_group)
+* [`config_mode`](#-kafka--broker--config_mode)
+* [`config_dir`](#-kafka--broker--config_dir)
+* [`log_dir`](#-kafka--broker--log_dir)
+* [`bin_dir`](#-kafka--broker--bin_dir)
+* [`service_name`](#-kafka--broker--service_name)
+* [`manage_service`](#-kafka--broker--manage_service)
+* [`service_ensure`](#-kafka--broker--service_ensure)
+* [`service_restart`](#-kafka--broker--service_restart)
+* [`service_requires`](#-kafka--broker--service_requires)
+* [`limit_nofile`](#-kafka--broker--limit_nofile)
+* [`limit_core`](#-kafka--broker--limit_core)
+* [`timeout_stop`](#-kafka--broker--timeout_stop)
+* [`exec_stop`](#-kafka--broker--exec_stop)
+* [`daemon_start`](#-kafka--broker--daemon_start)
+* [`env`](#-kafka--broker--env)
+* [`config`](#-kafka--broker--config)
+* [`heap_opts`](#-kafka--broker--heap_opts)
+* [`jmx_opts`](#-kafka--broker--jmx_opts)
+* [`log4j_opts`](#-kafka--broker--log4j_opts)
+* [`manage_log4j`](#-kafka--broker--manage_log4j)
+* [`log4j_content`](#-kafka--broker--log4j_content)
+* [`log_file_size`](#-kafka--broker--log_file_size)
+* [`log_file_count`](#-kafka--broker--log_file_count)
+* [`opts`](#-kafka--broker--opts)
 
-##### <a name="kafka_version"></a>`kafka_version`
+##### <a name="-kafka--broker--kafka_version"></a>`kafka_version`
 
 Data type: `String[1]`
 
@@ -346,7 +347,7 @@ The version of Kafka that should be installed.
 
 Default value: `$kafka::params::kafka_version`
 
-##### <a name="scala_version"></a>`scala_version`
+##### <a name="-kafka--broker--scala_version"></a>`scala_version`
 
 Data type: `String[1]`
 
@@ -354,7 +355,7 @@ The scala version what Kafka was built with.
 
 Default value: `$kafka::params::scala_version`
 
-##### <a name="install_dir"></a>`install_dir`
+##### <a name="-kafka--broker--install_dir"></a>`install_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -362,7 +363,7 @@ The directory to install Kafka to.
 
 Default value: `$kafka::params::install_dir`
 
-##### <a name="mirror_url"></a>`mirror_url`
+##### <a name="-kafka--broker--mirror_url"></a>`mirror_url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -370,7 +371,7 @@ The url where the Kafka is downloaded from.
 
 Default value: `$kafka::params::mirror_url`
 
-##### <a name="manage_java"></a>`manage_java`
+##### <a name="-kafka--broker--manage_java"></a>`manage_java`
 
 Data type: `Boolean`
 
@@ -378,7 +379,7 @@ Install java if it's not already installed.
 
 Default value: `$kafka::params::manage_java`
 
-##### <a name="package_dir"></a>`package_dir`
+##### <a name="-kafka--broker--package_dir"></a>`package_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -386,7 +387,7 @@ The directory to install Kafka.
 
 Default value: `$kafka::params::package_dir`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-kafka--broker--package_name"></a>`package_name`
 
 Data type: `Optional[String[1]]`
 
@@ -394,7 +395,7 @@ Package name, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_name`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-kafka--broker--package_ensure"></a>`package_ensure`
 
 Data type: `String[1]`
 
@@ -402,7 +403,7 @@ Package version or ensure state, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_ensure`
 
-##### <a name="user_name"></a>`user_name`
+##### <a name="-kafka--broker--user_name"></a>`user_name`
 
 Data type: `String[1]`
 
@@ -410,7 +411,7 @@ User to run Kafka as.
 
 Default value: `$kafka::params::user_name`
 
-##### <a name="user_shell"></a>`user_shell`
+##### <a name="-kafka--broker--user_shell"></a>`user_shell`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -418,7 +419,7 @@ Login shell of the Kafka user.
 
 Default value: `$kafka::params::user_shell`
 
-##### <a name="group_name"></a>`group_name`
+##### <a name="-kafka--broker--group_name"></a>`group_name`
 
 Data type: `String[1]`
 
@@ -426,7 +427,7 @@ Group to run Kafka as.
 
 Default value: `$kafka::params::group_name`
 
-##### <a name="user_id"></a>`user_id`
+##### <a name="-kafka--broker--user_id"></a>`user_id`
 
 Data type: `Optional[Integer]`
 
@@ -434,7 +435,7 @@ Create the Kafka user with this ID.
 
 Default value: `$kafka::params::user_id`
 
-##### <a name="group_id"></a>`group_id`
+##### <a name="-kafka--broker--group_id"></a>`group_id`
 
 Data type: `Optional[Integer]`
 
@@ -442,7 +443,7 @@ Create the Kafka group with this ID.
 
 Default value: `$kafka::params::group_id`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-kafka--broker--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -450,7 +451,7 @@ Create the Kafka user if it's not already present.
 
 Default value: `$kafka::params::manage_user`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-kafka--broker--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -458,7 +459,7 @@ Create the Kafka group if it's not already present.
 
 Default value: `$kafka::params::manage_group`
 
-##### <a name="config_mode"></a>`config_mode`
+##### <a name="-kafka--broker--config_mode"></a>`config_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -466,7 +467,7 @@ The permissions for the config files.
 
 Default value: `$kafka::params::config_mode`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-kafka--broker--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -474,7 +475,7 @@ The directory to create the Kafka config files to.
 
 Default value: `$kafka::params::config_dir`
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-kafka--broker--log_dir"></a>`log_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -482,7 +483,7 @@ The directory for Kafka log files.
 
 Default value: `$kafka::params::log_dir`
 
-##### <a name="bin_dir"></a>`bin_dir`
+##### <a name="-kafka--broker--bin_dir"></a>`bin_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -490,7 +491,7 @@ The directory where the Kafka scripts are.
 
 Default value: `$kafka::params::bin_dir`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-kafka--broker--service_name"></a>`service_name`
 
 Data type: `String[1]`
 
@@ -498,15 +499,15 @@ Set the name of the service.
 
 Default value: `'kafka'`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-kafka--broker--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install the systemd service.
 
 Default value: `$kafka::params::manage_service`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-kafka--broker--service_ensure"></a>`service_ensure`
 
 Data type: `Enum['running', 'stopped']`
 
@@ -514,7 +515,7 @@ Set the ensure state of the service.
 
 Default value: `$kafka::params::service_ensure`
 
-##### <a name="service_restart"></a>`service_restart`
+##### <a name="-kafka--broker--service_restart"></a>`service_restart`
 
 Data type: `Boolean`
 
@@ -522,7 +523,7 @@ Whether the configuration files should trigger a service restart.
 
 Default value: `$kafka::params::service_restart`
 
-##### <a name="service_requires"></a>`service_requires`
+##### <a name="-kafka--broker--service_requires"></a>`service_requires`
 
 Data type: `Array[String[1]]`
 
@@ -530,7 +531,7 @@ Set the list of services required to be running before Kafka.
 
 Default value: `$kafka::params::service_requires`
 
-##### <a name="limit_nofile"></a>`limit_nofile`
+##### <a name="-kafka--broker--limit_nofile"></a>`limit_nofile`
 
 Data type: `Optional[String[1]]`
 
@@ -538,7 +539,7 @@ Set the 'LimitNOFILE' option of the systemd service.
 
 Default value: `$kafka::params::limit_nofile`
 
-##### <a name="limit_core"></a>`limit_core`
+##### <a name="-kafka--broker--limit_core"></a>`limit_core`
 
 Data type: `Optional[String[1]]`
 
@@ -546,7 +547,7 @@ Set the 'LimitCORE' option of the systemd service.
 
 Default value: `$kafka::params::limit_core`
 
-##### <a name="timeout_stop"></a>`timeout_stop`
+##### <a name="-kafka--broker--timeout_stop"></a>`timeout_stop`
 
 Data type: `Optional[String[1]]`
 
@@ -554,7 +555,7 @@ Set the 'TimeoutStopSec' option of the systemd service.
 
 Default value: `$kafka::params::timeout_stop`
 
-##### <a name="exec_stop"></a>`exec_stop`
+##### <a name="-kafka--broker--exec_stop"></a>`exec_stop`
 
 Data type: `Boolean`
 
@@ -562,7 +563,7 @@ Set the 'ExecStop' option of the systemd service to 'kafka-server-stop.sh'.
 
 Default value: `$kafka::params::exec_stop`
 
-##### <a name="daemon_start"></a>`daemon_start`
+##### <a name="-kafka--broker--daemon_start"></a>`daemon_start`
 
 Data type: `Boolean`
 
@@ -570,7 +571,7 @@ Use the '-daemon' option when starting Kafka with 'kafka-server-start.sh'.
 
 Default value: `$kafka::params::daemon_start`
 
-##### <a name="env"></a>`env`
+##### <a name="-kafka--broker--env"></a>`env`
 
 Data type: `Hash`
 
@@ -578,7 +579,7 @@ A hash of the environment variables to set.
 
 Default value: `{}`
 
-##### <a name="config"></a>`config`
+##### <a name="-kafka--broker--config"></a>`config`
 
 Data type: `Hash[String[1], Any]`
 
@@ -586,7 +587,7 @@ A hash of the broker configuration options.
 
 Default value: `{}`
 
-##### <a name="heap_opts"></a>`heap_opts`
+##### <a name="-kafka--broker--heap_opts"></a>`heap_opts`
 
 Data type: `String[1]`
 
@@ -594,7 +595,7 @@ Set the Java heap size.
 
 Default value: `$kafka::params::broker_heap_opts`
 
-##### <a name="jmx_opts"></a>`jmx_opts`
+##### <a name="-kafka--broker--jmx_opts"></a>`jmx_opts`
 
 Data type: `String[1]`
 
@@ -602,7 +603,7 @@ Set the JMX options.
 
 Default value: `$kafka::params::broker_jmx_opts`
 
-##### <a name="log4j_opts"></a>`log4j_opts`
+##### <a name="-kafka--broker--log4j_opts"></a>`log4j_opts`
 
 Data type: `String[1]`
 
@@ -610,7 +611,40 @@ Set the Log4j options.
 
 Default value: `$kafka::params::broker_log4j_opts`
 
-##### <a name="opts"></a>`opts`
+##### <a name="-kafka--broker--manage_log4j"></a>`manage_log4j`
+
+Data type: `Boolean`
+
+Enable or disable the management of the log4j configuration file.
+
+Default value: `$kafka::params::manage_log4j`
+
+##### <a name="-kafka--broker--log4j_content"></a>`log4j_content`
+
+Data type: `Optional[String[1]]`
+
+Provide custom content for the log4j configuration file if manage_log4j is enabled,
+instead of using the content provided in this module.
+
+Default value: `undef`
+
+##### <a name="-kafka--broker--log_file_size"></a>`log_file_size`
+
+Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
+
+Set the max size of the Kafka log files before they are rolled.
+
+Default value: `$kafka::params::log_file_size`
+
+##### <a name="-kafka--broker--log_file_count"></a>`log_file_count`
+
+Data type: `Integer[1, 50]`
+
+Set the number of Kafka log files to keep.
+
+Default value: `$kafka::params::log_file_count`
+
+##### <a name="-kafka--broker--opts"></a>`opts`
 
 Data type: `String[0]`
 
@@ -618,31 +652,7 @@ Set the Kafka options.
 
 Default value: `$kafka::params::broker_opts`
 
-##### <a name="manage_log4j"></a>`manage_log4j`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::params::manage_log4j`
-
-##### <a name="log_file_size"></a>`log_file_size`
-
-Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
-
-
-
-Default value: `$kafka::params::log_file_size`
-
-##### <a name="log_file_count"></a>`log_file_count`
-
-Data type: `Integer[1, 50]`
-
-
-
-Default value: `$kafka::params::log_file_count`
-
-### <a name="kafkaconsumer"></a>`kafka::consumer`
+### <a name="kafka--consumer"></a>`kafka::consumer`
 
 This class handles the Kafka (consumer).
 
@@ -663,42 +673,42 @@ class { 'kafka::consumer':
 
 The following parameters are available in the `kafka::consumer` class:
 
-* [`kafka_version`](#kafka_version)
-* [`scala_version`](#scala_version)
-* [`install_dir`](#install_dir)
-* [`mirror_url`](#mirror_url)
-* [`manage_java`](#manage_java)
-* [`package_dir`](#package_dir)
-* [`package_name`](#package_name)
-* [`package_ensure`](#package_ensure)
-* [`user_name`](#user_name)
-* [`user_shell`](#user_shell)
-* [`group_name`](#group_name)
-* [`user_id`](#user_id)
-* [`group_id`](#group_id)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`config_mode`](#config_mode)
-* [`config_dir`](#config_dir)
-* [`log_dir`](#log_dir)
-* [`bin_dir`](#bin_dir)
-* [`service_name`](#service_name)
-* [`manage_service`](#manage_service)
-* [`service_ensure`](#service_ensure)
-* [`service_restart`](#service_restart)
-* [`service_requires`](#service_requires)
-* [`limit_nofile`](#limit_nofile)
-* [`limit_core`](#limit_core)
-* [`env`](#env)
-* [`config`](#config)
-* [`service_config`](#service_config)
-* [`jmx_opts`](#jmx_opts)
-* [`log4j_opts`](#log4j_opts)
-* [`manage_log4j`](#manage_log4j)
-* [`log_file_size`](#log_file_size)
-* [`log_file_count`](#log_file_count)
+* [`kafka_version`](#-kafka--consumer--kafka_version)
+* [`scala_version`](#-kafka--consumer--scala_version)
+* [`install_dir`](#-kafka--consumer--install_dir)
+* [`mirror_url`](#-kafka--consumer--mirror_url)
+* [`manage_java`](#-kafka--consumer--manage_java)
+* [`package_dir`](#-kafka--consumer--package_dir)
+* [`package_name`](#-kafka--consumer--package_name)
+* [`package_ensure`](#-kafka--consumer--package_ensure)
+* [`user_name`](#-kafka--consumer--user_name)
+* [`user_shell`](#-kafka--consumer--user_shell)
+* [`group_name`](#-kafka--consumer--group_name)
+* [`user_id`](#-kafka--consumer--user_id)
+* [`group_id`](#-kafka--consumer--group_id)
+* [`manage_user`](#-kafka--consumer--manage_user)
+* [`manage_group`](#-kafka--consumer--manage_group)
+* [`config_mode`](#-kafka--consumer--config_mode)
+* [`config_dir`](#-kafka--consumer--config_dir)
+* [`log_dir`](#-kafka--consumer--log_dir)
+* [`bin_dir`](#-kafka--consumer--bin_dir)
+* [`service_name`](#-kafka--consumer--service_name)
+* [`manage_service`](#-kafka--consumer--manage_service)
+* [`service_ensure`](#-kafka--consumer--service_ensure)
+* [`service_restart`](#-kafka--consumer--service_restart)
+* [`service_requires`](#-kafka--consumer--service_requires)
+* [`limit_nofile`](#-kafka--consumer--limit_nofile)
+* [`limit_core`](#-kafka--consumer--limit_core)
+* [`env`](#-kafka--consumer--env)
+* [`config`](#-kafka--consumer--config)
+* [`service_config`](#-kafka--consumer--service_config)
+* [`jmx_opts`](#-kafka--consumer--jmx_opts)
+* [`log4j_opts`](#-kafka--consumer--log4j_opts)
+* [`manage_log4j`](#-kafka--consumer--manage_log4j)
+* [`log_file_size`](#-kafka--consumer--log_file_size)
+* [`log_file_count`](#-kafka--consumer--log_file_count)
 
-##### <a name="kafka_version"></a>`kafka_version`
+##### <a name="-kafka--consumer--kafka_version"></a>`kafka_version`
 
 Data type: `String[1]`
 
@@ -706,7 +716,7 @@ The version of Kafka that should be installed.
 
 Default value: `$kafka::params::kafka_version`
 
-##### <a name="scala_version"></a>`scala_version`
+##### <a name="-kafka--consumer--scala_version"></a>`scala_version`
 
 Data type: `String[1]`
 
@@ -714,7 +724,7 @@ The scala version what Kafka was built with.
 
 Default value: `$kafka::params::scala_version`
 
-##### <a name="install_dir"></a>`install_dir`
+##### <a name="-kafka--consumer--install_dir"></a>`install_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -722,7 +732,7 @@ The directory to install Kafka to.
 
 Default value: `$kafka::params::install_dir`
 
-##### <a name="mirror_url"></a>`mirror_url`
+##### <a name="-kafka--consumer--mirror_url"></a>`mirror_url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -730,7 +740,7 @@ The url where the Kafka is downloaded from.
 
 Default value: `$kafka::params::mirror_url`
 
-##### <a name="manage_java"></a>`manage_java`
+##### <a name="-kafka--consumer--manage_java"></a>`manage_java`
 
 Data type: `Boolean`
 
@@ -738,7 +748,7 @@ Install java if it's not already installed.
 
 Default value: `$kafka::params::manage_java`
 
-##### <a name="package_dir"></a>`package_dir`
+##### <a name="-kafka--consumer--package_dir"></a>`package_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -746,7 +756,7 @@ The directory to install Kafka.
 
 Default value: `$kafka::params::package_dir`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-kafka--consumer--package_name"></a>`package_name`
 
 Data type: `Optional[String[1]]`
 
@@ -754,7 +764,7 @@ Package name, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_name`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-kafka--consumer--package_ensure"></a>`package_ensure`
 
 Data type: `String[1]`
 
@@ -762,7 +772,7 @@ Package version or ensure state, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_ensure`
 
-##### <a name="user_name"></a>`user_name`
+##### <a name="-kafka--consumer--user_name"></a>`user_name`
 
 Data type: `String[1]`
 
@@ -770,7 +780,7 @@ User to run Kafka as.
 
 Default value: `$kafka::params::user_name`
 
-##### <a name="user_shell"></a>`user_shell`
+##### <a name="-kafka--consumer--user_shell"></a>`user_shell`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -778,7 +788,7 @@ Login shell of the Kafka user.
 
 Default value: `$kafka::params::user_shell`
 
-##### <a name="group_name"></a>`group_name`
+##### <a name="-kafka--consumer--group_name"></a>`group_name`
 
 Data type: `String[1]`
 
@@ -786,7 +796,7 @@ Group to run Kafka as.
 
 Default value: `$kafka::params::group_name`
 
-##### <a name="user_id"></a>`user_id`
+##### <a name="-kafka--consumer--user_id"></a>`user_id`
 
 Data type: `Optional[Integer]`
 
@@ -794,7 +804,7 @@ Create the Kafka user with this ID.
 
 Default value: `$kafka::params::user_id`
 
-##### <a name="group_id"></a>`group_id`
+##### <a name="-kafka--consumer--group_id"></a>`group_id`
 
 Data type: `Optional[Integer]`
 
@@ -802,7 +812,7 @@ Create the Kafka group with this ID.
 
 Default value: `$kafka::params::group_id`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-kafka--consumer--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -810,7 +820,7 @@ Create the Kafka user if it's not already present.
 
 Default value: `$kafka::params::manage_user`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-kafka--consumer--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -818,7 +828,7 @@ Create the Kafka group if it's not already present.
 
 Default value: `$kafka::params::manage_group`
 
-##### <a name="config_mode"></a>`config_mode`
+##### <a name="-kafka--consumer--config_mode"></a>`config_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -826,7 +836,7 @@ The permissions for the config files.
 
 Default value: `$kafka::params::config_mode`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-kafka--consumer--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -834,7 +844,7 @@ The directory to create the Kafka config files to.
 
 Default value: `$kafka::params::config_dir`
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-kafka--consumer--log_dir"></a>`log_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -842,7 +852,7 @@ The directory for Kafka log files.
 
 Default value: `$kafka::params::log_dir`
 
-##### <a name="bin_dir"></a>`bin_dir`
+##### <a name="-kafka--consumer--bin_dir"></a>`bin_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -850,7 +860,7 @@ The directory where the Kafka scripts are.
 
 Default value: `$kafka::params::bin_dir`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-kafka--consumer--service_name"></a>`service_name`
 
 Data type: `String[1]`
 
@@ -858,15 +868,15 @@ Set the name of the service.
 
 Default value: `'kafka-consumer'`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-kafka--consumer--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install the systemd service.
 
 Default value: `$kafka::params::manage_service`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-kafka--consumer--service_ensure"></a>`service_ensure`
 
 Data type: `Enum['running', 'stopped']`
 
@@ -874,7 +884,7 @@ Set the ensure state of the service.
 
 Default value: `$kafka::params::service_ensure`
 
-##### <a name="service_restart"></a>`service_restart`
+##### <a name="-kafka--consumer--service_restart"></a>`service_restart`
 
 Data type: `Boolean`
 
@@ -882,7 +892,7 @@ Whether the configuration files should trigger a service restart.
 
 Default value: `$kafka::params::service_restart`
 
-##### <a name="service_requires"></a>`service_requires`
+##### <a name="-kafka--consumer--service_requires"></a>`service_requires`
 
 Data type: `Array[String[1]]`
 
@@ -890,7 +900,7 @@ Set the list of services required to be running before Kafka.
 
 Default value: `$kafka::params::service_requires`
 
-##### <a name="limit_nofile"></a>`limit_nofile`
+##### <a name="-kafka--consumer--limit_nofile"></a>`limit_nofile`
 
 Data type: `Optional[String[1]]`
 
@@ -898,7 +908,7 @@ Set the 'LimitNOFILE' option of the systemd service.
 
 Default value: `$kafka::params::limit_nofile`
 
-##### <a name="limit_core"></a>`limit_core`
+##### <a name="-kafka--consumer--limit_core"></a>`limit_core`
 
 Data type: `Optional[String[1]]`
 
@@ -906,7 +916,7 @@ Set the 'LimitCORE' option of the systemd service.
 
 Default value: `$kafka::params::limit_core`
 
-##### <a name="env"></a>`env`
+##### <a name="-kafka--consumer--env"></a>`env`
 
 Data type: `Hash`
 
@@ -914,7 +924,7 @@ A hash of the environment variables to set.
 
 Default value: `{}`
 
-##### <a name="config"></a>`config`
+##### <a name="-kafka--consumer--config"></a>`config`
 
 Data type: `Hash[String[1], Any]`
 
@@ -922,7 +932,7 @@ A hash of the consumer configuration options.
 
 Default value: `{}`
 
-##### <a name="service_config"></a>`service_config`
+##### <a name="-kafka--consumer--service_config"></a>`service_config`
 
 Data type: `Hash[String[1],String[1]]`
 
@@ -930,7 +940,7 @@ A hash of the `kafka-console-consumer.sh` script options.
 
 Default value: `{}`
 
-##### <a name="jmx_opts"></a>`jmx_opts`
+##### <a name="-kafka--consumer--jmx_opts"></a>`jmx_opts`
 
 Data type: `String[1]`
 
@@ -938,7 +948,7 @@ Set the JMX options.
 
 Default value: `$kafka::params::consumer_jmx_opts`
 
-##### <a name="log4j_opts"></a>`log4j_opts`
+##### <a name="-kafka--consumer--log4j_opts"></a>`log4j_opts`
 
 Data type: `String[1]`
 
@@ -946,139 +956,31 @@ Set the Log4j options.
 
 Default value: `$kafka::params::consumer_log4j_opts`
 
-##### <a name="manage_log4j"></a>`manage_log4j`
+##### <a name="-kafka--consumer--manage_log4j"></a>`manage_log4j`
 
 Data type: `Boolean`
 
-
+Enable or disable the management of the log4j configuration file.
 
 Default value: `$kafka::params::manage_log4j`
 
-##### <a name="log_file_size"></a>`log_file_size`
+##### <a name="-kafka--consumer--log_file_size"></a>`log_file_size`
 
 Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
 
-
+Set the max size of the Kafka log files before they are rolled.
 
 Default value: `$kafka::params::log_file_size`
 
-##### <a name="log_file_count"></a>`log_file_count`
+##### <a name="-kafka--consumer--log_file_count"></a>`log_file_count`
 
 Data type: `Integer[1, 50]`
 
-
+Set the number of Kafka log files to keep.
 
 Default value: `$kafka::params::log_file_count`
 
-### <a name="kafkaconsumerconfig"></a>`kafka::consumer::config`
-
-This class handles the Kafka (consumer) config.
-
-#### Parameters
-
-The following parameters are available in the `kafka::consumer::config` class:
-
-* [`manage_service`](#manage_service)
-* [`service_name`](#service_name)
-* [`service_restart`](#service_restart)
-* [`config`](#config)
-* [`config_dir`](#config_dir)
-* [`user_name`](#user_name)
-* [`group_name`](#group_name)
-* [`config_mode`](#config_mode)
-* [`manage_log4j`](#manage_log4j)
-* [`log_file_size`](#log_file_size)
-* [`log_file_count`](#log_file_count)
-
-##### <a name="manage_service"></a>`manage_service`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::consumer::manage_service`
-
-##### <a name="service_name"></a>`service_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::consumer::service_name`
-
-##### <a name="service_restart"></a>`service_restart`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::consumer::service_restart`
-
-##### <a name="config"></a>`config`
-
-Data type: `Hash[String[1], Any]`
-
-
-
-Default value: `$kafka::consumer::config`
-
-##### <a name="config_dir"></a>`config_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-Default value: `$kafka::consumer::config_dir`
-
-##### <a name="user_name"></a>`user_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::consumer::user_name`
-
-##### <a name="group_name"></a>`group_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::consumer::group_name`
-
-##### <a name="config_mode"></a>`config_mode`
-
-Data type: `Stdlib::Filemode`
-
-
-
-Default value: `$kafka::consumer::config_mode`
-
-##### <a name="manage_log4j"></a>`manage_log4j`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::consumer::manage_log4j`
-
-##### <a name="log_file_size"></a>`log_file_size`
-
-Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
-
-
-
-Default value: `$kafka::consumer::log_file_size`
-
-##### <a name="log_file_count"></a>`log_file_count`
-
-Data type: `Integer[1, 50]`
-
-
-
-Default value: `$kafka::consumer::log_file_count`
-
-### <a name="kafkamirror"></a>`kafka::mirror`
+### <a name="kafka--mirror"></a>`kafka::mirror`
 
 This class handles the Kafka (mirror).
 
@@ -1105,44 +1007,44 @@ class { 'kafka::mirror':
 
 The following parameters are available in the `kafka::mirror` class:
 
-* [`kafka_version`](#kafka_version)
-* [`scala_version`](#scala_version)
-* [`install_dir`](#install_dir)
-* [`mirror_url`](#mirror_url)
-* [`manage_java`](#manage_java)
-* [`package_dir`](#package_dir)
-* [`package_name`](#package_name)
-* [`package_ensure`](#package_ensure)
-* [`user_name`](#user_name)
-* [`user_shell`](#user_shell)
-* [`group_name`](#group_name)
-* [`user_id`](#user_id)
-* [`group_id`](#group_id)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`config_mode`](#config_mode)
-* [`config_dir`](#config_dir)
-* [`log_dir`](#log_dir)
-* [`bin_dir`](#bin_dir)
-* [`service_name`](#service_name)
-* [`manage_service`](#manage_service)
-* [`service_ensure`](#service_ensure)
-* [`service_restart`](#service_restart)
-* [`service_requires`](#service_requires)
-* [`limit_nofile`](#limit_nofile)
-* [`limit_core`](#limit_core)
-* [`env`](#env)
-* [`consumer_config`](#consumer_config)
-* [`producer_config`](#producer_config)
-* [`service_config`](#service_config)
-* [`heap_opts`](#heap_opts)
-* [`jmx_opts`](#jmx_opts)
-* [`log4j_opts`](#log4j_opts)
-* [`manage_log4j`](#manage_log4j)
-* [`log_file_size`](#log_file_size)
-* [`log_file_count`](#log_file_count)
+* [`kafka_version`](#-kafka--mirror--kafka_version)
+* [`scala_version`](#-kafka--mirror--scala_version)
+* [`install_dir`](#-kafka--mirror--install_dir)
+* [`mirror_url`](#-kafka--mirror--mirror_url)
+* [`manage_java`](#-kafka--mirror--manage_java)
+* [`package_dir`](#-kafka--mirror--package_dir)
+* [`package_name`](#-kafka--mirror--package_name)
+* [`package_ensure`](#-kafka--mirror--package_ensure)
+* [`user_name`](#-kafka--mirror--user_name)
+* [`user_shell`](#-kafka--mirror--user_shell)
+* [`group_name`](#-kafka--mirror--group_name)
+* [`user_id`](#-kafka--mirror--user_id)
+* [`group_id`](#-kafka--mirror--group_id)
+* [`manage_user`](#-kafka--mirror--manage_user)
+* [`manage_group`](#-kafka--mirror--manage_group)
+* [`config_mode`](#-kafka--mirror--config_mode)
+* [`config_dir`](#-kafka--mirror--config_dir)
+* [`log_dir`](#-kafka--mirror--log_dir)
+* [`bin_dir`](#-kafka--mirror--bin_dir)
+* [`service_name`](#-kafka--mirror--service_name)
+* [`manage_service`](#-kafka--mirror--manage_service)
+* [`service_ensure`](#-kafka--mirror--service_ensure)
+* [`service_restart`](#-kafka--mirror--service_restart)
+* [`service_requires`](#-kafka--mirror--service_requires)
+* [`limit_nofile`](#-kafka--mirror--limit_nofile)
+* [`limit_core`](#-kafka--mirror--limit_core)
+* [`env`](#-kafka--mirror--env)
+* [`consumer_config`](#-kafka--mirror--consumer_config)
+* [`producer_config`](#-kafka--mirror--producer_config)
+* [`service_config`](#-kafka--mirror--service_config)
+* [`heap_opts`](#-kafka--mirror--heap_opts)
+* [`jmx_opts`](#-kafka--mirror--jmx_opts)
+* [`log4j_opts`](#-kafka--mirror--log4j_opts)
+* [`manage_log4j`](#-kafka--mirror--manage_log4j)
+* [`log_file_size`](#-kafka--mirror--log_file_size)
+* [`log_file_count`](#-kafka--mirror--log_file_count)
 
-##### <a name="kafka_version"></a>`kafka_version`
+##### <a name="-kafka--mirror--kafka_version"></a>`kafka_version`
 
 Data type: `String[1]`
 
@@ -1150,7 +1052,7 @@ The version of Kafka that should be installed.
 
 Default value: `$kafka::params::kafka_version`
 
-##### <a name="scala_version"></a>`scala_version`
+##### <a name="-kafka--mirror--scala_version"></a>`scala_version`
 
 Data type: `String[1]`
 
@@ -1158,7 +1060,7 @@ The scala version what Kafka was built with.
 
 Default value: `$kafka::params::scala_version`
 
-##### <a name="install_dir"></a>`install_dir`
+##### <a name="-kafka--mirror--install_dir"></a>`install_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1166,7 +1068,7 @@ The directory to install Kafka to.
 
 Default value: `$kafka::params::install_dir`
 
-##### <a name="mirror_url"></a>`mirror_url`
+##### <a name="-kafka--mirror--mirror_url"></a>`mirror_url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -1174,7 +1076,7 @@ The url where the Kafka is downloaded from.
 
 Default value: `$kafka::params::mirror_url`
 
-##### <a name="manage_java"></a>`manage_java`
+##### <a name="-kafka--mirror--manage_java"></a>`manage_java`
 
 Data type: `Boolean`
 
@@ -1182,7 +1084,7 @@ Install java if it's not already installed.
 
 Default value: `$kafka::params::manage_java`
 
-##### <a name="package_dir"></a>`package_dir`
+##### <a name="-kafka--mirror--package_dir"></a>`package_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1190,7 +1092,7 @@ The directory to install Kafka.
 
 Default value: `$kafka::params::package_dir`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-kafka--mirror--package_name"></a>`package_name`
 
 Data type: `Optional[String[1]]`
 
@@ -1198,7 +1100,7 @@ Package name, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_name`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-kafka--mirror--package_ensure"></a>`package_ensure`
 
 Data type: `String[1]`
 
@@ -1206,7 +1108,7 @@ Package version or ensure state, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_ensure`
 
-##### <a name="user_name"></a>`user_name`
+##### <a name="-kafka--mirror--user_name"></a>`user_name`
 
 Data type: `String[1]`
 
@@ -1214,7 +1116,7 @@ User to run Kafka as.
 
 Default value: `$kafka::params::user_name`
 
-##### <a name="user_shell"></a>`user_shell`
+##### <a name="-kafka--mirror--user_shell"></a>`user_shell`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1222,7 +1124,7 @@ Login shell of the Kafka user.
 
 Default value: `$kafka::params::user_shell`
 
-##### <a name="group_name"></a>`group_name`
+##### <a name="-kafka--mirror--group_name"></a>`group_name`
 
 Data type: `String[1]`
 
@@ -1230,7 +1132,7 @@ Group to run Kafka as.
 
 Default value: `$kafka::params::group_name`
 
-##### <a name="user_id"></a>`user_id`
+##### <a name="-kafka--mirror--user_id"></a>`user_id`
 
 Data type: `Optional[Integer]`
 
@@ -1238,7 +1140,7 @@ Create the Kafka user with this ID.
 
 Default value: `$kafka::params::user_id`
 
-##### <a name="group_id"></a>`group_id`
+##### <a name="-kafka--mirror--group_id"></a>`group_id`
 
 Data type: `Optional[Integer]`
 
@@ -1246,7 +1148,7 @@ Create the Kafka group with this ID.
 
 Default value: `$kafka::params::group_id`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-kafka--mirror--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -1254,7 +1156,7 @@ Create the Kafka user if it's not already present.
 
 Default value: `$kafka::params::manage_user`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-kafka--mirror--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -1262,7 +1164,7 @@ Create the Kafka group if it's not already present.
 
 Default value: `$kafka::params::manage_group`
 
-##### <a name="config_mode"></a>`config_mode`
+##### <a name="-kafka--mirror--config_mode"></a>`config_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -1270,7 +1172,7 @@ The permissions for the config files.
 
 Default value: `$kafka::params::config_mode`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-kafka--mirror--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1278,7 +1180,7 @@ The directory to create the Kafka config files to.
 
 Default value: `$kafka::params::config_dir`
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-kafka--mirror--log_dir"></a>`log_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1286,7 +1188,7 @@ The directory for Kafka log files.
 
 Default value: `$kafka::params::log_dir`
 
-##### <a name="bin_dir"></a>`bin_dir`
+##### <a name="-kafka--mirror--bin_dir"></a>`bin_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1294,7 +1196,7 @@ The directory where the Kafka scripts are.
 
 Default value: `$kafka::params::bin_dir`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-kafka--mirror--service_name"></a>`service_name`
 
 Data type: `String[1]`
 
@@ -1302,15 +1204,15 @@ Set the name of the service.
 
 Default value: `'kafka-mirror'`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-kafka--mirror--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install the systemd service.
 
 Default value: `$kafka::params::manage_service`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-kafka--mirror--service_ensure"></a>`service_ensure`
 
 Data type: `Enum['running', 'stopped']`
 
@@ -1318,7 +1220,7 @@ Set the ensure state of the service.
 
 Default value: `$kafka::params::service_ensure`
 
-##### <a name="service_restart"></a>`service_restart`
+##### <a name="-kafka--mirror--service_restart"></a>`service_restart`
 
 Data type: `Boolean`
 
@@ -1326,7 +1228,7 @@ Whether the configuration files should trigger a service restart.
 
 Default value: `$kafka::params::service_restart`
 
-##### <a name="service_requires"></a>`service_requires`
+##### <a name="-kafka--mirror--service_requires"></a>`service_requires`
 
 Data type: `Array[String[1]]`
 
@@ -1334,7 +1236,7 @@ Set the list of services required to be running before Kafka.
 
 Default value: `$kafka::params::service_requires`
 
-##### <a name="limit_nofile"></a>`limit_nofile`
+##### <a name="-kafka--mirror--limit_nofile"></a>`limit_nofile`
 
 Data type: `Optional[String[1]]`
 
@@ -1342,7 +1244,7 @@ Set the 'LimitNOFILE' option of the systemd service.
 
 Default value: `$kafka::params::limit_nofile`
 
-##### <a name="limit_core"></a>`limit_core`
+##### <a name="-kafka--mirror--limit_core"></a>`limit_core`
 
 Data type: `Optional[String[1]]`
 
@@ -1350,7 +1252,7 @@ Set the 'LimitCORE' option of the systemd service.
 
 Default value: `$kafka::params::limit_core`
 
-##### <a name="env"></a>`env`
+##### <a name="-kafka--mirror--env"></a>`env`
 
 Data type: `Hash`
 
@@ -1358,7 +1260,7 @@ A hash of the environment variables to set.
 
 Default value: `{}`
 
-##### <a name="consumer_config"></a>`consumer_config`
+##### <a name="-kafka--mirror--consumer_config"></a>`consumer_config`
 
 Data type: `Hash[String[1],String[1]]`
 
@@ -1366,7 +1268,7 @@ A hash of the consumer configuration options.
 
 Default value: `{}`
 
-##### <a name="producer_config"></a>`producer_config`
+##### <a name="-kafka--mirror--producer_config"></a>`producer_config`
 
 Data type: `Hash[String[1],String[1]]`
 
@@ -1374,7 +1276,7 @@ A hash of the producer configuration options.
 
 Default value: `{}`
 
-##### <a name="service_config"></a>`service_config`
+##### <a name="-kafka--mirror--service_config"></a>`service_config`
 
 Data type: `Hash[String[1],String[1]]`
 
@@ -1382,7 +1284,7 @@ A hash of the mirror script options.
 
 Default value: `{}`
 
-##### <a name="heap_opts"></a>`heap_opts`
+##### <a name="-kafka--mirror--heap_opts"></a>`heap_opts`
 
 Data type: `String[1]`
 
@@ -1390,7 +1292,7 @@ Set the Java heap size.
 
 Default value: `$kafka::params::mirror_heap_opts`
 
-##### <a name="jmx_opts"></a>`jmx_opts`
+##### <a name="-kafka--mirror--jmx_opts"></a>`jmx_opts`
 
 Data type: `String[1]`
 
@@ -1398,7 +1300,7 @@ Set the JMX options.
 
 Default value: `$kafka::params::mirror_jmx_opts`
 
-##### <a name="log4j_opts"></a>`log4j_opts`
+##### <a name="-kafka--mirror--log4j_opts"></a>`log4j_opts`
 
 Data type: `String[1]`
 
@@ -1406,35 +1308,35 @@ Set the Log4j options.
 
 Default value: `$kafka::params::mirror_log4j_opts`
 
-##### <a name="manage_log4j"></a>`manage_log4j`
+##### <a name="-kafka--mirror--manage_log4j"></a>`manage_log4j`
 
 Data type: `Boolean`
 
-
+Enable or disable the management of the log4j configuration file.
 
 Default value: `$kafka::params::manage_log4j`
 
-##### <a name="log_file_size"></a>`log_file_size`
+##### <a name="-kafka--mirror--log_file_size"></a>`log_file_size`
 
 Data type: `Pattern[/[1-9][0-9]*[KMG]B/]`
 
-
+Set the max size of the Kafka log files before they are rolled.
 
 Default value: `$kafka::params::log_file_size`
 
-##### <a name="log_file_count"></a>`log_file_count`
+##### <a name="-kafka--mirror--log_file_count"></a>`log_file_count`
 
 Data type: `Integer[1, 50]`
 
-
+Set the number of Kafka log files to keep.
 
 Default value: `$kafka::params::log_file_count`
 
-### <a name="kafkaparams"></a>`kafka::params`
+### <a name="kafka--params"></a>`kafka::params`
 
 This class provides default parameters.
 
-### <a name="kafkaproducer"></a>`kafka::producer`
+### <a name="kafka--producer"></a>`kafka::producer`
 
 This class handles the Kafka (producer).
 
@@ -1455,46 +1357,46 @@ class { 'kafka::producer':
 
 The following parameters are available in the `kafka::producer` class:
 
-* [`input`](#input)
-* [`kafka_version`](#kafka_version)
-* [`scala_version`](#scala_version)
-* [`install_dir`](#install_dir)
-* [`mirror_url`](#mirror_url)
-* [`manage_java`](#manage_java)
-* [`package_dir`](#package_dir)
-* [`package_name`](#package_name)
-* [`package_ensure`](#package_ensure)
-* [`user_name`](#user_name)
-* [`user_shell`](#user_shell)
-* [`group_name`](#group_name)
-* [`user_id`](#user_id)
-* [`group_id`](#group_id)
-* [`manage_user`](#manage_user)
-* [`manage_group`](#manage_group)
-* [`config_mode`](#config_mode)
-* [`config_dir`](#config_dir)
-* [`log_dir`](#log_dir)
-* [`bin_dir`](#bin_dir)
-* [`service_name`](#service_name)
-* [`manage_service`](#manage_service)
-* [`service_ensure`](#service_ensure)
-* [`service_restart`](#service_restart)
-* [`service_requires`](#service_requires)
-* [`limit_nofile`](#limit_nofile)
-* [`limit_core`](#limit_core)
-* [`env`](#env)
-* [`config`](#config)
-* [`service_config`](#service_config)
-* [`jmx_opts`](#jmx_opts)
-* [`log4j_opts`](#log4j_opts)
+* [`input`](#-kafka--producer--input)
+* [`kafka_version`](#-kafka--producer--kafka_version)
+* [`scala_version`](#-kafka--producer--scala_version)
+* [`install_dir`](#-kafka--producer--install_dir)
+* [`mirror_url`](#-kafka--producer--mirror_url)
+* [`manage_java`](#-kafka--producer--manage_java)
+* [`package_dir`](#-kafka--producer--package_dir)
+* [`package_name`](#-kafka--producer--package_name)
+* [`package_ensure`](#-kafka--producer--package_ensure)
+* [`user_name`](#-kafka--producer--user_name)
+* [`user_shell`](#-kafka--producer--user_shell)
+* [`group_name`](#-kafka--producer--group_name)
+* [`user_id`](#-kafka--producer--user_id)
+* [`group_id`](#-kafka--producer--group_id)
+* [`manage_user`](#-kafka--producer--manage_user)
+* [`manage_group`](#-kafka--producer--manage_group)
+* [`config_mode`](#-kafka--producer--config_mode)
+* [`config_dir`](#-kafka--producer--config_dir)
+* [`log_dir`](#-kafka--producer--log_dir)
+* [`bin_dir`](#-kafka--producer--bin_dir)
+* [`service_name`](#-kafka--producer--service_name)
+* [`manage_service`](#-kafka--producer--manage_service)
+* [`service_ensure`](#-kafka--producer--service_ensure)
+* [`service_restart`](#-kafka--producer--service_restart)
+* [`service_requires`](#-kafka--producer--service_requires)
+* [`limit_nofile`](#-kafka--producer--limit_nofile)
+* [`limit_core`](#-kafka--producer--limit_core)
+* [`env`](#-kafka--producer--env)
+* [`config`](#-kafka--producer--config)
+* [`service_config`](#-kafka--producer--service_config)
+* [`jmx_opts`](#-kafka--producer--jmx_opts)
+* [`log4j_opts`](#-kafka--producer--log4j_opts)
 
-##### <a name="input"></a>`input`
+##### <a name="-kafka--producer--input"></a>`input`
 
 Data type: `Optional[String[1]]`
 
 Set named pipe as input.
 
-##### <a name="kafka_version"></a>`kafka_version`
+##### <a name="-kafka--producer--kafka_version"></a>`kafka_version`
 
 Data type: `String[1]`
 
@@ -1502,7 +1404,7 @@ The version of Kafka that should be installed.
 
 Default value: `$kafka::params::kafka_version`
 
-##### <a name="scala_version"></a>`scala_version`
+##### <a name="-kafka--producer--scala_version"></a>`scala_version`
 
 Data type: `String[1]`
 
@@ -1510,7 +1412,7 @@ The scala version what Kafka was built with.
 
 Default value: `$kafka::params::scala_version`
 
-##### <a name="install_dir"></a>`install_dir`
+##### <a name="-kafka--producer--install_dir"></a>`install_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1518,7 +1420,7 @@ The directory to install Kafka to.
 
 Default value: `$kafka::params::install_dir`
 
-##### <a name="mirror_url"></a>`mirror_url`
+##### <a name="-kafka--producer--mirror_url"></a>`mirror_url`
 
 Data type: `Stdlib::HTTPUrl`
 
@@ -1526,7 +1428,7 @@ The url where the Kafka is downloaded from.
 
 Default value: `$kafka::params::mirror_url`
 
-##### <a name="manage_java"></a>`manage_java`
+##### <a name="-kafka--producer--manage_java"></a>`manage_java`
 
 Data type: `Boolean`
 
@@ -1534,7 +1436,7 @@ Install java if it's not already installed.
 
 Default value: `$kafka::params::manage_java`
 
-##### <a name="package_dir"></a>`package_dir`
+##### <a name="-kafka--producer--package_dir"></a>`package_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1542,7 +1444,7 @@ The directory to install Kafka.
 
 Default value: `$kafka::params::package_dir`
 
-##### <a name="package_name"></a>`package_name`
+##### <a name="-kafka--producer--package_name"></a>`package_name`
 
 Data type: `Optional[String[1]]`
 
@@ -1550,7 +1452,7 @@ Package name, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_name`
 
-##### <a name="package_ensure"></a>`package_ensure`
+##### <a name="-kafka--producer--package_ensure"></a>`package_ensure`
 
 Data type: `String[1]`
 
@@ -1558,7 +1460,7 @@ Package version or ensure state, when installing Kafka from a package.
 
 Default value: `$kafka::params::package_ensure`
 
-##### <a name="user_name"></a>`user_name`
+##### <a name="-kafka--producer--user_name"></a>`user_name`
 
 Data type: `String[1]`
 
@@ -1566,7 +1468,7 @@ User to run Kafka as.
 
 Default value: `$kafka::params::user_name`
 
-##### <a name="user_shell"></a>`user_shell`
+##### <a name="-kafka--producer--user_shell"></a>`user_shell`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1574,7 +1476,7 @@ Login shell of the Kafka user.
 
 Default value: `$kafka::params::user_shell`
 
-##### <a name="group_name"></a>`group_name`
+##### <a name="-kafka--producer--group_name"></a>`group_name`
 
 Data type: `String[1]`
 
@@ -1582,7 +1484,7 @@ Group to run Kafka as.
 
 Default value: `$kafka::params::group_name`
 
-##### <a name="user_id"></a>`user_id`
+##### <a name="-kafka--producer--user_id"></a>`user_id`
 
 Data type: `Optional[Integer]`
 
@@ -1590,7 +1492,7 @@ Create the Kafka user with this ID.
 
 Default value: `$kafka::params::user_id`
 
-##### <a name="group_id"></a>`group_id`
+##### <a name="-kafka--producer--group_id"></a>`group_id`
 
 Data type: `Optional[Integer]`
 
@@ -1598,7 +1500,7 @@ Create the Kafka group with this ID.
 
 Default value: `$kafka::params::group_id`
 
-##### <a name="manage_user"></a>`manage_user`
+##### <a name="-kafka--producer--manage_user"></a>`manage_user`
 
 Data type: `Boolean`
 
@@ -1606,7 +1508,7 @@ Create the Kafka user if it's not already present.
 
 Default value: `$kafka::params::manage_user`
 
-##### <a name="manage_group"></a>`manage_group`
+##### <a name="-kafka--producer--manage_group"></a>`manage_group`
 
 Data type: `Boolean`
 
@@ -1614,7 +1516,7 @@ Create the Kafka group if it's not already present.
 
 Default value: `$kafka::params::manage_group`
 
-##### <a name="config_mode"></a>`config_mode`
+##### <a name="-kafka--producer--config_mode"></a>`config_mode`
 
 Data type: `Stdlib::Filemode`
 
@@ -1622,7 +1524,7 @@ The permissions for the config files.
 
 Default value: `$kafka::params::config_mode`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-kafka--producer--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1630,7 +1532,7 @@ The directory to create the Kafka config files to.
 
 Default value: `$kafka::params::config_dir`
 
-##### <a name="log_dir"></a>`log_dir`
+##### <a name="-kafka--producer--log_dir"></a>`log_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1638,7 +1540,7 @@ The directory for Kafka log files.
 
 Default value: `$kafka::params::log_dir`
 
-##### <a name="bin_dir"></a>`bin_dir`
+##### <a name="-kafka--producer--bin_dir"></a>`bin_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1646,7 +1548,7 @@ The directory where the Kafka scripts are.
 
 Default value: `$kafka::params::bin_dir`
 
-##### <a name="service_name"></a>`service_name`
+##### <a name="-kafka--producer--service_name"></a>`service_name`
 
 Data type: `String[1]`
 
@@ -1654,15 +1556,15 @@ Set the name of the service.
 
 Default value: `'kafka-producer'`
 
-##### <a name="manage_service"></a>`manage_service`
+##### <a name="-kafka--producer--manage_service"></a>`manage_service`
 
 Data type: `Boolean`
 
-Install the init.d or systemd service.
+Install systemd service.
 
 Default value: `$kafka::params::manage_service`
 
-##### <a name="service_ensure"></a>`service_ensure`
+##### <a name="-kafka--producer--service_ensure"></a>`service_ensure`
 
 Data type: `Enum['running', 'stopped']`
 
@@ -1670,7 +1572,7 @@ Set the ensure state of the service.
 
 Default value: `$kafka::params::service_ensure`
 
-##### <a name="service_restart"></a>`service_restart`
+##### <a name="-kafka--producer--service_restart"></a>`service_restart`
 
 Data type: `Boolean`
 
@@ -1678,7 +1580,7 @@ Whether the configuration files should trigger a service restart.
 
 Default value: `$kafka::params::service_restart`
 
-##### <a name="service_requires"></a>`service_requires`
+##### <a name="-kafka--producer--service_requires"></a>`service_requires`
 
 Data type: `Array[String[1]]`
 
@@ -1686,7 +1588,7 @@ Set the list of services required to be running before Kafka.
 
 Default value: `$kafka::params::service_requires`
 
-##### <a name="limit_nofile"></a>`limit_nofile`
+##### <a name="-kafka--producer--limit_nofile"></a>`limit_nofile`
 
 Data type: `Optional[String[1]]`
 
@@ -1694,7 +1596,7 @@ Set the 'LimitNOFILE' option of the systemd service.
 
 Default value: `$kafka::params::limit_nofile`
 
-##### <a name="limit_core"></a>`limit_core`
+##### <a name="-kafka--producer--limit_core"></a>`limit_core`
 
 Data type: `Optional[String[1]]`
 
@@ -1702,7 +1604,7 @@ Set the 'LimitCORE' option of the systemd service.
 
 Default value: `$kafka::params::limit_core`
 
-##### <a name="env"></a>`env`
+##### <a name="-kafka--producer--env"></a>`env`
 
 Data type: `Hash`
 
@@ -1710,7 +1612,7 @@ A hash of the environment variables to set.
 
 Default value: `{}`
 
-##### <a name="config"></a>`config`
+##### <a name="-kafka--producer--config"></a>`config`
 
 Data type: `Hash[String[1], Any]`
 
@@ -1718,7 +1620,7 @@ A hash of the producer configuration options.
 
 Default value: `{}`
 
-##### <a name="service_config"></a>`service_config`
+##### <a name="-kafka--producer--service_config"></a>`service_config`
 
 Data type: `Hash[String[1],String[1]]`
 
@@ -1726,7 +1628,7 @@ A hash of the `kafka-console-producer.sh` script options.
 
 Default value: `{}`
 
-##### <a name="jmx_opts"></a>`jmx_opts`
+##### <a name="-kafka--producer--jmx_opts"></a>`jmx_opts`
 
 Data type: `String[1]`
 
@@ -1734,7 +1636,7 @@ Set the JMX options.
 
 Default value: `$kafka::params::producer_jmx_opts`
 
-##### <a name="log4j_opts"></a>`log4j_opts`
+##### <a name="-kafka--producer--log4j_opts"></a>`log4j_opts`
 
 Data type: `String[1]`
 
@@ -1742,90 +1644,9 @@ Set the Log4j options.
 
 Default value: `$kafka::params::producer_log4j_opts`
 
-### <a name="kafkaproducerconfig"></a>`kafka::producer::config`
-
-This class handles the Kafka (producer) config.
-
-#### Parameters
-
-The following parameters are available in the `kafka::producer::config` class:
-
-* [`manage_service`](#manage_service)
-* [`service_name`](#service_name)
-* [`service_restart`](#service_restart)
-* [`config`](#config)
-* [`config_dir`](#config_dir)
-* [`user_name`](#user_name)
-* [`group_name`](#group_name)
-* [`config_mode`](#config_mode)
-
-##### <a name="manage_service"></a>`manage_service`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::producer::manage_service`
-
-##### <a name="service_name"></a>`service_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::producer::service_name`
-
-##### <a name="service_restart"></a>`service_restart`
-
-Data type: `Boolean`
-
-
-
-Default value: `$kafka::producer::service_restart`
-
-##### <a name="config"></a>`config`
-
-Data type: `Hash[String[1], Any]`
-
-
-
-Default value: `$kafka::producer::config`
-
-##### <a name="config_dir"></a>`config_dir`
-
-Data type: `Stdlib::Absolutepath`
-
-
-
-Default value: `$kafka::producer::config_dir`
-
-##### <a name="user_name"></a>`user_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::producer::user_name`
-
-##### <a name="group_name"></a>`group_name`
-
-Data type: `String[1]`
-
-
-
-Default value: `$kafka::producer::group_name`
-
-##### <a name="config_mode"></a>`config_mode`
-
-Data type: `Stdlib::Filemode`
-
-
-
-Default value: `$kafka::producer::config_mode`
-
 ## Defined types
 
-### <a name="kafkatopic"></a>`kafka::topic`
+### <a name="kafka--topic"></a>`kafka::topic`
 
 This defined type handles the creation of Kafka topics.
 
@@ -1846,31 +1667,40 @@ kafka::topic { 'test':
 
 The following parameters are available in the `kafka::topic` defined type:
 
-* [`ensure`](#ensure)
-* [`zookeeper`](#zookeeper)
-* [`replication_factor`](#replication_factor)
-* [`partitions`](#partitions)
-* [`bin_dir`](#bin_dir)
-* [`config`](#config)
+* [`ensure`](#-kafka--topic--ensure)
+* [`zookeeper`](#-kafka--topic--zookeeper)
+* [`bootstrap_server`](#-kafka--topic--bootstrap_server)
+* [`replication_factor`](#-kafka--topic--replication_factor)
+* [`partitions`](#-kafka--topic--partitions)
+* [`bin_dir`](#-kafka--topic--bin_dir)
+* [`config`](#-kafka--topic--config)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-kafka--topic--ensure"></a>`ensure`
 
-Data type: `String[1]`
+Data type: `Optional[String[1]]`
 
 Should the topic be created.
 
-Default value: `''`
+Default value: `undef`
 
-##### <a name="zookeeper"></a>`zookeeper`
+##### <a name="-kafka--topic--zookeeper"></a>`zookeeper`
 
-Data type: `String[1]`
+Data type: `Optional[String[1]]`
 
 The connection string for the ZooKeeper connection in the form host:port.
-Multiple hosts can be given to allow fail-over.
+Multiple hosts can be given to allow fail-over. Kafka < 3.0.0 only!
 
-Default value: `''`
+Default value: `undef`
 
-##### <a name="replication_factor"></a>`replication_factor`
+##### <a name="-kafka--topic--bootstrap_server"></a>`bootstrap_server`
+
+Data type: `Optional[String[1]]`
+
+The Kafka server to connect to in the form host:port. Kafka >= 2.2.0 only!
+
+Default value: `undef`
+
+##### <a name="-kafka--topic--replication_factor"></a>`replication_factor`
 
 Data type: `Integer`
 
@@ -1879,7 +1709,7 @@ not supplied, defaults to the cluster default.
 
 Default value: `1`
 
-##### <a name="partitions"></a>`partitions`
+##### <a name="-kafka--topic--partitions"></a>`partitions`
 
 Data type: `Integer`
 
@@ -1888,7 +1718,7 @@ supplied for create, defaults to the cluster default.
 
 Default value: `1`
 
-##### <a name="bin_dir"></a>`bin_dir`
+##### <a name="-kafka--topic--bin_dir"></a>`bin_dir`
 
 Data type: `String[1]`
 
@@ -1896,12 +1726,12 @@ The directory where the file kafka-topics.sh is located.
 
 Default value: `'/opt/kafka/bin'`
 
-##### <a name="config"></a>`config`
+##### <a name="-kafka--topic--config"></a>`config`
 
 Data type: `Optional[Hash[String[1],String[1]]]`
 
 A topic configuration override for the topic being created or altered.
 See the Kafka documentation for full details on the topic configs.
 
-Default value: ``undef``
+Default value: `undef`
 
