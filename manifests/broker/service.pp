@@ -35,27 +35,55 @@ class kafka::broker::service (
       'KAFKA_OPTS'       => $opts,
       'LOG_DIR'          => $log_dir,
     }
-    $environment = deep_merge($env_defaults, $env)
+    $environment = deep_merge($env_defaults, $env).map |$k, $v| { "${k}=${v}" }
 
     include systemd
 
-    if ($service_restart) {
-      $config_notify = Service[$service_name]
-    } else {
-      $config_notify = undef
+    $exec_start_content = $daemon_start ? {
+      true    => "${bin_dir}/kafka-server-start.sh -daemon ${config_dir}/server.properties ",
+      default => "${bin_dir}/kafka-server-start.sh ${config_dir}/server.properties",
     }
+    $exec_stop_content = $exec_stop ? {
+      undef   => undef,
+      default => "${bin_dir}/kafka-server-stop.sh",
+    }
+    $type_content = $daemon_start ? {
+      true    => 'forking',
+      default => 'simple',
+    }
+    $dependency_content = $service_requires.empty ? {
+      true    => undef,
+      default => $service_requires,
+    }
+    $active_content = $service_ensure == 'running'
 
-    file { "/etc/systemd/system/${service_name}.service":
-      ensure  => file,
-      mode    => '0644',
-      content => template('kafka/unit.erb'),
-      notify  => $config_notify,
-    }
-    service { $service_name:
-      ensure     => $service_ensure,
-      enable     => true,
-      hasstatus  => true,
-      hasrestart => true,
+    systemd::manage_unit { "${service_name}.service":
+      ensure          => 'present',
+      enable          => true,
+      active          => $active_content,
+      service_restart => $service_restart,
+      unit_entry      => {
+        'Description'   => 'Apache Kafka server (broker)',
+        'Documentation' => 'Documentation=http://kafka.apache.org/documentation.html',
+        'After'         => $dependency_content,
+        'Requires'      => $dependency_content,
+      }.filter |$k, $v| { $v != undef },
+      service_entry   => {
+        'User'             => $user_name,
+        'Group'            => $group_name,
+        'SyslogIdentifier' => $service_name,
+        'Environment'      => $environment,
+        'ExecStart'        => $exec_start_content,
+        'ExecStop'         => $exec_stop_content,
+        'Restart'          => 'on-failure',
+        'Type'             => $type_content,
+        'LimitCORE'        => $limit_core,
+        'LimitNOFILE'      => $limit_nofile,
+        'TimeoutStopSec'   => $timeout_stop,
+      }.filter |$k, $v| { $v != undef },
+      install_entry   => {
+        'WantedBy' => 'multi-user.target',
+      },
     }
   }
 }

@@ -69,10 +69,14 @@ describe 'kafka::broker', type: :class do
         end
 
         context 'defaults' do
-          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_notify('Service[kafka]') }
+          it {
+            is_expected.to contain_file('/etc/systemd/system/kafka.service').
+              with_notify('["Systemd::Daemon_reload[kafka.service]", "Service[kafka.service]"]')
+          }
+
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
-          it { is_expected.to contain_service('kafka') }
+          it { is_expected.to contain_service('kafka.service') }
         end
 
         context 'limit_nofile set' do
@@ -87,11 +91,20 @@ describe 'kafka::broker', type: :class do
           it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=infinity$} }
         end
 
-        context 'service_requires set', if: os_facts['service_provider'] == 'systemd' do
+        context 'service_requires set', if: os_facts['service_provider'] do
           let(:params) { super().merge(service_requires: ['dummy.target']) }
 
           it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
           it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=dummy\.target$} }
+        end
+
+        context 'multiple service_requires set', if: os_facts['service_provider'] do
+          let(:params) { super().merge(service_requires: ['dummy.target', 'another.target']) }
+
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=dummy\.target$} }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=dummy\.target$} }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^After=another\.target$} }
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content %r{^Wants=another\.target$} }
         end
 
         context 'service_restart false' do
