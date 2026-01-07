@@ -185,7 +185,7 @@ describe 'kafka::broker' do
             config => {
               'zookeeper.connect' => 'localhost:2181',
             },
-            heap_opts  => '-Xmx512M -Xmx512M',
+            heap_opts  => '-Xmx512M -Xms512M',
             log4j_opts => '-Dlog4j.configuration=file:/tmp/log4j.properties',
             jmx_opts   => '-Dcom.sun.management.jmxremote',
             opts       => '-Djava.security.policy=/some/path/my.policy',
@@ -202,7 +202,7 @@ describe 'kafka::broker' do
         it { is_expected.to be_owned_by 'root' }
         it { is_expected.to be_grouped_into 'root' }
         it { is_expected.to contain "Environment='KAFKA_JMX_OPTS=-Dcom.sun.management.jmxremote'" }
-        it { is_expected.to contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xmx512M'" }
+        it { is_expected.to contain "Environment='KAFKA_HEAP_OPTS=-Xmx512M -Xms512M'" }
         it { is_expected.to contain "Environment='KAFKA_LOG4J_OPTS=-Dlog4j.configuration=file:/tmp/log4j.properties'" }
         it { is_expected.to contain "Environment='KAFKA_OPTS=-Djava.security.policy=/some/path/my.policy'" }
         it { is_expected.to contain "Environment='LOG_DIR=/some/path/to/logs'" }
