@@ -20,7 +20,7 @@ class kafka::broker::config (
   assert_private()
 
   if ($manage_service and $service_restart) {
-    $config_notify = Service[$service_name]
+    $config_notify = Service["${service_name}.service"]
   } else {
     $config_notify = undef
   }
