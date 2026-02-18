@@ -49,7 +49,40 @@ describe 'kafka::broker', type: :class do
 
       describe 'kafka::broker::config' do
         context 'defaults' do
-          it { is_expected.to contain_file('/opt/kafka/config/server.properties') }
+          it {
+            is_expected.to contain_file('/opt/kafka/config/server.properties').
+              with_content(%r{zookeeper.connect=localhost:2181})
+          }
+        end
+
+        context 'array values' do
+          let(:params) do
+            {
+              'config' => {
+                'listeners' => ['PLAINTEXT://:9092', 'SSL://:9093'],
+              }
+            }
+          end
+
+          it {
+            is_expected.to contain_file('/opt/kafka/config/server.properties').
+              with_content(%r{^listeners=PLAINTEXT://:9092,SSL://:9093$})
+          }
+        end
+
+        context 'special delimiter for super.users' do
+          let(:params) do
+            {
+              'config' => {
+                'super.users' => ['User:Alice', 'User:Bob'],
+              }
+            }
+          end
+
+          it {
+            is_expected.to contain_file('/opt/kafka/config/server.properties').
+              with_content(%r{^super.users=User:Alice;User:Bob$})
+          }
         end
 
         context 'with manage_log4j => true' do

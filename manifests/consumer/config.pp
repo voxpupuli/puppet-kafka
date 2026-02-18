@@ -28,7 +28,7 @@ class kafka::consumer::config (
     owner   => $user_name,
     group   => $group_name,
     mode    => $config_mode,
-    content => template('kafka/properties.erb'),
+    content => epp('kafka/properties.epp', { 'doctag' => $doctag, 'config' => $config }),
     notify  => $config_notify,
     require => File[$config_dir],
   }

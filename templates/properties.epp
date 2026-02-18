@@ -1,0 +1,14 @@
+<%- |
+String $doctag,
+Hash $config
+| -%>
+#
+# Note: This file is managed by Puppet.
+#
+# See: http://kafka.apache.org/documentation.html#<%= $doctag %> for more details
+#
+<% $config.keys.sort.each |$k| { -%>
+<%   $v = $config[$k] -%>
+<%   if $k == 'super.users' { $delimiter = ';' } else { $delimiter = ',' } -%>
+<%=    $k %>=<%= if $v =~ Array {  $v.join($delimiter)  } else { $v } %>
+<% } -%>
