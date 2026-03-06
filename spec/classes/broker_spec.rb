@@ -12,8 +12,8 @@ describe 'kafka::broker', type: :class do
       let :params do
         {
           config: {
-            'zookeeper.connect' => 'localhost:2181'
-          }
+            'zookeeper.connect' => 'localhost:2181',
+          },
         }
       end
 
@@ -24,9 +24,9 @@ describe 'kafka::broker', type: :class do
       it { is_expected.to contain_class('kafka::broker') }
 
       it {
-        is_expected.to contain_file('/etc/systemd/system/kafka.service').
-          with_owner('root').
-          with_content(%r{^Environment='KAFKA_HEAP_OPTS=-Xmx1G -Xms1G'$})
+        is_expected.to contain_file('/etc/systemd/system/kafka.service')
+          .with_owner('root')
+          .with_content(%r{^Environment='KAFKA_HEAP_OPTS=-Xmx1G -Xms1G'$})
       }
 
       context 'with invalid mirror_url' do
@@ -50,8 +50,8 @@ describe 'kafka::broker', type: :class do
       describe 'kafka::broker::config' do
         context 'defaults' do
           it {
-            is_expected.to contain_file('/opt/kafka/config/server.properties').
-              with_content(%r{zookeeper.connect=localhost:2181})
+            is_expected.to contain_file('/opt/kafka/config/server.properties')
+              .with_content(%r{zookeeper.connect=localhost:2181})
           }
         end
 
@@ -60,13 +60,13 @@ describe 'kafka::broker', type: :class do
             {
               'config' => {
                 'listeners' => ['PLAINTEXT://:9092', 'SSL://:9093'],
-              }
+              },
             }
           end
 
           it {
-            is_expected.to contain_file('/opt/kafka/config/server.properties').
-              with_content(%r{^listeners=PLAINTEXT://:9092,SSL://:9093$})
+            is_expected.to contain_file('/opt/kafka/config/server.properties')
+              .with_content(%r{^listeners=PLAINTEXT://:9092,SSL://:9093$})
           }
         end
 
@@ -75,13 +75,13 @@ describe 'kafka::broker', type: :class do
             {
               'config' => {
                 'super.users' => ['User:Alice', 'User:Bob'],
-              }
+              },
             }
           end
 
           it {
-            is_expected.to contain_file('/opt/kafka/config/server.properties').
-              with_content(%r{^super.users=User:Alice;User:Bob$})
+            is_expected.to contain_file('/opt/kafka/config/server.properties')
+              .with_content(%r{^super.users=User:Alice;User:Bob$})
           }
         end
 
@@ -109,8 +109,8 @@ describe 'kafka::broker', type: :class do
 
         context 'defaults' do
           it {
-            is_expected.to contain_file('/etc/systemd/system/kafka.service').
-              with_notify('["Systemd::Daemon_reload[kafka.service]", "Service[kafka.service]"]')
+            is_expected.to contain_file('/etc/systemd/system/kafka.service')
+              .with_notify('["Systemd::Daemon_reload[kafka.service]", "Service[kafka.service]"]')
           }
 
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
@@ -141,11 +141,11 @@ describe 'kafka::broker', type: :class do
           let(:params) { super().merge(service_requires: ['dummy.target', 'another.target']) }
 
           it {
-            is_expected.to contain_file('/etc/systemd/system/kafka.service').
-              with_content(%r{^After=dummy\.target$}).
-              with_content(%r{^Wants=dummy\.target$}).
-              with_content(%r{^After=another\.target$}).
-              with_content(%r{^Wants=another\.target$})
+            is_expected.to contain_file('/etc/systemd/system/kafka.service')
+              .with_content(%r{^After=dummy\.target$})
+              .with_content(%r{^Wants=dummy\.target$})
+              .with_content(%r{^After=another\.target$})
+              .with_content(%r{^Wants=another\.target$})
           }
         end
 

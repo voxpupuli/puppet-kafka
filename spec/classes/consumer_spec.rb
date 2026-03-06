@@ -13,8 +13,8 @@ describe 'kafka::consumer', type: :class do
         {
           service_config: {
             'topic'     => 'demo',
-            'zookeeper' => 'localhost:2181'
-          }
+            'zookeeper' => 'localhost:2181',
+          },
         }
       end
 

@@ -16,13 +16,13 @@ describe 'kafka::topic', type: :define do
             'ensure'             => 'present',
             'zookeeper'          => 'localhost:2181',
             'replication_factor' => 1,
-            'partitions'         => 1
+            'partitions'         => 1,
           }
         end
 
         it {
           is_expected.to contain_exec('create topic demo').with(
-            command: 'kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic demo '
+            command: 'kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic demo ',
           )
         }
       end
@@ -34,13 +34,13 @@ describe 'kafka::topic', type: :define do
             'ensure'             => 'present',
             'bootstrap_server'   => 'localhost:9092',
             'replication_factor' => 1,
-            'partitions'         => 1
+            'partitions'         => 1,
           }
         end
 
         it {
           is_expected.to contain_exec('create topic demo').with(
-            command: 'kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic demo '
+            command: 'kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic demo ',
           )
         }
       end
@@ -51,7 +51,7 @@ describe 'kafka::topic', type: :define do
           {
             'ensure'             => 'present',
             'replication_factor' => 1,
-            'partitions'         => 1
+            'partitions'         => 1,
           }
         end
 
@@ -68,13 +68,13 @@ describe 'kafka::topic', type: :define do
             'zookeeper'          => 'localhost:2181',
             'replication_factor' => 1,
             'partitions'         => 1,
-            'config'             => { 'cleanup.policy' => 'compact', 'retention.ms' => '2592000000' }
+            'config'             => { 'cleanup.policy' => 'compact', 'retention.ms' => '2592000000' },
           }
         end
 
         it {
           is_expected.to contain_exec('create topic demo').with(
-            command: 'kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic demo --config cleanup.policy=compact --config retention.ms=2592000000'
+            command: 'kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic demo --config cleanup.policy=compact --config retention.ms=2592000000',
           )
         }
       end
@@ -93,7 +93,7 @@ describe 'kafka::topic', type: :define do
 
         it {
           is_expected.to contain_exec('create topic demo').with(
-            command: 'kafka-topics.sh --create --bootstrap-server localhost:9092 --command-config /opt/kafka/config/admin.config --replication-factor 1 --partitions 1 --topic demo '
+            command: 'kafka-topics.sh --create --bootstrap-server localhost:9092 --command-config /opt/kafka/config/admin.config --replication-factor 1 --partitions 1 --topic demo ',
           )
         }
       end
