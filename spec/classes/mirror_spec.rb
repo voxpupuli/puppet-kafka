@@ -13,11 +13,11 @@ describe 'kafka::mirror', type: :class do
         {
           consumer_config: {
             'group.id'          => 'kafka-mirror',
-            'zookeeper.connect' => 'localhost:2181'
+            'zookeeper.connect' => 'localhost:2181',
           },
           producer_config: {
-            'bootstrap.servers' => 'localhost:9092'
-          }
+            'bootstrap.servers' => 'localhost:9092',
+          },
         }
       end
 

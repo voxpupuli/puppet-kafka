@@ -13,9 +13,9 @@ describe 'kafka::producer', type: :class do
         {
           service_config: {
             'broker-list' => 'localhost:9092',
-            'topic'       => 'demo'
+            'topic'       => 'demo',
           },
-          input: '/tmp/kafka-producer'
+          input: '/tmp/kafka-producer',
         }
       end
 

@@ -35,7 +35,7 @@ describe 'kafka', type: :class do
               group_name: 'mykafka',
               manage_java: false,
               config_dir: '/opt/kafka/custom_config',
-              log_dir: '/var/log/custom_kafka'
+              log_dir: '/var/log/custom_kafka',
             }
           end
 
