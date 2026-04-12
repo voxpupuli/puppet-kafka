@@ -61,7 +61,7 @@ class kafka::broker::service (
 
     $unit_entry = {
       'Description'   => 'Apache Kafka server (broker)',
-      'Documentation' => 'Documentation=http://kafka.apache.org/documentation.html',
+      'Documentation' => 'http://kafka.apache.org/documentation.html',
       'After'         => $service_requires.empty ? {
         true    => undef,
         default => $service_requires,
