@@ -4,6 +4,42 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v10.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v10.0.0) (2026-07-08)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v9.0.0...v10.0.0)
+
+**Breaking changes:**
+
+- Drop puppet, update openvox minimum version to 8.19 [\#392](https://github.com/voxpupuli/puppet-kafka/pull/392) ([TheMeier](https://github.com/TheMeier))
+
+**Implemented enhancements:**
+
+- Feature/command config [\#402](https://github.com/voxpupuli/puppet-kafka/pull/402) ([bovy89](https://github.com/bovy89))
+- refactor: use system::mange\_unit for broker service [\#401](https://github.com/voxpupuli/puppet-kafka/pull/401) ([TheMeier](https://github.com/TheMeier))
+- puppet/archive Allow 8.x, puppetlabs/java Allow 11.x, puppet/systemd Allow 8.x [\#391](https://github.com/voxpupuli/puppet-kafka/pull/391) ([TheMeier](https://github.com/TheMeier))
+- metadata.json: Add OpenVox [\#387](https://github.com/voxpupuli/puppet-kafka/pull/387) ([jstraw](https://github.com/jstraw))
+
+**Closed issues:**
+
+- Add support for Puppetlabs Java 11.1.0 [\#385](https://github.com/voxpupuli/puppet-kafka/issues/385)
+- Huge amount of unit tests [\#382](https://github.com/voxpupuli/puppet-kafka/issues/382)
+- issue when setting manage\_user, manage\_group flags to false [\#340](https://github.com/voxpupuli/puppet-kafka/issues/340)
+- New release [\#338](https://github.com/voxpupuli/puppet-kafka/issues/338)
+- Init script fails when other processes contain $PGREP\_PATTERN [\#318](https://github.com/voxpupuli/puppet-kafka/issues/318)
+- Error on 'white' branch in travis [\#271](https://github.com/voxpupuli/puppet-kafka/issues/271)
+- ZooKeeper not auto starting [\#243](https://github.com/voxpupuli/puppet-kafka/issues/243)
+- Unable to use Alpha release with current content [\#158](https://github.com/voxpupuli/puppet-kafka/issues/158)
+- Kafka 0.10.0.1 fails to start, inter.broker.protocol.version is set 0.8.2.2 [\#113](https://github.com/voxpupuli/puppet-kafka/issues/113)
+- Systemd [\#58](https://github.com/voxpupuli/puppet-kafka/issues/58)
+- Support for an offline/file based mirror [\#38](https://github.com/voxpupuli/puppet-kafka/issues/38)
+
+**Merged pull requests:**
+
+- fix systemd unit Invalid URL \(Documentation\) [\#406](https://github.com/voxpupuli/puppet-kafka/pull/406) ([bovy89](https://github.com/bovy89))
+- feat: use semicolon as delimiter when super.users config is passed as array [\#403](https://github.com/voxpupuli/puppet-kafka/pull/403) ([TheMeier](https://github.com/TheMeier))
+- feat: add Debian 13 [\#400](https://github.com/voxpupuli/puppet-kafka/pull/400) ([TheMeier](https://github.com/TheMeier))
+- chore: drop onbsolete module data [\#399](https://github.com/voxpupuli/puppet-kafka/pull/399) ([TheMeier](https://github.com/TheMeier))
+
 ## [v9.0.0](https://github.com/voxpupuli/puppet-kafka/tree/v9.0.0) (2024-12-13)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v8.0.0...v9.0.0)
@@ -311,7 +347,6 @@ These should not affect the functionality of the module.
 - added a "bin\_dir" parameter to configure where the Kafka scripts are [\#159](https://github.com/voxpupuli/puppet-kafka/pull/159) ([LionelCons](https://github.com/LionelCons))
 - Allow changing the LimitNOFILE parameter for systemd unit file [\#157](https://github.com/voxpupuli/puppet-kafka/pull/157) ([jacobmw](https://github.com/jacobmw))
 - add support to kafka::broker logs dir [\#148](https://github.com/voxpupuli/puppet-kafka/pull/148) ([jolivares](https://github.com/jolivares))
-- Add log.message.format.version to broker params [\#142](https://github.com/voxpupuli/puppet-kafka/pull/142) ([winks](https://github.com/winks))
 
 **Fixed bugs:**
 
