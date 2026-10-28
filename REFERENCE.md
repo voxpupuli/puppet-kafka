@@ -1744,4 +1744,3 @@ Property file containing configs to be passed to Admin Client.
 This is used only with --bootstrap-server option for describing and
 
 Default value: `undef`
-
