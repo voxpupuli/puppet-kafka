@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 Each new release typically also includes the latest modulesync defaults.
 These should not affect the functionality of the module.
 
+## [v10.2.0](https://github.com/voxpupuli/puppet-kafka/tree/v10.2.0) (2026-11-18)
+
+[Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v10.1.0...v10.2.0)
+
+**Implemented enhancements:**
+
+- feat: make broker service restart policy configurable [\#417](https://github.com/voxpupuli/puppet-kafka/pull/417) ([TheMeier](https://github.com/TheMeier))
+- Update dependency puppetlabs/java to v12 [\#415](https://github.com/voxpupuli/puppet-kafka/pull/415) ([pccibot](https://github.com/pccibot))
+- Update dependency puppet/archive to v9 [\#414](https://github.com/voxpupuli/puppet-kafka/pull/414) ([pccibot](https://github.com/pccibot))
+- puppetlabs/stdlib: Allow 10.x [\#413](https://github.com/voxpupuli/puppet-kafka/pull/413) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [v10.1.0](https://github.com/voxpupuli/puppet-kafka/tree/v10.1.0) (2026-10-28)
 
 [Full Changelog](https://github.com/voxpupuli/puppet-kafka/compare/v10.0.0...v10.1.0)
