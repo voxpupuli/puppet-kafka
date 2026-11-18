@@ -78,6 +78,9 @@
 # @param service_restart
 #   Whether the configuration files should trigger a service restart.
 #
+# @param service_restart_policy
+#   Set the systemd service restart policy.
+#
 # @param service_requires
 #   Set the list of services required to be running before Kafka.
 #
@@ -151,6 +154,7 @@ class kafka::broker (
   Boolean $manage_service                       = $kafka::params::manage_service,
   Enum['running', 'stopped'] $service_ensure    = $kafka::params::service_ensure,
   Boolean $service_restart                      = $kafka::params::service_restart,
+  String[1] $service_restart_policy               = 'on-failure',
   Array[String[1]] $service_requires            = $kafka::params::service_requires,
   Optional[String[1]] $limit_nofile             = $kafka::params::limit_nofile,
   Optional[String[1]] $limit_core               = $kafka::params::limit_core,

@@ -111,11 +111,18 @@ describe 'kafka::broker', type: :class do
           it {
             is_expected.to contain_file('/etc/systemd/system/kafka.service')
               .with_notify('["Systemd::Daemon_reload[kafka.service]", "Service[kafka.service]"]')
+              .with_content(%r{^Restart=on-failure$})
           }
 
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitNOFILE=} }
           it { is_expected.not_to contain_file('/etc/systemd/system/kafka.service').with_content %r{^LimitCORE=} }
           it { is_expected.to contain_service('kafka.service') }
+        end
+
+        context 'service_restart_policy set' do
+          let(:params) { super().merge(service_restart_policy: 'always') }
+
+          it { is_expected.to contain_file('/etc/systemd/system/kafka.service').with_content(%r{^Restart=always$}) }
         end
 
         context 'limit_nofile set' do

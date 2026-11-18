@@ -322,6 +322,7 @@ The following parameters are available in the `kafka::broker` class:
 * [`manage_service`](#-kafka--broker--manage_service)
 * [`service_ensure`](#-kafka--broker--service_ensure)
 * [`service_restart`](#-kafka--broker--service_restart)
+* [`service_restart_policy`](#-kafka--broker--service_restart_policy)
 * [`service_requires`](#-kafka--broker--service_requires)
 * [`limit_nofile`](#-kafka--broker--limit_nofile)
 * [`limit_core`](#-kafka--broker--limit_core)
@@ -522,6 +523,14 @@ Data type: `Boolean`
 Whether the configuration files should trigger a service restart.
 
 Default value: `$kafka::params::service_restart`
+
+##### <a name="-kafka--broker--service_restart_policy"></a>`service_restart_policy`
+
+Data type: `String[1]`
+
+Set the systemd service restart policy.
+
+Default value: `'on-failure'`
 
 ##### <a name="-kafka--broker--service_requires"></a>`service_requires`
 
